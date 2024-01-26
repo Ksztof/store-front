@@ -1,4 +1,5 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE } from '../../types/authTypes';
+import { createSlice } from '@reduxjs/toolkit';
+import { login } from '../actions/authActions'; 
 
 interface AuthState {
   loading: boolean;
@@ -6,23 +7,34 @@ interface AuthState {
   error: string | null;
 }
 
+
 const initialState: AuthState = {
   loading: false,
   userData: null,
   error: null,
 };
 
-const authReducer = (state = initialState, action: { type: string; payload?: any }) => {
-  switch (action.type) {
-    case LOGIN_START:
-      return { ...state, loading: true, error: null };
-    case LOGIN_SUCCESS:
-      return { ...state, loading: false, userData: action.payload };
-    case LOGIN_FAILURE:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    // Możesz dodać swoje reducery, jeśli są potrzebne
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userData = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = 'Wrong credentials.'; // Uwaga: error może wymagać dostosowania w zależności od struktury błędu
+      });
+  },
+});
 
-export default authReducer;
+export default authSlice.reducer;
