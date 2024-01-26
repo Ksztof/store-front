@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../hooks'; // Zaimportuj swój niestandardowy hook
+import { useAppDispatch } from '../hooks';
 import { login } from '../redux/actions/authActions';
 
 const LoginForm: React.FC = () => {
