@@ -7,10 +7,16 @@ export interface LoginCredentials {
     password: string;
   }
 
-  
 export interface RegisterCredentials {
   login: string;
   email: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface AuthState {
+  loading: boolean;
+  userData: any; 
+  error: string | null;
+  isLoggedIn: boolean;
 }
