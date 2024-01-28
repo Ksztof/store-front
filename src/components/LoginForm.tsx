@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../hooks';
 import { login } from '../redux/actions/authActions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const dispatch = useAppDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      if (isLoggedIn) {
+          navigate('/');
+      }
+  }, [isLoggedIn, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
