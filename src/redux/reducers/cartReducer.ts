@@ -1,36 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login } from '../actions/authActions'; 
-import { AuthState } from '../../types/authTypes';
+import { CartState } from '../../types/cartTypes';
+import { checkCart } from '../actions/cartActions';
 
-const initialState: AuthState = {
+const initialState: CartState = {
   loading: false,
-  userData: null,
+  cartData: null,
   error: null,
-  isLoggedIn: false,
 };
 
-const authSlice = createSlice({
-  name: 'auth',
+const cartSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    // Możesz dodać swoje reducery, jeśli są potrzebne
   },
+  
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (authState) => {
-        authState.loading = true;
-        authState.error = null;
+      .addCase(checkCart.pending, (cartState) => {
+        cartState.loading = true;
+        cartState.error = null;
       })
-      .addCase(login.fulfilled, (authState, action) => {
-        authState.loading = false;
-        authState.userData = action.payload;
-        authState.isLoggedIn = true;
+      .addCase(checkCart.fulfilled, (cartState, action) => {
+        cartState.loading = false;
+        cartState.cartData = action.payload;
       })
-      .addCase(login.rejected, (authState, action) => {
-        authState.loading = false;
-        authState.error = 'Wrong credentials.'; // Uwaga: error może wymagać dostosowania w zależności od struktury błędu
+      .addCase(checkCart.rejected, (cartState: any, action) => {
+        cartState.loading = false;
+        cartState.error = action.payload;
       });
   },
 });
 
-export default authSlice.reducer;
+export default cartSlice.reducer;
