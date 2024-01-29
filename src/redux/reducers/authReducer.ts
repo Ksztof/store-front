@@ -13,7 +13,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Możesz dodać swoje reducery, jeśli są potrzebne
   },
   extraReducers: (builder) => {
     builder
@@ -28,7 +27,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (authState, action) => {
         authState.loading = false;
-        authState.error = 'Wrong credentials.'; // Uwaga: error może wymagać dostosowania w zależności od struktury błędu
+        authState.error = 'Wrong credentials.';
       });
   },
 });

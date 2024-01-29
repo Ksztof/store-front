@@ -5,7 +5,6 @@ import { AuthState, LoginCredentials } from '../../types/authTypes';
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials, { rejectWithValue }) => {
-
     try {
       const data = await loginUser(credentials);
       return data;

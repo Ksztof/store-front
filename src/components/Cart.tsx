@@ -1,4 +1,17 @@
-const CartForm = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { useAppDispatch } from '../hooks';
+import { checkCart } from "../redux/actions/cartActions";
+import { useEffect } from "react";
+
+export const CartForm = () => {
+    const cartContent = useSelector((state: RootState) => state.cart.cartData);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(checkCart())
+    }, [cartContent]);
+
     return (
         <div style={{
             width: '300px', 
@@ -12,7 +25,7 @@ const CartForm = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{textAlign: 'center'}}>Koszyk</h4>
-            <h5>dwad</h5> 
+            <h5>{cartContent}</h5> 
         </div>
     );
 };

@@ -5,7 +5,13 @@ interface CheckCart {
     Quantity: number;
   }
   
-   interface AboutCart  {
+   export interface AboutCart  {
     TotalCartValue: number;
     AboutProductsInCart: CheckCart[];
+  }
+
+  export interface CartState {
+    loading: boolean;
+    cartData: any; 
+    error: string | null;
   }
