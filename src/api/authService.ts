@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { LoginCredentials, RegisterCredentials } from '../types/authTypes';
 
+axios.defaults.withCredentials = true;
+
 export const loginUser = async (credentials: LoginCredentials) => {
   const response = await axios.post('https://localhost:5445/api/User/login', credentials);
   return response.data;
