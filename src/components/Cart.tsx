@@ -10,7 +10,7 @@ export const CartForm = () => {
 
     useEffect(() => {
         dispatch(checkCart())
-    }, [cartContent]);
+    }, []);
 
     return (
         <div style={{
@@ -25,7 +25,7 @@ export const CartForm = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{textAlign: 'center'}}>Koszyk</h4>
-            <h5>{cartContent}</h5> 
+            <h5>{JSON.stringify(cartContent)}</h5> 
         </div>
     );
 };
