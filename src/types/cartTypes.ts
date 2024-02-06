@@ -1,13 +1,13 @@
-interface CheckCart {
-    ProductName: string;
-    ProductUnitPrice: number;
-    ProductTotalPrice: number;
-    Quantity: number;
+export interface CheckCart {
+    productName: string;
+    productUnitPrice: number;
+    productTotalPrice: number;
+    quantity: number;
   }
   
    export interface AboutCart  {
-    TotalCartValue: number;
-    AboutProductsInCart: CheckCart[];
+    totalCartValue: number;
+    aboutProductsInCart: CheckCart[];
   }
 
   export interface CartState {

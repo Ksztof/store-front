@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import React from 'react';
-import Cart from "../components/Cart";
+import { Cart } from "../components/Cart";
 import { Products } from "../components/Products";
 
 

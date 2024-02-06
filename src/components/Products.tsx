@@ -16,7 +16,7 @@ export const Products = () => {
             dispatch(getProducts());
         }
     }, []);
-
+    
     return (
         <div>
             {products.map((product: ProductDetails) => (
@@ -24,6 +24,7 @@ export const Products = () => {
                     <h3>Name: {product.name}</h3>
                     <p>Description: {product.description}</p>
                     <p>price: {product.price}</p>
+                    <button >+</button>
                 </div>
             ))}
         </div>
