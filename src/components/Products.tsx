@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../hooks";
 import { getProducts } from "../redux/actions/productActions";
 import { useSelector } from "react-redux";
@@ -9,12 +9,17 @@ export const Products = () => {
     const dispatch = useAppDispatch();
     const isDataLoading = useSelector((state: RootState) => state.product.loading);
     const products = useSelector((state: RootState) => state.product.productsData);
+    const [number, setNumber] = useState(1);
 
     useEffect(() => {
         if(!isDataLoading){
             dispatch(getProducts());
         }
     }, []);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNumber(Number(event.target.value))
+    }
     
     const addToCart = (product: ProductInCart, quantity: number) => {
         const itemsInCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -34,7 +39,11 @@ export const Products = () => {
                     <h3>Name: {product.name}</h3>
                     <p>Description: {product.description}</p>
                     <p>price: {product.price}</p>
-                    <input></input>
+                    <input
+                        type="number"
+                        value={number}
+                        onChange={handleInputChange}
+                    />
                     <button >dodaj do koszyka</button>
                 </div>
             ))}
