@@ -2,9 +2,9 @@ import React from 'react';
 import { Main } from './pages/main';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login } from './pages/login';
-import { Navbar } from './components/navbar';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
+import { Navbar } from './components/Navbar';
 
 const App: React.FC = () => {
   return (
