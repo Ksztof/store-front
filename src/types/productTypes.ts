@@ -3,22 +3,19 @@ export interface ProductDetails {
   name: string;
   price: number;
   description: string;
-  manufacturer: string; 
+  manufacturer: string;
   dateAdded: Date;
-  }
+}
 
-  export interface ProductState {
-    loading: boolean;
-    productsData: any; 
-    error: string | null;
-  }
+export interface ProductState {
+  loading: boolean;
+  productsData: ProductDetails[];
+  error: string | null;
+}
 
-  export interface ProductInCart {
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-    manufacturer: string; 
-    dateAdded: Date;
-    quantity: number;
-    }
+export interface ProductInCartDetails {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}

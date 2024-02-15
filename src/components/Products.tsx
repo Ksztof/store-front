@@ -3,7 +3,8 @@ import { useAppDispatch } from "../hooks";
 import { getProducts } from "../redux/actions/productActions";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { ProductDetails, ProductInCart } from "../types/productTypes";
+import { ProductDetails } from "../types/productTypes";
+import { Product } from "./Product";
 
 export const Products = () => {
     const dispatch = useAppDispatch();
@@ -12,41 +13,17 @@ export const Products = () => {
     const [number, setNumber] = useState(1);
 
     useEffect(() => {
-        if(!isDataLoading){
+        if (!isDataLoading) {
             dispatch(getProducts());
         }
     }, []);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumber(Number(event.target.value))
-    }
-    
-    const addToCart = (product: ProductInCart, quantity: number) => {
-        const itemsInCart = JSON.parse(localStorage.getItem('cart') || '[]');
-
-        const existingItem: ProductInCart = itemsInCart.find((item: ProductInCart) => item.id === product.id);
-        if(existingItem){
-            existingItem.quantity += 1
-            
-        }
-
-    }
 
     return (
         <div>
-            {products.map((product: ProductDetails) => (
-                <div key={product.id}>
-                    <h3>Name: {product.name}</h3>
-                    <p>Description: {product.description}</p>
-                    <p>price: {product.price}</p>
-                    <input
-                        type="number"
-                        value={number}
-                        onChange={handleInputChange}
-                    />
-                    <button >dodaj do koszyka</button>
-                </div>
+            {products.map((product : ProductDetails) => (
+                <Product key={product.id} productId={product.id} />
             ))}
         </div>
     );
-}
+};

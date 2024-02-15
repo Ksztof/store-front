@@ -34,12 +34,7 @@ export const Cart = () => {
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
                         {cartContent.aboutProductsInCart.map((product: CheckCart, index: number) => (
-                            <div key={index}>
-                                <p>Nazwa produktu: {product.productName}</p>
-                                <p>Cena jednostkowa: {product.productUnitPrice} zł</p>
-                                <p>Cena całkowita: {product.productTotalPrice} zł</p>
-                                <p>Ilość: {product.quantity}</p>
-                            </div>
+                            
                         ))}
                     </div>
                 </>
