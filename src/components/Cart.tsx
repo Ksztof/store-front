@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { AboutCart, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
+import { AboutCartApi, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
 import { checkCart } from '../redux/actions/cartActions';
 import { getProductsFromLocStor } from '../utils/cartUtills';
@@ -9,8 +9,9 @@ import { getProductsFromLocStor } from '../utils/cartUtills';
 export const Cart = () => {
     const dispatch = useAppDispatch();
 
-    const cartContentApi: AboutCart = useSelector((state: RootState) => state.cart.cartData);
+    const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
     const cartContentLocStore = getProductsFromLocStor();
+    const cartContent: any = [];
 
     useEffect(() => {
         dispatch(checkCart())

@@ -1,6 +1,7 @@
+import { CheckCart } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 
-export const getProductsFromLocStor = (): ProductDetails[] => {
+export const getProductsFromLocStor = (): CheckCart[] => {
     const productsInCartLocStorJson = localStorage.getItem('productsInCart');
     const productsInCartLocStor = productsInCartLocStorJson ? JSON.parse(productsInCartLocStorJson) : [];
 
@@ -8,7 +9,9 @@ export const getProductsFromLocStor = (): ProductDetails[] => {
 }
 
 export const addProductToLocStor = (product: ProductDetails) => {
-    const productsInCartLocStor: ProductDetails[] = getProductsFromLocStor();
+    const productsInCartLocStor: CheckCart[] = getProductsFromLocStor();
+
+    //zrobic rzutowanie na CheckCart,  podczas którego każdy dodany produkt, będzie zwiększał ilość produkt w local storage
     
     productsInCartLocStor.push(product);
 

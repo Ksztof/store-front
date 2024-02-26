@@ -12,10 +12,3 @@ export interface ProductState {
   productsData: ProductDetails[];
   error: string | null;
 }
-
-export interface ProductInCartDetails {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
