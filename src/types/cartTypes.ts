@@ -1,11 +1,14 @@
 export interface CheckCart {
+    productId: number
     productName: string;
     productUnitPrice: number;
-    productTotalPrice: number;
+    description: string;
+    manufacturer: string;
     quantity: number;
+    productTotalPrice: number;
   }
   
-   export interface AboutCart  {
+   export interface AboutCartApi  {
     totalCartValue: number;
     aboutProductsInCart: CheckCart[];
   }
