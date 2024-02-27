@@ -5,12 +5,13 @@ import { AboutCartApi, CheckCart } from '../types/cartTypes'; // Upewnij się, �
 import { useAppDispatch } from '../hooks';
 import { checkCart } from '../redux/actions/cartActions';
 import { getProductsFromLocStor } from '../utils/cartUtills';
+import { ProductDetails } from '../types/productTypes';
 
 export const Cart = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
-    const cartContentLocStore = getProductsFromLocStor();
+    const cartContentLocStore: ProductDetails[] = getProductsFromLocStor();
     const cartContent: any = [];
 
     useEffect(() => {
@@ -37,9 +38,7 @@ export const Cart = () => {
                 <>
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
-                        {cartContent.aboutProductsInCart.map((product: CheckCart, index: number) => (
-                            
-                        ))}
+                        
                     </div>
                 </>
             ) : (
