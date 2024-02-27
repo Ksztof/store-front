@@ -6,7 +6,7 @@ import { addProductToLocStor } from "../utils/cartUtills";
 
 export const Product = ({ productId }: { productId: number }) => {
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
-
+    
     const addProductToCart = () =>{
         if (product) addProductToLocStor(product);  
     };

@@ -10,10 +10,35 @@ export const getProductsFromLocStor = (): CheckCart[] => {
 
 export const addProductToLocStor = (product: ProductDetails) => {
     const productsInCartLocStor: CheckCart[] = getProductsFromLocStor();
+    const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
 
-    //zrobic rzutowanie na CheckCart,  podczas którego każdy dodany produkt, będzie zwiększał ilość produkt w local storage
-    
-    productsInCartLocStor.push(product);
+    const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor.find(
+        (p: CheckCart) => p.productId === productCartFormat.productId
+    );
 
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor))
+    if (productExistInLocalStorage) {
+        productExistInLocalStorage.quantity += 1;
+
+        productExistInLocalStorage.productTotalPrice =
+            productExistInLocalStorage.quantity * productExistInLocalStorage.productUnitPrice;
+    } else {
+        productCartFormat.quantity = 1;
+
+        productCartFormat.productTotalPrice =
+            productCartFormat.quantity * productCartFormat.productUnitPrice;
+
+        productsInCartLocStor.push(productCartFormat);
+    }
+
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
 };
+
+const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
+    productId: product.id,
+    productName: product.name,
+    productUnitPrice: product.price,
+    description: product.description,
+    manufacturer: product.manufacturer,
+    quantity: 1,
+    productTotalPrice: 0,
+});
