@@ -8,21 +8,20 @@ export const getProductsFromLocStor = (): CheckCart[] => {
     return productsInCartLocStor;
 }
 
-export const addProductToLocStor = (product: ProductDetails) => {
+export const addProductToLocStor = (product: ProductDetails, quantity: number) => {
     const productsInCartLocStor: CheckCart[] = getProductsFromLocStor();
     const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
-
     const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor.find(
         (p: CheckCart) => p.productId === productCartFormat.productId
     );
 
     if (productExistInLocalStorage) {
-        productExistInLocalStorage.quantity += 1;
+        productExistInLocalStorage.quantity += quantity;
 
         productExistInLocalStorage.productTotalPrice =
             productExistInLocalStorage.quantity * productExistInLocalStorage.productUnitPrice;
     } else {
-        productCartFormat.quantity = 1;
+        productCartFormat.quantity = quantity;
 
         productCartFormat.productTotalPrice =
             productCartFormat.quantity * productCartFormat.productUnitPrice;
