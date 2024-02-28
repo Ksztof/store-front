@@ -11,7 +11,7 @@ export const Cart = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
-    const cartContentLocStore: ProductDetails[] = getProductsFromLocStor();
+    const cartContentLocStore: CheckCart[] = getProductsFromLocStor();
     const cartContent: any = [];
 
     useEffect(() => {
