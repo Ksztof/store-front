@@ -13,13 +13,23 @@ export const Product = ({ productId }: { productId: number }) => {
         setProductQuantity(event.target.value);
     };
 
-    const addProductToCart = (Quantity: string) => {
-        const parsedQuant: number = parseFloat(Quantity);
-        // if (!isNaN(parsedProdQuant)) {
-        //     // Jeśli parsowanie się powiodło, wykonaj odpowiednie działania
-        //     console.log('Wartość została pomyślnie sparsowana:', parsedProdQuant);
-        //   } 
-        if (product) addProductToLocStor(product, parsedQuant);
+    const addProductToCart = (quantity: string) => {
+        let parsedQuant: number = parseFloat(quantity);
+        const inputIsntNumber = !isNaN(parsedQuant);
+        const productExists = product;
+        const inputIsPositive = parsedQuant > 0;
+        const isEmptyString = quantity === '';
+        const valueIsInScope = parsedQuant < 100;
+
+        if (
+            (inputIsntNumber && productExists && inputIsPositive && valueIsInScope) ||
+            (productExists && isEmptyString)
+        ) {
+            if (quantity === '') {
+                parsedQuant = 1;
+            }
+            addProductToLocStor(product, parsedQuant);
+        }
     };
 
     if (!product) return null;
@@ -33,8 +43,8 @@ export const Product = ({ productId }: { productId: number }) => {
             <input
                 type="text"
                 onChange={handleInputChange}
-                pattern="[0-9]*[.,]?[0-9]+"
-                title="1"
+                value={productQuantity}
+
             />
         </div>
     );
