@@ -41,3 +41,15 @@ const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
     quantity: 1,
     productTotalPrice: 0,
 });
+
+export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number => {
+    let totalFromLocStor: number = 0;
+
+    if(!cartContentLocStore || cartContentLocStore.length === 0) return 0;
+
+    cartContentLocStore.forEach((product: CheckCart) => {
+        totalFromLocStor += product.quantity * product.productUnitPrice; 
+    });
+
+    return totalFromLocStor;
+};

@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { AboutCartApi, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
+import { AboutCart, AboutCartApi, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
 import { checkCart } from '../redux/actions/cartActions';
-import { getProductsFromLocStor } from '../utils/cartUtills';
-import { ProductDetails } from '../types/productTypes';
+import { calculateTotalLocStore, getProductsFromLocStor } from '../utils/cartUtills';
 
-export const Cart = () => {
+export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
-    const cartContentLocStore: CheckCart[] = getProductsFromLocStor();
-    const cartContent: any = [];
+    const cartContentLocStor: CheckCart[] = getProductsFromLocStor();
+    const totalFromLocStor = calculateTotalLocStore(cartContentLocStor);
+
+    const cartContent: AboutCart = {
+        totalCartValue: cartContentApi.totalCartValue + totalFromLocStor,
+        aboutProductsInCart: [...cartContentApi.aboutProductsInCart, ...cartContentLocStor]
+    };
 
     useEffect(() => {
         dispatch(checkCart())
     }, []);
-    
+
     return (
         <div style={{
             width: '300px',
@@ -36,9 +40,9 @@ export const Cart = () => {
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
             {cartContent && cartContent.aboutProductsInCart ? (
                 <>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {0} zł</h5>
                     <div>
-                        
+
                     </div>
                 </>
             ) : (

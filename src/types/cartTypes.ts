@@ -13,6 +13,11 @@ export interface CheckCart {
     aboutProductsInCart: CheckCart[];
   }
 
+  export interface AboutCart  {
+    totalCartValue: number;
+    aboutProductsInCart: CheckCart[];
+  }
+
   export interface CartState {
     loading: boolean;
     cartData: any; 

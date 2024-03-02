@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../redux/store';
-export const Navbar = () => {
+
+export const Navbar: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     return (
