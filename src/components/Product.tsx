@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ProductDetails } from "../types/productTypes";
-import { useAppDispatch } from "../hooks";
 import { addProductToLocStor } from "../utils/cartUtills";
 import { useState } from "react";
 
-export const Product = ({ productId }: { productId: number }) => {
+export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
     const [productQuantity, setProductQuantity] = useState<string>('1');
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
 
