@@ -9,7 +9,7 @@ export interface CheckCart {
   }
   
    export interface AboutCartApi  {
-    totalCartValueApi: number;
+    totalCartValue: number;
     aboutProductsInCart: CheckCart[];
   }
 

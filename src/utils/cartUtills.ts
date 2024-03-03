@@ -1,5 +1,6 @@
-import { CheckCart } from "../types/cartTypes";
+import { AboutCart, AboutCartApi, CheckCart } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
+
 
 export const getProductsFromLocStor = (): CheckCart[] => {
     const productsInCartLocStorJson = localStorage.getItem('productsInCart');
@@ -30,6 +31,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
     }
 
     localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
+    
 };
 
 const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
@@ -52,4 +54,15 @@ export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number
     });
 
     return totalFromLocStor;
+};
+
+export const getCombinedCartContent = (cartContApi: AboutCartApi, cartContLocStor: CheckCart[]): AboutCart => {
+    const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
+
+    const newCartContent: AboutCart = {
+        totalCartValue: cartContApi.totalCartValue + totalFromLocStor,
+        aboutProductsInCart: [...cartContApi.aboutProductsInCart, ...cartContLocStor]
+    };
+
+    return newCartContent;
 };
