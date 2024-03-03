@@ -1,26 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, AboutCartApi, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
 import { checkCart } from '../redux/actions/cartActions';
-import { calculateTotalLocStore, getProductsFromLocStor } from '../utils/cartUtills';
+import { calculateTotalLocStore, getCombinedCartContent, getProductsFromLocStor } from '../utils/cartUtills';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
     const cartContentLocStor: CheckCart[] = getProductsFromLocStor();
-    const totalFromLocStor = calculateTotalLocStore(cartContentLocStor);
 
-    const cartContent: AboutCart = {
-        totalCartValue: cartContentApi.totalCartValue + totalFromLocStor,
-        aboutProductsInCart: [...cartContentApi.aboutProductsInCart, ...cartContentLocStor]
-    };
+    const [cartContent, setCartContent] = useState<AboutCart>({
+        totalCartValue: 0,
+        aboutProductsInCart: []
+    });
 
     useEffect(() => {
-        dispatch(checkCart())
+        dispatch(checkCart());
     }, []);
+
+    useEffect(() => {                                                                                                   
+        if(cartContentApi && cartContentLocStor ){//TODO: change for cartContentApi || cartContentLocStor
+            const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
+            setCartContent(newCartContent);
+        };
+        
+    }, [cartContentLocStor, cartContentApi]);
 
     return (
         <div style={{
@@ -38,11 +45,21 @@ export const Cart: React.FC = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
-            {cartContent && cartContent.aboutProductsInCart ? (
+            {cartContent
+                && cartContent
+                && cartContent !== null
+                && cartContent !== undefined ? (
                 <>
-                    <h5>Wartość koszyka: {0} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
-
+                        {cartContent.aboutProductsInCart.map((p: CheckCart, index: number) => {
+                            return <div key={p.productId + index}>
+                                <p>productName: {p.productName}</p>
+                                <p>manufacturer: {p.manufacturer}</p>
+                                <p>quantity: {p.quantity}</p>
+                                <p></p>
+                            </div>
+                        })}
                     </div>
                 </>
             ) : (
