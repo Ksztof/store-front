@@ -29,7 +29,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
 
         productsInCartLocStor.push(productCartFormat);
     }
-
+    
     localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
     
 };

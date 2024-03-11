@@ -10,8 +10,7 @@ export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
-    const cartContentLocStor: CheckCart[] = getProductsFromLocStor();
-
+    const [cartContentLocStor, setCartContentLocStor] = useState<CheckCart[]>(getProductsFromLocStor());
     const [cartContent, setCartContent] = useState<AboutCart>({
         totalCartValue: 0,
         aboutProductsInCart: []
@@ -21,13 +20,25 @@ export const Cart: React.FC = () => {
         dispatch(checkCart());
     }, []);
 
-    useEffect(() => {                                                                                                   
-        if(cartContentApi && cartContentLocStor ){//TODO: change for cartContentApi || cartContentLocStor
+
+    useEffect(() => {
+        const handleProductsInLocStorUpdate = (event: StorageEvent) => {
+            if (event.key == 'productsInCart') {
+                setCartContentLocStor(getProductsFromLocStor());
+                
+            }
+        };
+
+        window.addEventListener('storage', handleProductsInLocStorUpdate);
+
+        return () => {
+            window.removeEventListener('storage', handleProductsInLocStorUpdate);
+        };
+        if (cartContentApi && cartContentLocStor) {//TODO: change for cartContentApi || cartContentLocStor
             const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
             setCartContent(newCartContent);
         };
-        
-    }, [cartContentLocStor, cartContentApi]);
+    }, []);
 
     return (
         <div style={{
