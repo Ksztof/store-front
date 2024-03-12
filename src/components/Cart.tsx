@@ -18,14 +18,24 @@ export const Cart: React.FC = () => {
 
     useEffect(() => {
         dispatch(checkCart());
+        if (cartContentApi && cartContentLocStor) {//TODO: change for cartContentApi || cartContentLocStor
+            const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
+            setCartContent(newCartContent);
+        };
     }, []);
 
-
     useEffect(() => {
+
         const handleProductsInLocStorUpdate = (event: StorageEvent) => {
+            console.log("before" + cartContent)
             if (event.key == 'productsInCart') {
+                console.log("after" + cartContent)
+
                 setCartContentLocStor(getProductsFromLocStor());
+                const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
+                setCartContent(newCartContent);
                 
+
             }
         };
 
@@ -34,10 +44,7 @@ export const Cart: React.FC = () => {
         return () => {
             window.removeEventListener('storage', handleProductsInLocStorUpdate);
         };
-        if (cartContentApi && cartContentLocStor) {//TODO: change for cartContentApi || cartContentLocStor
-            const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
-            setCartContent(newCartContent);
-        };
+        
     }, []);
 
     return (
