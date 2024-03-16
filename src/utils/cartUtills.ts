@@ -30,8 +30,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
         productsInCartLocStor.push(productCartFormat);
     }
     
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
-    
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));    
 };
 
 const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({

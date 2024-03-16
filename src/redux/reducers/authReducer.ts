@@ -25,7 +25,7 @@ const authSlice = createSlice({
         authState.userData = action.payload;
         authState.isLoggedIn = true;
       })
-      .addCase(login.rejected, (authState, action) => {
+      .addCase(login.rejected, (authState, action) => {// change any for AuthState
         authState.loading = false;
         authState.error = 'Wrong credentials.';
       });

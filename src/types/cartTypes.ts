@@ -23,3 +23,9 @@ export interface CheckCart {
     cartData: any; 
     error: string | null;
   }
+
+  export interface CartLocStorState {
+    loading: boolean;
+    cartLocStorData: CheckCart[]; 
+    error: string | null;
+  }
