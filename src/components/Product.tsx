@@ -1,13 +1,15 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { ProductDetails } from "../types/productTypes";
+import { ProductDetails, ProductPayload } from "../types/productTypes";
 import { addProductToLocStor } from "../utils/cartUtills";
 import { useState } from "react";
+import { useAppDispatch } from "../hooks";
+import { addProductToRedStor } from "../redux/actions/cartLocStor";
 
 export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
     const [productQuantity, setProductQuantity] = useState<string>('1');
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
-
+    const dispatch = useAppDispatch();
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProductQuantity(event.target.value);
     };
@@ -27,7 +29,13 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
             if (quantity === '') {
                 parsedQuant = 1;
             }
-            addProductToLocStor(product, parsedQuant);
+
+            let productPayload: ProductPayload= {
+                product: product, 
+                quantity: parsedQuant,
+            }
+
+            dispatch(addProductToRedStor(productPayload))
         }
     };
 

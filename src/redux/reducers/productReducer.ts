@@ -16,17 +16,17 @@ const productSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (cartState) => {
-        cartState.loading = true;
-        cartState.error = null;
+      .addCase(getProducts.pending, (productState) => {
+        productState.loading = true;
+        productState.error = null;
       })
-      .addCase(getProducts.fulfilled, (cartState, action) => {
-        cartState.loading = false;
-        cartState.productsData = action.payload;
+      .addCase(getProducts.fulfilled, (productState, action) => {
+        productState.loading = false;
+        productState.productsData = action.payload;
       })
-      .addCase(getProducts.rejected, (cartState: any, action) => {
-        cartState.loading = false;
-        cartState.error = action.payload;
+      .addCase(getProducts.rejected, (productState: any, action) => { // change any for ProductState
+        productState.loading = false;
+        productState.error = action.payload;
       });
   },
 });

@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCartContent } from '../../api/cartService';
 import { AboutCartApi } from '../../types/cartTypes';
 
-export const checkCart  = createAsyncThunk<AboutCartApi, void>(
+export const checkCart = createAsyncThunk<
+  AboutCartApi,
+  void
+>(
   'cart/getCartContent ',
   async (_, { rejectWithValue }) => {
     try {

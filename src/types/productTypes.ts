@@ -12,3 +12,8 @@ export interface ProductState {
   productsData: ProductDetails[];
   error: string | null;
 }
+
+export interface ProductPayload {
+  product: ProductDetails;
+  quantity: number;
+}

@@ -24,7 +24,7 @@ const cartSlice = createSlice({
         cartState.loading = false;
         cartState.cartData = action.payload;
       })
-      .addCase(checkCart.rejected, (cartState: any, action) => {
+      .addCase(checkCart.rejected, (cartState: any, action) => {  // change any for CartState
         cartState.loading = false;
         cartState.error = action.payload;
       });
