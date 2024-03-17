@@ -10,7 +10,7 @@ export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
-    const [cartContentLocStor, setCartContentLocStor] = useState<CheckCart[]>(getProductsFromLocStor());
+    const cartContentLocStor: CheckCart[] = useSelector((state: RootState) => state.cartLocStor.cartLocStorData);
     const [cartContent, setCartContent] = useState<AboutCart>({
         totalCartValue: 0,
         aboutProductsInCart: []
@@ -22,7 +22,7 @@ export const Cart: React.FC = () => {
             const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
             setCartContent(newCartContent);
         };
-    }, []);
+    }, [cartContentLocStor]);
 
     useEffect(() => {
 
@@ -31,7 +31,6 @@ export const Cart: React.FC = () => {
             if (event.key == 'productsInCart') {
                 console.log("after" + cartContent)
 
-                setCartContentLocStor(getProductsFromLocStor());
                 const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
                 setCartContent(newCartContent);
                 
