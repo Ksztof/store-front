@@ -29,8 +29,8 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
 
         productsInCartLocStor.push(productCartFormat);
     }
-    
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));    
+
+    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
 };
 
 const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
@@ -46,10 +46,10 @@ const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
 export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number => {
     let totalFromLocStor: number = 0;
 
-    if(!cartContentLocStore || cartContentLocStore.length === 0) return 0;
+    if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;
 
     cartContentLocStore.forEach((product: CheckCart) => {
-        totalFromLocStor += product.quantity * product.productUnitPrice; 
+        totalFromLocStor += product.quantity * product.productUnitPrice;
     });
 
     return totalFromLocStor;
@@ -58,10 +58,25 @@ export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number
 export const getCombinedCartContent = (cartContApi: AboutCartApi, cartContLocStor: CheckCart[]): AboutCart => {
     const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
 
+    const newCartContentMap: { [productId: number]: CheckCart } = {};
     const newCartContent: AboutCart = {
-        totalCartValue: cartContApi.totalCartValue + totalFromLocStor,
-        aboutProductsInCart: [...cartContApi.aboutProductsInCart, ...cartContLocStor]
-    };
+        totalCartValue: totalFromLocStor + cartContApi.totalCartValue,
+        aboutProductsInCart: []
+    }
+
+    cartContApi.aboutProductsInCart.forEach(product => getCartContentAsMap(product, newCartContentMap));
+    cartContLocStor.forEach(product => getCartContentAsMap(product, newCartContentMap));
+
+    newCartContent.aboutProductsInCart = Object.values(newCartContentMap);
 
     return newCartContent;
+};
+
+const getCartContentAsMap = (obj: CheckCart, map: { [productId: number]: CheckCart }) => {
+
+    if (map[obj.productId]) {
+        map[obj.productId].quantity += obj.quantity;
+    } else {
+        map[obj.productId] = { ...obj };
+    }
 };
