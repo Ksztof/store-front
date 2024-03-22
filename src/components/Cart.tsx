@@ -18,33 +18,14 @@ export const Cart: React.FC = () => {
 
     useEffect(() => {
         dispatch(checkCart());
+
         if (cartContentApi && cartContentLocStor) {//TODO: change for cartContentApi || cartContentLocStor
             const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
             setCartContent(newCartContent);
         };
     }, [cartContentLocStor]);
 
-    useEffect(() => {
-
-        const handleProductsInLocStorUpdate = (event: StorageEvent) => {
-            console.log("before" + cartContent)
-            if (event.key == 'productsInCart') {
-                console.log("after" + cartContent)
-
-                const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
-                setCartContent(newCartContent);
-                
-
-            }
-        };
-
-        window.addEventListener('storage', handleProductsInLocStorUpdate);
-
-        return () => {
-            window.removeEventListener('storage', handleProductsInLocStorUpdate);
-        };
-        
-    }, []);
+   
 
     return (
         <div style={{
@@ -74,6 +55,7 @@ export const Cart: React.FC = () => {
                                 <p>productName: {p.productName}</p>
                                 <p>manufacturer: {p.manufacturer}</p>
                                 <p>quantity: {p.quantity}</p>
+                                <p>unit price: {p.productUnitPrice}</p>
                                 <p></p>
                             </div>
                         })}
