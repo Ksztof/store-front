@@ -10,7 +10,6 @@ export const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const isDataLoading = useSelector((state: RootState) => state.product.loading);
     const products = useSelector((state: RootState) => state.product.productsData);
-    const [number, setNumber] = useState(1);
 
     useEffect(() => {
         if (!isDataLoading) {
