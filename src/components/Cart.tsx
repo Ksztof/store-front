@@ -19,7 +19,7 @@ export const Cart: React.FC = () => {
     useEffect(() => {
         dispatch(checkCart());
 
-        if (cartContentApi && cartContentLocStor) {//TODO: change for cartContentApi || cartContentLocStor
+        if (cartContentApi && cartContentLocStor) {
             const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
             setCartContent(newCartContent);
         };

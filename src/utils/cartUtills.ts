@@ -3,7 +3,7 @@ import { ProductDetails } from "../types/productTypes";
 
 
 export const getProductsFromLocStor = (): CheckCart[] => {
-    const productsInCartLocStorJson = localStorage.getItem('productsInCart');
+    const productsInCartLocStorJson = localStorage.getItem('productsInCartLocStor');
     const productsInCartLocStor = productsInCartLocStorJson ? JSON.parse(productsInCartLocStorJson) : [];
 
     return productsInCartLocStor;
@@ -30,7 +30,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
         productsInCartLocStor.push(productCartFormat);
     }
 
-    localStorage.setItem('productsInCart', JSON.stringify(productsInCartLocStor));
+    localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
 };
 
 const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
@@ -80,3 +80,13 @@ const getCartContentAsMap = (obj: CheckCart, map: { [productId: number]: CheckCa
         map[obj.productId] = { ...obj };
     }
 };
+
+const isCartExist = (): boolean => {
+    const cartContent = localStorage.getItem('cartContent');
+
+    if(cartContent === null){
+        return true;
+    } else {
+        return false;
+    }
+}
