@@ -11,9 +11,9 @@ export const addProductToRedStor = createAsyncThunk<
     }
 >(
     'cartLocStor/addProduct ',
-    async ({ product, quantity }, { rejectWithValue }) => {
+    async (ProductPayload, { rejectWithValue }) => {
         try {
-            addProductToLocStor(product, quantity);
+            addProductToLocStor(ProductPayload.product, ProductPayload.quantity);
 
             const updatedCart = getProductsFromLocStor();
 

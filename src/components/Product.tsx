@@ -4,7 +4,7 @@ import { ProductDetails, ProductPayload } from "../types/productTypes";
 import { addProductToLocStor } from "../utils/cartUtills";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks";
-import { addProductToRedStor } from "../redux/actions/cartLocStor";
+import { addProductToRedStor } from "../redux/actions/cartLocStorActions";
 
 export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
     const [productQuantity, setProductQuantity] = useState<string>('1');

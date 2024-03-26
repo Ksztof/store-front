@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CartLocStorState } from '../../types/cartTypes';
-import { addProductToRedStor } from '../actions/cartLocStor';
+import { addProductToRedStor } from '../actions/cartLocStorActions';
 
 const initialState: CartLocStorState = {
   loading: false,
@@ -16,11 +16,11 @@ const cartLocStorSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(addProductToRedStor.pending, (cartLocStorState) => {
+      .addCase(addProductToRedStor.pending, (cartLocStorState: CartLocStorState) => {
         cartLocStorState.loading = true;
         cartLocStorState.error = null;
       })
-      .addCase(addProductToRedStor.fulfilled, (cartLocStorState, action) => {
+      .addCase(addProductToRedStor.fulfilled, (cartLocStorState: CartLocStorState, action) => {
         cartLocStorState.loading = false;
         cartLocStorState.cartLocStorData = action.payload;
       })

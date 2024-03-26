@@ -5,13 +5,14 @@ import { AboutCart, AboutCartApi, CheckCart } from '../types/cartTypes'; // Upew
 import { useAppDispatch } from '../hooks';
 import { checkCart } from '../redux/actions/cartActions';
 import { calculateTotalLocStore, getCombinedCartContent, getProductsFromLocStor } from '../utils/cartUtills';
+import { addCombinedCartRedStor } from '../redux/actions/combinedCartActions';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContentApi: AboutCartApi = useSelector((state: RootState) => state.cart.cartData);
     const cartContentLocStor: CheckCart[] = useSelector((state: RootState) => state.cartLocStor.cartLocStorData);
-    const [cartContent, setCartContent] = useState<AboutCart>({
+    const [combinedCartContent, setCartContent] = useState<AboutCart>({
         totalCartValue: 0,
         aboutProductsInCart: []
     });
@@ -22,8 +23,15 @@ export const Cart: React.FC = () => {
         if (cartContentApi && cartContentLocStor) {
             const newCartContent = getCombinedCartContent(cartContentApi, cartContentLocStor)
             setCartContent(newCartContent);
+
+            let combinedCartContentPayload: AboutCart= {
+                totalCartValue: combinedCartContent.totalCartValue,
+                aboutProductsInCart: combinedCartContent.aboutProductsInCart
+            }
+
+            dispatch(addCombinedCartRedStor(combinedCartContentPayload));
         };
-    }, [cartContentLocStor]);
+    }, [cartContentLocStor]); 
 
    
 
@@ -43,14 +51,14 @@ export const Cart: React.FC = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
-            {cartContent
-                && cartContent
-                && cartContent !== null
-                && cartContent !== undefined ? (
+            {combinedCartContent
+                && combinedCartContent
+                && combinedCartContent !== null
+                && combinedCartContent !== undefined ? (
                 <>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {combinedCartContent.totalCartValue} zł</h5>
                     <div>
-                        {cartContent.aboutProductsInCart.map((p: CheckCart, index: number) => {
+                        {combinedCartContent.aboutProductsInCart.map((p: CheckCart, index: number) => {
                             return <div key={p.productId + index}>
                                 <p>productName: {p.productName}</p>
                                 <p>manufacturer: {p.manufacturer}</p>
