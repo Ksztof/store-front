@@ -1,31 +1,37 @@
 export interface CheckCart {
-    productId: number
-    productName: string;
-    productUnitPrice: number;
-    description: string;
-    manufacturer: string;
-    quantity: number;
-    productTotalPrice: number;
-  }
-  
-   export interface AboutCartApi  {
-    totalCartValue: number;
-    aboutProductsInCart: CheckCart[];
-  }
+  productId: number
+  productName: string;
+  productUnitPrice: number;
+  description: string;
+  manufacturer: string;
+  quantity: number;
+  productTotalPrice: number;
+};
 
-  export interface AboutCart  {
-    totalCartValue: number;
-    aboutProductsInCart: CheckCart[];
-  }
+export interface AboutCartApi {
+  totalCartValue: number;
+  aboutProductsInCart: CheckCart[];
+};
 
-  export interface CartState {
-    loading: boolean;
-    cartData: any; 
-    error: string | null;
-  }
+export interface AboutCart {
+  totalCartValue: number;
+  aboutProductsInCart: CheckCart[];
+};
 
-  export interface CartLocStorState {
-    loading: boolean;
-    cartLocStorData: CheckCart[]; 
-    error: string | null;
-  }
+export interface CartState {
+  loading: boolean;
+  cartData: any;
+  error: string | null;
+};
+
+export interface CartLocStorState {
+  loading: boolean;
+  cartLocStorData: CheckCart[];
+  error: string | null;
+};
+
+export interface CombinedCartLocStorState {
+  loading: boolean;
+  combinedCartLocStorData: AboutCart | null;
+  error: string | null;
+};
