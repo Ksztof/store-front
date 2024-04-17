@@ -1,47 +1,50 @@
-import { AboutCart, AboutCartApi, CheckCart } from "../types/cartTypes";
+import { AboutCart, CheckCart } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 
 
-export const getProductsFromLocStor = (): CheckCart[] => {
+export const getProductsFromLocStor = (): AboutCart | null => {
     const productsInCartLocStorJson = localStorage.getItem('productsInCartLocStor');
-    const productsInCartLocStor = productsInCartLocStorJson ? JSON.parse(productsInCartLocStorJson) : [];
+    const productsInCartLocStor = productsInCartLocStorJson ? JSON.parse(productsInCartLocStorJson) : null;
 
     return productsInCartLocStor;
 }
 
 export const addProductToLocStor = (product: ProductDetails, quantity: number) => {
-    const productsInCartLocStor: CheckCart[] = getProductsFromLocStor();
+    const productsInCartLocStor: AboutCart | null = getProductsFromLocStor();
     const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
-    const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor.find(
-        (p: CheckCart) => p.productId === productCartFormat.productId
-    );
+    const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
+        .find((p: CheckCart) => p.productId === productCartFormat.productId);
 
     if (productExistInLocalStorage) {
+        const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
+
         productExistInLocalStorage.quantity += quantity;
 
-        productExistInLocalStorage.productTotalPrice =
-            productExistInLocalStorage.quantity * productExistInLocalStorage.productUnitPrice;
+        productExistInLocalStorage.productTotalPrice = newProductsTotalPrice;
+        if (productsInCartLocStor) {
+            productsInCartLocStor.totalCartValue += newProductsTotalPrice;
+        }
+
     } else {
         productCartFormat.quantity = quantity;
 
         productCartFormat.productTotalPrice =
             productCartFormat.quantity * productCartFormat.productUnitPrice;
 
-        productsInCartLocStor.push(productCartFormat);
+        if (productsInCartLocStor) {
+            productsInCartLocStor.aboutProductsInCart.push(productCartFormat);
+            productsInCartLocStor.totalCartValue += productCartFormat.productTotalPrice;
+        }
     }
 
     localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
 };
 
-export const addCombinedCartToLocStor = (combinedCart: AboutCart) => {
-    localStorage.setItem('combinedCartLocStor', JSON.stringify(combinedCart));
+export const addCartContentToLocStor = (cartContent: AboutCart) => {
+    localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
 };
 
-export const removeCombinedCartFromLocStor = () => {
-    localStorage.removeItem('combinedCartLocStor');
-};
-
-const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
+export const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
     productId: product.id,
     productName: product.name,
     productUnitPrice: product.price,
@@ -63,7 +66,7 @@ export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number
     return totalFromLocStor;
 };
 
-export const getCombinedCartContent = (cartContApi: AboutCartApi, cartContLocStor: CheckCart[]): AboutCart => {
+export const getCombinedCartContent = (cartContApi: AboutCart, cartContLocStor: CheckCart[]): AboutCart => {
     const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
 
     const newCartContentMap: { [productId: number]: CheckCart } = {};
@@ -89,12 +92,12 @@ const getCartContentAsMap = (obj: CheckCart, map: { [productId: number]: CheckCa
     }
 };
 
-const isCartExist = (): boolean => {
-    const cartContent = localStorage.getItem('cartContent');
+export const isCartExistLocStor = (): boolean => {
+    const cartContent = localStorage.getItem('productsInCartLocStor');
 
-    if(cartContent === null){
-        return true;
-    } else {
+    if (cartContent === null) {
         return false;
+    } else {
+        return true;
     }
 }

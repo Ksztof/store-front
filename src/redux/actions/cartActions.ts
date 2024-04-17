@@ -1,23 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCartContent } from '../../api/cartService';
-import { AboutCartApi } from '../../types/cartTypes';
+import { AboutCart } from '../../types/cartTypes';
+import { addCartContentToLocStor, getProductsFromLocStor, mapProductDetailsToCheckCart } from '../../utils/cartUtills';
 
-export const checkCart = createAsyncThunk<
-  AboutCartApi,
-  void
->(
-  'cart/getCartContent ',
-  async (_, { rejectWithValue }) => {
-    try {
-      const data: AboutCartApi = await getCartContent();
+//Create key in local storage even if cart in api is empty
+export const getCartContentApi = createAsyncThunk
+  (
+    'cart/getCartContentApi ',
+    async (_, { rejectWithValue }) => {
+      try {
+        const data: AboutCart = await getCartContent();
+        addCartContentToLocStor(data);
+      } catch (error: any) {
+        console.error(error);
+        if (!error.response) {
+          throw error;
+        }
 
-      return data;
-    } catch (error: any) {
-      console.error(error);
-      if (!error.response) {
-        throw error;
+        return rejectWithValue(error.response.data.Error.description);
       }
-      return rejectWithValue(error.response.data.Error.description);
     }
-  }
-);
+  );
