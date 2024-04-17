@@ -8,11 +8,6 @@ export interface CheckCart {
   productTotalPrice: number;
 };
 
-export interface AboutCartApi {
-  totalCartValue: number;
-  aboutProductsInCart: CheckCart[];
-};
-
 export interface AboutCart {
   totalCartValue: number;
   aboutProductsInCart: CheckCart[];
@@ -26,7 +21,7 @@ export interface CartState {
 
 export interface CartLocStorState {
   loading: boolean;
-  cartLocStorData: CheckCart[];
+  cartLocStorData: AboutCart | null;
   error: string | null;
 };
 

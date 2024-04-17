@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CartState } from '../../types/cartTypes';
-import { checkCart } from '../actions/cartActions';
+import { getCartContentApi } from '../actions/cartActions';
 
 const initialState: CartState = {
   loading: false,
@@ -16,15 +16,14 @@ const cartSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(checkCart.pending, (cartState) => {
+      .addCase(getCartContentApi.pending, (cartState) => {
         cartState.loading = true;
         cartState.error = null;
       })
-      .addCase(checkCart.fulfilled, (cartState, action) => {
+      .addCase(getCartContentApi.fulfilled, (cartState, action) => {
         cartState.loading = false;
-        cartState.cartData = action.payload;
       })
-      .addCase(checkCart.rejected, (cartState: any, action) => {  // change any for CartState
+      .addCase(getCartContentApi.rejected, (cartState: any, action) => {  // change any for CartState
         cartState.loading = false;
         cartState.error = action.payload;
       });

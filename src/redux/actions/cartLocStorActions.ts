@@ -1,21 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { addProductToLocStor, getProductsFromLocStor } from '../../utils/cartUtills';
 import { ProductPayload } from '../../types/productTypes';
-import { CheckCart } from '../../types/cartTypes';
+import { AboutCart, CheckCart } from '../../types/cartTypes';
 
 export const addProductToRedStor = createAsyncThunk<
-    CheckCart[],
+    AboutCart | null,
     ProductPayload,
     {
         rejectValue: string
     }
 >(
     'cartLocStor/addProduct ',
-    async (ProductPayload, { rejectWithValue }) => {
+    async (payload: ProductPayload, { rejectWithValue }) => {
         try {
-            addProductToLocStor(ProductPayload.product, ProductPayload.quantity);
+            addProductToLocStor(payload.product, payload.quantity);
 
-            const updatedCart = getProductsFromLocStor();
+            const updatedCart: AboutCart | null = getProductsFromLocStor();
 
             return updatedCart;
         } catch (error: any) {

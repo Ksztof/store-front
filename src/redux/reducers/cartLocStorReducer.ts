@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CartLocStorState } from '../../types/cartTypes';
 import { addProductToRedStor } from '../actions/cartLocStorActions';
+import { getProductsFromLocStor } from '../../utils/cartUtills';
 
 const initialState: CartLocStorState = {
   loading: false,
-  cartLocStorData: [],
+  cartLocStorData: getProductsFromLocStor(),
   error: null,
 };
 
