@@ -3,10 +3,11 @@ import { ProductDetails } from "../types/productTypes";
 
 
 export const getProductsFromLocStor = (): AboutCart | null => {
-    const productsInCartLocStorJson = localStorage.getItem('productsInCartLocStor');
-    const productsInCartLocStor = productsInCartLocStorJson ? JSON.parse(productsInCartLocStorJson) : null;
+    const cartContentJson = localStorage.getItem('productsInCartLocStor');
+    const cartContent:  AboutCart | null = cartContentJson
+     ? JSON.parse(cartContentJson) : null;
 
-    return productsInCartLocStor;
+    return cartContent;
 }
 
 export const addProductToLocStor = (product: ProductDetails, quantity: number) => {
@@ -54,34 +55,34 @@ export const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart
     productTotalPrice: 0,
 });
 
-export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number => {
-    let totalFromLocStor: number = 0;
+// export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number => {
+//     let totalFromLocStor: number = 0;
 
-    if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;
+//     if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;
 
-    cartContentLocStore.forEach((product: CheckCart) => {
-        totalFromLocStor += product.quantity * product.productUnitPrice;
-    });
+//     cartContentLocStore.forEach((product: CheckCart) => {
+//         totalFromLocStor += product.quantity * product.productUnitPrice;
+//     });
 
-    return totalFromLocStor;
-};
+//     return totalFromLocStor;
+// };
 
-export const getCombinedCartContent = (cartContApi: AboutCart, cartContLocStor: CheckCart[]): AboutCart => {
-    const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
+// export const getCombinedCartContent = (cartContApi: AboutCart, cartContLocStor: CheckCart[]): AboutCart => {
+//     const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
 
-    const newCartContentMap: { [productId: number]: CheckCart } = {};
-    const newCartContent: AboutCart = {
-        totalCartValue: totalFromLocStor + cartContApi.totalCartValue,
-        aboutProductsInCart: []
-    }
+//     const newCartContentMap: { [productId: number]: CheckCart } = {};
+//     const newCartContent: AboutCart = {
+//         totalCartValue: totalFromLocStor + cartContApi.totalCartValue,
+//         aboutProductsInCart: []
+//     }
 
-    cartContApi.aboutProductsInCart.forEach(product => getCartContentAsMap(product, newCartContentMap));
-    cartContLocStor.forEach(product => getCartContentAsMap(product, newCartContentMap));
+//     cartContApi.aboutProductsInCart.forEach(product => getCartContentAsMap(product, newCartContentMap));
+//     cartContLocStor.forEach(product => getCartContentAsMap(product, newCartContentMap));
 
-    newCartContent.aboutProductsInCart = Object.values(newCartContentMap);
+//     newCartContent.aboutProductsInCart = Object.values(newCartContentMap);
 
-    return newCartContent;
-};
+//     return newCartContent;
+// };
 
 const getCartContentAsMap = (obj: CheckCart, map: { [productId: number]: CheckCart }) => {
 
