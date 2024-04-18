@@ -4,7 +4,7 @@ import { RootState } from '../redux/store';
 import { AboutCart, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
 import { getCartContentApi } from '../redux/actions/cartActions';
-import { calculateTotalLocStore, getCombinedCartContent, getProductsFromLocStor, isCartExistLocStor } from '../utils/cartUtills';
+import { getProductsFromLocStor, isCartExistLocStor } from '../utils/cartUtills';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -45,6 +45,7 @@ export const Cart: React.FC = () => {
                                 <p>manufacturer: {p.manufacturer}</p>
                                 <p>quantity: {p.quantity}</p>
                                 <p>unit price: {p.productUnitPrice}</p>
+                                <p>total: {p.productTotalPrice}</p>
                                 <p></p>
                             </div>
                         })}
