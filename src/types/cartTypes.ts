@@ -19,9 +19,9 @@ export interface CartState {
   error: string | null;
 };
 
-export interface CartLocStorState {
+export interface CartContent {
   loading: boolean;
-  cartLocStorData: AboutCart | null;
+  products: AboutCart | null;
   error: string | null;
 };
 
