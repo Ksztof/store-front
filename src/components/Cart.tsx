@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
 import { getCartContentApi } from '../redux/actions/cartActions';
-import { getProductsFromLocStor, isCartExistLocStor } from '../utils/cartUtills';
+import { isCartExistLocStor } from '../utils/cartUtils';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cartLocStor.cartLocStorData);
+    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartContent.products);
 
     useEffect(() => {
         let cartExistInLocalStorage = isCartExistLocStor();

@@ -1,8 +1,7 @@
-import { addProductToRedStor } from "../redux/actions/cartLocStorActions";
 import { AboutCart, CheckCart } from "../types/cartTypes";
 import { ProductDetails, ProductPayload } from "../types/productTypes";
-import { useAppDispatch } from '../hooks';
 import { AppDispatch } from "../redux/store";
+import { addProductToRedStor } from "../redux/actions/cartActions";
 
 
 export const addProductToCart = (quantity: string, product: ProductDetails | undefined, dispatch: AppDispatch) => {
