@@ -2,8 +2,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ProductDetails } from "../types/productTypes";
 import { useState } from "react";
-import { addProductToCart, decreaseQuantity, increaseQuantity } from "../utils/productUtils";
+import { decreaseQuantity, increaseQuantity } from "../utils/productUtils";
 import { useAppDispatch } from "../hooks";
+import { addProductToCart } from "../redux/actions/cartActions";
 
 export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
     const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
             <p>{product.price}</p>
             <button onClick={() => decreaseQuantity(productId)}>-</button>
             <button onClick={() => increaseQuantity(productId)}>+</button>
-            <button onClick={() => addProductToCart(productQuantity, product, dispatch)}>Dodaj do koszyka</button>
+            <button onClick={() => dispatch(addProductToCart({product: product, quantity: productQuantity}))}>Dodaj do koszyka</button>
             <input
                 type="text"
                 onChange={handleInputChange}

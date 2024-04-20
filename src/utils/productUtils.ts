@@ -1,32 +1,30 @@
 import { AboutCart, CheckCart } from "../types/cartTypes";
-import { ProductDetails, ProductPayload } from "../types/productTypes";
-import { AppDispatch } from "../redux/store";
-import { addProductToRedStor } from "../redux/actions/cartActions";
+import { ProductPayloadCart, ProductPayloadLocStor } from "../types/productTypes";
 
-
-export const addProductToCart = (quantity: string, product: ProductDetails | undefined, dispatch: AppDispatch) => {
-    let parsedQuant: number = parseFloat(quantity);
-    const inputIsntNumber = !isNaN(parsedQuant);
-    const productExists = product;
+export const prepareProductForCart = (payload: ProductPayloadCart): ProductPayloadLocStor | undefined => {
+    let parsedQuant: number = parseFloat(payload.quantity);
+    const inputIsNumber = !isNaN(parsedQuant);
+    const productExists = payload.product;
     const inputIsPositive = parsedQuant > 0;
-    const isEmptyString = quantity === '';
+    const isEmptyString = payload.quantity === '';
     const valueIsInScope = parsedQuant < 100;
 
     if (
-        (inputIsntNumber && productExists && inputIsPositive && valueIsInScope) ||
-        (productExists && isEmptyString)
-    ) {
-        if (quantity === '') {
+        (inputIsNumber && productExists && inputIsPositive && valueIsInScope) ||
+        (productExists && isEmptyString)) {
+        if (payload.quantity === '') {
             parsedQuant = 1;
         }
 
-        let productPayload: ProductPayload = {
-            product: product,
+        let productPayload: ProductPayloadLocStor = {
+            product: payload.product,
             quantity: parsedQuant,
         }
 
-        dispatch(addProductToRedStor(productPayload))
+        return productPayload;
     }
+    
+    return undefined;
 };
 
 export const decreaseQuantity = (productId: number) => {
