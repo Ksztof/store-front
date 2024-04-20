@@ -12,8 +12,11 @@ export interface ProductState {
   productsData: ProductDetails[];
   error: string | null;
 }
-
-export interface ProductPayload {
+export interface ProductPayloadCart {
+  product: ProductDetails;
+  quantity: string;
+}
+export interface ProductPayloadLocStor {
   product: ProductDetails;
   quantity: number;
 }

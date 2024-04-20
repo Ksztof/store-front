@@ -1,3 +1,4 @@
+
 export interface CheckCart {
   productId: number
   productName: string;
@@ -16,17 +17,16 @@ export interface AboutCart {
 export interface CartState {
   loading: boolean;
   cartData: any;
-  error: string | null;
+  error: string | undefined;
 };
 
 export interface CartContent {
   loading: boolean;
   products: AboutCart | null;
-  error: string | null;
+  error: string | undefined;
 };
 
-export interface CombinedCartLocStorState {
-  loading: boolean;
-  combinedCartLocStorData: AboutCart | null;
-  error: string | null;
-};
+export interface CartSliceState {
+  syncCartWithApi: CartState;
+  cartContent: CartContent;
+}
