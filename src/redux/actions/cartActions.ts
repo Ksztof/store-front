@@ -12,12 +12,13 @@ export const synchronizeCartWithApi = createAsyncThunk<void, void, { rejectValue
   'cart/synchronizeCartWithApi  ',
   async (_, { rejectWithValue }) => {
     try {
-      const data: ApiResponse<AboutCart> = await getCartContent();
-      if (isApiError(data)) {
-        const error: ErrorContent = data.error;
+      const response: ApiResponse<AboutCart> = await getCartContent();
+
+      if (isApiError(response)) {
+        const error: ErrorContent = response.error;
         return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
       } else {
-        addCartContentToLocStor(data.entity);
+        addCartContentToLocStor(response.entity);
       }
     } catch (error: unknown) {
       console.error("Unexpected error:", error);
@@ -37,7 +38,6 @@ export const addProductToCart = createAsyncThunk<
         if(typeof(product) === 'undefined'){
           return rejectWithValue("product values ​​are incorrect");
         }
-          console.log("product: " + product + "quantity: " + product.quantity)
         addProductToLocStor(product.product, product.quantity);
 
         const updatedCart: AboutCart | null = getProductsFromLocStor();

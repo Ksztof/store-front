@@ -42,6 +42,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
 };
 
 export const addCartContentToLocStor = (cartContent: AboutCart) => {
+    console.log("cartContent from addCartContentToLocStor: " + JSON.stringify(cartContent));
     localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
 };
 
