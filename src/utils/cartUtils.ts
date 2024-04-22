@@ -15,13 +15,13 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
     const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
     const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
         .find((p: CheckCart) => p.productId === productCartFormat.productId);
-
+    console.log("productExistInLocalStorage?.quantity" +productExistInLocalStorage?.quantity);
     if (productExistInLocalStorage) {
         const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
 
         productExistInLocalStorage.quantity += quantity;
-
-        productExistInLocalStorage.productTotalPrice = newProductsTotalPrice;
+        console.log("productExistInLocalStorage.productTotalPrice " + productExistInLocalStorage.productTotalPrice)
+        productExistInLocalStorage.productTotalPrice += newProductsTotalPrice;
         if (productsInCartLocStor) {
             productsInCartLocStor.totalCartValue += newProductsTotalPrice;
         }
@@ -42,7 +42,6 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
 };
 
 export const addCartContentToLocStor = (cartContent: AboutCart) => {
-    console.log("cartContent from addCartContentToLocStor: " + JSON.stringify(cartContent));
     localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
 };
 
