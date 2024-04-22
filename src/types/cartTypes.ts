@@ -30,3 +30,12 @@ export interface CartSliceState {
   syncCartWithApi: CartState;
   cartContent: CartContent;
 }
+
+export interface AdjustProductQuantityPayload {
+  productId: number,
+  operationType: AdjustProductQuantityType
+}
+export enum AdjustProductQuantityType {
+  Increase = "INCREASE",
+  Decrease = "DECREASE"
+}

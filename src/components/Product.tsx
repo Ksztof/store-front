@@ -22,8 +22,6 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p>{product.price}</p>
-            <button onClick={() => decreaseQuantity(productId)}>-</button>
-            <button onClick={() => increaseQuantity(productId)}>+</button>
             <button onClick={() => dispatch(addProductToCart({product: product, quantity: productQuantity}))}>Dodaj do koszyka</button>
             <input
                 type="text"
