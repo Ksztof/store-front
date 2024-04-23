@@ -3,15 +3,27 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, AdjustProductQuantityType, CheckCart } from '../types/cartTypes'; // Upewnij się, że importujesz odpowiedni typ
 import { useAppDispatch } from '../hooks';
-import { adjustProductQuantity, synchronizeCartWithApi  } from '../redux/actions/cartActions';
+import { adjustProductQuantity, changeProductInCartQuantity, synchronizeCartWithApi  } from '../redux/actions/cartActions';
 import { isCartExistLocStor } from '../utils/cartUtils';
-import { decreaseQuantity, increaseQuantity } from '../utils/productUtils';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartContent.products);
-
+     const handleQuantityChange = (productId: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        let quantity: number = parseInt(value, 10);
+        quantity = isNaN(quantity) || quantity <= 0 ? 1 : quantity;
+        if (value === '') {
+            return;
+        }
+        if(!isNaN(quantity) && quantity > 0){
+            dispatch(changeProductInCartQuantity({productId: productId, productQuantity: quantity}));
+        } else {
+            dispatch(changeProductInCartQuantity({ productId: productId, productQuantity: 1 }));
+        }
+     };
+     
     useEffect(() => {
         let cartExistInLocalStorage = isCartExistLocStor();
         if(!cartExistInLocalStorage){
@@ -45,6 +57,13 @@ export const Cart: React.FC = () => {
                                 <p>productName: {p.productName}</p>
                                 <p>manufacturer: {p.manufacturer}</p>
                                 <p>quantity: {p.quantity}</p>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleQuantityChange(p.productId, event)}
+                                    value={p.quantity}
+                                    autoComplete='off'
+                                />
                                 <p>unit price: {p.productUnitPrice}</p>
                                 <p>total price: {p.productTotalPrice}</p>
                                 <button onClick={() => dispatch(adjustProductQuantity({productId: p.productId, operationType: AdjustProductQuantityType.Decrease}))}>-</button>

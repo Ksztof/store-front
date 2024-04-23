@@ -39,3 +39,8 @@ export enum AdjustProductQuantityType {
   Increase = "INCREASE",
   Decrease = "DECREASE"
 }
+
+export interface ChangeProductInCartQuantityPayload {
+  productId: number,
+  productQuantity: number 
+}
