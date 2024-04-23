@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ProductDetails } from "../types/productTypes";
 import { useState } from "react";
-import { decreaseQuantity, increaseQuantity } from "../utils/productUtils";
 import { useAppDispatch } from "../hooks";
 import { addProductToCart } from "../redux/actions/cartActions";
 
@@ -11,7 +10,7 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
 
     const [productQuantity, setProductQuantity] = useState<string>('1');
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProductQuantity(event.target.value);
     };
 
@@ -25,7 +24,7 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
             <button onClick={() => dispatch(addProductToCart({product: product, quantity: productQuantity}))}>Dodaj do koszyka</button>
             <input
                 type="text"
-                onChange={handleInputChange}
+                onChange={handleQuantityChange}
                 value={productQuantity}
             />
         </div>

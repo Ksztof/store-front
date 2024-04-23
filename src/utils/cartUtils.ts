@@ -4,8 +4,8 @@ import { ProductDetails } from "../types/productTypes";
 
 export const getProductsFromLocStor = (): AboutCart | null => {
     const cartContentJson = localStorage.getItem('productsInCartLocStor');
-    const cartContent:  AboutCart | null = cartContentJson
-     ? JSON.parse(cartContentJson) : null;
+    const cartContent: AboutCart | null = cartContentJson
+        ? JSON.parse(cartContentJson) : null;
 
     return cartContent;
 }
@@ -15,7 +15,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
     const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
     const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
         .find((p: CheckCart) => p.productId === productCartFormat.productId);
-    console.log("productExistInLocalStorage?.quantity" +productExistInLocalStorage?.quantity);
+    console.log("productExistInLocalStorage?.quantity" + productExistInLocalStorage?.quantity);
     if (productExistInLocalStorage) {
         const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
 
@@ -55,41 +55,43 @@ export const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart
     productTotalPrice: 0,
 });
 
-// export const calculateTotalLocStore = (cartContentLocStore: CheckCart[]): number => {
-//     let totalFromLocStor: number = 0;
+export const decreaseProductInCartQuantityLs = (productId: number) => {
+    const cartContentJson = localStorage.getItem('productsInCartLocStor');
+    const cartContent: AboutCart | null = cartContentJson
+        ? JSON.parse(cartContentJson) : null;
 
-//     if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;
+    if (cartContent?.aboutProductsInCart) {
+        const productIndex: number | undefined = cartContent.aboutProductsInCart.findIndex((p: CheckCart) => p.productId === productId);
+        var product = cartContent.aboutProductsInCart[productIndex];
 
-//     cartContentLocStore.forEach((product: CheckCart) => {
-//         totalFromLocStor += product.quantity * product.productUnitPrice;
-//     });
+        if (productIndex !== -1 && cartContent?.aboutProductsInCart[productIndex].quantity > 1) {
+            product.quantity -= 1;
+            product.productTotalPrice -= product.productUnitPrice;
+            cartContent.totalCartValue -= product.productUnitPrice;
+        } else if (productIndex !== -1 && product.quantity === 1) {
+            cartContent?.aboutProductsInCart.splice(productIndex, 1)
+            cartContent.totalCartValue -= product.productUnitPrice;
+        }
 
-//     return totalFromLocStor;
-// };
+        localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
+    }
+};
 
-// export const getCombinedCartContent = (cartContApi: AboutCart, cartContLocStor: CheckCart[]): AboutCart => {
-//     const totalFromLocStor = calculateTotalLocStore(cartContLocStor);
+export const increaseProductInCartQuantityLs = (productId: number) => {
+    const cartContentJson = localStorage.getItem('productsInCartLocStor');
+    const cartContent: AboutCart | null = cartContentJson
+        ? JSON.parse(cartContentJson) : null;
 
-//     const newCartContentMap: { [productId: number]: CheckCart } = {};
-//     const newCartContent: AboutCart = {
-//         totalCartValue: totalFromLocStor + cartContApi.totalCartValue,
-//         aboutProductsInCart: []
-//     }
+    if (cartContent?.aboutProductsInCart) {
+        const product: CheckCart | undefined = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === productId);
 
-//     cartContApi.aboutProductsInCart.forEach(product => getCartContentAsMap(product, newCartContentMap));
-//     cartContLocStor.forEach(product => getCartContentAsMap(product, newCartContentMap));
+        if (product) {
+            product.quantity += 1;
+            product.productTotalPrice += product.productUnitPrice;
+            cartContent.totalCartValue += product.productUnitPrice;
+        }
 
-//     newCartContent.aboutProductsInCart = Object.values(newCartContentMap);
-
-//     return newCartContent;
-// };
-
-const getCartContentAsMap = (obj: CheckCart, map: { [productId: number]: CheckCart }) => {
-
-    if (map[obj.productId]) {
-        map[obj.productId].quantity += obj.quantity;
-    } else {
-        map[obj.productId] = { ...obj };
+        localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
     }
 };
 
@@ -102,3 +104,32 @@ export const isCartExistLocStor = (): boolean => {
         return true;
     }
 }
+
+
+export const changeProductInCartQuantityLs = (productId: number, quantity: number) => {
+    const cartContentJson = localStorage.getItem('productsInCartLocStor');
+    const cartContent: AboutCart | null = cartContentJson
+        ? JSON.parse(cartContentJson) : null;
+
+    if (cartContent) {
+        const product = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === productId);
+        if (product) {
+            product.quantity = quantity;
+            product.productTotalPrice = product.quantity * product.productUnitPrice;
+            cartContent.totalCartValue = calculateTotalCartValue(cartContent.aboutProductsInCart);
+        }
+    }
+
+    localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
+};
+
+export const calculateTotalCartValue = (cartContentLocStore: CheckCart[]): number => {
+    if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;
+
+    const total = cartContentLocStore.reduce((total: number, product: CheckCart) => {
+        return total + product.quantity * product.productUnitPrice;
+    }, 0);
+
+    return total;
+};
+

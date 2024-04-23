@@ -1,6 +1,6 @@
 import {  PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CartContent, CartSliceState, CartState } from '../../types/cartTypes';
-import { addProductToCart, adjustProductQuantity, synchronizeCartWithApi  } from '../actions/cartActions';
+import { addProductToCart, adjustProductQuantity, changeProductInCartQuantity, synchronizeCartWithApi  } from '../actions/cartActions';
 import { getProductsFromLocStor } from '../../utils/cartUtils';
 
 const initialApiCartSyncState: CartState = {
@@ -57,6 +57,18 @@ const cartSlice = createSlice({
         state.cartContent.products = action.payload;
       })
       .addCase(adjustProductQuantity.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {
+        state.cartContent.loading = false;
+        state.cartContent.error = action.payload;
+      })
+      
+      .addCase(changeProductInCartQuantity.pending, (state: CartSliceState) => {
+        state.cartContent.loading = true;
+      })
+      .addCase(changeProductInCartQuantity.fulfilled, (state: CartSliceState, action) => {
+        state.cartContent.loading = false;
+        state.cartContent.products = action.payload;
+      })
+      .addCase(changeProductInCartQuantity.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {
         state.cartContent.loading = false;
         state.cartContent.error = action.payload;
       });

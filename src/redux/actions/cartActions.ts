@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType } from '../../types/cartTypes';
-import { addCartContentToLocStor, addProductToLocStor, getProductsFromLocStor } from '../../utils/cartUtils';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload } from '../../types/cartTypes';
+import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/cartUtils';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError } from '../../utils/responseUtils';
-import { decreaseQuantity, increaseQuantity, prepareProductForCart } from '../../utils/productUtils';
+import { prepareProductForCart } from '../../utils/productUtils';
 
 export const synchronizeCartWithApi = createAsyncThunk<void, void, { rejectValue: string | undefined }
 >(
@@ -59,9 +59,9 @@ export const addProductToCart = createAsyncThunk<
     async(payload: AdjustProductQuantityPayload, {rejectWithValue}) => {
       try{
         if(payload.operationType === AdjustProductQuantityType.Increase){
-          increaseQuantity(payload.productId);
+          increaseProductInCartQuantityLs(payload.productId);
         } else{
-          decreaseQuantity(payload.productId);
+          decreaseProductInCartQuantityLs(payload.productId);
         }
 
         const updatedCart: AboutCart | null = getProductsFromLocStor();
@@ -71,7 +71,28 @@ export const addProductToCart = createAsyncThunk<
         return updatedCart;
       } catch (error: unknown){
         console.error("Unexpected error:", error);
-        return rejectWithValue("Cannot ajust product quantity, because unexpecter error occured");
+        return rejectWithValue("Cannot adjust product quantity, because of unexpected error occured");
       }
     }
   );
+
+  export const changeProductInCartQuantity = createAsyncThunk<
+  AboutCart | null, 
+  ChangeProductInCartQuantityPayload,
+  {rejectValue: string | undefined}>(
+    'cart/changeProductInCartQuantity',
+    async(payload: ChangeProductInCartQuantityPayload, {rejectWithValue}) => {
+      try{
+        changeProductInCartQuantityLs(payload.productId, payload.productQuantity);
+        const updatedCart: AboutCart | null = getProductsFromLocStor();
+        if(updatedCart === null){
+          return rejectWithValue("Cannot change product in cart quantity, cart doesn't exist");
+        }
+
+        return updatedCart;
+      }catch(error: unknown){
+        console.error("Unexpected error:", error);
+        return rejectWithValue("Cannot change product in cart quantity, because of unexpected error occured");
+      }
+    }
+  )
