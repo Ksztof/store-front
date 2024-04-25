@@ -73,6 +73,10 @@ export const decreaseProductInCartQuantityLs = (productId: number) => {
             cartContent.totalCartValue -= product.productUnitPrice;
         }
 
+        if(cartContent.aboutProductsInCart.length === 0){
+            cartContent.totalCartValue = 0;
+        }
+
         localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
     }
 };
