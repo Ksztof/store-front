@@ -12,10 +12,10 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (isLoggedIn) {
-          navigate('/');
-      }
-  }, [isLoggedIn, navigate]);
+    if (isLoggedIn) {
+        navigate('/');
+    }
+}, [isLoggedIn, navigate, dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -23,7 +23,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(login(credentials));
+    dispatch(login(credentials))
   };
 
   return (

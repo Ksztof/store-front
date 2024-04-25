@@ -28,8 +28,9 @@ const cartSlice = createSlice({
       .addCase(synchronizeCartWithApi.pending, (state: CartSliceState) => {
         state.syncCartWithApi.loading = true;
       })
-      .addCase(synchronizeCartWithApi.fulfilled, (state: CartSliceState) => {
+      .addCase(synchronizeCartWithApi.fulfilled, (state: CartSliceState, action) => {
         state.syncCartWithApi.loading = false;
+        state.cartContent.products = action.payload;
       })
       .addCase(synchronizeCartWithApi.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {  
         state.syncCartWithApi.loading = false;

@@ -7,18 +7,19 @@ import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError } from '../../utils/responseUtils';
 import { prepareProductForCart } from '../../utils/productUtils';
 
-export const synchronizeCartWithApi = createAsyncThunk<void, void, { rejectValue: string | undefined }
+export const synchronizeCartWithApi = createAsyncThunk<AboutCart, void, { rejectValue: string | undefined }
 >(
   'cart/synchronizeCartWithApi  ',
   async (_, { rejectWithValue }) => {
     try {
       const response: ApiResponse<AboutCart> = await getCartContent();
-
+      
       if (isApiError(response)) {
         const error: ErrorContent = response.error;
         return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
       } else {
         addCartContentToLocStor(response.entity);
+        return response.entity;
       }
     } catch (error: unknown) {
       console.error("Unexpected error:", error);
