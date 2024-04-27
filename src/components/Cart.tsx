@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, AdjustProductQuantityType, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
-import { adjustProductQuantity, synchronizeCartWithApi } from '../redux/actions/cartActions';
+import { adjustProductQuantity, changeCartContentGlobally, synchronizeCartWithApi } from '../redux/actions/cartActions';
 import { isCartExistLocStor } from '../utils/cartUtils';
 import { ProductInCart } from './ProductInCart';
 
@@ -18,9 +18,13 @@ export const Cart: React.FC = () => {
             dispatch(synchronizeCartWithApi());
             console.log(cartContent);
         }
-
-        console.log(cartContent);
     }, [isLoggedIn, dispatch]);
+    
+    const handleOrder = () => {
+        if (cartContent !== null) {
+            dispatch(changeCartContentGlobally(cartContent))
+        }
+    };
 
     return (
         <div style={{
@@ -46,6 +50,7 @@ export const Cart: React.FC = () => {
                             <ProductInCart key={p.productId + index} product={p} />
                         ))}
                     </div>
+                    <button type="submit" onClick={handleOrder}>Order</button>
                 </>
             ) : (
                 <p>Koszyk jest pusty</p>

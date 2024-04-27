@@ -1,4 +1,4 @@
-import { AboutCart, CheckCart } from "../types/cartTypes";
+import { AboutCart, CheckCart, NewProductsForApi } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 
 
@@ -45,12 +45,16 @@ export const addCartContentToLocStor = (cartContent: AboutCart) => {
     localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
 };
 
-export const mapProductDetailsToCheckCart = (product: ProductDetails): CheckCart => ({
-    productId: product.id,
-    productName: product.name,
-    productUnitPrice: product.price,
-    description: product.description,
-    manufacturer: product.manufacturer,
+export const clearCartContentInLocStor = () => {
+    localStorage.removeItem('productsInCartLocStor');
+};
+
+export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): CheckCart => ({
+    productId: productDetails.id,
+    productName: productDetails.name,
+    productUnitPrice: productDetails.price,
+    description: productDetails.description,
+    manufacturer: productDetails.manufacturer,
     quantity: 1,
     productTotalPrice: 0,
 });
@@ -73,7 +77,7 @@ export const decreaseProductInCartQuantityLs = (productId: number) => {
             cartContent.totalCartValue -= product.productUnitPrice;
         }
 
-        if(cartContent.aboutProductsInCart.length === 0){
+        if (cartContent.aboutProductsInCart.length === 0) {
             cartContent.totalCartValue = 0;
         }
 
@@ -137,3 +141,11 @@ export const calculateTotalCartValue = (cartContentLocStore: CheckCart[]): numbe
     return total;
 };
 
+export const mapAboutCartToNewProductsForApi = (aboutCart: AboutCart): NewProductsForApi => {
+    return {
+        products: aboutCart.aboutProductsInCart.map(product => ({
+            productId: product.productId,
+            quantity: product.quantity,
+        }))
+    };
+};

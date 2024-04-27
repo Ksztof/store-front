@@ -48,3 +48,12 @@ export interface ChangeProductInCartQuantityPayload {
 export interface ProductInCartProps {
   product: CheckCart;
 }
+
+export interface ProductRepresentationForApi{
+  productId: number;
+  quantity: number;
+}
+
+export interface NewProductsForApi{
+  products: ProductRepresentationForApi[];
+}
