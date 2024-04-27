@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AboutCart } from '../types/cartTypes';
+import { AboutCart, NewProductsForApi } from '../types/cartTypes';
 import { ApiError, ApiResponse, ErrorContent } from '../types/apiResponseTypes';
 import { isAboutCart, isErrorContent } from '../utils/responseUtils';
 
@@ -28,7 +28,7 @@ export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
   }
 };
 
-export const saveCartContent = async (cartContent: AboutCart): Promise<ApiResponse<AboutCart>> => {
+export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponse<AboutCart>> => {
   try {
     const response = await axios.put<AboutCart>('https://localhost:5445/api/Carts', { cartContent });
     const data = response.data;

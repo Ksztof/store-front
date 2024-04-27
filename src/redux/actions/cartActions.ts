@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload } from '../../types/cartTypes';
-import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/cartUtils';
+import { getCartContent, saveCartContent } from '../../api/cartService';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi } from '../../types/cartTypes';
+import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError } from '../../utils/responseUtils';
@@ -97,3 +97,27 @@ export const addProductToCart = createAsyncThunk<
       }
     }
   )
+
+  export const changeCartContentGlobally = createAsyncThunk<
+  AboutCart, 
+  AboutCart,
+  {rejectValue: string | undefined}>(
+    'cart/changeCartContentGlobally',
+    async(payload: AboutCart, {rejectWithValue}) => {
+      try{
+        const newProductsForApi: NewProductsForApi = mapAboutCartToNewProductsForApi(payload);
+        const response: ApiResponse<AboutCart> = await saveCartContent(newProductsForApi);
+        if (isApiError(response)) {
+          const error: ErrorContent = response.error;
+          return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+        } else {
+          clearCartContentInLocStor();
+          addCartContentToLocStor(response.entity);
+          return response.entity;
+        }
+      } catch (error: unknown) {
+        console.error("Unexpected error:", error);
+        return rejectWithValue("Api cannot be updated with new cart content, an unexpected error occurred");
+      }
+    }
+  );

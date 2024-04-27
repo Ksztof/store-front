@@ -1,6 +1,6 @@
 import {  PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CartContent, CartSliceState, CartState } from '../../types/cartTypes';
-import { addProductToCart, adjustProductQuantity, changeProductInCartQuantity, synchronizeCartWithApi  } from '../actions/cartActions';
+import { addProductToCart, adjustProductQuantity, changeCartContentGlobally, changeProductInCartQuantity, synchronizeCartWithApi  } from '../actions/cartActions';
 import { getProductsFromLocStor } from '../../utils/cartUtils';
 
 const initialApiCartSyncState: CartState = {
@@ -36,7 +36,6 @@ const cartSlice = createSlice({
         state.syncCartWithApi.loading = false;
         state.syncCartWithApi.error = action.payload;
       })
-      
 
       .addCase(addProductToCart.pending, (state: CartSliceState) => {
         state.cartContent.loading = true;
@@ -70,6 +69,18 @@ const cartSlice = createSlice({
         state.cartContent.products = action.payload;
       })
       .addCase(changeProductInCartQuantity.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {
+        state.cartContent.loading = false;
+        state.cartContent.error = action.payload;
+      })
+      
+      .addCase(changeCartContentGlobally.pending, (state: CartSliceState) => {
+        state.cartContent.loading = true;
+      })
+      .addCase(changeCartContentGlobally.fulfilled, (state: CartSliceState, action) => {
+        state.cartContent.loading = false;
+        state.cartContent.products = action.payload;
+      })
+      .addCase(changeCartContentGlobally.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {
         state.cartContent.loading = false;
         state.cartContent.error = action.payload;
       });
