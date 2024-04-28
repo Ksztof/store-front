@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, AdjustProductQuantityType, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
-import { adjustProductQuantity, changeCartContentGlobally, synchronizeCartWithApi } from '../redux/actions/cartActions';
+import { changeCartContentGlobally, synchronizeCartWithApi } from '../redux/actions/cartActions';
 import { isCartExistLocStor } from '../utils/cartUtils';
 import { ProductInCart } from './ProductInCart';
 
@@ -47,7 +47,7 @@ export const Cart: React.FC = () => {
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
                         {cartContent.aboutProductsInCart.map((p: CheckCart, index: number) => (
-                            <ProductInCart key={p.productId + index} product={p} />
+                            <ProductInCart key={p.productId} product={p} />
                         ))}
                     </div>
                     <button type="submit" onClick={handleOrder}>Order</button>

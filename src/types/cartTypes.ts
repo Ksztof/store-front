@@ -49,11 +49,11 @@ export interface ProductInCartProps {
   product: CheckCart;
 }
 
-export interface ProductRepresentationForApi{
+export interface ProductInCartApi {
   productId: number;
   quantity: number;
 }
 
-export interface NewProductsForApi{
-  products: ProductRepresentationForApi[];
+export interface NewProductsForApi {
+  products: ProductInCartApi[];
 }

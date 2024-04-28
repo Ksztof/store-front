@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../hooks";
 import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../types/cartTypes";
 import { adjustProductQuantity, changeProductInCartQuantity } from "../redux/actions/cartActions";
@@ -7,7 +7,10 @@ export const ProductInCart: React.FC<ProductInCartProps> = (productProps) => {
     const dispatch = useAppDispatch();
     const product = productProps.product;
     const [inputValue, setInputValue] = useState(product.quantity.toString());
-
+    useEffect(() => {
+        setInputValue(product.quantity.toString());
+      }, [product.quantity]);
+      
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     };
