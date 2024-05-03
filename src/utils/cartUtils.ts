@@ -11,34 +11,47 @@ export const getProductsFromLocStor = (): AboutCart | null => {
 }
 
 export const addProductToLocStor = (product: ProductDetails, quantity: number) => {
-    const productsInCartLocStor: AboutCart | null = getProductsFromLocStor();
     const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
-    const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
-        .find((p: CheckCart) => p.productId === productCartFormat.productId);
-    console.log("productExistInLocalStorage?.quantity" + productExistInLocalStorage?.quantity);
-    if (productExistInLocalStorage) {
-        const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
 
-        productExistInLocalStorage.quantity += quantity;
-        console.log("productExistInLocalStorage.productTotalPrice " + productExistInLocalStorage.productTotalPrice)
-        productExistInLocalStorage.productTotalPrice += newProductsTotalPrice;
-        if (productsInCartLocStor) {
-            productsInCartLocStor.totalCartValue += newProductsTotalPrice;
+    const productsInCartLocStor: AboutCart | null = getProductsFromLocStor();
+    if(productsInCartLocStor === null){
+        const newCart: AboutCart = {
+            totalCartValue: product.price * quantity,
+            aboutProductsInCart: [productCartFormat],
+            createdAt: product.dateAdded
         }
-
-    } else {
-        productCartFormat.quantity = quantity;
-
-        productCartFormat.productTotalPrice =
-            productCartFormat.quantity * productCartFormat.productUnitPrice;
-
-        if (productsInCartLocStor) {
-            productsInCartLocStor.aboutProductsInCart.push(productCartFormat);
-            productsInCartLocStor.totalCartValue += productCartFormat.productTotalPrice;
-        }
+        localStorage.setItem('productsInCartLocStor', JSON.stringify(newCart));
     }
 
-    localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
+    if (productsInCartLocStor !== null) {
+        const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
+            .find((p: CheckCart) => p.productId === productCartFormat.productId);
+
+        if (productExistInLocalStorage) {
+            const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
+            productExistInLocalStorage.quantity += quantity;
+            productExistInLocalStorage.productTotalPrice += newProductsTotalPrice;
+            if (productsInCartLocStor?.createdAt) {
+                productsInCartLocStor.createdAt = product.dateAdded;
+            }
+
+            if (productsInCartLocStor) {
+                productsInCartLocStor.totalCartValue += newProductsTotalPrice;
+            }
+        } else {
+            productCartFormat.quantity = quantity;
+            productCartFormat.productTotalPrice = productCartFormat.quantity * productCartFormat.productUnitPrice;
+            if (productsInCartLocStor) {
+                productsInCartLocStor.aboutProductsInCart.push(productCartFormat);
+                productsInCartLocStor.totalCartValue += productCartFormat.productTotalPrice;
+            }
+
+            if (productsInCartLocStor?.createdAt) {
+                productsInCartLocStor.createdAt = product.dateAdded;
+            }
+        }
+        localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
+    }
 };
 
 export const addCartContentToLocStor = (cartContent: AboutCart) => {

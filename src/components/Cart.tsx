@@ -16,7 +16,8 @@ export const Cart: React.FC = () => {
         const cartExistInLocalStorage = isCartExistLocStor();
         if (!cartExistInLocalStorage && isLoggedIn) {
             dispatch(synchronizeCartWithApi());
-            console.log(cartContent);
+            console.log(typeof cartContent?.createdAt); // Powinno pokazać 'true'
+
         }
     }, [isLoggedIn, dispatch]);
     
@@ -42,13 +43,15 @@ export const Cart: React.FC = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
-            {cartContent && cartContent.totalCartValue !== 0 ? (
+            {cartContent && cartContent.totalCartValue !== 0 && cartContent.createdAt ? (
                 <>
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
                         {cartContent.aboutProductsInCart.map((p: CheckCart, index: number) => (
                             <ProductInCart key={p.productId} product={p} />
                         ))}
+                        <p>{cartContent.createdAt.toString()}</p>
+                        
                     </div>
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </>

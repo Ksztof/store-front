@@ -25,7 +25,7 @@
   },
   "proxy": "https://localhost:5445",
   "scripts": {
-    "start": "cross-env HTTPS=true SSL_CRT_FILE=C:/Users/PeklerFix/Desktop/store-front/store-ssl/localhost+3.pem SSL_KEY_FILE=C:/Users/PeklerFix/Desktop/store-front/store-ssl/localhost+3-key.pem react-scripts start",
+    "start": "cross-env HTTPS=true SSL_CRT_FILE=C:/Users/KRZYS/Desktop/store-front/store-ssl/localhost+3.pem SSL_KEY_FILE=C:/Users/KRZYS/Desktop/store-front/store-ssl/localhost+3-key.pem react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

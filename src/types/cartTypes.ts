@@ -12,11 +12,12 @@ export interface CheckCart {
 export interface AboutCart {
   totalCartValue: number;
   aboutProductsInCart: CheckCart[];
+  createdAt: Date;
 };
 
 export interface CartState {
   loading: boolean;
-  cartData: any;
+  cartData: AboutCart;
   error: string | undefined;
 };
 

@@ -39,7 +39,7 @@ export const addProductToCart = createAsyncThunk<
         if(typeof(product) === 'undefined'){
           return rejectWithValue("product values ​​are incorrect");
         }
-        console.log("product.product"+product.product+ "new product.quantity" +product.quantity);
+        //console.log(JSON.stringify(product.product));
         addProductToLocStor(product.product, product.quantity);
 
         const updatedCart: AboutCart | null = getProductsFromLocStor();

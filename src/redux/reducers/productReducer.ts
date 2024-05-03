@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductState } from '../../types/productTypes';
 import { getProducts } from '../actions/productActions';
 
 const initialState: ProductState = {
   loading: false,
   productsData: [],
-  error: null,
+  error: "",
 };
 
 const productSlice = createSlice({
@@ -16,15 +16,14 @@ const productSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (productState) => {
+      .addCase(getProducts.pending, (productState: ProductState) => {
         productState.loading = true;
-        productState.error = null;
       })
-      .addCase(getProducts.fulfilled, (productState, action) => {
+      .addCase(getProducts.fulfilled, (productState: ProductState, action) => {
         productState.loading = false;
         productState.productsData = action.payload;
       })
-      .addCase(getProducts.rejected, (productState: any, action) => { // change any for ProductState
+      .addCase(getProducts.rejected, (productState: ProductState, action: PayloadAction<string | undefined>) => {
         productState.loading = false;
         productState.error = action.payload;
       });
