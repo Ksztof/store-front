@@ -11,15 +11,15 @@ export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
     const response = await axios.get<AboutCart>('https://localhost:5445/api/Carts', {});
     const data = response.data;
 
-    if (isAboutCart(data)) {
-      return {
-        isSuccess: true,
-        entity: data
-      };
-    } else if (isErrorContent(data)) {
+    if (isErrorContent(data)) {
       return {
         isSuccess: false,
         error: data
+      };
+    } else if (isAboutCart(data)) {
+      return {
+        isSuccess: true,
+        entity: data
       };
     } else {
       throw new Error("Invalid API response format");
@@ -33,16 +33,16 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
   try {
     const response = await axios.put<AboutCart>('https://localhost:5445/api/Carts', cartContent);
     const data = response.data;
-    console.log("data" +JSON.stringify(data));
-    if (isAboutCart(data)) {
-      return {
-        isSuccess: true,
-        entity: data
-      };
-    } else if (isErrorContent(data)) {
+    console.log("data" + JSON.stringify(data));
+    if (isErrorContent(data)) {
       return {
         isSuccess: false,
         error: data
+      };
+    } else if (isAboutCart(data)) {
+      return {
+        isSuccess: true,
+        entity: data
       };
     } else {
       throw new Error("Invalid API response format");

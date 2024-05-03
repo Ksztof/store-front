@@ -10,7 +10,7 @@ export interface ProductDetails {
 export interface ProductState {
   loading: boolean;
   productsData: ProductDetails[];
-  error: string | null;
+  error: string | undefined;
 }
 export interface ProductPayloadCart {
   product: ProductDetails;

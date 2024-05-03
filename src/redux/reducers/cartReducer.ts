@@ -5,7 +5,7 @@ import { getProductsFromLocStor } from '../../utils/cartUtils';
 
 const initialApiCartSyncState: CartState = {
   loading: false,
-  cartData: null,
+  cartData: {totalCartValue: 0, aboutProductsInCart: [], createdAt: new Date()},
   error: "",
 };
 
