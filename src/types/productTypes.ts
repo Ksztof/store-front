@@ -4,7 +4,7 @@ export interface ProductDetails {
   price: number;
   description: string;
   manufacturer: string;
-  dateAdded: Date;
+  dateAdded: string;
 }
 
 export interface ProductState {

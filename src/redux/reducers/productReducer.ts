@@ -21,7 +21,7 @@ const productSlice = createSlice({
       })
       .addCase(getProducts.fulfilled, (productState: ProductState, action) => {
         productState.loading = false;
-        productState.productsData = action.payload;
+          productState.productsData = action.payload || [];
       })
       .addCase(getProducts.rejected, (productState: ProductState, action: PayloadAction<string | undefined>) => {
         productState.loading = false;

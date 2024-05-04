@@ -19,10 +19,7 @@ export const Products: React.FC = () => {
 
     return (
         <div>
-            {products.map((product: ProductDetails) => (
-                        <Product key={product.id} productId={product.id} />
-                    ))}
-            {/* {Array.isArray(products) && products.length > 0 ? (
+             {Array.isArray(products) && products.length > 0 ? (
                 <>
                     {products.map((product: ProductDetails) => (
                         <Product key={product.id} productId={product.id} />
@@ -30,7 +27,7 @@ export const Products: React.FC = () => {
                 </>
             ) : (
                 <p>No available products</p>
-            )} */}
+            )} 
         </div>
     );
 };
