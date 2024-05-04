@@ -12,7 +12,7 @@ export interface CheckCart {
 export interface AboutCart {
   totalCartValue: number;
   aboutProductsInCart: CheckCart[];
-  createdAt: Date;
+  createdAt: string;
 };
 
 export interface CartState {

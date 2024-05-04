@@ -1,4 +1,4 @@
-import { ApiError, ApiResponse, ErrorContent } from "../types/apiResponseTypes";
+import { ApiError, ApiResponse, ApiSuccessEmpty, ErrorContent } from "../types/apiResponseTypes";
 import { AboutCart } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 
@@ -11,9 +11,12 @@ export function isAboutCart(data: any): data is AboutCart {
 }
 
 export function isErrorContent(data: any): data is ErrorContent {
-  return 'code' in data && 'description' in data;
+  return typeof data.code === 'string' && typeof data.description === 'string';
 }
 
+export function isApiSuccessEmpty(data: any): data is ApiSuccessEmpty {
+  return data.isSuccess === true && data.isEmpty === true;
+}
 export function isProductDetails(data: any[]): data is ProductDetails[] {
   return data.every(item => 
     'id' in item &&

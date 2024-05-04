@@ -16,8 +16,6 @@ export const Cart: React.FC = () => {
         const cartExistInLocalStorage = isCartExistLocStor();
         if (!cartExistInLocalStorage && isLoggedIn) {
             dispatch(synchronizeCartWithApi());
-            console.log(typeof cartContent?.createdAt); // Powinno pokazać 'true'
-
         }
     }, [isLoggedIn, dispatch]);
     

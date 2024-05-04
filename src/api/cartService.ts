@@ -2,21 +2,32 @@ import axios from 'axios';
 import { AboutCart, NewProductsForApi } from '../types/cartTypes';
 import { ApiError, ApiResponse, ErrorContent } from '../types/apiResponseTypes';
 import { isAboutCart, isErrorContent } from '../utils/responseUtils';
-import humps from 'humps';
 
 axios.defaults.withCredentials = true;
 
 export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
   try {
     const response = await axios.get<AboutCart>('https://localhost:5445/api/Carts', {});
-    const data = response.data;
 
+    if (response.status === 204) {
+      console.log('response.status === 204');
+      return {
+        isSuccess: true,
+        isEmpty: true
+      };
+    }
+
+    const data = response.data;
     if (isErrorContent(data)) {
+      console.log('isErrorContent');
+
       return {
         isSuccess: false,
         error: data
       };
     } else if (isAboutCart(data)) {
+      console.log('isAboutCart');
+
       return {
         isSuccess: true,
         entity: data

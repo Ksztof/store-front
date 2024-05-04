@@ -23,7 +23,7 @@ export const getAllProducts = async (): Promise<ApiResponse<ProductDetails[]>> =
     if (data.length === 0) {
       return {
         isSuccess: true,
-        entity: []
+        isEmpty: true
       };
     }
 

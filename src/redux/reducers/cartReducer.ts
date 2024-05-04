@@ -5,7 +5,10 @@ import { getProductsFromLocStor } from '../../utils/cartUtils';
 
 const initialApiCartSyncState: CartState = {
   loading: false,
-  cartData: {totalCartValue: 0, aboutProductsInCart: [], createdAt: new Date()},
+  cartData: {
+    totalCartValue: 0,
+    aboutProductsInCart: [],
+    createdAt: ""},
   error: "",
 };
 
@@ -30,7 +33,8 @@ const cartSlice = createSlice({
       })
       .addCase(synchronizeCartWithApi.fulfilled, (state: CartSliceState, action) => {
         state.syncCartWithApi.loading = false;
-        state.cartContent.products = action.payload;
+        if(action.payload !== null)
+          state.cartContent.products = action.payload;
       })
       .addCase(synchronizeCartWithApi.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {  
         state.syncCartWithApi.loading = false;
@@ -78,7 +82,8 @@ const cartSlice = createSlice({
       })
       .addCase(changeCartContentGlobally.fulfilled, (state: CartSliceState, action) => {
         state.cartContent.loading = false;
-        state.cartContent.products = action.payload;
+        if(action.payload !== null)
+          state.cartContent.products = action.payload;
       })
       .addCase(changeCartContentGlobally.rejected, (state: CartSliceState, action: PayloadAction<string | undefined>) => {
         state.cartContent.loading = false;
