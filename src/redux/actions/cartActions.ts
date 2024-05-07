@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi } from '../../types/cartTypes';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload } from '../../types/cartTypes';
 import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
@@ -14,7 +14,7 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
   async (_, { rejectWithValue }) => {
     try {
       const response: ApiResponse<AboutCart> = await getCartContent();
-      console.log('const response:' );
+      console.log('const response:');
       if (isApiError(response)) {
         const error: ErrorContent = response.error;
         return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
@@ -33,26 +33,35 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
   }
 );
 
-export const setCurrentCart = createAsyncThunk<AboutCart | null, void, {state: RootState, rejectValue: string | undefined }
+export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: RootState, rejectValue: string | undefined }
 >(
   'cart/setCurrentCart',
-  async (_, {getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       const state: RootState = getState();
-      const cartCreationDate: string = state.cart.syncCartWithApi.cartData.createdAt;
-      const response: ApiResponse<AboutCart> = await checkCurrentCart(cartCreationDate);
-      console.log('const response:' );
-      if (isApiError(response)) {
-        const error: ErrorContent = response.error;
-        return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+      const cartCreationDate: string | undefined = state.cart.cartContent.products?.createdAt;
+      console.log("cartCreationDate: " + cartCreationDate)
+      if (cartCreationDate !== undefined) {
+        const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
+
+        const response: ApiResponse<AboutCart> = await checkCurrentCart(payload);
+
+        console.log('const response:');
+        if (isApiError(response)) {
+          const error: ErrorContent = response.error;
+          return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+        }
+        else if (isApiSuccessEmpty(response)) {
+          console.log("Cart is up to date")
+          return null;
+        } else {
+          clearCartContentInLocStor();
+          addCartContentToLocStor(response.entity);
+          return response.entity;
+        }
       }
-      else if (isApiSuccessEmpty(response)) {
-        console.log("Cart is up to date")
-        return null;
-      } else {
-        clearCartContentInLocStor();
-        addCartContentToLocStor(response.entity);
-        return response.entity;
+      else {
+        return rejectWithValue('Invalid cart creation date');
       }
     } catch (error: unknown) {
       console.error("Unexpected error:", error);
