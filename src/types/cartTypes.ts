@@ -58,3 +58,7 @@ export interface ProductInCartApi {
 export interface NewProductsForApi {
   products: ProductInCartApi[];
 }
+
+export interface checkCurrentCartPayload{
+  createdAt: string;
+}

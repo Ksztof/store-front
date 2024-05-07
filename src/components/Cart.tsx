@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, AdjustProductQuantityType, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
-import { changeCartContentGlobally, synchronizeCartWithApi } from '../redux/actions/cartActions';
+import { changeCartContentGlobally, setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
 import { isCartExistLocStor } from '../utils/cartUtils';
 import { ProductInCart } from './ProductInCart';
 
@@ -14,8 +14,10 @@ export const Cart: React.FC = () => {
 
     useEffect(() => {
         const cartExistInLocalStorage = isCartExistLocStor();
-        if (!cartExistInLocalStorage && isLoggedIn) {
+        if (!cartExistInLocalStorage) {
             dispatch(synchronizeCartWithApi());
+        } else if(cartExistInLocalStorage){
+            dispatch(setCurrentCart());
         }
     }, [isLoggedIn, dispatch]);
     

@@ -1,15 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getCartContent, saveCartContent } from '../../api/cartService';
+import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi } from '../../types/cartTypes';
 import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { prepareProductForCart } from '../../utils/productUtils';
+import { RootState } from '../store';
 
 export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, { rejectValue: string | undefined }
 >(
-  'cart/synchronizeCartWithApi  ',
+  'cart/synchronizeCartWithApi',
   async (_, { rejectWithValue }) => {
     try {
       const response: ApiResponse<AboutCart> = await getCartContent();
@@ -28,6 +29,34 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
     } catch (error: unknown) {
       console.error("Unexpected error:", error);
       return rejectWithValue("The contents of the shopping cart cannot be downloaded, an unexpected error occurred");
+    }
+  }
+);
+
+export const setCurrentCart = createAsyncThunk<AboutCart | null, void, {state: RootState, rejectValue: string | undefined }
+>(
+  'cart/setCurrentCart',
+  async (_, {getState, rejectWithValue }) => {
+    try {
+      const state: RootState = getState();
+      const cartCreationDate: string = state.cart.syncCartWithApi.cartData.createdAt;
+      const response: ApiResponse<AboutCart> = await checkCurrentCart(cartCreationDate);
+      console.log('const response:' );
+      if (isApiError(response)) {
+        const error: ErrorContent = response.error;
+        return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+      }
+      else if (isApiSuccessEmpty(response)) {
+        console.log("Cart is up to date")
+        return null;
+      } else {
+        clearCartContentInLocStor();
+        addCartContentToLocStor(response.entity);
+        return response.entity;
+      }
+    } catch (error: unknown) {
+      console.error("Unexpected error:", error);
+      return rejectWithValue("Failed to retrive information about cart content because of unexpected error");
     }
   }
 );
