@@ -67,10 +67,9 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
   }
 };
 
-export const checkCurrentCart = async (cartCreationDate: string): Promise<ApiResponse<AboutCart>> => {
+export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponse<AboutCart>> => {
   try {
-    const createdAt: checkCurrentCartPayload = {createdAt: cartCreationDate};
-    const response = await axios.post<AboutCart>('https://localhost:5445/api/Carts/check-current-cart', createdAt);
+    const response = await axios.post<AboutCart>('https://localhost:5445/api/Carts/check-current-cart', payload);
 
     if (response.status === 204) {
       console.log('response.status === 204');
