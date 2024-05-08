@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload } from '../../types/cartTypes';
-import { addCartContentToLocStor, addProductToLocStor, changeProductInCartQuantityLs, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { prepareProductForCart } from '../../utils/productUtils';
 import { RootState } from '../store';
+import { addCartContentToLocStor, addProductToLocStor, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/localStorageUtils';
+import { changeProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 
 export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, { rejectValue: string | undefined }
 >(

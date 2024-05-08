@@ -1,7 +1,7 @@
 import {  PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CartContent, CartSliceState, CartState } from '../../types/cartTypes';
 import { addProductToCart, adjustProductQuantity, changeCartContentGlobally, changeProductInCartQuantity, setCurrentCart, synchronizeCartWithApi  } from '../actions/cartActions';
-import { getProductsFromLocStor } from '../../utils/cartUtils';
+import { getProductsFromLocStor } from '../../utils/localStorageUtils';
 
 const initialApiCartSyncState: CartState = {
   loading: false,

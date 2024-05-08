@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AboutCart, NewProductsForApi, checkCurrentCartPayload } from '../types/cartTypes';
-import { ApiError, ApiResponse, ErrorContent } from '../types/apiResponseTypes';
+import { ApiResponse } from '../types/apiResponseTypes';
 import { isAboutCart, isErrorContent } from '../utils/responseUtils';
 
 axios.defaults.withCredentials = true;

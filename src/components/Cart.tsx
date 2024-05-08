@@ -1,22 +1,27 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { AboutCart, AdjustProductQuantityType, CheckCart } from '../types/cartTypes';
+import { AboutCart, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
 import { changeCartContentGlobally, setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
-import { isCartExistLocStor } from '../utils/cartUtils';
 import { ProductInCart } from './ProductInCart';
+import { isCartExistLocStor } from '../utils/localStorageUtils';
+import { isGuestUser } from '../utils/cookiesUtils';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
     const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartContent.products);
-    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+    const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {
         const cartExistInLocalStorage = isCartExistLocStor();
-        if (!cartExistInLocalStorage) {
+        if (
+            (!cartExistInLocalStorage && isLoggedIn) 
+             || (!cartExistInLocalStorage && isGuestUser())) {
             dispatch(synchronizeCartWithApi());
-        } else if(cartExistInLocalStorage){
+        } else if(
+            (cartExistInLocalStorage && isLoggedIn)
+             || (cartExistInLocalStorage && isGuestUser())){
             dispatch(setCurrentCart());
         }
     }, [isLoggedIn, dispatch]);

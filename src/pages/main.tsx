@@ -1,14 +1,10 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import React from 'react';
-import { Cart } from "../components/Cart";
 import { Products } from "../components/Products";
+import { Cart } from "../components/Cart";
 
 
 
-export const Main = () => {
-    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-    
+export const Main = () => {    
     return (
         <div>
             <h1> Main Page</h1>

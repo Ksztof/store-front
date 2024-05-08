@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ProductDetails } from '../types/productTypes';
-import { isErrorContent, isProductDetails } from '../utils/responseUtils';
+import { isProductDetails } from '../utils/responseUtils';
 import { ApiResponse } from '../types/apiResponseTypes';
 
 axios.defaults.withCredentials = true;
