@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../hooks";
-import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../types/cartTypes";
+import { AdjustProductQuantityType, ProductInCartProps } from "../types/cartTypes";
 import { adjustProductQuantity, changeProductInCartQuantity } from "../redux/actions/cartActions";
 
 export const ProductInCart: React.FC<ProductInCartProps> = (productProps) => {
