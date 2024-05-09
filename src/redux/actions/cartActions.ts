@@ -40,7 +40,7 @@ export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: 
   async (_, { getState, rejectWithValue }) => {
     try {
       const state: RootState = getState();
-      const cartCreationDate: string | undefined = state.cart.cartContent.products?.createdAt;
+      const cartCreationDate: string | undefined = state.cart.cartDetails.aboutCart?.createdAt;
       console.log("cartCreationDate: " + cartCreationDate)
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };

@@ -21,15 +21,15 @@ export interface CartState {
   error: string | undefined;
 };
 
-export interface CartContent {
+export interface CartDetails {
   loading: boolean;
-  products: AboutCart | null;
+  aboutCart: AboutCart | null;
   error: string | undefined;
 };
 
 export interface CartSliceState {
   syncCartWithApi: CartState;
-  cartContent: CartContent;
+  cartDetails: CartDetails;
 }
 
 export interface AdjustProductQuantityPayload {
