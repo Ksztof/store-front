@@ -18,7 +18,7 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
         const newCart: AboutCart = {
             totalCartValue: product.price * quantity,
             aboutProductsInCart: [productCartFormat],
-            createdAt: product.dateAdded
+            createdAt: ""
         }
         localStorage.setItem('productsInCartLocStor', JSON.stringify(newCart));
     }
@@ -31,9 +31,6 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
             const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
             productExistInLocalStorage.quantity += quantity;
             productExistInLocalStorage.productTotalPrice += newProductsTotalPrice;
-            if (productsInCartLocStor?.createdAt) {
-                productsInCartLocStor.createdAt = product.dateAdded;
-            }
 
             if (productsInCartLocStor) {
                 productsInCartLocStor.totalCartValue += newProductsTotalPrice;
@@ -46,9 +43,6 @@ export const addProductToLocStor = (product: ProductDetails, quantity: number) =
                 productsInCartLocStor.totalCartValue += productCartFormat.productTotalPrice;
             }
 
-            if (productsInCartLocStor?.createdAt) {
-                productsInCartLocStor.createdAt = product.dateAdded;
-            }
         }
         localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
     }

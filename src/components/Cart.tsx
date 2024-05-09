@@ -10,19 +10,21 @@ import { isGuestUser } from '../utils/cookiesUtils';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
-    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartContent.products);
+    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartDetails.aboutCart);
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {
         const cartExistInLocalStorage = isCartExistLocStor();
         if (
-            (!cartExistInLocalStorage && isLoggedIn) 
+            (!cartExistInLocalStorage && isLoggedIn) //TODO: && isLoggedIn fix it user in not loged in after cart reload
              || (!cartExistInLocalStorage && isGuestUser())) {
             dispatch(synchronizeCartWithApi());
         } else if(
-            (cartExistInLocalStorage && isLoggedIn)
+            (cartExistInLocalStorage && isLoggedIn) //&& isLoggedIn
              || (cartExistInLocalStorage && isGuestUser())){
             dispatch(setCurrentCart());
+        } else {
+
         }
     }, [isLoggedIn, dispatch]);
     
@@ -48,11 +50,11 @@ export const Cart: React.FC = () => {
             wordBreak: 'break-word'
         }}>
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
-            {cartContent && cartContent.totalCartValue !== 0 && cartContent.createdAt ? (
+            {cartContent && cartContent.totalCartValue !== 0 ? (
                 <>
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <div>
-                        {cartContent.aboutProductsInCart.map((p: CheckCart, index: number) => (
+                        {cartContent.aboutProductsInCart.map((p: CheckCart) => (
                             <ProductInCart key={p.productId} product={p} />
                         ))}
                         <p>{cartContent.createdAt.toString()}</p>
