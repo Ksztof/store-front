@@ -97,10 +97,14 @@ export const addProductToCart = createAsyncThunk<
 export const adjustProductQuantity = createAsyncThunk<
   AboutCart | null,
   AdjustProductQuantityPayload,
-  { rejectValue: string | undefined }>(
+  { state: RootState, rejectValue: string | undefined }>(
     'cart/adjustProductQuantity',
-    async (payload: AdjustProductQuantityPayload, { rejectWithValue }) => {
+    async (payload: AdjustProductQuantityPayload, { getState, rejectWithValue }) => {
       try {
+        const state: RootState = getState();
+
+        const isloggedin: boolean = state.auth.isLoggedIn;
+        console.log("isloggedin: "+ isloggedin);
         if (payload.operationType === AdjustProductQuantityType.Increase) {
           increaseProductInCartQuantityLs(payload.productId);
         } else {
