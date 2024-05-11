@@ -1,6 +1,7 @@
 import { AboutCart, CheckCart, NewProductsForApi } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 import { ModifyProductInCartQuantityPayload } from "../types/cartTypes";
+import { produce } from 'immer';
 
 export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): CheckCart => ({
     productId: productDetails.id,
@@ -13,15 +14,18 @@ export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): Ch
 });
 
 export const modifyProductInCartQuantity = (payload: ModifyProductInCartQuantityPayload): AboutCart => {
-    const cartContent: AboutCart = payload.aboutCart;
-    const product = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === payload.productId);
-    if (product) {
-        product.quantity = payload.productQuantity;
-        product.productTotalPrice = product.quantity * product.productUnitPrice;
-        cartContent.totalCartValue = calculateTotalCartValue(cartContent.aboutProductsInCart);
-    }
+    return produce(payload.aboutCart, (draft: AboutCart) => {
+        const productIndex: number = draft.aboutProductsInCart.findIndex(p => p.productId === payload.productId);
 
-    return cartContent;
+        if (productIndex !== -1) {
+            const product: CheckCart = draft.aboutProductsInCart[productIndex];
+
+            product.quantity = payload.productQuantity;
+            product.productTotalPrice = product.quantity * product.productUnitPrice;
+
+            draft.totalCartValue = calculateTotalCartValue(draft.aboutProductsInCart);
+        }
+    });
 };
 
 export const calculateTotalCartValue = (cartContentLocStore: CheckCart[]): number => {

@@ -6,7 +6,7 @@ import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { prepareProductForCart } from '../../utils/productUtils';
 import { RootState } from '../store';
-import { addCartContentToLocStor, addProductToLocStor, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/localStorageUtils';
+import { addProductToLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/localStorageUtils';
 import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 
@@ -23,7 +23,6 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
       else if (isApiSuccessEmpty(response)) {
         return null;
       } else {
-        //addCartContentToLocStor(response.entity);
         return response.entity;
       }
     } catch (error: unknown) {
@@ -122,15 +121,15 @@ export const changeProductInCartQuantity = createAsyncThunk<
       try {
         const state: RootState = getState();
         const currentCartContent: AboutCart | null = state.cart.cartDetails.aboutCart;
+        
         if(currentCartContent){
           const modifyProductInCartQuantityPayload: ModifyProductInCartQuantityPayload = {
             productId: payload.productId,
             productQuantity: payload.productQuantity,
-            aboutCart: currentCartContent
+            aboutCart: (currentCartContent)
           }
 
           const changedCartContent: AboutCart = modifyProductInCartQuantity(modifyProductInCartQuantityPayload);
-          
           return changedCartContent;
         } else {
           return rejectWithValue("Cannot change product in cart quantity, because cart is empty.");

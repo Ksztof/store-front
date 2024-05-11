@@ -21,7 +21,7 @@ export const Product: React.FC<{ productId: number }> = ({ productId }: { produc
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p>{product.price}</p>
-            <button onClick={() => dispatch(addProductToCart({product: product, quantity: productQuantity}))}>Dodaj do koszyka</button>
+            <button onClick={() => dispatch(addProductToCart({product: product, quantity: productQuantity}))}>Add to cart</button>
             <input
                 type="number"
                 onChange={handleQuantityChange}
