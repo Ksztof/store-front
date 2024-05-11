@@ -10,7 +10,6 @@ export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
     const response = await axios.get<AboutCart>('https://localhost:5445/api/Carts', {});
 
     if (response.status === 204) {
-      console.log('response.status === 204');
       return {
         isSuccess: true,
         isEmpty: true
@@ -19,16 +18,12 @@ export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
 
     const data = response.data;
     if (isErrorContent(data)) {
-      console.log('isErrorContent');
-
       return {
         isSuccess: false,
         error: data
       };
 
     } else if (isAboutCart(data)) {
-      console.log('isAboutCart');
-
       return {
         isSuccess: true,
         entity: data
@@ -46,7 +41,6 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
   try {
     const response = await axios.put<AboutCart>('https://localhost:5445/api/Carts', cartContent);
     const data = response.data;
-    console.log("data" + JSON.stringify(data));
     if (isErrorContent(data)) {
       return {
         isSuccess: false,
@@ -72,7 +66,6 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
     const response = await axios.post<AboutCart>('https://localhost:5445/api/Carts/check-current-cart', payload);
 
     if (response.status === 204) {
-      console.log('response.status === 204');
       return {
         isSuccess: true,
         isEmpty: true

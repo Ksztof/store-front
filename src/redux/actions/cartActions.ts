@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload } from '../../types/cartTypes';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload } from '../../types/cartTypes';
 import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { prepareProductForCart } from '../../utils/productUtils';
 import { RootState } from '../store';
 import { addCartContentToLocStor, addProductToLocStor, clearCartContentInLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/localStorageUtils';
-import { changeProductInCartQuantityLs, mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
+import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
+import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 
 export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, { rejectValue: string | undefined }
 >(
@@ -15,16 +16,14 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
   async (_, { rejectWithValue }) => {
     try {
       const response: ApiResponse<AboutCart> = await getCartContent();
-      console.log('const response:');
       if (isApiError(response)) {
         const error: ErrorContent = response.error;
         return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
       }
       else if (isApiSuccessEmpty(response)) {
-        console.log("empty cart")
         return null;
       } else {
-        addCartContentToLocStor(response.entity);
+        //addCartContentToLocStor(response.entity);
         return response.entity;
       }
     } catch (error: unknown) {
@@ -41,23 +40,18 @@ export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: 
     try {
       const state: RootState = getState();
       const cartCreationDate: string | undefined = state.cart.cartDetails.aboutCart?.createdAt;
-      console.log("cartCreationDate: " + cartCreationDate)
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
 
         const response: ApiResponse<AboutCart> = await checkCurrentCart(payload);
 
-        console.log('const response:');
         if (isApiError(response)) {
           const error: ErrorContent = response.error;
           return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
         }
         else if (isApiSuccessEmpty(response)) {
-          console.log("Cart is up to date")
           return null;
         } else {
-          clearCartContentInLocStor();
-          addCartContentToLocStor(response.entity);
           return response.entity;
         }
       }
@@ -97,14 +91,10 @@ export const addProductToCart = createAsyncThunk<
 export const adjustProductQuantity = createAsyncThunk<
   AboutCart | null,
   AdjustProductQuantityPayload,
-  { state: RootState, rejectValue: string | undefined }>(
+  { rejectValue: string | undefined }>(
     'cart/adjustProductQuantity',
-    async (payload: AdjustProductQuantityPayload, { getState, rejectWithValue }) => {
+    async (payload: AdjustProductQuantityPayload, { rejectWithValue }) => {
       try {
-        const state: RootState = getState();
-
-        const isloggedin: boolean = state.auth.isLoggedIn;
-        console.log("isloggedin: "+ isloggedin);
         if (payload.operationType === AdjustProductQuantityType.Increase) {
           increaseProductInCartQuantityLs(payload.productId);
         } else {
@@ -124,19 +114,27 @@ export const adjustProductQuantity = createAsyncThunk<
   );
 
 export const changeProductInCartQuantity = createAsyncThunk<
-  AboutCart | null,
+  AboutCart,
   ChangeProductInCartQuantityPayload,
-  { rejectValue: string | undefined }>(
+  { state: RootState, rejectValue: string | undefined }>(
     'cart/changeProductInCartQuantity',
-    async (payload: ChangeProductInCartQuantityPayload, { rejectWithValue }) => {
+    async (payload: ChangeProductInCartQuantityPayload, { getState, rejectWithValue }) => {
       try {
-        changeProductInCartQuantityLs(payload.productId, payload.productQuantity);
-        const updatedCart: AboutCart | null = getProductsFromLocStor();
-        if (updatedCart === null) {
-          return rejectWithValue("Cannot change product in cart quantity, cart doesn't exist");
-        }
+        const state: RootState = getState();
+        const currentCartContent: AboutCart | null = state.cart.cartDetails.aboutCart;
+        if(currentCartContent){
+          const modifyProductInCartQuantityPayload: ModifyProductInCartQuantityPayload = {
+            productId: payload.productId,
+            productQuantity: payload.productQuantity,
+            aboutCart: currentCartContent
+          }
 
-        return updatedCart;
+          const changedCartContent: AboutCart = modifyProductInCartQuantity(modifyProductInCartQuantityPayload);
+          
+          return changedCartContent;
+        } else {
+          return rejectWithValue("Cannot change product in cart quantity, because cart is empty.");
+        }
       } catch (error: unknown) {
         console.error("Unexpected error:", error);
         return rejectWithValue("Cannot change product in cart quantity, because of unexpected error occured");
@@ -159,8 +157,6 @@ export const changeCartContentGlobally = createAsyncThunk<
         } else if (isApiSuccessEmpty(response)) {
           return null;
         } else {
-          clearCartContentInLocStor();
-          addCartContentToLocStor(response.entity);
           return response.entity;
         }
       } catch (error: unknown) {
