@@ -5,7 +5,6 @@ import { AboutCart, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
 import { changeCartContentGlobally, setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
 import { ProductInCart } from './ProductInCart';
-import { isCartExistLocStor } from '../utils/localStorageUtils';
 import { isGuestUser } from '../utils/cookiesUtils';
 
 export const Cart: React.FC = () => {
@@ -14,14 +13,13 @@ export const Cart: React.FC = () => {
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {
-        const cartExistInLocalStorage = isCartExistLocStor();
         if (
-            (!cartExistInLocalStorage && isLoggedIn) //TODO: && isLoggedIn fix it user in not loged in after cart reload
-             || (!cartExistInLocalStorage && isGuestUser())) {
+            (!cartContent && isLoggedIn)
+             || (!cartContent && isGuestUser())) {
             dispatch(synchronizeCartWithApi());
         } else if(
-            (cartExistInLocalStorage && isLoggedIn) //&& isLoggedIn
-             || (cartExistInLocalStorage && isGuestUser())){
+            (cartContent && isLoggedIn)
+             || (cartContent && isGuestUser())){
             dispatch(setCurrentCart());
         } else {
 

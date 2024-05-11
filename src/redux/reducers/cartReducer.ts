@@ -68,7 +68,7 @@ const cartSlice = createSlice({
       .addCase(changeProductInCartQuantity.pending, (state: CartSliceState) => {
         state.cartDetails.loading = true;
       })
-      .addCase(changeProductInCartQuantity.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(changeProductInCartQuantity.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart>) => {
         state.cartDetails.loading = false;
         state.cartDetails.aboutCart = action.payload;
       })

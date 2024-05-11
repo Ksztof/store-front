@@ -5,11 +5,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ProductDetails } from "../types/productTypes";
 import { Product } from "./Product";
+import { AboutCart } from '../types/cartTypes';
 
 export const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const isDataLoading = useSelector((state: RootState) => state.product.loading);
     const products = useSelector((state: RootState) => state.product.productsData);
+    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartDetails.aboutCart);
 
     useEffect(() => {
         if (!isDataLoading) {

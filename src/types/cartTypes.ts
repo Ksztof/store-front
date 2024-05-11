@@ -46,6 +46,12 @@ export interface ChangeProductInCartQuantityPayload {
   productQuantity: number 
 }
 
+export interface ModifyProductInCartQuantityPayload {
+  productId: number,
+  productQuantity: number,
+  aboutCart: AboutCart,
+}
+
 export interface ProductInCartProps {
   product: CheckCart;
 }

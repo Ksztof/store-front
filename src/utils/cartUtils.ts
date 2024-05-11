@@ -1,5 +1,6 @@
 import { AboutCart, CheckCart, NewProductsForApi } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
+import { ModifyProductInCartQuantityPayload } from "../types/cartTypes";
 
 export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): CheckCart => ({
     productId: productDetails.id,
@@ -11,21 +12,16 @@ export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): Ch
     productTotalPrice: 0,
 });
 
-export const changeProductInCartQuantityLs = (productId: number, quantity: number) => {
-    const cartContentJson = localStorage.getItem('productsInCartLocStor');
-    const cartContent: AboutCart | null = cartContentJson
-        ? JSON.parse(cartContentJson) : null;
-
-    if (cartContent) {
-        const product = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === productId);
-        if (product) {
-            product.quantity = quantity;
-            product.productTotalPrice = product.quantity * product.productUnitPrice;
-            cartContent.totalCartValue = calculateTotalCartValue(cartContent.aboutProductsInCart);
-        }
+export const modifyProductInCartQuantity = (payload: ModifyProductInCartQuantityPayload): AboutCart => {
+    const cartContent: AboutCart = payload.aboutCart;
+    const product = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === payload.productId);
+    if (product) {
+        product.quantity = payload.productQuantity;
+        product.productTotalPrice = product.quantity * product.productUnitPrice;
+        cartContent.totalCartValue = calculateTotalCartValue(cartContent.aboutProductsInCart);
     }
 
-    localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
+    return cartContent;
 };
 
 export const calculateTotalCartValue = (cartContentLocStore: CheckCart[]): number => {
