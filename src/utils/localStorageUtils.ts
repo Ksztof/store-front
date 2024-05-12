@@ -1,6 +1,6 @@
-import { AboutCart, CheckCart } from "../types/cartTypes";
-import { ProductDetails } from "../types/productTypes";
+import { AboutCart, CheckCart, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from "../types/cartTypes";
 import { mapProductDetailsToCheckCart } from "./cartUtils";
+import { produce } from 'immer';
 
 export const getProductsFromLocStor = (): AboutCart | null => {
     const cartContentJson = localStorage.getItem('productsInCartLocStor');
@@ -10,42 +10,23 @@ export const getProductsFromLocStor = (): AboutCart | null => {
     return cartContent;
 }
 
-export const addProductToLocStor = (product: ProductDetails, quantity: number) => {
-    const productCartFormat: CheckCart = mapProductDetailsToCheckCart(product);
+export const getCartWithNewProduct = (payload: addProductToReduxStorePayload): AboutCart => {
+    const newProduct: CheckCart = mapProductDetailsToCheckCart(payload.newProduct, payload.newProductQuantity);
 
-    const productsInCartLocStor: AboutCart | null = getProductsFromLocStor();
-    if (productsInCartLocStor === null) {
-        const newCart: AboutCart = {
-            totalCartValue: product.price * quantity,
-            aboutProductsInCart: [productCartFormat],
-            createdAt: ""
-        }
-        localStorage.setItem('productsInCartLocStor', JSON.stringify(newCart));
-    }
+    return produce(payload.cartContent, (draft: AboutCart) => {
+        const product: CheckCart | undefined = draft.aboutProductsInCart
+            .find((p: CheckCart) => p.productId === newProduct.productId);
+        const newProductTotalPrice = payload.newProductQuantity * payload.newProduct.price;
 
-    if (productsInCartLocStor !== null) {
-        const productExistInLocalStorage: CheckCart | undefined = productsInCartLocStor?.aboutProductsInCart
-            .find((p: CheckCart) => p.productId === productCartFormat.productId);
-
-        if (productExistInLocalStorage) {
-            const newProductsTotalPrice = quantity * productExistInLocalStorage.productUnitPrice;
-            productExistInLocalStorage.quantity += quantity;
-            productExistInLocalStorage.productTotalPrice += newProductsTotalPrice;
-
-            if (productsInCartLocStor) {
-                productsInCartLocStor.totalCartValue += newProductsTotalPrice;
-            }
+        if (product) {
+            product.quantity += payload.newProductQuantity;
+            product.productTotalPrice += newProductTotalPrice;
+            draft.totalCartValue += newProductTotalPrice;
         } else {
-            productCartFormat.quantity = quantity;
-            productCartFormat.productTotalPrice = productCartFormat.quantity * productCartFormat.productUnitPrice;
-            if (productsInCartLocStor) {
-                productsInCartLocStor.aboutProductsInCart.push(productCartFormat);
-                productsInCartLocStor.totalCartValue += productCartFormat.productTotalPrice;
-            }
-
+            draft.aboutProductsInCart.push(newProduct);
+            draft.totalCartValue += newProductTotalPrice;
         }
-        localStorage.setItem('productsInCartLocStor', JSON.stringify(productsInCartLocStor));
-    }
+    });
 };
 
 export const addCartContentToLocStor = (cartContent: AboutCart) => {
@@ -56,48 +37,36 @@ export const clearCartContentInLocStor = () => {
     localStorage.removeItem('productsInCartLocStor');
 };
 
-export const decreaseProductInCartQuantityLs = (productId: number) => {
-    const cartContentJson = localStorage.getItem('productsInCartLocStor');
-    const cartContent: AboutCart | null = cartContentJson
-        ? JSON.parse(cartContentJson) : null;
+export const decreaseProductInCartQuantity = (payload: increaseProductInCartQuantityStorePayload): AboutCart => {
+    return produce(payload.cartContent, (draft: AboutCart) => {
+        const productIndex: number | undefined = draft.aboutProductsInCart.findIndex((p: CheckCart) => p.productId === payload.productId);
+        if (productIndex !== -1) {
+            const product = draft.aboutProductsInCart[productIndex];
+            if (product.quantity > 1) {
+                product.quantity -= 1;
+                product.productTotalPrice -= product.productUnitPrice;
+                draft.totalCartValue -= product.productUnitPrice;
+            } else if (product.quantity === 1) {
+                draft.aboutProductsInCart.splice(productIndex, 1);
+                draft.totalCartValue -= product.productUnitPrice;
+            }
 
-    if (cartContent?.aboutProductsInCart) {
-        const productIndex: number | undefined = cartContent.aboutProductsInCart.findIndex((p: CheckCart) => p.productId === productId);
-        var product = cartContent.aboutProductsInCart[productIndex];
-
-        if (productIndex !== -1 && cartContent?.aboutProductsInCart[productIndex].quantity > 1) {
-            product.quantity -= 1;
-            product.productTotalPrice -= product.productUnitPrice;
-            cartContent.totalCartValue -= product.productUnitPrice;
-        } else if (productIndex !== -1 && product.quantity === 1) {
-            cartContent?.aboutProductsInCart.splice(productIndex, 1)
-            cartContent.totalCartValue -= product.productUnitPrice;
+            if(draft.aboutProductsInCart.length === 0){
+                draft.totalCartValue = 0;
+            }
         }
-
-        if (cartContent.aboutProductsInCart.length === 0) {
-            cartContent.totalCartValue = 0;
-        }
-
-        localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
-    }
+    });
 };
 
-export const increaseProductInCartQuantityLs = (productId: number) => {
-    const cartContentJson = localStorage.getItem('productsInCartLocStor');
-    const cartContent: AboutCart | null = cartContentJson
-        ? JSON.parse(cartContentJson) : null;
-
-    if (cartContent?.aboutProductsInCart) {
-        const product: CheckCart | undefined = cartContent.aboutProductsInCart.find((p: CheckCart) => p.productId === productId);
-
+export const increaseProductInCartQuantity = (payload: increaseProductInCartQuantityStorePayload): AboutCart => {
+    return produce(payload.cartContent, (draft: AboutCart) => {
+        const product = draft.aboutProductsInCart.find((p: CheckCart) => p.productId === payload.productId);
         if (product) {
             product.quantity += 1;
             product.productTotalPrice += product.productUnitPrice;
-            cartContent.totalCartValue += product.productUnitPrice;
+            draft.totalCartValue += product.productUnitPrice;
         }
-
-        localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
-    }
+    });
 };
 
 export const isCartExistLocStor = (): boolean =>

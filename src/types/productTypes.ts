@@ -12,9 +12,9 @@ export interface ProductState {
   productsData: ProductDetails[];
   error: string | undefined;
 }
-export interface ProductPayloadCart {
+export interface addProductToCartPayload {
   product: ProductDetails;
-  quantity: string;
+  quantity: number;
 }
 export interface ProductPayloadLocStor {
   product: ProductDetails;

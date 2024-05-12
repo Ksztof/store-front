@@ -8,10 +8,15 @@ import { addProductToCart } from "../redux/actions/cartActions";
 export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
     const dispatch = useAppDispatch();
 
-    const [productQuantity, setProductQuantity] = useState<string>('1');
+    const [productQuantity, setProductQuantity] = useState<number>(1);
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
+    
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProductQuantity(event.target.value);
+        const value = event.target.value;
+        const parsedValue = parseFloat(value);
+        if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 100) {
+            setProductQuantity(parsedValue);
+        }
     };
 
     if (!product) return null;

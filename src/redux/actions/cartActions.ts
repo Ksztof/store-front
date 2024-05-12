@@ -1,12 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload } from '../../types/cartTypes';
-import { ProductPayloadCart, ProductPayloadLocStor } from '../../types/productTypes';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
+import { addProductToCartPayload } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
-import { prepareProductForCart } from '../../utils/productUtils';
 import { RootState } from '../store';
-import { addProductToLocStor, decreaseProductInCartQuantityLs, getProductsFromLocStor, increaseProductInCartQuantityLs } from '../../utils/localStorageUtils';
+import { decreaseProductInCartQuantity, getCartWithNewProduct, getProductsFromLocStor, increaseProductInCartQuantity} from '../../utils/localStorageUtils';
 import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 
@@ -32,7 +31,10 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
   }
 );
 
-export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: RootState, rejectValue: string | undefined }
+export const setCurrentCart = createAsyncThunk<
+  AboutCart | null, 
+  void,
+ { state: RootState, rejectValue: string | undefined }
 >(
   'cart/setCurrentCart',
   async (_, { getState, rejectWithValue }) => {
@@ -43,7 +45,6 @@ export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: 
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
 
         const response: ApiResponse<AboutCart> = await checkCurrentCart(payload);
-
         if (isApiError(response)) {
           const error: ErrorContent = response.error;
           return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
@@ -65,21 +66,27 @@ export const setCurrentCart = createAsyncThunk<AboutCart | null, void, { state: 
 );
 
 export const addProductToCart = createAsyncThunk<
-  AboutCart | null,
-  ProductPayloadCart,
-  { rejectValue: string | undefined }>(
+  AboutCart,
+  addProductToCartPayload,
+  { state: RootState,rejectValue: string | undefined }>(
     'cart/addProduct ',
-    async (payload: ProductPayloadCart, { rejectWithValue }) => {
+    async (payload: addProductToCartPayload, { getState, rejectWithValue }) => {
       try {
-        const product: ProductPayloadLocStor | undefined = prepareProductForCart(payload);
-        if (typeof (product) === 'undefined') {
-          return rejectWithValue("product values ​​are incorrect");
+        const state: RootState = getState();
+        const currentCartContent: AboutCart = state.cart.cartDetails.aboutCart;
+
+        if(currentCartContent !== null){
+          const addProductPayload: addProductToReduxStorePayload = {
+            cartContent: currentCartContent,
+            newProduct: payload.product,
+            newProductQuantity: payload.quantity
+          }
+
+          const updatedCart: AboutCart = getCartWithNewProduct(addProductPayload);  
+          return updatedCart;
+        } else {
+          return rejectWithValue("Cannot add product to cart, cart doesn't exsist");
         }
-        addProductToLocStor(product.product, product.quantity);
-
-        const updatedCart: AboutCart | null = getProductsFromLocStor();
-
-        return updatedCart;
       } catch (error: unknown) {
         console.error("Unexpected error:", error);
         return rejectWithValue("Cannot update the shopping cart, an unexpected error occurred");
@@ -88,23 +95,25 @@ export const addProductToCart = createAsyncThunk<
   );
 
 export const adjustProductQuantity = createAsyncThunk<
-  AboutCart | null,
+  AboutCart,
   AdjustProductQuantityPayload,
-  { rejectValue: string | undefined }>(
+  { state: RootState, rejectValue: string | undefined }>(
     'cart/adjustProductQuantity',
-    async (payload: AdjustProductQuantityPayload, { rejectWithValue }) => {
+    async (payload: AdjustProductQuantityPayload, { getState, rejectWithValue }) => {
       try {
+        const state = getState();
+        const currentCartContent: AboutCart = state.cart.cartDetails.aboutCart;
+        const changeQuantityPayload: increaseProductInCartQuantityStorePayload = {
+          productId: payload.productId,
+          cartContent: currentCartContent,
+        }
         if (payload.operationType === AdjustProductQuantityType.Increase) {
-          increaseProductInCartQuantityLs(payload.productId);
+          const updatedCart: AboutCart = increaseProductInCartQuantity(changeQuantityPayload);
+          return updatedCart;
         } else {
-          decreaseProductInCartQuantityLs(payload.productId);
-        }
-
-        const updatedCart: AboutCart | null = getProductsFromLocStor();
-        if (updatedCart === null) {
-          return rejectWithValue("There is nothing to adjust, because cart doesn't exist");
-        }
-        return updatedCart;
+          const updatedCart: AboutCart = decreaseProductInCartQuantity(changeQuantityPayload);
+          return updatedCart;
+        }        
       } catch (error: unknown) {
         console.error("Unexpected error:", error);
         return rejectWithValue("Cannot adjust product quantity, because of unexpected error occured");
