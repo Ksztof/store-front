@@ -1,3 +1,4 @@
+import { ProductDetails } from "./productTypes";
 
 export interface CheckCart {
   productId: number
@@ -23,7 +24,7 @@ export interface CartState {
 
 export interface CartDetails {
   loading: boolean;
-  aboutCart: AboutCart | null;
+  aboutCart: AboutCart;
   error: string | undefined;
 };
 
@@ -67,4 +68,15 @@ export interface NewProductsForApi {
 
 export interface checkCurrentCartPayload{
   createdAt: string;
+}
+
+export interface addProductToReduxStorePayload{
+  cartContent: AboutCart;
+  newProduct: ProductDetails;
+  newProductQuantity: number;
+}
+
+export interface increaseProductInCartQuantityStorePayload{
+  productId: number;
+  cartContent: AboutCart;
 }

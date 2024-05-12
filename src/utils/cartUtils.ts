@@ -3,14 +3,14 @@ import { ProductDetails } from "../types/productTypes";
 import { ModifyProductInCartQuantityPayload } from "../types/cartTypes";
 import { produce } from 'immer';
 
-export const mapProductDetailsToCheckCart = (productDetails: ProductDetails): CheckCart => ({
+export const mapProductDetailsToCheckCart = (productDetails: ProductDetails, quantity: number): CheckCart => ({
     productId: productDetails.id,
     productName: productDetails.name,
     productUnitPrice: productDetails.price,
     description: productDetails.description,
     manufacturer: productDetails.manufacturer,
-    quantity: 1,
-    productTotalPrice: 0,
+    quantity: quantity,
+    productTotalPrice: quantity * productDetails.price,
 });
 
 export const modifyProductInCartQuantity = (payload: ModifyProductInCartQuantityPayload): AboutCart => {

@@ -9,7 +9,7 @@ import { isGuestUser } from '../utils/cookiesUtils';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
-    const cartContent: AboutCart | null = useSelector((state: RootState) => state.cart.cartDetails.aboutCart);
+    const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartDetails.aboutCart);
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {

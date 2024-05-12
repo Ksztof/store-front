@@ -1,7 +1,6 @@
 import {  PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AboutCart, CartDetails, CartSliceState, CartState } from '../../types/cartTypes';
 import { addProductToCart, adjustProductQuantity, changeCartContentGlobally, changeProductInCartQuantity, setCurrentCart, synchronizeCartWithApi  } from '../actions/cartActions';
-import { getProductsFromLocStor } from '../../utils/localStorageUtils';
 
 const initialApiCartSyncState: CartState = {//think about naming conventions
   loading: false,
@@ -14,7 +13,10 @@ const initialApiCartSyncState: CartState = {//think about naming conventions
 
 const initialStateAddProductToCart: CartDetails = {
   loading: false,
-  aboutCart: getProductsFromLocStor(),
+  aboutCart: {
+    totalCartValue: 0,
+    aboutProductsInCart: [],
+    createdAt: ""},
   error: "",
 };
 
@@ -44,7 +46,7 @@ const cartSlice = createSlice({
       .addCase(addProductToCart.pending, (state: CartSliceState) => {
         state.cartDetails.loading = true;
       })
-      .addCase(addProductToCart.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(addProductToCart.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
         state.cartDetails.loading = false;
         state.cartDetails.aboutCart = action.payload;
       })
@@ -56,7 +58,7 @@ const cartSlice = createSlice({
       .addCase(adjustProductQuantity.pending, (state: CartSliceState) => {
         state.cartDetails.loading = true;
       })
-      .addCase(adjustProductQuantity.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(adjustProductQuantity.fulfilled, (state: CartSliceState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
         state.cartDetails.loading = false;
         state.cartDetails.aboutCart = action.payload;
       })
