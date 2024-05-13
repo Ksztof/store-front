@@ -2,14 +2,6 @@ import { AboutCart, CheckCart, addProductToReduxStorePayload, increaseProductInC
 import { mapProductDetailsToCheckCart } from "./cartUtils";
 import { produce } from 'immer';
 
-export const getProductsFromLocStor = (): AboutCart | null => {
-    const cartContentJson = localStorage.getItem('productsInCartLocStor');
-    const cartContent: AboutCart | null = cartContentJson
-        ? JSON.parse(cartContentJson) : null;
-
-    return cartContent;
-}
-
 export const getCartWithNewProduct = (payload: addProductToReduxStorePayload): AboutCart => {
     const newProduct: CheckCart = mapProductDetailsToCheckCart(payload.newProduct, payload.newProductQuantity);
 
@@ -27,14 +19,6 @@ export const getCartWithNewProduct = (payload: addProductToReduxStorePayload): A
             draft.totalCartValue += newProductTotalPrice;
         }
     });
-};
-
-export const addCartContentToLocStor = (cartContent: AboutCart) => {
-    localStorage.setItem('productsInCartLocStor', JSON.stringify(cartContent));
-};
-
-export const clearCartContentInLocStor = () => {
-    localStorage.removeItem('productsInCartLocStor');
 };
 
 export const decreaseProductInCartQuantity = (payload: increaseProductInCartQuantityStorePayload): AboutCart => {
@@ -68,6 +52,3 @@ export const increaseProductInCartQuantity = (payload: increaseProductInCartQuan
         }
     });
 };
-
-export const isCartExistLocStor = (): boolean =>
-    !!localStorage.getItem('productsInCartLocStor');
