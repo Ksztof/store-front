@@ -5,6 +5,7 @@ import { Login } from './pages/login';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Navbar } from './components/Navbar';
+import { Order } from './components/Order';
 
 const App: React.FC = () => {
   return (
@@ -13,8 +14,9 @@ const App: React.FC = () => {
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={ <Main />} />
+            <Route path="/login" element={ <Login /> } />
+            <Route path="/order" element={ <Order /> } />
           </Routes>
         </Router>
       </div>

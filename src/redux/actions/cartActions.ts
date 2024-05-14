@@ -5,7 +5,7 @@ import { addProductToCartPayload } from '../../types/productTypes';
 import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { RootState } from '../store';
-import { decreaseProductInCartQuantity, getCartWithNewProduct, getProductsFromLocStor, increaseProductInCartQuantity} from '../../utils/localStorageUtils';
+import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity} from '../../utils/localStorageUtils';
 import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 
