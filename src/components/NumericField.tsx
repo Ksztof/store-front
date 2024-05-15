@@ -1,17 +1,13 @@
 import React from 'react';
 import { Field, useFormikContext } from 'formik';
+import { NumericFieldProps } from '../types/fieldTypes';
 
-interface NumericFieldProps {
-  name: string;
-  label: string;
-}
-
-const NumericField: React.FC<NumericFieldProps> = ({ name, label }) => {
+const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue }) => {
   const { setFieldValue } = useFormikContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const formattedValue = value.replace(/[^0-9]/g, '');
+    const formattedValue = formatValue ? formatValue(value) : value;
     setFieldValue(name, formattedValue);
   };
 
@@ -22,5 +18,6 @@ const NumericField: React.FC<NumericFieldProps> = ({ name, label }) => {
     </div>
   );
 };
+
 
 export default NumericField;
