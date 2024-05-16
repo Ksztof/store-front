@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { AboutCart, CheckCart } from '../types/cartTypes';
 import { useAppDispatch } from '../hooks';
-import { changeCartContentGlobally, setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
+import { setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
 import { ProductInCart } from './ProductInCart';
 import { isGuestUser } from '../utils/cookiesUtils';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +26,7 @@ export const Cart: React.FC = () => {
         } else {
 
         }
-    }, [isLoggedIn, dispatch]);
+    }, [isLoggedIn, cartContent, dispatch]);
     
     const handleOrder = () => {
         if (cartContent !== null) {
