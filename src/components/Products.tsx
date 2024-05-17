@@ -15,7 +15,7 @@ export const Products: React.FC = () => {
         if (!isDataLoading) {
             dispatch(getProducts());
         }
-    }, []);
+    }, [isDataLoading, dispatch]);//should it be here?
 
     return (
         <div>
