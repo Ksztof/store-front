@@ -2,8 +2,8 @@ import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import { NumericFieldProps } from '../types/fieldTypes';
 
-const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue }) => {
-  const { setFieldValue } = useFormikContext();
+const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, onBlur, setOrderDetails }) => {
+  const { setFieldValue, handleBlur } = useFormikContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -11,10 +11,28 @@ const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue })
     setFieldValue(name, formattedValue);
   };
 
+  const handleCustomBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const formattedValue = formatValue ? formatValue(value) : value;
+    handleBlur(e);
+
+    if (setOrderDetails) {
+      setOrderDetails({ [name]: formattedValue });
+    }
+  };
+  
+  const blurProps = onBlur ? { onBlur: handleCustomBlur } : {};
+
   return (
     <div>
       <label htmlFor={name}>{label}</label>
-      <Field id={name} name={name} type="text" onChange={handleChange} />
+      <Field
+        id={name}
+        name={name}
+        type="number"
+        onChange={handleChange}
+        {...blurProps}
+      />
     </div>
   );
 };
