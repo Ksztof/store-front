@@ -1,4 +1,4 @@
-export interface FormValues {
+export interface OrderDetailsInitialValues {
     firstName: string;
     lastName: string;
     email: string;
@@ -8,4 +8,4 @@ export interface FormValues {
     postCode: string;
     city: string;
     phoneNumber: string;
-  }
+};

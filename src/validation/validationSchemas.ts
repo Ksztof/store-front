@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { FormValues } from '../types/formsTypes';
 
 export const orderDetailsSchema = Yup.object({
   firstName: Yup.string()
@@ -39,15 +38,3 @@ export const orderDetailsSchema = Yup.object({
     .matches(/^\d{3}-\d{3}-\d{3}$/, 'Invalid phone number format')
     .required('Phone number is required')
 });
-
-export const orderDetailsInitialValues: FormValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  street: '',
-  streetNumber: '',
-  homeNumber: '',
-  postCode: '',
-  city: '',
-  phoneNumber: ''
-};

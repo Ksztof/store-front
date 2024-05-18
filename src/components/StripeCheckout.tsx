@@ -1,12 +1,12 @@
 import React from 'react';
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import stripePromise from '../stripe/stripe';
-import { Props } from '../types/stripeTypes';
 import { payWithCard } from '../redux/actions/paymentActions';
 import { useAppDispatch } from '../hooks';
+import { StripeCheckoutProps } from '../props/stripeCheckoutProps';
 
 
-const StripeCheckout: React.FC<Props> = ({ amount }: { amount: number }) => {
+const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount }) => {
     const stripe = useStripe();
     const elements = useElements();
     const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ const StripeCheckout: React.FC<Props> = ({ amount }: { amount: number }) => {
     );
 };
 
-export const WrappedStripeCheckout: React.FC<Props> = ({ amount }: { amount: number }) => (
+export const WrappedStripeCheckout: React.FC<StripeCheckoutProps> = ({ amount }) => (
     <Elements stripe={stripePromise}>
         <StripeCheckout amount={amount} />
     </Elements>

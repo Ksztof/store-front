@@ -4,8 +4,9 @@ import { ProductDetails } from "../types/productTypes";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks";
 import { addProductToCart } from "../redux/actions/cartActions";
+import { ProductProps } from "../props/productProps";
 
-export const Product: React.FC<{ productId: number }> = ({ productId }: { productId: number }) => {
+export const Product: React.FC<ProductProps> = ({ productId }) => {
     const dispatch = useAppDispatch();
 
     const [productQuantity, setProductQuantity] = useState<number>(1);
