@@ -1,18 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CardElement } from "@stripe/react-stripe-js";
-import { submitPayment } from "../../api/paymentService";
+import { saveOrder } from "../../api/orderService";
+import { MakeOrderCardPaymentPayload } from "../../types/orderTypes";
 import { isApiError } from "../../utils/responseUtils";
-import { PayWithCardPayload } from "../../types/stripeTypes";
 
-export const payWithCard = createAsyncThunk<
+export const makeOrderCardPayment = createAsyncThunk<
 void, 
-PayWithCardPayload, 
+MakeOrderCardPaymentPayload, 
 { rejectValue: string }
 >(
-  'payment/payWithCard',
-  async (payload: PayWithCardPayload, { rejectWithValue }) => {
+  'order/makeOrderCardPayment',
+  async (payload: MakeOrderCardPaymentPayload, { rejectWithValue }) => {
     try {
-        const { amount, stripe, elements } = payload;
+        const { amount, stripe, elements, orderDetails } = payload;
 
         if (!stripe || !elements) {
             return rejectWithValue("Stripe has not loaded yet.");
@@ -36,15 +36,13 @@ PayWithCardPayload,
             console.log('PaymentMethod:', paymentMethod);
             console.log('Success');
 
-            const response = await submitPayment(paymentMethod.id, amount);
-            // if (isApiError(response)) {
-            //     const apiError = response.error;
-            //     return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
-            // } else if (isApiSuccessEmpty(response)) {
-            //     //return true;
-            // } else {
-            //     //return undefined;
-            // }
+            const response = await saveOrder(orderDetails);
+            if (isApiError(response)) {
+                const apiError = response.error;
+                return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
+            } else {
+                //return undefined;
+            }
         }
     } catch (error: unknown) {
       console.error("Unexpected error:", error);

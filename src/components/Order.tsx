@@ -12,8 +12,6 @@ export const Order: React.FC = () => {
     const [orderDetails, setOrderDetailsState] = useState<OrderDetailsInitialValues>(orderDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-
-
     const handleSetOrderDetails = (values: Partial<OrderDetailsInitialValues>) => {
         setOrderDetailsState(prev => ({ ...prev, ...values }));
     };
@@ -26,7 +24,7 @@ export const Order: React.FC = () => {
             {isFormValid && (
                 <>
                     <h1>Your order</h1>
-                    <WrappedStripeCheckout amount={toPay} />
+                    <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
                     <p>Order amount {toPay}</p>
                 </>
             )}
