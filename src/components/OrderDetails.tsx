@@ -17,11 +17,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ handleSetOrderDetail
                 onSubmit={() => {
                 }}
             >
-                {({ errors, touched, isValid }) => {
+                {({ touched, isValid }) => {
                     const isFormFullyTouched: boolean = Object.keys(touched).length === Object.keys(orderDetailsInitialValues).length;
                     const isFormValid: boolean = isValid && isFormFullyTouched;
 
-                    if(isFormFullyTouched && isFormValid){
+                    if(isFormValid){
                         setIsFormValid(true);
                     }
 
