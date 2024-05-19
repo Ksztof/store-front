@@ -5,7 +5,6 @@ import { payWithCard } from '../redux/actions/paymentActions';
 import { useAppDispatch } from '../hooks';
 import { StripeCheckoutProps } from '../props/stripeCheckoutProps';
 
-
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount }) => {
     const stripe = useStripe();
     const elements = useElements();
@@ -20,7 +19,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount }) => {
         <form onSubmit={handleSubmit}>
             <CardElement />
             <button type="submit" disabled={!stripe}>
-                Zapłać {amount} zł
+                <p> Zapłać {amount} zł</p>
             </button>
         </form>
     );
