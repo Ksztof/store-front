@@ -1,5 +1,6 @@
 import { OrderDetailsInitialValues } from "../types/orderTypes";
 
 export interface OrderDetailsProps {
-    setOrderDetails: (value: Partial<OrderDetailsInitialValues>) => void;
+    handleSetOrderDetails: (value: Partial<OrderDetailsInitialValues>) => void;
+    setIsFormValid: (value: boolean) => void;
 }

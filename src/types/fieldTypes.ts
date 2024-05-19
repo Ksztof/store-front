@@ -5,7 +5,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    setOrderDetails?: (value: Partial<OrderDetailsInitialValues>) => void; 
+    handleSetOrderDetails?: (value: Partial<OrderDetailsInitialValues>) => void; 
 }
 
 export interface NumericFieldProps {
@@ -13,5 +13,5 @@ export interface NumericFieldProps {
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    setOrderDetails?: (value: Partial<OrderDetailsInitialValues>) => void; 
+    handleSetOrderDetails?: (value: Partial<OrderDetailsInitialValues>) => void; 
   }
