@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
-import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { RootState } from '../store';
 import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity} from '../../utils/localStorageUtils';
@@ -14,7 +14,7 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
   'cart/synchronizeCartWithApi',
   async (_, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<AboutCart> = await getCartContent();
+      const response: ApiResponseWithEmpty<AboutCart> = await getCartContent();
       if (isApiError(response)) {
         const error: ErrorContent = response.error;
         return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
@@ -44,7 +44,7 @@ export const setCurrentCart = createAsyncThunk<
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
 
-        const response: ApiResponse<AboutCart> = await checkCurrentCart(payload);
+        const response: ApiResponseWithEmpty<AboutCart> = await checkCurrentCart(payload);
         if (isApiError(response)) {
           const error: ErrorContent = response.error;
           return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
@@ -158,7 +158,7 @@ export const changeCartContentGlobally = createAsyncThunk<
     async (payload: AboutCart, { rejectWithValue }) => {
       try {
         const newProductsForApi: NewProductsForApi = mapAboutCartToNewProductsForApi(payload);
-        const response: ApiResponse<AboutCart> = await saveCartContent(newProductsForApi);
+        const response: ApiResponseWithEmpty<AboutCart> = await saveCartContent(newProductsForApi);
         if (isApiError(response)) {
           const error: ErrorContent = response.error;
           return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);

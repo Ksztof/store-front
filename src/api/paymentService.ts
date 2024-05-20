@@ -1,11 +1,9 @@
 import axios from "axios";
-import { OrderDetails, OrderResponse } from "../types/orderTypes";
-import { isErrorContent, isOrderResponse } from "../utils/responseUtils";
-import { ApiResponse } from "../types/apiResponse";
+import { ApiResponseWithEmpty } from "../types/apiResponseWithEmpty";
 
 axios.defaults.withCredentials = true;
 
-export const saveOrder = async (orderDetails: OrderDetails): Promise<ApiResponse<OrderResponse>> => {
+export const payUsingCard = async (orderDetails: OrderDetails): Promise<ApiResponseWithEmpty<OrderResponse>> => {
     try {
         const response = await axios.post<OrderResponse>('https://localhost:5445/api/Orders', orderDetails);
 

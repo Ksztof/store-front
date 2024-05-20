@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { OrderDetails } from './OrderDetails';
+import React, { useState } from 'react';
 import WrappedStripeCheckout from './StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { orderDetailsInitialValues } from '../initialValues/orderInitials';
-import { OrderDetailsInitialValues } from '../types/orderTypes';
+import { OrderDetails } from '../types/orderTypes';
+import { ShippingDetails } from './ShippingDetails';
 
 
 export const Order: React.FC = () => {
     const toPay: number = useSelector((state: RootState) => state.cart.cartDetails.aboutCart.totalCartValue);
-    const [orderDetails, setOrderDetailsState] = useState<OrderDetailsInitialValues>(orderDetailsInitialValues);
+    const [orderDetails, setOrderDetailsState] = useState<OrderDetails>(orderDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-    const handleSetOrderDetails = (values: Partial<OrderDetailsInitialValues>) => {
+    const handleSetOrderDetails = (values: Partial<OrderDetails>) => {
         setOrderDetailsState(prev => ({ ...prev, ...values }));
     };
 
     return (
         <div>
             <h1>Order Page</h1>
-            < OrderDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
+            < ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
 
             {isFormValid && (
                 <>

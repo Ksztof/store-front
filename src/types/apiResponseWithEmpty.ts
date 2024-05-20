@@ -18,6 +18,9 @@ export interface ApiError {
     error: ErrorContent;
 }
 
-export type ApiResponse<T> = ApiSuccess<T> | ApiError | ApiSuccessEmpty;
+export type ApiResponseWithEmpty<T> = ApiSuccess<T> | ApiError | ApiSuccessEmpty;
+
+
+
 
 

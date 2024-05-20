@@ -1,6 +1,6 @@
-import { OrderDetailsInitialValues } from "../types/orderTypes";
+import { OrderDetails } from "../types/orderTypes";
 
 export interface StripeCheckoutProps{
     amount: number;
-    orderDetails: OrderDetailsInitialValues;
+    orderDetails: OrderDetails;
 }

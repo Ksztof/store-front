@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { AboutCart, NewProductsForApi, checkCurrentCartPayload } from '../types/cartTypes';
-import { ApiResponse } from '../types/apiResponseTypes';
+import { ApiResponseWithEmpty } from '../types/apiResponseWithEmpty';
 import { isAboutCart, isErrorContent } from '../utils/responseUtils';
 
 axios.defaults.withCredentials = true;
 
-export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
+export const getCartContent = async (): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
     const response = await axios.get<AboutCart>('https://localhost:5445/api/Carts', {});
 
@@ -37,7 +37,7 @@ export const getCartContent = async (): Promise<ApiResponse<AboutCart>> => {
   }
 };
 
-export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponse<AboutCart>> => {
+export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
     const response = await axios.put<AboutCart>('https://localhost:5445/api/Carts', cartContent);
     const data = response.data;
@@ -61,7 +61,7 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
   }
 };
 
-export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponse<AboutCart>> => {
+export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
     const response = await axios.post<AboutCart>('https://localhost:5445/api/Carts/check-current-cart', payload);
 
