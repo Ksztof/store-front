@@ -1,7 +1,7 @@
 import { Stripe, StripeElements } from "@stripe/stripe-js";
 import { CheckCart } from "./cartTypes";
 
-export interface OrderDetailsInitialValues {
+export interface OrderDetails {
     firstName: string;
     lastName: string;
     email: string;
@@ -17,7 +17,7 @@ export interface MakeOrderCardPaymentPayload {
     amount: number;
     stripe: Stripe | null;
     elements: StripeElements | null;
-    orderDetails: OrderDetailsInitialValues;
+    orderDetails: OrderDetails;
 }
 
 interface ShippingDetailResponse {

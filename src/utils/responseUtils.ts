@@ -1,9 +1,10 @@
-import { ApiError, ApiResponse, ApiSuccessEmpty, ErrorContent } from "../types/apiResponseTypes";
+import { ApiResponse } from "../types/apiResponse";
+import { ApiError, ApiResponseWithEmpty, ApiSuccessEmpty, ErrorContent } from "../types/apiResponseWithEmpty";
 import { AboutCart } from "../types/cartTypes";
 import { OrderResponse } from "../types/orderTypes";
 import { ProductDetails } from "../types/productTypes";
 
-export function isApiError<T>(response: ApiResponse<T>): response is ApiError {
+export function isApiError<T>(response: ApiResponseWithEmpty<T> | ApiResponse<T>): response is ApiError {
   return 'isSuccess' in response && response.isSuccess === false;
 }
 

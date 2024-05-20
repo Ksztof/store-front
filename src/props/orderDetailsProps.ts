@@ -1,6 +1,6 @@
-import { OrderDetailsInitialValues } from "../types/orderTypes";
+import { OrderDetails } from "../types/orderTypes";
 
-export interface OrderDetailsProps {
-    handleSetOrderDetails: (value: Partial<OrderDetailsInitialValues>) => void;
+export interface ShippingDetailsProps {
+    handleSetOrderDetails: (value: Partial<OrderDetails>) => void;
     setIsFormValid: (value: boolean) => void;
 }

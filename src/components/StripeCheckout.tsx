@@ -3,8 +3,9 @@ import { CardElement, useStripe, useElements, Elements } from '@stripe/react-str
 import stripePromise from '../stripe/stripe';
 import { useAppDispatch } from '../hooks';
 import { StripeCheckoutProps } from '../props/stripeCheckoutProps';
-import { makeOrderCardPayment } from '../redux/actions/paymentActions';
-import { MakeOrderCardPaymentPayload } from '../types/orderTypes';
+import { PayWithCardPayload } from '../types/paymentTypes';
+import { payWithCard } from '../redux/actions/paymentActions';
+import { makeOrder } from '../redux/actions/orderActions';
 
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails }) => {
     const stripe = useStripe();
@@ -13,10 +14,11 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails })
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const makeOrderCardPaymentPayload: MakeOrderCardPaymentPayload = (
-            {amount, stripe, elements, orderDetails}
-        );
-        dispatch(makeOrderCardPayment({ makeOrderCardPaymentPayload }));
+        
+        const payWithCardPayload: PayWithCardPayload = { amount, stripe, elements};
+
+        dispatch(makeOrder(orderDetails));
+        dispatch(payWithCard(payWithCardPayload));
     };
 
     return (

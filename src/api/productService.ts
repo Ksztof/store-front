@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { ProductDetails } from '../types/productTypes';
 import { isProductDetails } from '../utils/responseUtils';
-import { ApiResponse } from '../types/apiResponseTypes';
+import { ApiResponseWithEmpty } from '../types/apiResponseWithEmpty';
 
 axios.defaults.withCredentials = true;
 
-export const getAllProducts = async (): Promise<ApiResponse<ProductDetails[]>> => {
+export const getAllProducts = async (): Promise<ApiResponseWithEmpty<ProductDetails[]>> => {
   try {
     const response = await axios.get<ProductDetails[]>('https://localhost:5445/api/Products');
     const data = response.data;

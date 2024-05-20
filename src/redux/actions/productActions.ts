@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ProductDetails } from '../../types/productTypes';
 import { getAllProducts } from '../../api/productService';
-import { ApiResponse, ErrorContent } from '../../types/apiResponseTypes';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 
 export const getProducts = createAsyncThunk<
@@ -11,7 +11,7 @@ export const getProducts = createAsyncThunk<
     'product/getProducts ',
     async (_, { rejectWithValue }) => {
       try {
-        const response: ApiResponse<ProductDetails[]> = await getAllProducts();
+        const response: ApiResponseWithEmpty<ProductDetails[]> = await getAllProducts();
         if (isApiError(response)) {
           const error: ErrorContent = response.error;
           return rejectWithValue(`Error code: ${error.code} Error description: ${error.description}`);

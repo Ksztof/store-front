@@ -4,10 +4,10 @@ import TextField from "./TextField";
 import NumericField from "./NumericField";
 import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatNumericField, formatPhoneNumber, formatPostCode } from "../validation/validationUtils";
 import { orderDetailsInitialValues } from "../initialValues/orderInitials";
-import { OrderDetailsProps } from "../props/orderDetailsProps";
+import { ShippingDetailsProps } from "../props/orderDetailsProps";
 
 
-export const OrderDetails: React.FC<OrderDetailsProps> = ({ handleSetOrderDetails, setIsFormValid }) => {
+export const ShippingDetails: React.FC<ShippingDetailsProps> = ({ handleSetOrderDetails, setIsFormValid }) => {
 
     return (
         <div>
