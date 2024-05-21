@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ApiResponseWithEmpty } from "../types/apiResponseWithEmpty";
+import { isErrorContent } from "../utils/responseUtils";
 
 axios.defaults.withCredentials = true;
 
@@ -13,12 +14,6 @@ export const payUsingCard = async (orderDetails: OrderDetails): Promise<ApiRespo
             return {
                 isSuccess: false,
                 error: data
-            };
-
-        } else if (isOrderResponse(data)) {
-            return {
-                isSuccess: true,
-                entity: data
             };
 
         } else {

@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PayWithCardPayload } from "../../types/paymentTypes";
+import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
+import { payUsingCard } from "../../api/paymentService";
+import { isApiError } from "../../utils/responseUtils";
 
 export const payWithCard = createAsyncThunk<
     void,
@@ -10,7 +12,7 @@ export const payWithCard = createAsyncThunk<
     'payment/payWithCard',
     async (payload: PayWithCardPayload, { rejectWithValue }) => {
         try {
-            const { amount, stripe, elements } = payload;
+            let { amount, stripe, elements } = payload;
 
             if (!stripe || !elements) {
                 return rejectWithValue("Stripe has not loaded yet.");
@@ -32,8 +34,16 @@ export const payWithCard = createAsyncThunk<
                 return rejectWithValue(error.message);
             } else {
                 if(typeof paymentMethod !== "undefined"){
-                    const response = await saveOrder(orderDetails);
+                    //amount in grosz - stripe requirement`
+                    amount = amount * 100; 
+                    const paymentDetails: PaymentDetails = {
+                        paymentMethodId : paymentMethod.id,
+                        amount: amount,
+                        currency: "PLN"
+                    }
 
+                    const response = await payUsingCard(paymentDetails);
+                    
                     if (isApiError(response)) {
                         const apiError = response.error;
                         return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
