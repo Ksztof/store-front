@@ -5,7 +5,7 @@ import { payUsingCard } from "../../api/paymentService";
 import { isApiError } from "../../utils/responseUtils";
 
 export const payWithCard = createAsyncThunk<
-    void,
+    null,
     PayWithCardPayload,
     { rejectValue: string }
 >(
@@ -33,24 +33,26 @@ export const payWithCard = createAsyncThunk<
                 console.error(error);
                 return rejectWithValue(error.message);
             } else {
-                if(typeof paymentMethod !== "undefined"){
-                    //amount in grosz - stripe requirement`
-                    amount = amount * 100; 
+                if (typeof paymentMethod !== "undefined") {
+                    //amount in grosz - stripe requirement
+                    amount = amount * 100;
                     const paymentDetails: PaymentDetails = {
-                        paymentMethodId : paymentMethod.id,
+                        paymentMethodId: paymentMethod.id,
                         amount: amount,
                         currency: "PLN"
                     }
 
                     const response = await payUsingCard(paymentDetails);
-                    
+
                     if (isApiError(response)) {
                         const apiError = response.error;
                         return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
                     }
                 } else {
-                    rejectWithValue("Payment id is undefined");
+                    return rejectWithValue("The payment method wasn't created correctly");
                 }
+
+                return null;
             }
         } catch (error: unknown) {
             console.error("Unexpected error:", error);

@@ -16,16 +16,16 @@ const productSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (productState: ProductState) => {
-        productState.loading = true;
+      .addCase(getProducts.pending, (state: ProductState) => {
+        state.loading = true;
       })
-      .addCase(getProducts.fulfilled, (productState: ProductState, action) => {
-        productState.loading = false;
-          productState.productsData = action.payload || [];
+      .addCase(getProducts.fulfilled, (state: ProductState, action) => {
+        state.loading = false;
+        state.productsData = action.payload || [];
       })
-      .addCase(getProducts.rejected, (productState: ProductState, action: PayloadAction<string | undefined>) => {
-        productState.loading = false;
-        productState.error = action.payload;
+      .addCase(getProducts.rejected, (state: ProductState, action: PayloadAction<string | undefined>) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

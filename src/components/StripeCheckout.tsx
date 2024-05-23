@@ -16,7 +16,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails })
         event.preventDefault();
         
         const payWithCardPayload: PayWithCardPayload = { amount, stripe, elements};
-
+        
         dispatch(makeOrder(orderDetails));
         dispatch(payWithCard(payWithCardPayload));
     };
