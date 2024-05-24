@@ -11,3 +11,10 @@ export interface PaymentDetails {
     amount: number,
     currency: string
 }
+
+export enum PaymentStatus {
+    Succeeded = "SUCCEEDED",
+    Failed = "FAILED",
+    Awaiting = "AWAITING",
+    NotStarted = "NOTSTARTED"
+  }
