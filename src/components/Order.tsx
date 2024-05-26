@@ -3,12 +3,19 @@ import WrappedStripeCheckout from './StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { orderDetailsInitialValues } from '../initialValues/orderInitials';
-import { OrderDetails } from '../types/orderTypes';
+import { OrderDetails, OrderResponse } from '../types/orderTypes';
 import { ShippingDetails } from './ShippingDetails';
+import { PaymentStatus } from '../types/paymentTypes';
+import { CheckCart } from '../types/cartTypes';
+import { ProductInCart } from './ProductInCart';
+import { OrderedProducts } from './OrderedProducts';
 
 
 export const Order: React.FC = () => {
     const toPay: number = useSelector((state: RootState) => state.cart.cartDetails.aboutCart.totalCartValue);
+    const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
+    const paymentStatus = useSelector((state: RootState) => state.payment.status); //PaymentStatus
+
     const [orderDetails, setOrderDetailsState] = useState<OrderDetails>(orderDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
@@ -19,13 +26,42 @@ export const Order: React.FC = () => {
     return (
         <div>
             <h1>Order Page</h1>
-            < ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
-
-            {isFormValid && (
+            {paymentStatus === PaymentStatus.Succeeded ? (
+                <div>
+                    <h1>Order Summary</h1>
+                    <p>Order ID: {orderSummary.id}</p>
+                    <p>Total Amount: {orderSummary.totalCartValue}</p>
+                    <p>Status: paid</p>
+                    <p>Products</p>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {orderSummary.aboutProductsInCart.map((product: CheckCart) => (
+                                    <OrderedProducts key={product.productId} product={product} />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            ) : (
                 <>
-                    <h1>Your order</h1>
-                    <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
-                    <p>Order amount {toPay}</p>
+                    < ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
+
+                    {isFormValid && (
+                        <>
+                            <h1>Your order</h1>
+                            <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
+                            <p>Order amount {toPay}</p>
+                        </>
+                    )}
                 </>
             )}
         </div>

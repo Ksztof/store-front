@@ -3,6 +3,9 @@ import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
 import { payUsingCard } from "../../api/paymentService";
 import { isApiError } from "../../utils/responseUtils";
+import { PaymentStatusResponse } from '../../types/paymentTypes';
+import { AboutPayment } from '../../types/paymentTypes';
+import { isErrorContent } from '../../utils/responseUtils';
 
 export const payWithCard = createAsyncThunk<
     null,
@@ -57,6 +60,23 @@ export const payWithCard = createAsyncThunk<
         } catch (error: unknown) {
             console.error("Unexpected error:", error);
             return rejectWithValue("An unexpected error occurred");
+        }
+    }
+);
+
+export const updatePaymentStatus = createAsyncThunk<
+    string,
+    AboutPayment,
+    { rejectValue: string }
+>(
+    'payment/updatePaymentStatus',
+    async (payload: AboutPayment, { rejectWithValue }) => {
+        if (payload.status === PaymentStatusResponse.Succeeded) {
+            return PaymentStatusResponse.Succeeded;
+        } else if (payload.error && isErrorContent(payload.error)) {
+            return rejectWithValue(`Payment failed with code:  ${payload.error.code} and message ${payload.error.description} - applies to order with id: ${payload.orderId}`);
+        } else {
+            return rejectWithValue("An uncexpected error occured during payment status check.");
         }
     }
 );

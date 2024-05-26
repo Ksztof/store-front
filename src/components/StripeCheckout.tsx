@@ -17,8 +17,12 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails })
         
         const payWithCardPayload: PayWithCardPayload = { amount, stripe, elements};
         
-        dispatch(makeOrder(orderDetails));
-        dispatch(payWithCard(payWithCardPayload));
+        const orderResult = await dispatch(makeOrder(orderDetails));
+        // Sprawdzenie, czy pierwsza akcja zakończyła się sukcesem
+        if (orderResult.type.endsWith('fulfilled')) {
+            // Wywołanie drugiej akcji, jeśli pierwsza się powiodła
+            dispatch(payWithCard(payWithCardPayload));
+        }
     };
 
     return (

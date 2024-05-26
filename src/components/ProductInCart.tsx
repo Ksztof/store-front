@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../hooks";
-import { AdjustProductQuantityType, ProductInCartProps } from "../types/cartTypes";
+import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../types/cartTypes";
 import { adjustProductQuantity, changeProductInCartQuantity } from "../redux/actions/cartActions";
 
-export const ProductInCart: React.FC<ProductInCartProps> = (productProps) => {
+export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
     const dispatch = useAppDispatch();
-    const product = productProps.product;
+    const product: CheckCart = props.product;
     const [inputValue, setInputValue] = useState(product.quantity.toString());
     useEffect(() => {
         setInputValue(product.quantity.toString());
@@ -50,7 +50,6 @@ export const ProductInCart: React.FC<ProductInCartProps> = (productProps) => {
                 autoComplete='off'
                 onKeyDown={handleKeyPress}
             />
-            <p></p>
         </div>
     );
 };
