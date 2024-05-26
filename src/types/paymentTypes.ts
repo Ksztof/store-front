@@ -1,4 +1,5 @@
 import { Stripe, StripeElements } from "@stripe/stripe-js";
+import {ErrorContent} from "./apiResponse"
 
 export interface PayWithCardPayload {
     amount: number;
@@ -18,3 +19,14 @@ export enum PaymentStatus {
     Awaiting = "AWAITING",
     NotStarted = "NOTSTARTED"
   }
+
+  export interface AboutPayment {
+    orderId: string;
+    status: PaymentStatusResponse;
+    error?: ErrorContent; 
+  }
+
+  export enum PaymentStatusResponse {
+    Succeeded = "succeeded",
+    Failed = "failed"
+}

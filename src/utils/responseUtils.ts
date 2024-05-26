@@ -13,7 +13,7 @@ export function isAboutCart(data: any): data is AboutCart {
 }
 
 export function isErrorContent(data: any): data is ErrorContent {
-  return typeof data.code === 'string' && typeof data.description === 'string';
+  return (typeof data.code === 'string') && (typeof data.description === 'string' || data.description === undefined);
 }
 
 export function isApiSuccessEmpty(data: any): data is ApiSuccessEmpty {
