@@ -5,7 +5,7 @@ import { updatePaymentStatus } from '../redux/actions/paymentActions';
 
 export const startConnection = (dispatch: AppDispatch): HubConnection => {
   const connection: HubConnection = new HubConnectionBuilder()
-    .withUrl("https://localhost:5445/paymentHub")
+    .withUrl("http://localhost:5002/paymentHub")
     .build();
 
   connection.start().catch(err => console.error('Error while establishing connection:', err));
