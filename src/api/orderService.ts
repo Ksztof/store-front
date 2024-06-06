@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export const saveOrder = async (orderDetails: OrderDetails): Promise<ApiResponse<OrderResponse>> => {
     try {
-        const response = await axios.post<OrderResponse>('https://localhost:5445/api/Orders', orderDetails);
+        const response = await axios.post<OrderResponse>('https://localhost:5004/api/Orders', orderDetails);
 
         const data = response.data;
 

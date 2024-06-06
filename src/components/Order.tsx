@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WrappedStripeCheckout from './StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -7,14 +7,16 @@ import { OrderDetails, OrderResponse } from '../types/orderTypes';
 import { ShippingDetails } from './ShippingDetails';
 import { PaymentStatus } from '../types/paymentTypes';
 import { CheckCart } from '../types/cartTypes';
-import { ProductInCart } from './ProductInCart';
 import { OrderedProducts } from './OrderedProducts';
+import { startConnection } from '../signalR/hubConnection';
+import { useAppDispatch } from '../hooks';
 
 
 export const Order: React.FC = () => {
     const toPay: number = useSelector((state: RootState) => state.cart.cartDetails.aboutCart.totalCartValue);
     const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
-    const paymentStatus = useSelector((state: RootState) => state.payment.status); //PaymentStatus
+    const paymentStatus = useSelector((state: RootState) => state.payment.status);
+    const dispatch = useAppDispatch();
 
     const [orderDetails, setOrderDetailsState] = useState<OrderDetails>(orderDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
@@ -22,6 +24,15 @@ export const Order: React.FC = () => {
     const handleSetOrderDetails = (values: Partial<OrderDetails>) => {
         setOrderDetailsState(prev => ({ ...prev, ...values }));
     };
+
+    // useEffect(() => {
+    //     if (orderSummary.id) {
+    //         const connection = startConnection(dispatch, orderSummary.id);
+    //         return () => {
+    //             connection.stop();
+    //         };
+    //     }
+    // }, [orderSummary, dispatch]);
 
     return (
         <div>
