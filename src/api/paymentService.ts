@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export const payUsingCard = async (paymentDetails: PaymentDetails): Promise<ApiResponseWithEmpty<void>> => {
     try {
-        const response = await axios.post<void>('https://localhost:5445/api/Payments', paymentDetails);
+        const response = await axios.post('https://localhost:5004/api/Payments', paymentDetails);
 
         if (response.status === 204) {
             return {
@@ -28,6 +28,6 @@ export const payUsingCard = async (paymentDetails: PaymentDetails): Promise<ApiR
             throw new Error("Invalid API response format");
         }
     } catch (error) {
-        throw new Error("Failed to retrive information about submitted order because of unexpected error");
+        throw new Error("Failed to retrive information about payment because of unexpected error");
     }
 }

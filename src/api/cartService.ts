@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export const getCartContent = async (): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
-    const response = await axios.get<AboutCart>('https://localhost:5445/api/Carts', {});
+    const response = await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
 
     if (response.status === 204) {
       return {
@@ -39,7 +39,7 @@ export const getCartContent = async (): Promise<ApiResponseWithEmpty<AboutCart>>
 
 export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
-    const response = await axios.put<AboutCart>('https://localhost:5445/api/Carts', cartContent);
+    const response = await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
     const data = response.data;
     if (isErrorContent(data)) {
       return {
@@ -63,7 +63,7 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
 
 export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
-    const response = await axios.post<AboutCart>('https://localhost:5445/api/Carts/check-current-cart', payload);
+    const response = await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
 
     if (response.status === 204) {
       return {

@@ -71,6 +71,7 @@ export const updatePaymentStatus = createAsyncThunk<
 >(
     'payment/updatePaymentStatus',
     async (payload: AboutPayment, { rejectWithValue }) => {
+        console.log("updatePaymentStatus is executing");
         if (payload.status === PaymentStatusResponse.Succeeded) {
             return PaymentStatusResponse.Succeeded;
         } else if (payload.error && isErrorContent(payload.error)) {

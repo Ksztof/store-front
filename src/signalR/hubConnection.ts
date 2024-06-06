@@ -3,14 +3,20 @@ import { AppDispatch } from '../redux/store';
 import { AboutPayment } from '../types/paymentTypes'
 import { updatePaymentStatus } from '../redux/actions/paymentActions';
 
-export const startConnection = (dispatch: AppDispatch): HubConnection => {
+export const startConnection = (dispatch: AppDispatch, orderId: number ): HubConnection => {
   const connection: HubConnection = new HubConnectionBuilder()
-    .withUrl("http://localhost:5002/paymentHub")
+    .withUrl("https://localhost:5004/paymentHub")
     .build();
 
-  connection.start().catch(err => console.error('Error while establishing connection:', err));
+  connection.start()
+    .then(() => {
+      console.log('Connection started');
+      return connection.invoke('JoinGroup', orderId.toString());
+    })
+    .catch(err => console.error('Error while establishing connection:', err));
 
   connection.on("ReceivePaymentStatus", (paymentStatus: AboutPayment) => {
+
     dispatch(updatePaymentStatus(paymentStatus));
   });
 

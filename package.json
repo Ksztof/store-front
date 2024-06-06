@@ -31,7 +31,7 @@
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
-  "proxy": "https://localhost:5445",
+  "proxy": "https://localhost:5004",
   "scripts": {
     "start": "cross-env HTTPS=true SSL_CRT_FILE=C:/Users/KRZYS/Desktop/store-front/store-ssl/localhost+3.pem SSL_KEY_FILE=C:/Users/KRZYS/Desktop/store-front/store-ssl/localhost+3-key.pem react-scripts start",
     "build": "react-scripts build",

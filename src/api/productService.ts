@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export const getAllProducts = async (): Promise<ApiResponseWithEmpty<ProductDetails[]>> => {
   try {
-    const response = await axios.get<ProductDetails[]>('https://localhost:5445/api/Products');
+    const response = await axios.get<ProductDetails[]>('https://localhost:5004/api/Products');
     const data = response.data;
 
     if (!isProductDetails(data)) {
