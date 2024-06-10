@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { isApiError } from "../../utils/responseUtils";
 import { OrderDetails, OrderResponse } from "../../types/orderTypes";
 import { saveOrder } from "../../api/orderService";
@@ -26,3 +26,6 @@ export const makeOrder = createAsyncThunk<
         }
     }
 );
+
+export const resetOrder = createAction('order/reset');
+

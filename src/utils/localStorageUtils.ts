@@ -5,7 +5,11 @@ import { produce } from 'immer';
 export const getCartWithNewProduct = (payload: addProductToReduxStorePayload): AboutCart => {
     const newProduct: CheckCart = mapProductDetailsToCheckCart(payload.newProduct, payload.newProductQuantity);
 
-    return produce(payload.cartContent, (draft: AboutCart) => {
+    return produce(payload.cartContent ?? {
+        totalCartValue: 0,
+        aboutProductsInCart: [],
+        createdAt: ""
+    }, (draft: AboutCart) => {
         const product: CheckCart | undefined = draft.aboutProductsInCart
             .find((p: CheckCart) => p.productId === newProduct.productId);
         const newProductTotalPrice = payload.newProductQuantity * payload.newProduct.price;
@@ -35,7 +39,7 @@ export const decreaseProductInCartQuantity = (payload: increaseProductInCartQuan
                 draft.totalCartValue -= product.productUnitPrice;
             }
 
-            if(draft.aboutProductsInCart.length === 0){
+            if (draft.aboutProductsInCart.length === 0) {
                 draft.totalCartValue = 0;
             }
         }

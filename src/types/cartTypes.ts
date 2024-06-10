@@ -71,7 +71,7 @@ export interface checkCurrentCartPayload{
 }
 
 export interface addProductToReduxStorePayload{
-  cartContent: AboutCart;
+  cartContent: AboutCart | undefined;
   newProduct: ProductDetails;
   newProductQuantity: number;
 }

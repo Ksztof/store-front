@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { PayWithCardPayload, PaymentDetails, PaymentStatus } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
 import { payUsingCard } from "../../api/paymentService";
 import { isApiError } from "../../utils/responseUtils";
@@ -65,19 +65,39 @@ export const payWithCard = createAsyncThunk<
 );
 
 export const updatePaymentStatus = createAsyncThunk<
-    string,
+    PaymentStatusResponse,
     AboutPayment,
     { rejectValue: string }
 >(
     'payment/updatePaymentStatus',
     async (payload: AboutPayment, { rejectWithValue }) => {
-        console.log("updatePaymentStatus is executing");
-        if (payload.status === PaymentStatusResponse.Succeeded) {
-            return PaymentStatusResponse.Succeeded;
-        } else if (payload.error && isErrorContent(payload.error)) {
-            return rejectWithValue(`Payment failed with code:  ${payload.error.code} and message ${payload.error.description} - applies to order with id: ${payload.orderId}`);
-        } else {
+        try {
+            if (payload.status === PaymentStatusResponse.Succeeded) {
+                return PaymentStatusResponse.Succeeded;
+            } else if (payload.error && isErrorContent(payload.error)) {
+                return rejectWithValue(`Payment failed with code:  ${payload.error.code} and message ${payload.error.description} - applies to order with id: ${payload.orderId}`);
+            } else {
+                return rejectWithValue("payment status doesn't match");
+            }
+        } catch {
             return rejectWithValue("An uncexpected error occured during payment status check.");
         }
     }
 );
+
+export const updatePaymentStatusSuccess = createAsyncThunk<
+    PaymentStatusResponse,
+    PaymentStatus,
+    { rejectValue: string }
+>(
+    'payment/updatePaymentStatusSuccess',
+    async (status: string, { rejectWithValue }) => {
+        try {
+            return PaymentStatusResponse.Succeeded;
+        } catch {
+            return rejectWithValue("An uncexpected error occured during changing payment status to success.");
+        }
+    }
+);
+
+export const resetPayment = createAction('payment/reset');

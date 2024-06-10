@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PaymentState } from "../../initialValues/paymentInitials";
-import { payWithCard, updatePaymentStatus } from "../actions/paymentActions";
+import { payWithCard, resetPayment, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
 import { PaymentStatus } from "../../types/paymentTypes";
 
 const initialState: PaymentState = {
@@ -37,7 +37,21 @@ const paymentSlice = createSlice({
       .addCase(updatePaymentStatus.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      
+      .addCase(updatePaymentStatusSuccess.pending, (state: PaymentState) => {
+        state.loading = true;
+      })
+      .addCase(updatePaymentStatusSuccess.fulfilled, (state: PaymentState) => {
+        state.loading = false;
+        state.status = PaymentStatus.Succeeded;
+      })
+      .addCase(updatePaymentStatusSuccess.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      .addCase(resetPayment, () => initialState);
   },
 });
 

@@ -1,8 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductState } from '../../types/productTypes';
-import { getProducts } from '../actions/productActions';
 import { OrderState, initialOrderData } from '../../initialValues/orderInitials';
-import { makeOrder } from '../actions/orderActions';
+import { makeOrder, resetOrder } from '../actions/orderActions';
 import { OrderResponse } from '../../types/orderTypes';
 
 const initialState: OrderState = {
@@ -29,7 +27,9 @@ const orderSlice = createSlice({
       .addCase(makeOrder.rejected, (state: OrderState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      
+      .addCase(resetOrder, () => initialState);
   },
 });
 
