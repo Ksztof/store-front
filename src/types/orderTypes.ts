@@ -18,7 +18,7 @@ export interface MakeOrderCardPaymentPayload {
     stripe: Stripe | null;
     elements: StripeElements | null;
     orderDetails: OrderDetails;
-}
+};
 
 interface ShippingDetailResponse {
     firstName: string;
@@ -37,4 +37,14 @@ export interface OrderResponse {
     totalCartValue: number;
     aboutProductsInCart: CheckCart[];
     shippingDetil: ShippingDetailResponse;
+};
+
+export enum MethodOfPayment {
+    Card = "Card",
+    OnDelivery = "OnDelivery",
+    NotSet = "NotSet"
+};
+
+export interface OrderSummaryProps {
+    paymentMethod: MethodOfPayment
 }

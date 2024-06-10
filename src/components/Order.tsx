@@ -3,21 +3,25 @@ import WrappedStripeCheckout from './StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { orderDetailsInitialValues } from '../initialValues/orderInitials';
-import { OrderDetails, OrderResponse } from '../types/orderTypes';
+import { OrderDetails, MethodOfPayment } from '../types/orderTypes';
 import { ShippingDetails } from './ShippingDetails';
 import { PaymentStatus } from '../types/paymentTypes';
-import { CheckCart } from '../types/cartTypes';
-import { OrderedProducts } from './OrderedProducts';
-import { startConnection } from '../signalR/hubConnection';
+import PaymentMethodSelector from './PaymentMethodSelector';
+import ProductsToOrder from './ProductsToOrder';
 import { useAppDispatch } from '../hooks';
-
+import { makeOrder, resetOrder } from '../redux/actions/orderActions';
+import { resetPayment, updatePaymentStatusSuccess } from '../redux/actions/paymentActions';
+import OrderSummary from './OrderSummary';
+import { Link } from 'react-router-dom';
+import { resetCart } from '../redux/actions/cartActions';
 
 export const Order: React.FC = () => {
-    const toPay: number = useSelector((state: RootState) => state.cart.cartDetails.aboutCart.totalCartValue);
-    const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
-    const paymentStatus = useSelector((state: RootState) => state.payment.status);
     const dispatch = useAppDispatch();
 
+    const toPay: number = useSelector((state: RootState) => state.cart.cartData.totalCartValue);
+    const paymentStatus = useSelector((state: RootState) => state.payment.status);
+
+    const [paymentMethod, setPaymentMethod] = useState<MethodOfPayment>(MethodOfPayment.NotSet);
     const [orderDetails, setOrderDetailsState] = useState<OrderDetails>(orderDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
@@ -25,56 +29,70 @@ export const Order: React.FC = () => {
         setOrderDetailsState(prev => ({ ...prev, ...values }));
     };
 
-    // useEffect(() => {
-    //     if (orderSummary.id) {
-    //         const connection = startConnection(dispatch, orderSummary.id);
-    //         return () => {
-    //             connection.stop();
-    //         };
-    //     }
-    // }, [orderSummary, dispatch]);
+    const handleFormSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        setIsFormValid(true);
+    };
+
+    const handleDeliveryOrder = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const orderResult = await dispatch(makeOrder(orderDetails));
+        if (orderResult.type.endsWith('fulfilled')) {
+            dispatch(updatePaymentStatusSuccess(PaymentStatus.Succeeded));
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            console.log("payment status"+ paymentStatus);
+            if (paymentStatus === PaymentStatus.Succeeded) {
+                dispatch(resetOrder());
+                dispatch(resetPayment());
+                dispatch(resetCart());
+            };
+        }
+
+    }, [paymentStatus, dispatch]);
+
 
     return (
         <div>
-            <h1>Order Page</h1>
             {paymentStatus === PaymentStatus.Succeeded ? (
-                <div>
-                    <h1>Order Summary</h1>
-                    <p>Order ID: {orderSummary.id}</p>
-                    <p>Total Amount: {orderSummary.totalCartValue}</p>
-                    <p>Status: paid</p>
-                    <p>Products</p>
+                <>
+                    <h1>Thank you for your order!</h1>
+                    <OrderSummary paymentMethod={paymentMethod} />
                     <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Total Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orderSummary.aboutProductsInCart.map((product: CheckCart) => (
-                                    <OrderedProducts key={product.productId} product={product} />
-                                ))}
-                            </tbody>
-                        </table>
+                        <Link to="/">OK</Link>
                     </div>
-                </div>
+                </>
             ) : (
                 <>
-                    < ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
-
-                    {isFormValid && (
-                        <>
-                            <h1>Your order</h1>
-                            <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
-                            <p>Order amount {toPay}</p>
-                        </>
-                    )}
+                    <ProductsToOrder />
+                    <form onSubmit={handleFormSubmit}>
+                        <ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
+                        {isFormValid && (
+                            <>
+                                <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
+                                {paymentMethod === MethodOfPayment.Card ? (
+                                    <>
+                                        <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
+                                        <p>Order amount {toPay}</p>
+                                    </>
+                                ) : paymentMethod === MethodOfPayment.OnDelivery ? (
+                                    <>
+                                        <button onClick={handleDeliveryOrder}>Order Now</button>
+                                    </>
+                                ) : (
+                                    <p>Select a payment method</p>
+                                )}
+                            </>
+                        )}
+                    </form>
                 </>
             )}
         </div>
     );
-}
+};
+
+
+export default Order;

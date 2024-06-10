@@ -1,11 +1,11 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
 import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { RootState } from '../store';
-import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity} from '../../utils/localStorageUtils';
+import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from '../../utils/localStorageUtils';
 import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 
@@ -32,15 +32,15 @@ export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, {
 );
 
 export const setCurrentCart = createAsyncThunk<
-  AboutCart | null, 
+  AboutCart | null,
   void,
- { state: RootState, rejectValue: string | undefined }
+  { state: RootState, rejectValue: string | undefined }
 >(
   'cart/setCurrentCart',
   async (_, { getState, rejectWithValue }) => {
     try {
       const state: RootState = getState();
-      const cartCreationDate: string | undefined = state.cart.cartDetails.aboutCart?.createdAt;
+      const cartCreationDate: string | undefined = state.cart.cartData?.createdAt;
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
 
@@ -68,21 +68,20 @@ export const setCurrentCart = createAsyncThunk<
 export const addProductToCart = createAsyncThunk<
   AboutCart,
   addProductToCartPayload,
-  { state: RootState,rejectValue: string | undefined }>(
+  { state: RootState, rejectValue: string | undefined }>(
     'cart/addProduct ',
     async (payload: addProductToCartPayload, { getState, rejectWithValue }) => {
       try {
         const state: RootState = getState();
-        const currentCartContent: AboutCart = state.cart.cartDetails.aboutCart;
-
-        if(currentCartContent !== null){
+        const currentCartContent: AboutCart = state.cart.cartData;
+        if (currentCartContent !== null) {
           const addProductPayload: addProductToReduxStorePayload = {
             cartContent: currentCartContent,
             newProduct: payload.product,
             newProductQuantity: payload.quantity
           }
 
-          const updatedCart: AboutCart = getCartWithNewProduct(addProductPayload);  
+          const updatedCart: AboutCart = getCartWithNewProduct(addProductPayload);
           return updatedCart;
         } else {
           return rejectWithValue("Cannot add product to cart, cart doesn't exsist");
@@ -102,7 +101,7 @@ export const adjustProductQuantity = createAsyncThunk<
     async (payload: AdjustProductQuantityPayload, { getState, rejectWithValue }) => {
       try {
         const state = getState();
-        const currentCartContent: AboutCart = state.cart.cartDetails.aboutCart;
+        const currentCartContent: AboutCart = state.cart.cartData;
         const changeQuantityPayload: increaseProductInCartQuantityStorePayload = {
           productId: payload.productId,
           cartContent: currentCartContent,
@@ -113,7 +112,7 @@ export const adjustProductQuantity = createAsyncThunk<
         } else {
           const updatedCart: AboutCart = decreaseProductInCartQuantity(changeQuantityPayload);
           return updatedCart;
-        }        
+        }
       } catch (error: unknown) {
         console.error("Unexpected error:", error);
         return rejectWithValue("Cannot adjust product quantity, because of unexpected error occured");
@@ -129,9 +128,9 @@ export const changeProductInCartQuantity = createAsyncThunk<
     async (payload: ChangeProductInCartQuantityPayload, { getState, rejectWithValue }) => {
       try {
         const state: RootState = getState();
-        const currentCartContent: AboutCart | null = state.cart.cartDetails.aboutCart;
-        
-        if(currentCartContent){
+        const currentCartContent: AboutCart | null = state.cart.cartData;
+
+        if (currentCartContent) {
           const modifyProductInCartQuantityPayload: ModifyProductInCartQuantityPayload = {
             productId: payload.productId,
             productQuantity: payload.productQuantity,
@@ -173,3 +172,5 @@ export const changeCartContentGlobally = createAsyncThunk<
       }
     }
   );
+
+export const resetCart = createAction('cart/reset');

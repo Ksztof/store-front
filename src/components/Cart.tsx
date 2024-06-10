@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
-    const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartDetails.aboutCart);
+    const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
     const navigate = useNavigate();
 

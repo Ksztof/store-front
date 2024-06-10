@@ -3,7 +3,7 @@ import { AppDispatch } from '../redux/store';
 import { AboutPayment } from '../types/paymentTypes'
 import { updatePaymentStatus } from '../redux/actions/paymentActions';
 
-export const startConnection = (dispatch: AppDispatch, orderId: number ): HubConnection => {
+export const startConnection = (dispatch: AppDispatch, orderId: number): HubConnection => {
   const connection: HubConnection = new HubConnectionBuilder()
     .withUrl("https://localhost:5004/paymentHub")
     .build();
@@ -16,7 +16,6 @@ export const startConnection = (dispatch: AppDispatch, orderId: number ): HubCon
     .catch(err => console.error('Error while establishing connection:', err));
 
   connection.on("ReceivePaymentStatus", (paymentStatus: AboutPayment) => {
-
     dispatch(updatePaymentStatus(paymentStatus));
   });
 
