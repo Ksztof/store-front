@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const orderDetailsSchema = Yup.object({
+export const shippingDetailsSchema = Yup.object({
   firstName: Yup.string()
     .required('First name is required')
     .max(52, 'First name cannot be longer than 52 characters')
@@ -38,3 +38,26 @@ export const orderDetailsSchema = Yup.object({
     .matches(/^\d{3}-\d{3}-\d{3}$/, 'Invalid phone number format')
     .required('Phone number is required')
 });
+
+export const passwordValidation = Yup.string()
+  .required('Password is required.')
+  .min(7, 'Password must be at least 7 characters long.')
+  .matches(/[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z]/, 'Password must contain at least 4 letters.')
+  .matches(/\d.*\d/, 'Password must contain at least 2 digits.')
+  .matches(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/, 'Password must contain at least one special character.')
+  .matches(/^\S*$/, 'Password must not contain any white spaces.');
+
+export const registerSchema = Yup.object({
+  login: Yup.string()
+    .required('Login is required.')
+    .min(2, 'Login must be at least 2 characters long.')
+    .matches(/^[a-zA-Z][a-zA-Z0-9]*$/, 'Login must start with a letter and contain only letters and digits.')
+    .max(15, 'Login can have a maximum of 15 characters'),
+  email: Yup.string()
+    .email('Invalid email format. Please enter a valid email address like name@domain.com')
+    .matches(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/, 'Please enter a valid email address with proper format and domain')
+    .required('Email is required'),
+  password: passwordValidation,
+  confirmPassword: passwordValidation.oneOf([Yup.ref('password')], 'Confirm password must match password.'),
+});
+

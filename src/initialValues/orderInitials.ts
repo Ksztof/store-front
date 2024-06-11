@@ -1,6 +1,6 @@
-import { OrderDetails, OrderResponse } from "../types/orderTypes";
+import { ShippingDetails, OrderResponse } from "../types/orderTypes";
 
-export const orderDetailsInitialValues: OrderDetails = {
+export const shippingDetailsInitialValues: ShippingDetails = {
     firstName: '',
     lastName: '',
     email: '',

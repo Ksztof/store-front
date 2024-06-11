@@ -60,7 +60,10 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
     throw new Error("Failed to save cart content because of unexpected error");
   }
 };
-
+// const isValidDate = (dateString: string) => {
+//   const date = new Date(dateString);
+//   return !isNaN(date.getTime());
+// };
 export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponseWithEmpty<AboutCart>> => {
   try {
     const response = await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
@@ -71,7 +74,6 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
         isEmpty: true
       };
     }
-
     const data = response.data;
 
     if (isErrorContent(data)) {

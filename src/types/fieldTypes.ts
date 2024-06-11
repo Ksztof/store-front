@@ -1,11 +1,11 @@
-import { OrderDetails } from "./orderTypes";
+import { ShippingDetails } from "./orderTypes";
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    handleSetOrderDetails?: (value: Partial<OrderDetails>) => void; 
+    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void; 
 }
 
 export interface NumericFieldProps {
@@ -13,5 +13,5 @@ export interface NumericFieldProps {
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    handleSetOrderDetails?: (value: Partial<OrderDetails>) => void; 
+    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void; 
   }
