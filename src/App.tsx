@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Navbar } from './components/Navbar';
 import { Order } from './components/Order';
+import RegisterPage from './pages/RegisterPage';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="/" element={ <Main />} />
             <Route path="/login" element={ <Login /> } />
             <Route path="/order" element={ <Order /> } />
+            <Route path="/register" element={ <RegisterPage /> } />
           </Routes>
         </Router>
       </div>

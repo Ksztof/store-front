@@ -43,7 +43,6 @@ export const setCurrentCart = createAsyncThunk<
       const cartCreationDate: string | undefined = state.cart.cartData?.createdAt;
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
-
         const response: ApiResponseWithEmpty<AboutCart> = await checkCurrentCart(payload);
         if (isApiError(response)) {
           const error: ErrorContent = response.error;

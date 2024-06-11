@@ -1,8 +1,20 @@
+import { ValidationError } from "yup";
+import { passwordValidation } from "./validationSchemas";
+
 export function capitalizeFirstLetterAndSetLength(string: string, maxLength: number): string {
     const alphaOnly: string = string.replace(/[^a-zA-Z]/g, '');
     const trimmedString: string= alphaOnly.slice(0, maxLength);
     return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1).toLowerCase();
 }
+
+export function formatLoginAndSetLength(inputString: string, maxLength: number): string {
+    let sanitizedString = inputString.replace(/[^a-zA-Z0-9]/g, '');
+    sanitizedString = sanitizedString.replace(/^[^a-zA-Z]+/, '');
+    const trimmedString = sanitizedString.slice(0, maxLength);
+    
+    return trimmedString;
+}
+
 
 
 export function formatPostCode(value: string): string {
@@ -55,3 +67,15 @@ export function formatEmailInput(value: string): string {
     }
     return parts.join('@');
 }
+
+export const formatPasswordInput = (value: string): string => {
+    const sanitizedValue = value.replace(/\s+/g, ''); 
+    try {
+        passwordValidation.validateSync(sanitizedValue);
+      return sanitizedValue;
+    } catch (error) {
+        const validationError = error as ValidationError;
+        console.error(validationError.errors);
+        return sanitizedValue; 
+      }
+    };

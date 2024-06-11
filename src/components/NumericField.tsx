@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import { NumericFieldProps } from '../types/fieldTypes';
 
-const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, onBlur, handleSetOrderDetails }) => {
+const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, onBlur, handleSetShippingDetails }) => {
   const { setFieldValue, handleBlur } = useFormikContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +16,8 @@ const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, o
     const formattedValue = formatValue ? formatValue(value) : value;
     handleBlur(e);
 
-    if (handleSetOrderDetails) {
-      handleSetOrderDetails({ [name]: formattedValue });
+    if (handleSetShippingDetails) {
+      handleSetShippingDetails({ [name]: formattedValue });
     }
   };
   
@@ -36,6 +36,5 @@ const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, o
     </div>
   );
 };
-
 
 export default NumericField;

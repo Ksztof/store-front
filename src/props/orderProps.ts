@@ -1,7 +1,7 @@
-import { MethodOfPayment, OrderDetails } from "../types/orderTypes";
+import { MethodOfPayment, ShippingDetails } from "../types/orderTypes";
 
 export interface ShippingDetailsProps {
-    handleSetOrderDetails: (value: Partial<OrderDetails>) => void;
+    handleSetShippingDetails: (value: Partial<ShippingDetails>) => void;
     setIsFormValid: (value: boolean) => void;
 }
 

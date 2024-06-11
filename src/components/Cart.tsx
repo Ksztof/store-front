@@ -17,17 +17,21 @@ export const Cart: React.FC = () => {
     useEffect(() => {
         if (
             (!cartContent && isLoggedIn)
-             || (!cartContent && isGuestUser())) {
+            || (!cartContent && isGuestUser())
+            || (cartContent.createdAt.trim() === "" && isLoggedIn)
+            || (cartContent.createdAt.trim() === "" && isGuestUser())
+        ) {
             dispatch(synchronizeCartWithApi());
-        } else if(
+        } else if (
             (cartContent && isLoggedIn)
-             || (cartContent && isGuestUser())){
+            || (cartContent && isGuestUser())) {
             dispatch(setCurrentCart());
         } else {
 
         }
-    }, [isLoggedIn, cartContent, dispatch]);
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoggedIn, dispatch]);
+
     const handleOrder = () => {
         if (cartContent !== null) {
             navigate('/order');
@@ -61,7 +65,7 @@ export const Cart: React.FC = () => {
                             <ProductInCart key={p.productId} product={p} />
                         ))}
                         <p>{cartContent.createdAt.toString()}</p>
-                        
+
                     </div>
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </>

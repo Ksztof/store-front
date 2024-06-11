@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import WrappedStripeCheckout from './StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { orderDetailsInitialValues } from '../initialValues/orderInitials';
-import { OrderDetails, MethodOfPayment } from '../types/orderTypes';
-import { ShippingDetails } from './ShippingDetails';
+import { ShippingDetails, MethodOfPayment } from '../types/orderTypes';
+import { ShippingDetailsForm } from './ShippingDetailsForm';
 import { PaymentStatus } from '../types/paymentTypes';
 import PaymentMethodSelector from './PaymentMethodSelector';
 import ProductsToOrder from './ProductsToOrder';
@@ -14,6 +13,7 @@ import { resetPayment, updatePaymentStatusSuccess } from '../redux/actions/payme
 import OrderSummary from './OrderSummary';
 import { Link } from 'react-router-dom';
 import { resetCart } from '../redux/actions/cartActions';
+import { shippingDetailsInitialValues } from '../initialValues/orderInitials';
 
 export const Order: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -22,11 +22,11 @@ export const Order: React.FC = () => {
     const paymentStatus = useSelector((state: RootState) => state.payment.status);
 
     const [paymentMethod, setPaymentMethod] = useState<MethodOfPayment>(MethodOfPayment.NotSet);
-    const [orderDetails, setOrderDetailsState] = useState<OrderDetails>(orderDetailsInitialValues);
+    const [shippingDetails, setShippingDetailsState] = useState<ShippingDetails>(shippingDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-    const handleSetOrderDetails = (values: Partial<OrderDetails>) => {
-        setOrderDetailsState(prev => ({ ...prev, ...values }));
+    const handleSetShippingDetails = (values: Partial<ShippingDetails>) => {
+        setShippingDetailsState(prev => ({ ...prev, ...values }));
     };
 
     const handleFormSubmit = (event: React.FormEvent) => {
@@ -36,7 +36,7 @@ export const Order: React.FC = () => {
 
     const handleDeliveryOrder = async (event: React.FormEvent) => {
         event.preventDefault();
-        const orderResult = await dispatch(makeOrder(orderDetails));
+        const orderResult = await dispatch(makeOrder(shippingDetails));
         if (orderResult.type.endsWith('fulfilled')) {
             dispatch(updatePaymentStatusSuccess(PaymentStatus.Succeeded));
         }
@@ -44,7 +44,6 @@ export const Order: React.FC = () => {
 
     useEffect(() => {
         return () => {
-            console.log("payment status"+ paymentStatus);
             if (paymentStatus === PaymentStatus.Succeeded) {
                 dispatch(resetOrder());
                 dispatch(resetPayment());
@@ -69,13 +68,13 @@ export const Order: React.FC = () => {
                 <>
                     <ProductsToOrder />
                     <form onSubmit={handleFormSubmit}>
-                        <ShippingDetails handleSetOrderDetails={handleSetOrderDetails} setIsFormValid={setIsFormValid} />
+                        <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
                         {isFormValid && (
                             <>
                                 <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                                 {paymentMethod === MethodOfPayment.Card ? (
                                     <>
-                                        <WrappedStripeCheckout amount={toPay} orderDetails={orderDetails} />
+                                        <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} />
                                         <p>Order amount {toPay}</p>
                                     </>
                                 ) : paymentMethod === MethodOfPayment.OnDelivery ? (

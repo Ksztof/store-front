@@ -10,7 +10,6 @@ export const startConnection = (dispatch: AppDispatch, orderId: number): HubConn
 
   connection.start()
     .then(() => {
-      console.log('Connection started');
       return connection.invoke('JoinGroup', orderId.toString());
     })
     .catch(err => console.error('Error while establishing connection:', err));
