@@ -31,21 +31,20 @@ export const RegisterPage: React.FC = () => {
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
         await dispatch(register(registerCredentials));
-        if (registrationState === ReducerStates.Fulfilled) {
-            return (
-                <div>
-                    <><p>Registration complete!</p></>
-                </div>
-            );
-        }
     };
 
     return (
         <div>
-            <RegisterForm handleSetRegisterCredentials={handleSetRegisterCredentials} setIsFormValid={setIsFormValid} />
-            {isFormValid && (
+            {registrationState === ReducerStates.Fulfilled ? (
+                <><p>REGISTERED</p></>
+            ) : (
                 <>
-                    <button onClick={handleRegister}>Register</button>
+                    <RegisterForm handleSetRegisterCredentials={handleSetRegisterCredentials} setIsFormValid={setIsFormValid} />
+                    {isFormValid && (
+                        <>
+                            <button onClick={handleRegister}>Register</button>
+                        </>
+                    )}
                 </>
             )}
         </div>
