@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState, persistor } from '../redux/store';
 import { useAppDispatch } from '../hooks';
-import { logout } from '../redux/reducers/authReducer';
 import { useEffect } from 'react';
+import { resetAuth } from '../redux/actions/authActions';
 
 export const Navbar: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -14,7 +14,7 @@ export const Navbar: React.FC = () => {
     }, [isLoggedIn])
     
     const handleLogout = () => {
-        dispatch(logout());
+        dispatch(resetAuth());
         persistor.purge();
       };
 

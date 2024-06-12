@@ -1,11 +1,12 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { PayWithCardPayload, PaymentDetails, PaymentStatus } from "../../types/paymentTypes";
+import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
 import { payUsingCard } from "../../api/paymentService";
 import { isApiError } from "../../utils/responseUtils";
 import { PaymentStatusResponse } from '../../types/paymentTypes';
 import { AboutPayment } from '../../types/paymentTypes';
 import { isErrorContent } from '../../utils/responseUtils';
+import { ReducerStates } from "../../types/sharedTypes";
 
 export const payWithCard = createAsyncThunk<
     null,
@@ -87,11 +88,11 @@ export const updatePaymentStatus = createAsyncThunk<
 
 export const updatePaymentStatusSuccess = createAsyncThunk<
     PaymentStatusResponse,
-    PaymentStatus,
+    void,
     { rejectValue: string }
 >(
     'payment/updatePaymentStatusSuccess',
-    async (status: string, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
         try {
             return PaymentStatusResponse.Succeeded;
         } catch {

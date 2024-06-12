@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../../api/authService';
 import { LoginCredentials, RegisterCredentials } from '../../types/authTypes';
 
@@ -39,3 +39,5 @@ export const register = createAsyncThunk<
     }
   }
 );
+
+export const resetAuth = createAction('auth/reset');

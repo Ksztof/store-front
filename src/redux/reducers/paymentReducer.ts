@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PaymentState } from "../../initialValues/paymentInitials";
 import { payWithCard, resetPayment, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
-import { PaymentStatus } from "../../types/paymentTypes";
+import { ReducerStates } from "../../types/sharedTypes";
 
 const initialState: PaymentState = {
   loading: false,
-  status: PaymentStatus.NotStarted,
+  status: ReducerStates.Idle,
   error: "",
 };
 
@@ -17,14 +17,16 @@ const paymentSlice = createSlice({
     builder
       .addCase(payWithCard.pending, (state: PaymentState) => {
         state.loading = true;
+        state.status = ReducerStates.Pending;
       })
       .addCase(payWithCard.fulfilled, (state: PaymentState) => {
         state.loading = false;
-        state.status = PaymentStatus.Awaiting;
+        state.status = ReducerStates.Fulfilled;
       })
       .addCase(payWithCard.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
+        state.status = ReducerStates.Rejected;
       })
 
       .addCase(updatePaymentStatus.pending, (state: PaymentState) => {
@@ -32,7 +34,7 @@ const paymentSlice = createSlice({
       })
       .addCase(updatePaymentStatus.fulfilled, (state: PaymentState) => {
         state.loading = false;
-        state.status = PaymentStatus.Succeeded;
+        state.status = ReducerStates.Fulfilled;
       })
       .addCase(updatePaymentStatus.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
@@ -44,7 +46,7 @@ const paymentSlice = createSlice({
       })
       .addCase(updatePaymentStatusSuccess.fulfilled, (state: PaymentState) => {
         state.loading = false;
-        state.status = PaymentStatus.Succeeded;
+        state.status = ReducerStates.Fulfilled;
       })
       .addCase(updatePaymentStatusSuccess.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
         state.loading = false;

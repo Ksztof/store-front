@@ -16,6 +16,7 @@ export interface OrderState {
     loading: boolean;
     orderData: OrderResponse;
     error: string | undefined;
+    status: string;
 }
 
 export const initialOrderData: OrderResponse = {

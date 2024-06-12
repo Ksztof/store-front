@@ -16,7 +16,7 @@ export interface RegisterCredentials {
 
 export interface AuthState {
   loading: boolean;
-  userData: any; 
   error: string | null;
   isLoggedIn: boolean;
+  status: string;
 }

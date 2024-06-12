@@ -1,8 +1,8 @@
-import { PaymentStatus } from "../types/paymentTypes";
+import { ReducerStates } from "../types/sharedTypes";
 
 export interface PaymentState {
     loading: boolean,
-    status: PaymentStatus, 
+    status: ReducerStates, 
     error: string | undefined,
 }
 

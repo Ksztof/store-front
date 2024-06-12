@@ -1,6 +1,6 @@
 import { MethodOfPayment, ShippingDetails } from "../types/orderTypes";
 
-export interface ShippingDetailsProps {
+export interface ShippingDetailsFormProps {
     handleSetShippingDetails: (value: Partial<ShippingDetails>) => void;
     setIsFormValid: (value: boolean) => void;
 }
