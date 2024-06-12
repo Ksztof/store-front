@@ -19,4 +19,5 @@ export interface AuthState {
   userData: any; 
   error: string | null;
   isLoggedIn: boolean;
+  status: string;
 }

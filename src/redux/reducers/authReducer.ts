@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login } from '../actions/authActions'; 
+import { login, resetAuth } from '../actions/authActions'; 
 import { AuthState } from '../../types/authTypes';
+import { ReducerStates } from '../../types/sharedTypes';
 
 const initialState: AuthState = {
   loading: false,
   userData: null,
   error: null,
   isLoggedIn: false,
+  status: ReducerStates.Idle
 };
 
 const authSlice = createSlice({
@@ -21,19 +23,24 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (authState) => {
-        authState.loading = true;
-        authState.error = null;
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.status = ReducerStates.Pending;
       })
-      .addCase(login.fulfilled, (authState, action) => {
-        authState.loading = false;
-        authState.userData = action.payload;
-        authState.isLoggedIn = true;
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userData = action.payload;
+        state.isLoggedIn = true;
+        state.status = ReducerStates.Fulfilled;
       })
-      .addCase(login.rejected, (authState) => {// change any for AuthState
-        authState.loading = false;
-        authState.error = 'Wrong credentials.';
-      });
+      .addCase(login.rejected, (state) => {
+        state.loading = false;
+        state.error = 'Wrong credentials.';
+        state.status = ReducerStates.Rejected
+      })
+      
+      .addCase(resetAuth, () => initialState);
   },
 });
 

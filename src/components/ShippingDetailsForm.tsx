@@ -3,13 +3,12 @@ import { shippingDetailsSchema } from "../validation/validationSchemas";
 import TextField from "./TextField";
 import NumericField from "./NumericField";
 import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatNumericField, formatPhoneNumber, formatPostCode } from "../validation/validationUtils";
-import { ShippingDetailsProps } from "../props/orderProps";
+import { ShippingDetailsFormProps } from "../props/orderProps";
 import { shippingDetailsInitialValues } from "../initialValues/orderInitials";
 
 
-export const ShippingDetailsForm: React.FC<ShippingDetailsProps> =
+export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
     ({ handleSetShippingDetails, setIsFormValid }) => {
-
         return (
             <div>
                 <Formik

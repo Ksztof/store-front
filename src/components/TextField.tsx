@@ -2,7 +2,8 @@ import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import { TextFieldProps } from '../types/fieldTypes';
 
-const TextField: React.FC<TextFieldProps> = ({ name, label, formatValue, onBlur, handleSetShippingDetails, type = 'text' }) => {
+const TextField: React.FC<TextFieldProps> = 
+({ name, label, formatValue, onBlur, handleSetShippingDetails, handleSetRegisterCredentials, type = 'text' }) => {
     const { setFieldValue, handleBlur } = useFormikContext();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +20,8 @@ const TextField: React.FC<TextFieldProps> = ({ name, label, formatValue, onBlur,
 
         if (handleSetShippingDetails) {
             handleSetShippingDetails({ [name]: formattedValue });
+        } else if (handleSetRegisterCredentials) {
+            handleSetRegisterCredentials({ [name]: formattedValue })
         }
     };
 
