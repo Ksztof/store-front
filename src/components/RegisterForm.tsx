@@ -1,29 +1,37 @@
-import { ErrorMessage, Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik, FormikProps } from "formik";
 import TextField from "./TextField";
 import { registerCredentialsInitialValues } from "../initialValues/authInitials";
 import { registerSchema } from "../validation/validationSchemas";
-import { formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../validation/validationUtils";
+import {formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../validation/validationUtils";
 import { RegisterFormProps } from "../props/authProps";
+import { useEffect, useRef } from "react";
 
 export const RegisterForm: React.FC<RegisterFormProps> =
     ({ handleSetRegisterCredentials, setIsFormValid }) => {
+        const formikRef = useRef<FormikProps<any>>(null);
+
+        useEffect(() => {
+            const checkFormValidity = () => {
+                const formik = formikRef.current;
+                if (formik) {
+                    const isFormFullyTouched = Object.keys(formik.touched).length === Object.keys(registerCredentialsInitialValues).length;
+                    const formIsValid = formik.isValid && isFormFullyTouched;
+                    setIsFormValid(formIsValid);
+                }
+            };
+
+            checkFormValidity();
+        });
+
         return (
             <div>
                 <Formik
+                    innerRef={formikRef}
                     initialValues={registerCredentialsInitialValues}
                     validationSchema={registerSchema}
-                    onSubmit={() => {
-                    }}
+                    onSubmit={() => {}}
                 >
-                    {({ touched, isValid }) => {
-                        const isFormFullyTouched: boolean = Object.keys(touched).length === Object.keys(registerCredentialsInitialValues).length;
-                        const isFormValid: boolean = isValid && isFormFullyTouched;
-
-                        if (isFormValid) {
-                            setIsFormValid(true);
-                        }
-
-                        return (
+                    {() => (
                             <Form style={{ display: 'block' }}>
                                 <style>
                                     {`
@@ -70,10 +78,8 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                     handleSetRegisterCredentials={handleSetRegisterCredentials} />
                                 <ErrorMessage name="confirmPassword" component="div" />
                             </Form>
-                        );
-                    }}
+                    )}
                 </Formik>
             </div>
-
         );
-    }
+    };

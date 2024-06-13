@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { login, register, resetAuth } from '../actions/authActions'; 
+import { login, register, resetAuth } from '../actions/authActions';
 import { AuthState } from '../../types/authTypes';
 import { ReducerStates } from '../../types/sharedTypes';
 
 const initialState: AuthState = {
   loading: false,
-  error: null,
+  error: undefined,
   isLoggedIn: false,
   status: ReducerStates.Idle
 };
@@ -13,17 +13,11 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: (authState) => {
-      authState.isLoggedIn = false;
-      authState.error = null;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state: AuthState) => {
         state.loading = true;
-        state.error = null;
         state.status = ReducerStates.Pending;
       })
       .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<void | undefined>) => {//add payload action
@@ -36,19 +30,18 @@ const authSlice = createSlice({
         state.error = 'Wrong credentials.';
         state.status = ReducerStates.Rejected
       })
-      
+
       .addCase(register.pending, (state: AuthState) => {
         state.loading = true;
-        state.error = null;
         state.status = ReducerStates.Pending;
       })
-      .addCase(register.fulfilled, (state: AuthState, action: PayloadAction<void | undefined>) => {
+      .addCase(register.fulfilled, (state: AuthState, action: PayloadAction<void | null>) => {
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(register.rejected, (state: AuthState) => {
+      .addCase(register.rejected, (state: AuthState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
-        state.error = 'Wrong credentials.';
+        state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 
@@ -56,5 +49,4 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
 export default authSlice.reducer;

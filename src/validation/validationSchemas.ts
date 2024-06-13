@@ -55,7 +55,8 @@ export const registerSchema = Yup.object({
     .max(15, 'Login can have a maximum of 15 characters'),
   email: Yup.string()
     .email('Invalid email format. Please enter a valid email address like name@domain.com')
-    .matches(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/, 'Please enter a valid email address with proper format and domain')
+    .matches(/^[a-zA-Z0-9]*[a-zA-Z][a-zA-Z0-9]*@[a-zA-Z][a-zA-Z0-9]*(\.[a-zA-Z0-9]+)?\.[a-zA-Z]{2,5}$/
+, 'Please enter a valid email address with proper format and domain')
     .required('Email is required'),
   password: passwordValidation,
   confirmPassword: passwordValidation.oneOf([Yup.ref('password')], 'Confirm password must match password.'),

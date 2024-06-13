@@ -1,6 +1,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../../api/authService';
 import { LoginCredentials, RegisterCredentials } from '../../types/authTypes';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
+import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 
 export const login = createAsyncThunk<
   void,
@@ -22,20 +24,25 @@ export const login = createAsyncThunk<
 );
 
 export const register = createAsyncThunk<
-  void,
+  null,
   RegisterCredentials,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >(
   'auth/register',
   async (payload: RegisterCredentials, { rejectWithValue }) => {
     try {
-      const response = await registerUser(payload);
-      return response;
-    } catch (error: any) {
-      if (!error.response) {
-        throw error;
+      const response: ApiResponseWithEmpty<void> = await registerUser(payload);
+      if (isApiError(response)) {
+        const error: ErrorContent = response.error;
+        return rejectWithValue(`Error code: ${error.code}, Error description: ${error.description}`);
+      } else if (isApiSuccessEmpty(response)) {
+        return null;
+      } else {
+        return rejectWithValue(`validation error`);
       }
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      console.error("Unexpected error:", error);
+      return rejectWithValue("User cannot be registered, an unexpected error occurred");
     }
   }
 );
