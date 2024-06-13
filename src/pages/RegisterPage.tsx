@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { RegisterForm } from '../components/RegisterForm';
 import { RegisterCredentials } from '../types/authTypes';
 import { registerCredentialsInitialValues } from '../initialValues/authInitials';
-import { register } from '../redux/actions/authActions';
+import { register, resetAuth } from '../redux/actions/authActions';
 import { useAppDispatch } from '../hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { ReducerStates } from '../types/sharedTypes';
+import { Link } from 'react-router-dom';
 
 export const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -19,14 +20,9 @@ export const RegisterPage: React.FC = () => {
         setRegisterCredentialsState(prev => ({ ...prev, ...values }));
     };
 
-    const handleFormSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        setIsFormValid(true);
-    };
+    // useEffect(() => {
 
-    useEffect(() => {
-
-    }, [registrationState])
+    // }, [registrationState])
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -36,7 +32,11 @@ export const RegisterPage: React.FC = () => {
     return (
         <div>
             {registrationState === ReducerStates.Fulfilled ? (
-                <><p>REGISTERED</p></>
+                <>
+                    <p>Thank you for your registration!</p>
+                    <p>Please check your email and click the activation link.</p>
+                    <Link to="/" onClick={() => dispatch(resetAuth())}>OK</Link>
+                </>
             ) : (
                 <>
                     <RegisterForm handleSetRegisterCredentials={handleSetRegisterCredentials} setIsFormValid={setIsFormValid} />
