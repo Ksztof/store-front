@@ -19,8 +19,8 @@ export const Order: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const toPay: number = useSelector((state: RootState) => state.cart.cartData.totalCartValue);
-    const paymentState = useSelector((state: RootState) => state.payment.status);
-
+    const paymentState: string = useSelector((state: RootState) => state.payment.status);
+    const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
     const [paymentMethod, setPaymentMethod] = useState<MethodOfPayment>(MethodOfPayment.NotSet);
     const [shippingDetails, setShippingDetailsState] = useState<ShippingDetails>(shippingDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
@@ -46,7 +46,7 @@ export const Order: React.FC = () => {
             };
         }
 
-    }, [paymentState, dispatch]);
+    }, [paymentState, isCartEmpty, dispatch]);
 
     return (
         <div>
@@ -62,7 +62,7 @@ export const Order: React.FC = () => {
                 <>
                     <ProductsToOrder />
                     <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
-                    {isFormValid && (
+                    {isFormValid && isCartEmpty !== true  && (
                         <>
                             <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                             {paymentMethod === MethodOfPayment.Card ? (

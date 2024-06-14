@@ -9,6 +9,7 @@ const initialState: CartState = {
     aboutProductsInCart: [],
     createdAt: ""},
   error: "",
+  isEmpty: true,
 };
 
 const cartSlice = createSlice({
@@ -23,8 +24,10 @@ const cartSlice = createSlice({
       })
       .addCase(synchronizeCartWithApi.fulfilled, (state: CartState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
         state.loading = false;
-        if(action.payload !== null)
+        if(action.payload !== null){
           state.cartData = action.payload;
+          state.isEmpty = false;
+        }
       })
       .addCase(synchronizeCartWithApi.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {  
         state.loading = false;
@@ -37,6 +40,7 @@ const cartSlice = createSlice({
       .addCase(addProductToCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
         state.loading = false;
         state.cartData = action.payload;
+        state.isEmpty = false;
       })
       .addCase(addProductToCart.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
@@ -70,7 +74,7 @@ const cartSlice = createSlice({
       .addCase(changeCartContentGlobally.pending, (state: CartState) => {
         state.loading = true;
       })
-      .addCase(changeCartContentGlobally.fulfilled, (state: CartState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(changeCartContentGlobally.fulfilled, (state: CartState, action: PayloadAction<AboutCart | null>) => {
         state.loading = false;
         if(action.payload !== null)
           state.cartData = action.payload;
@@ -83,7 +87,7 @@ const cartSlice = createSlice({
       .addCase(setCurrentCart.pending, (state: CartState) => {
         state.loading = true;
       })
-      .addCase(setCurrentCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart | null>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(setCurrentCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart | null>) => {
         state.loading = false;
         if(action.payload !== null)
           state.cartData = action.payload;

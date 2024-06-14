@@ -1,50 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../hooks';
-import { login } from '../redux/actions/authActions';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { useNavigate } from 'react-router-dom';
+import { ErrorMessage, Form, Formik, FormikProps } from "formik";
+import { useEffect, useRef } from "react";
+import { LoginFormProps } from "../props/authProps";
+import { loginCredentialsInitialValues } from "../initialValues/authInitials";
+import { loginSchema } from "../validation/validationSchemas";
+import TextField from "./TextField";
+import { formatEmailInput, formatPasswordInput } from "../validation/validationUtils";
 
-const LoginForm: React.FC = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const dispatch = useAppDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const navigate = useNavigate();
+export const LoginForm: React.FC<LoginFormProps> =
+    ({ handleSetLoginCredentials, setIsFormValid }) => {
+        const formikRef = useRef<FormikProps<any>>(null);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-        navigate('/');
-    }
-}, [isLoggedIn, navigate, dispatch]);
+        useEffect(() => {
+            const checkFormValidity = () => {
+                const formik = formikRef.current;
+                if (formik) {
+                    const isFormFullyTouched = Object.keys(formik.touched).length === Object.keys(loginCredentialsInitialValues).length;
+                    const formIsValid = formik.isValid && isFormFullyTouched;
+                    setIsFormValid(formIsValid);
+                }
+            };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
+            checkFormValidity();
+        });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(login(credentials))
-  };
+        return (
+            <div>
+                <Formik
+                    innerRef={formikRef}
+                    initialValues={loginCredentialsInitialValues}
+                    validationSchema={loginSchema}
+                    onSubmit={() => { }}
+                >
+                    {() => (
+                        <Form style={{ display: 'block' }}>
+                            <style>
+                                {`
+                                form > div {
+                                    margin-bottom: 10px;
+                                }
+                                label, input {
+                                    display: block;
+                                    width: 100%;
+                                }
+                            `}
+                            </style>
+                            <TextField
+                                name="email"
+                                type="email" formatValue={formatEmailInput}
+                                label="Email"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetLoginCredentials} />
+                            <ErrorMessage name="email" component="div" />
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        name="email"
-        value={credentials.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        name="password"
-        value={credentials.password}
-        onChange={handleChange}
-        placeholder="Password"
-      />
-      <button type="submit">Login</button>
-    </form>
-  );
-};
-
-export default LoginForm;
+                            <TextField
+                                name="password"
+                                type="password" formatValue={formatPasswordInput}
+                                label="Password"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetLoginCredentials} />
+                            <ErrorMessage name="password" component="div" />
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        );
+    };

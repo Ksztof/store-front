@@ -20,6 +20,7 @@ export interface CartState {
   loading: boolean;
   cartData: AboutCart;
   error: string | undefined;
+  isEmpty: boolean,
 };
 
 export interface CartDetails {

@@ -41,7 +41,7 @@ export const register = createAsyncThunk<
         return rejectWithValue(`validation error`);
       }
     } catch (error: unknown) {
-      console.error("Unexpected error:", error);
+      console.error("Unexpected error auth actions:", error);
       return rejectWithValue("User cannot be registered, an unexpected error occurred");
     }
   }

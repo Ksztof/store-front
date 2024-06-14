@@ -14,6 +14,11 @@ export interface RegisterCredentials {
   confirmPassword: string;
 }
 
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
 export interface AuthState {
   loading: boolean;
   error: string | undefined;
