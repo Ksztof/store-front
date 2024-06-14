@@ -26,7 +26,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails })
                 connection.stop();
             };
         }
-    }, [orderSummary, dispatch]);
+    }, [orderSummary, orderState, dispatch]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -36,8 +36,8 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails })
             console.log(" ReducerStates.Fulfilled andPAYMENT PROCESS");
 
         } else {
-            await dispatch(makeOrder(orderDetails));
-            if (orderState === ReducerStates.Fulfilled) {
+            const orderResult = await dispatch(makeOrder(orderDetails));
+            if (orderResult.meta.requestStatus.endsWith("fulfilled")) {
                 dispatch(payWithCard(payWithCardPayload));
                 console.log(" ReducerStates.Rejected and PAYMENT PROCESS");
             }

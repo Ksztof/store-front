@@ -13,6 +13,7 @@ export const loginUser = async (credentials: LoginCredentials) => {
 export const registerUser = async (credentials: RegisterCredentials): Promise<ApiResponseWithEmpty<void>> => {
   try {
     const response = await axios.post('https://localhost:5004/api/User', credentials);
+    console.log(`eeeeeeeeeeeeeeeeeeeeee`);
     if (response.status === 201) {
       return {
         isSuccess: true,
@@ -21,7 +22,6 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<Ap
     }
 
     const data = response.data;
-    console.log(isErrorContent(data));
     if (isErrorContent(data)) {
       return {
         isSuccess: false,
@@ -30,7 +30,7 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<Ap
     } else {
       throw new Error("Invalid API response format");
     }
-  } catch {
-    throw new Error("Failed to register because of unexpected error");
+  } catch (error) {
+    throw new Error("Failed to register because of unexpected error auth service");
   }
 };

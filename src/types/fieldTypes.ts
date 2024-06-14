@@ -1,4 +1,4 @@
-import { RegisterCredentials } from "./authTypes";
+import { LoginCredentials, RegisterCredentials } from "./authTypes";
 import { ShippingDetails } from "./orderTypes";
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -8,6 +8,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void; 
     handleSetRegisterCredentials?: (value: Partial<RegisterCredentials>) => void; 
+    handleSetLoginCredentials?: (value: Partial<LoginCredentials>) => void; 
 }
 
 export interface NumericFieldProps {

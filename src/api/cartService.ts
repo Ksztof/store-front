@@ -42,6 +42,7 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<A
     const response = await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
     const data = response.data;
     if (isErrorContent(data)) {
+      console.log("saveCartContent is error content")
       return {
         isSuccess: false,
         error: data
@@ -75,7 +76,6 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
       };
     }
     const data = response.data;
-
     if (isErrorContent(data)) {
       return {
         isSuccess: false,

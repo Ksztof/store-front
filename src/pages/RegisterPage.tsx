@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { RegisterForm } from '../components/RegisterForm';
 import { RegisterCredentials } from '../types/authTypes';
 import { registerCredentialsInitialValues } from '../initialValues/authInitials';
@@ -19,10 +19,6 @@ export const RegisterPage: React.FC = () => {
     const handleSetRegisterCredentials = (values: Partial<RegisterCredentials>) => {
         setRegisterCredentialsState(prev => ({ ...prev, ...values }));
     };
-
-    // useEffect(() => {
-
-    // }, [registrationState])
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -50,6 +46,5 @@ export const RegisterPage: React.FC = () => {
         </div>
     );
 };
-
 
 export default RegisterPage;

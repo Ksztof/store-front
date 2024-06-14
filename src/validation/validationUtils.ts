@@ -45,31 +45,59 @@ export function formatNumericField(value: string): string {
     return value.slice(0, 6).replace(/[^0-9]/g, '');
 }
 
+// export const formatEmailInput = (email: string) => {
+//     email = email.replace(/[^a-zA-Z0-9@.]/g, '');
+
+//     const atIndex: number = email.indexOf('@');
+//     if (atIndex !== -1) {
+//         email = email.slice(0, atIndex + 1) + email.slice(atIndex + 1).replace(/@/g, '');
+//     }
+
+//     email = email.replace(/\.{2,}/g, '.');
+
+//     const parts: string[] = email.split('@');
+//     const localPart: string = parts[0] || '';
+//     const domainPart: string | undefined = parts[1];
+//     if (!localPart || !/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/.test(localPart)) {
+//         return localPart || ''; 
+//     }
+
+//     if (!domainPart) return localPart + (atIndex !== -1 ? '@' : '');
+
+//     if (!/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}$/.test(domainPart)) {
+//         return `${localPart}@${domainPart}`;
+//     }
+
+//     return `${localPart}@${domainPart}`;
+// };
+
 export const formatEmailInput = (email: string) => {
     email = email.replace(/[^a-zA-Z0-9@.]/g, '');
-
     const atIndex: number = email.indexOf('@');
     if (atIndex !== -1) {
         email = email.slice(0, atIndex + 1) + email.slice(atIndex + 1).replace(/@/g, '');
     }
-
     email = email.replace(/\.{2,}/g, '.');
 
     const parts: string[] = email.split('@');
     const localPart: string = parts[0] || '';
     const domainPart: string | undefined = parts[1];
-    if (!localPart || !/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/.test(localPart)) {
-        return localPart || ''; 
+    if (!localPart || !/^[a-zA-Z][a-zA-Z0-9.]*$/.test(localPart)) {
+        return localPart || '';
     }
-
     if (!domainPart) return localPart + (atIndex !== -1 ? '@' : '');
-
+    if (domainPart.startsWith('.')) {
+        return `${localPart}@`;
+    }
     if (!/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}$/.test(domainPart)) {
         return `${localPart}@${domainPart}`;
     }
 
     return `${localPart}@${domainPart}`;
 };
+
+
+
 
 
 export const formatPasswordInput = (value: string): string => {
