@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login } from './pages/login';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
-import { Navbar } from './components/Navbar';
 import { Order } from './components/Order';
 import RegisterPage from './pages/RegisterPage';
+import { Navbar } from './components/navbar';
 
 const App: React.FC = () => {
   return (

@@ -13,7 +13,6 @@ export const loginUser = async (credentials: LoginCredentials) => {
 export const registerUser = async (credentials: RegisterCredentials): Promise<ApiResponseWithEmpty<void>> => {
   try {
     const response = await axios.post('https://localhost:5004/api/User', credentials);
-    console.log(`eeeeeeeeeeeeeeeeeeeeee`);
     if (response.status === 201) {
       return {
         isSuccess: true,
