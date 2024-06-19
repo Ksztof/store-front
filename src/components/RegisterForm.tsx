@@ -2,7 +2,7 @@ import { ErrorMessage, Form, Formik, FormikProps } from "formik";
 import TextField from "./TextField";
 import { registerCredentialsInitialValues } from "../initialValues/authInitials";
 import { registerSchema } from "../validation/validationSchemas";
-import {formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../validation/validationUtils";
+import { formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../validation/validationUtils";
 import { RegisterFormProps } from "../props/authProps";
 import { useEffect, useRef } from "react";
 
@@ -29,12 +29,12 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                     innerRef={formikRef}
                     initialValues={registerCredentialsInitialValues}
                     validationSchema={registerSchema}
-                    onSubmit={() => {}}
+                    onSubmit={() => { }}
                 >
                     {() => (
-                            <Form style={{ display: 'block' }}>
-                                <style>
-                                    {`
+                        <Form style={{ display: 'block' }}>
+                            <style>
+                                {`
                                 form > div {
                                     margin-bottom: 10px;
                                 }
@@ -43,41 +43,41 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                     width: 100%;
                                 }
                             `}
-                                </style>
+                            </style>
 
-                                <TextField
-                                    name="login"
-                                    type="text"
-                                    formatValue={(value) => formatLoginAndSetLength(value, 15)}
-                                    label="Login"
-                                    onBlur={() => { }}
-                                    handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                                <ErrorMessage name="login" component="div" />
+                            <TextField
+                                name="login"
+                                type="text"
+                                formatValue={(value) => formatLoginAndSetLength(value, 15)}
+                                label="Login"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetRegisterCredentials} />
+                            <ErrorMessage name="login" component="div" />
 
-                                <TextField
-                                    name="email"
-                                    type="email" formatValue={formatEmailInput}
-                                    label="Email"
-                                    onBlur={() => { }}
-                                    handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                                <ErrorMessage name="email" component="div" />
+                            <TextField
+                                name="email"
+                                type="email" formatValue={formatEmailInput}
+                                label="Email"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetRegisterCredentials} />
+                            <ErrorMessage name="email" component="div" />
 
-                                <TextField
-                                    name="password"
-                                    type="password" formatValue={formatPasswordInput}
-                                    label="Password"
-                                    onBlur={() => { }}
-                                    handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                                <ErrorMessage name="password" component="div" />
+                            <TextField
+                                name="password"
+                                type="password" formatValue={formatPasswordInput}
+                                label="Password"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetRegisterCredentials} />
+                            <ErrorMessage name="password" component="div" />
 
-                                <TextField
-                                    name="confirmPassword"
-                                    type="password" formatValue={formatPasswordInput}
-                                    label="Confirm Password"
-                                    onBlur={() => { }}
-                                    handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                                <ErrorMessage name="confirmPassword" component="div" />
-                            </Form>
+                            <TextField
+                                name="confirmPassword"
+                                type="password" formatValue={formatPasswordInput}
+                                label="Confirm Password"
+                                onBlur={() => { }}
+                                handleSetRegisterCredentials={handleSetRegisterCredentials} />
+                            <ErrorMessage name="confirmPassword" component="div" />
+                        </Form>
                     )}
                 </Formik>
             </div>
