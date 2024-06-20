@@ -1,97 +1,84 @@
 import axios from 'axios';
 import { AboutCart, NewProductsForApi, checkCurrentCartPayload } from '../types/cartTypes';
-import { ApiResponseWithEmpty } from '../types/apiResponseWithEmpty';
-import { isAboutCart, isErrorContent } from '../utils/responseUtils';
+import { isAboutCart, isProblemDetails } from '../utils/responseUtils';
+import { ApiError } from '../types/errorTypes';
+import { ApiResponseNoContent } from '../types/apiResponseWithEmpty';
+import { ApiResponse } from '../types/apiResponse';
 
 axios.defaults.withCredentials = true;
 
-export const getCartContent = async (): Promise<ApiResponseWithEmpty<AboutCart>> => {
+export const getCartContent = async (): Promise<ApiResponseNoContent | ApiResponse<AboutCart> | ApiError> => {
   try {
     const response = await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
 
     if (response.status === 204) {
-      return {
-        isSuccess: true,
-        isEmpty: true
-      };
-    }
-
-    const data = response.data;
-    if (isErrorContent(data)) {
-      return {
-        isSuccess: false,
-        error: data
-      };
-
-    } else if (isAboutCart(data)) {
-      return {
-        isSuccess: true,
-        entity: data
-      };
-
+      const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+      return responseDetails;
     } else {
-      throw new Error("Invalid API response format");
+      if(isAboutCart(response.data)){
+        const responseDetails: ApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+        return responseDetails;
+      }
+      throw new Error();
     }
-  } catch (error) {
-    throw new Error("Failed to download cart content because of unexpected error");
-  }
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
+    }
+
+    throw new Error("Failed to get cart content because of unexpected error");
+  };
 };
 
-export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponseWithEmpty<AboutCart>> => {
+export const saveCartContent = async (cartContent: NewProductsForApi): Promise<ApiResponseNoContent | ApiResponse<AboutCart> | ApiError> => {
   try {
     const response = await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
-    const data = response.data;
-    if (isErrorContent(data)) {
-      console.log("saveCartContent is error content")
-      return {
-        isSuccess: false,
-        error: data
-      };
-
-    } else if (isAboutCart(data)) {
-      return {
-        isSuccess: true,
-        entity: data
-      };
-
+    if (response.status === 204) {
+      const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+      return responseDetails;
     } else {
-      throw new Error("Invalid API response format");
+      if(isAboutCart(response.data)){
+        const responseDetails: ApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+        return responseDetails;
+      }
+      throw new Error();
     }
-  } catch (error) {
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
+    }
+
     throw new Error("Failed to save cart content because of unexpected error");
-  }
+  };
 };
-// const isValidDate = (dateString: string) => {
-//   const date = new Date(dateString);
-//   return !isNaN(date.getTime());
-// };
-export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponseWithEmpty<AboutCart>> => {
+
+export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<ApiResponseNoContent | ApiResponse<AboutCart> | ApiError> => {
   try {
     const response = await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
-
     if (response.status === 204) {
-      return {
-        isSuccess: true,
-        isEmpty: true
-      };
-    }
-    const data = response.data;
-    if (isErrorContent(data)) {
-      return {
-        isSuccess: false,
-        error: data
-      };
-
-    } else if (isAboutCart(data)) {
-      return {
-        isSuccess: true,
-        entity: data
-      };
-      
+      const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+      return responseDetails;
     } else {
-      throw new Error("Invalid API response format");
+      if(isAboutCart(response.data)){
+        const responseDetails: ApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+        return responseDetails;
+      }
+      throw new Error();
     }
-  } catch (error) {
-    throw new Error("Failed to retrive information about cart content because of unexpected error");
-  }
-}
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
+    }
+
+    throw new Error("Failed to check current cart because of unexpected error");
+  };
+};

@@ -1,22 +1,26 @@
-import { ApiResponse } from "../types/apiResponse";
-import { ApiError, ApiResponseWithEmpty, ApiSuccessEmpty, ErrorContent } from "../types/apiResponseWithEmpty";
+import { SafeParseReturnType } from "zod";
+import { ApiResponseNoContent } from "../types/apiResponseWithEmpty";
 import { AboutCart } from "../types/cartTypes";
 import { OrderResponse } from "../types/orderTypes";
 import { ProductDetails } from "../types/productTypes";
+import { ProblemDetailsType, ZodAboutCart, ZodOrderResponse, ZodProblemDetails } from "../zod/schemas";
 
-export function isApiError<T>(response: ApiResponseWithEmpty<T> | ApiResponse<T>): response is ApiError {
-  return 'isSuccess' in response && response.isSuccess === false;
-}
+// export function isApiError<T>(response: ApiResponseNoContent | ApiResponse<T>): response is ApiError {
+//   const result: SafeParseReturnType<any, ApiError> = ZodApiError.safeParse(response);
+//   return result.success;
+// }
 
 export function isAboutCart(data: any): data is AboutCart {
-  return 'totalCartValue' in data && 'aboutProductsInCart' in data && 'createdAt' in data;
+  const result: SafeParseReturnType<any, AboutCart> = ZodAboutCart.safeParse(data);
+  return result.success;
 }
 
-export function isErrorContent(data: any): data is ErrorContent {
-  return (typeof data.code === 'string') && (typeof data.description === 'string' || data.description === undefined);
+export function isProblemDetails(data: any): data is ProblemDetailsType {
+  const result: SafeParseReturnType<any, ProblemDetailsType> = ZodProblemDetails.safeParse( data );
+  return result.success;
 }
 
-export function isApiSuccessEmpty(data: any): data is ApiSuccessEmpty {
+export function isApiSuccessEmpty(data: any): data is ApiResponseNoContent {
   return data.isSuccess === true && data.isEmpty === true;
 }
 
@@ -32,10 +36,6 @@ export function isProductDetails(data: any[]): data is ProductDetails[] {
 }
 
 export function isOrderResponse(data: any): data is OrderResponse {
-  return (
-    'id' in data
-    && 'totalCartValue' in data
-    && 'aboutProductsInCart' in data
-    && 'shippingDetil' in data
-  );
+  const result = ZodOrderResponse.safeParse(data);
+  return result.success;
 }

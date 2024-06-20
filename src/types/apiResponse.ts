@@ -1,16 +1,6 @@
-export interface ApiSuccess<T> {
+export interface SuccessResponse<T> {
     isSuccess: true;
     entity: T;
 }
 
-export interface ErrorContent {
-    code: string;
-    description?: string;
-}
-
-export interface ApiError {
-    isSuccess: false;
-    error: ErrorContent;
-}
-
-export type ApiResponse<T> = ApiSuccess<T> | ApiError;
+export type ApiResponse<T> = SuccessResponse<T>;
