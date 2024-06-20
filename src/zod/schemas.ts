@@ -72,17 +72,22 @@ export const ZodProductDetails = z.object({
     dateAdded: z.string(),
 });
 
-
-// export const ZodApiError = z.object({
-//     isSuccess: z.literal(false),
-//     error: ZodProblemDetails
-//   });
-
-export type ErrorContentType = z.infer<typeof ZodErrorContent>;
-export type ProblemDetailsType = z.infer<typeof ZodProblemDetails>;
-export type AboutCart = z.infer<typeof ZodAboutCart>;
-export type OrderResponse = z.infer<typeof ZodOrderResponse>;
-export type ProductDetails = z.infer<typeof ZodProductDetails>;
 export const ZodProductDetailsArray = z.array(ZodProductDetails);
 
-//export type ApiError = z.infer<typeof ZodApiError>;
+export const ZodApiError = z.object({
+    isSuccess: z.literal(false),
+    error: ZodProblemDetails
+});
+
+export const ZodSuccessResponseNoContent = z.object({
+    isSuccess: z.literal(true),
+    isEmpty: z.literal(true),
+});
+
+export type ErrorContentZodType = z.infer<typeof ZodErrorContent>;
+export type ProblemDetailsZodType = z.infer<typeof ZodProblemDetails>;
+export type AboutCartZodType = z.infer<typeof ZodAboutCart>;
+export type OrderResponseZodType = z.infer<typeof ZodOrderResponse>;
+export type ProductDetailsArrayZodType = z.infer<typeof ZodProductDetailsArray>;
+export type ApiErrorZodType = z.infer<typeof ZodApiError>;
+export type ApiResponseNoContentZodType = z.infer<typeof ZodSuccessResponseNoContent>;

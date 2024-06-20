@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { LoginCredentials, RegisterCredentials } from '../types/authTypes';
-import { ApiResponseNoContent } from '../types/apiResponseWithEmpty';
+import { NoContentApiResponse } from '../types/noContentApiResponse';
 import { isProblemDetails } from '../utils/responseUtils';
 import { ApiError } from '../types/errorTypes';
 axios.defaults.withCredentials = true;
 
-export const loginUser = async (credentials: LoginCredentials): Promise<ApiResponseNoContent | ApiError> => {
+export const loginUser = async (credentials: LoginCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     await axios.post('https://localhost:5004/api/User/login', credentials);
-    const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+    const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
     return responseDetails;
   } catch (error: any) {
     const data = error.response?.data;
@@ -22,10 +22,10 @@ export const loginUser = async (credentials: LoginCredentials): Promise<ApiRespo
   };
 };
 
-export const registerUser = async (credentials: RegisterCredentials): Promise<ApiResponseNoContent | ApiError> => {
+export const registerUser = async (credentials: RegisterCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     await axios.post('https://localhost:5004/api/User', credentials);
-    const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+    const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
     return responseDetails;
   } catch (error: any) {
     const data = error.response?.data;

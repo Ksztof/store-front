@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ProductDetails } from '../../types/productTypes';
 import { getAllProducts } from '../../api/productService';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 
 export const getProducts = createAsyncThunk<

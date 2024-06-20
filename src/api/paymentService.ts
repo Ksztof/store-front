@@ -1,15 +1,15 @@
 import axios from "axios";
-import { ApiResponseNoContent } from "../types/apiResponseWithEmpty";
+import { NoContentApiResponse } from "../types/noContentApiResponse";
 import { PaymentDetails } from "../types/paymentTypes";
 import { isProblemDetails } from "../utils/responseUtils";
 import { ApiError } from "../types/errorTypes";
 
 axios.defaults.withCredentials = true;
 
-export const payUsingCard = async (paymentDetails: PaymentDetails): Promise<ApiResponseNoContent | ApiError> => {
+export const payUsingCard = async (paymentDetails: PaymentDetails): Promise<NoContentApiResponse | ApiError> => {
     try {
         await axios.post('https://localhost:5004/api/Payments', paymentDetails);
-        const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+        const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
         return responseDetails;
     } catch (error: any) {
         const data = error.response?.data;

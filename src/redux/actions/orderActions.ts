@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { isApiError } from "../../utils/responseUtils";
 import { ShippingDetails, OrderResponse } from "../../types/orderTypes";
 import { saveOrder } from "../../api/orderService";
-import { ApiResponse } from "../../types/apiResponse";
+import { ApiResponse } from "../../types/okApiResponse";
 
 export const makeOrder = createAsyncThunk<
     OrderResponse,

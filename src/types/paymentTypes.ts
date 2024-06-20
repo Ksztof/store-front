@@ -1,5 +1,5 @@
 import { Stripe, StripeElements } from "@stripe/stripe-js";
-import { ProblemDetailsType } from "./apiResponse";
+import { ProblemDetailsType } from "./okApiResponse";
 
 export interface PayWithCardPayload {
   amount: number;
