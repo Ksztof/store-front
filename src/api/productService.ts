@@ -1,38 +1,31 @@
 import axios from 'axios';
 import { ProductDetails } from '../types/productTypes';
-import { isProductDetails } from '../utils/responseUtils';
-import { ApiResponseWithEmpty } from '../types/apiResponseWithEmpty';
+import { isProblemDetails, isProductDetails } from '../utils/responseUtils';
+import { ApiResponseNoContent } from '../types/apiResponseWithEmpty';
+import { ApiError } from '../types/errorTypes';
+import { ApiResponse } from '../types/apiResponse';
 
 axios.defaults.withCredentials = true;
 
-export const getAllProducts = async (): Promise<ApiResponseWithEmpty<ProductDetails[]>> => {
+export const getAllProducts = async (): Promise<ApiResponse<ProductDetails[]> | ApiResponseNoContent | ApiError> => {
   try {
     const response = await axios.get<ProductDetails[]>('https://localhost:5004/api/Products');
-    const data = response.data;
 
-    if (!isProductDetails(data)) {
-      return {
-        isSuccess: false,
-        error: {
-          code: "FORMAT_ERROR",
-          description: "Invalid API response format"
-        }
-      };
+    if (isProductDetails(response.data)) {
+      const responseDetails: ApiResponse<ProductDetails[]> = { isSuccess: true, entity: response.data };
+      return responseDetails;
+    } else {
+      const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+      return responseDetails;
+    }
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
     }
 
-    if (data.length === 0) {
-      return {
-        isSuccess: true,
-        isEmpty: true
-      };
-    }
-
-    return {
-      isSuccess: true,
-      entity: data
-    };
-  } catch (error) {
-    throw new Error("Failed to download products because of unexpected error");
-  }
+    throw new Error("Failed to get all products because of unexpected error");
+  };
 };
-

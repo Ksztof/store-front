@@ -1,5 +1,5 @@
 import { Stripe, StripeElements } from "@stripe/stripe-js";
-import { ErrorContent } from "./apiResponse"
+import { ProblemDetailsType } from "./apiResponse";
 
 export interface PayWithCardPayload {
   amount: number;
@@ -16,7 +16,7 @@ export interface PaymentDetails {
 export interface AboutPayment {
   orderId: string;
   status: PaymentStatusResponse;
-  error?: ErrorContent;
+  error?: ProblemDetailsType;
 }
 
 export enum PaymentStatusResponse {
