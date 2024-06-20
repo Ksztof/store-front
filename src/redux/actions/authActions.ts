@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../../api/authService';
 import { LoginCredentials, RegisterCredentials } from '../../types/authTypes';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 
 export const login = createAsyncThunk<

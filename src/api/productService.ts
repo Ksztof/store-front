@@ -1,21 +1,21 @@
 import axios from 'axios';
 import { ProductDetails } from '../types/productTypes';
 import { isProblemDetails, isProductDetails } from '../utils/responseUtils';
-import { ApiResponseNoContent } from '../types/apiResponseWithEmpty';
+import { NoContentApiResponse } from '../types/noContentApiResponse';
 import { ApiError } from '../types/errorTypes';
-import { ApiResponse } from '../types/apiResponse';
+import { OkApiResponse } from '../types/okApiResponse';
 
 axios.defaults.withCredentials = true;
 
-export const getAllProducts = async (): Promise<ApiResponse<ProductDetails[]> | ApiResponseNoContent | ApiError> => {
+export const getAllProducts = async (): Promise<OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError> => {
   try {
     const response = await axios.get<ProductDetails[]>('https://localhost:5004/api/Products');
 
     if (isProductDetails(response.data)) {
-      const responseDetails: ApiResponse<ProductDetails[]> = { isSuccess: true, entity: response.data };
+      const responseDetails: OkApiResponse<ProductDetails[]> = { isSuccess: true, entity: response.data };
       return responseDetails;
     } else {
-      const responseDetails: ApiResponseNoContent = { isSuccess: true, isEmpty: true };
+      const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
     }
   } catch (error: any) {

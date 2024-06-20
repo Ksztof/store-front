@@ -1,6 +1,17 @@
-import { ProblemDetailsType } from "../zod/schemas";
+export interface ErrorContent {
+    code: string;
+    description?: string;
+    type: number;
+};
+export interface ProblemDetails {
+    type: string;
+    title: string;
+    status: number;
+    errors: ErrorContent[],
+};
 
 export interface ApiError {
     isSuccess: false;
-    error: ProblemDetailsType;
-}
+    error: ProblemDetails;
+};
+

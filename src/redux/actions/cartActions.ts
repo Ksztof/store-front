@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/apiResponseWithEmpty';
+import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
 import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
 import { RootState } from '../store';
 import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from '../../utils/localStorageUtils';

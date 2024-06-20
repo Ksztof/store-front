@@ -1,17 +1,17 @@
 import axios from "axios";
 import { ShippingDetails, OrderResponse } from "../types/orderTypes";
 import { isOrderResponse, isProblemDetails } from "../utils/responseUtils";
-import { ApiResponse } from "../types/apiResponse";
+import { OkApiResponse } from "../types/okApiResponse";
 import { ApiError } from "../types/errorTypes";
 
 axios.defaults.withCredentials = true;
 
-export const saveOrder = async (orderDetails: ShippingDetails): Promise<ApiResponse<OrderResponse> | ApiError> => {
+export const saveOrder = async (orderDetails: ShippingDetails): Promise<OkApiResponse<OrderResponse> | ApiError> => {
     try {
         const response = await axios.post<OrderResponse>('https://localhost:5004/api/Orders', orderDetails);
 
         if (isOrderResponse(response.data)) {
-            const responseDetails: ApiResponse<OrderResponse> = { isSuccess: true, entity: response.data };
+            const responseDetails: OkApiResponse<OrderResponse> = { isSuccess: true, entity: response.data };
             return responseDetails;
         }
 
