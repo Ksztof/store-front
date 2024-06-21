@@ -3,11 +3,13 @@ import { OrderState, initialOrderData } from '../../initialValues/orderInitials'
 import { makeOrder, resetOrder } from '../actions/orderActions';
 import { OrderResponse } from '../../types/orderTypes';
 import { ReducerStates } from '../../types/sharedTypes';
+import { ApiError } from '../../types/errorTypes';
+import { apiErrorInitialValue } from '../../initialValues/authInitials';
 
 const initialState: OrderState = {
   loading: false,
   orderData: initialOrderData,
-  error: "",
+  error: apiErrorInitialValue,
   status: ReducerStates.Idle
 };
 
@@ -16,7 +18,7 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
   },
-  
+
   extraReducers: (builder) => {
     builder
       .addCase(makeOrder.pending, (state: OrderState) => {
@@ -28,12 +30,12 @@ const orderSlice = createSlice({
         state.orderData = action.payload;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(makeOrder.rejected, (state: OrderState, action: PayloadAction<string | undefined>) => {
+      .addCase(makeOrder.rejected, (state: OrderState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
         state.status = ReducerStates.Rejected;
       })
-      
+
       .addCase(resetOrder, () => initialState);
   },
 });

@@ -1,7 +1,7 @@
 //CHANGE FILE NAME MAYBE FOR TYPEGUARDS?
 import { SafeParseReturnType } from "zod";
 import { AboutCart } from "../types/cartTypes";
-import { AboutCartZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodApiError, ZodOrderResponse, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
+import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
 
 
 export function isApiError(response: any): response is ApiErrorZodType {
@@ -31,5 +31,10 @@ export function isProductDetails(data: any): data is ProductDetailsArrayZodType 
 
 export function isOrderResponse(data: any): data is OrderResponseZodType {
   const result: SafeParseReturnType<any, OrderResponseZodType> = ZodOrderResponse.safeParse(data);
+  return result.success;
+}
+
+export function isSignalrError(data: any): data is AboutPaymentZodType {
+  const result = ZodAboutPayment.safeParse(data);
   return result.success;
 }

@@ -1,3 +1,5 @@
+import { ApiError } from "./errorTypes";
+
 export interface ProductDetails {
   id: number;
   name: string;
@@ -10,7 +12,7 @@ export interface ProductDetails {
 export interface ProductState {
   loading: boolean;
   productsData: ProductDetails[];
-  error: string | undefined;
+  error: ApiError | string | undefined;
 }
 export interface addProductToCartPayload {
   product: ProductDetails;

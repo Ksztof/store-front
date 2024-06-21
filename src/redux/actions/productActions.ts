@@ -1,28 +1,32 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ProductDetails } from '../../types/productTypes';
 import { getAllProducts } from '../../api/productService';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
-import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
+import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
+import { ApiError } from '../../types/errorTypes';
+import { NoContentApiResponse } from '../../types/noContentApiResponse';
+import { OkApiResponse } from '../../types/okApiResponse';
 
 export const getProducts = createAsyncThunk<
-  ProductDetails[] | null,
+  void | ProductDetails[],
   void,
-  { rejectValue: string | undefined }>(
+  { rejectValue: ApiError | string }>(
     'product/getProducts ',
     async (_, { rejectWithValue }) => {
       try {
-        const response: ApiResponseWithEmpty<ProductDetails[]> = await getAllProducts();
+        const response: OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError = await getAllProducts();
         if (isApiError(response)) {
-          const error: ErrorContent = response.error;
-          return rejectWithValue(`Error code: ${error.code} Error description: ${error.description}`);
-        } else if (isApiSuccessEmpty(response)) {
-          return null;
-        } else {
-          return response.entity;
+          return rejectWithValue(response);
         }
+
+        if (isNoContentResponse(response)) {
+          return;
+        }
+
+        return response.entity;
+
       } catch (error: unknown) {
-        console.error("Unexpected error:", error);
-        return rejectWithValue("Products cannot be downloaded, an unexpected error occurred");
+        console.error("getProducts error: ", error);
+        return rejectWithValue("Unable to download products, an unexpected error occurred");
       }
     }
   );

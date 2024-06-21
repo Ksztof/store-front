@@ -1,3 +1,5 @@
+import { ApiError } from "./errorTypes";
+
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -21,7 +23,7 @@ export interface LoginCredentials {
 
 export interface AuthState {
   loading: boolean;
-  error: string | undefined;
+  error: ApiError | string | undefined;
   isLoggedIn: boolean;
   status: string;
 }

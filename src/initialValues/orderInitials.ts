@@ -1,3 +1,4 @@
+import { ApiError } from "../types/errorTypes";
 import { ShippingDetails, OrderResponse } from "../types/orderTypes";
 
 export const shippingDetailsInitialValues: ShippingDetails = {
@@ -15,7 +16,7 @@ export const shippingDetailsInitialValues: ShippingDetails = {
 export interface OrderState {
     loading: boolean;
     orderData: OrderResponse;
-    error: string | undefined;
+    error: ApiError | string | undefined;
     status: string;
 }
 

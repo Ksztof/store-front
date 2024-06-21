@@ -2,64 +2,70 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
-import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
+import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
 import { RootState } from '../store';
 import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from '../../utils/localStorageUtils';
 import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
+import { NoContentApiResponse } from '../../types/noContentApiResponse';
+import { OkApiResponse } from '../../types/okApiResponse';
+import { ApiError } from '../../types/errorTypes';
 
-export const synchronizeCartWithApi = createAsyncThunk<AboutCart | null, void, { rejectValue: string | undefined }
+const getCartData = (state: RootState) => state.cart.cartData;
+
+export const synchronizeCartWithApi = createAsyncThunk<
+  void | AboutCart,
+  void,
+  { rejectValue: ApiError | string }
 >(
   'cart/synchronizeCartWithApi',
   async (_, { rejectWithValue }) => {
     try {
-      const response: ApiResponseWithEmpty<AboutCart> = await getCartContent();
+      const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await getCartContent();
+
       if (isApiError(response)) {
-        const error: ErrorContent = response.error;
-        return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+        return rejectWithValue(response);
       }
-      else if (isApiSuccessEmpty(response)) {
-        return null;
-      } else {
-        return response.entity;
+
+      if (isNoContentResponse(response)) {
+        return;
       }
-    } catch (error: unknown) {
-      console.error("Unexpected error:", error);
+
+      return response.entity;
+    } catch (error: any) {
+      console.error("SynchronizeCartWithApi error: ", error);
       return rejectWithValue("The contents of the shopping cart cannot be downloaded, an unexpected error occurred");
     }
   }
 );
 
 export const setCurrentCart = createAsyncThunk<
-  AboutCart | null,
+  void | AboutCart,
   void,
-  { state: RootState, rejectValue: string | undefined }
+  { state: RootState, rejectValue: ApiError | string }
 >(
   'cart/setCurrentCart',
   async (_, { getState, rejectWithValue }) => {
     try {
-      const state: RootState = getState();
-      const cartCreationDate: string | undefined = state.cart.cartData?.createdAt;
+      const cartCreationDate: string | undefined = getCartData(getState())?.createdAt;
+
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
-        const response: ApiResponseWithEmpty<AboutCart> = await checkCurrentCart(payload);
+        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await checkCurrentCart(payload);
+
         if (isApiError(response)) {
-          const error: ErrorContent = response.error;
-          return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
+          return rejectWithValue(response);
         }
-        else if (isApiSuccessEmpty(response)) {
-          return null;
-        } else {
-          return response.entity;
+
+        if (isNoContentResponse(response)) {
+          return;
         }
+
+        return response.entity;
       }
-      else {
-        return rejectWithValue('Invalid cart creation date');
-      }
-    } catch (error: unknown) {
-      console.error("Unexpected error:", error);
-      return rejectWithValue("Failed to retrive information about cart content because of unexpected error");
+    } catch (error: any) {
+      console.error("setCurrentCart error: ", error);
+      return rejectWithValue("Failed to retrive information about current cart content because of unexpected error");
     }
   }
 );
@@ -71,8 +77,8 @@ export const addProductToCart = createAsyncThunk<
     'cart/addProduct ',
     async (payload: addProductToCartPayload, { getState, rejectWithValue }) => {
       try {
-        const state: RootState = getState();
-        const currentCartContent: AboutCart = state.cart.cartData;
+        const currentCartContent: AboutCart = getCartData(getState());
+
         if (currentCartContent !== null) {
           const addProductPayload: addProductToReduxStorePayload = {
             cartContent: currentCartContent,
@@ -85,8 +91,8 @@ export const addProductToCart = createAsyncThunk<
         } else {
           return rejectWithValue("Cannot add product to cart, cart doesn't exsist");
         }
-      } catch (error: unknown) {
-        console.error("Unexpected error:", error);
+      } catch (error: any) {
+        console.error("addProductToCart error: ", error);
         return rejectWithValue("Cannot update the shopping cart, an unexpected error occurred");
       }
     }
@@ -99,12 +105,12 @@ export const adjustProductQuantity = createAsyncThunk<
     'cart/adjustProductQuantity',
     async (payload: AdjustProductQuantityPayload, { getState, rejectWithValue }) => {
       try {
-        const state = getState();
-        const currentCartContent: AboutCart = state.cart.cartData;
+        const currentCartContent: AboutCart = getCartData(getState());
         const changeQuantityPayload: increaseProductInCartQuantityStorePayload = {
           productId: payload.productId,
           cartContent: currentCartContent,
         }
+
         if (payload.operationType === AdjustProductQuantityType.Increase) {
           const updatedCart: AboutCart = increaseProductInCartQuantity(changeQuantityPayload);
           return updatedCart;
@@ -126,8 +132,7 @@ export const changeProductInCartQuantity = createAsyncThunk<
     'cart/changeProductInCartQuantity',
     async (payload: ChangeProductInCartQuantityPayload, { getState, rejectWithValue }) => {
       try {
-        const state: RootState = getState();
-        const currentCartContent: AboutCart | null = state.cart.cartData;
+        const currentCartContent: AboutCart | null = getCartData(getState());
 
         if (currentCartContent) {
           const modifyProductInCartQuantityPayload: ModifyProductInCartQuantityPayload = {
@@ -149,27 +154,29 @@ export const changeProductInCartQuantity = createAsyncThunk<
   )
 
 export const changeCartContentGlobally = createAsyncThunk<
-  AboutCart | null,
+  void | AboutCart,
   AboutCart,
-  { rejectValue: string | undefined }>(
+  { rejectValue: ApiError | string }>(
     'cart/changeCartContentGlobally',
     async (payload: AboutCart, { rejectWithValue }) => {
       try {
         const newProductsForApi: NewProductsForApi = mapAboutCartToNewProductsForApi(payload);
-        const response: ApiResponseWithEmpty<AboutCart> = await saveCartContent(newProductsForApi);
+        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await saveCartContent(newProductsForApi);
+
         if (isApiError(response)) {
-          const error: ErrorContent = response.error;
-          return rejectWithValue("Error code: " + error.code + " " + "Error description: " + error.description);
-        } else if (isApiSuccessEmpty(response)) {
-          return null;
-        } else {
-          return response.entity;
+          return rejectWithValue(response);
         }
-      } catch (error: unknown) {
-        console.error("Unexpected error:", error);
-        return rejectWithValue("Api cannot be updated with new cart content, an unexpected error occurred");
+
+        if (isNoContentResponse(response)) {
+          return;
+        }
+
+        return response.entity;
+      } catch (error: any) {
+        console.error("changeCartContentGlobally error: ", error);
+        return rejectWithValue("Failed to update cart content globally, because of unexpected error");
       }
     }
   );
-
+  
 export const resetCart = createAction('cart/reset');
