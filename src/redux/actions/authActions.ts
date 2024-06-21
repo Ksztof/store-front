@@ -1,48 +1,52 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../../api/authService';
 import { LoginCredentials, RegisterCredentials } from '../../types/authTypes';
-import { ApiResponseWithEmpty, ErrorContent } from '../../types/noContentApiResponse';
-import { isApiError, isApiSuccessEmpty } from '../../utils/responseUtils';
+import { NoContentApiResponse } from '../../types/noContentApiResponse';
+import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
+import { ApiError } from '../../types/errorTypes';
 
 export const login = createAsyncThunk<
   void,
   LoginCredentials,
-  { rejectValue: string }
+  { rejectValue: ApiError | string }
 >(
   'auth/login',
   async (payload: LoginCredentials, { rejectWithValue }) => {
     try {
-      const response = await loginUser(payload);
-      return response;
-    } catch (error: any) {
-      if (!error.response) {
-        throw error;
+      const response: NoContentApiResponse | ApiError = await loginUser(payload);
+      if (isApiError(response)) {
+        return rejectWithValue(response);
       }
-      return rejectWithValue(error.response.data);
+
+      if (isNoContentResponse(response)) {
+        return;
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      return rejectWithValue("Unexpected error occured when logging in.");
     }
   }
 );
 
 export const register = createAsyncThunk<
-  null,
+  void,
   RegisterCredentials,
-  { rejectValue: string | undefined }
+  { rejectValue: ApiError | string }
 >(
   'auth/register',
   async (payload: RegisterCredentials, { rejectWithValue }) => {
     try {
-      const response: ApiResponseWithEmpty<void> = await registerUser(payload);
+      const response: NoContentApiResponse | ApiError = await registerUser(payload);
       if (isApiError(response)) {
-        const error: ErrorContent = response.error;
-        return rejectWithValue(`Error code: ${error.code}, Error description: ${error.description}`);
-      } else if (isApiSuccessEmpty(response)) {
-        return null;
-      } else {
-        return rejectWithValue(`validation error`);
+        return rejectWithValue(response);
       }
-    } catch (error: unknown) {
-      console.error("Unexpected error auth actions:", error);
-      return rejectWithValue("User cannot be registered, an unexpected error occurred");
+      
+      if (isNoContentResponse(response)) {
+        return;
+      }
+    } catch (error: any) {
+      console.error("register error:", error);
+      return rejectWithValue("Unexpected error occured when registering.");
     }
   }
 );

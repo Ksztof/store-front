@@ -2,27 +2,27 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { isApiError } from "../../utils/responseUtils";
 import { ShippingDetails, OrderResponse } from "../../types/orderTypes";
 import { saveOrder } from "../../api/orderService";
-import { ApiResponse } from "../../types/okApiResponse";
+import { OkApiResponse } from "../../types/okApiResponse";
+import { ApiError } from "../../types/errorTypes";
 
 export const makeOrder = createAsyncThunk<
     OrderResponse,
     ShippingDetails,
-    { rejectValue: string }
+    { rejectValue: ApiError | string }
 >(
     'order/makeOrder',
     async (shippingDetails: ShippingDetails, { rejectWithValue }) => {
         try {
-            const response: ApiResponse<OrderResponse> = await saveOrder(shippingDetails);
+            const response: OkApiResponse<OrderResponse> | ApiError = await saveOrder(shippingDetails);
 
             if (isApiError(response)) {
-                const apiError = response.error;
-                return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
+                return rejectWithValue(response);
             }
 
             return response.entity;
         } catch (error: unknown) {
-            console.error("Unexpected error:", error);
-            return rejectWithValue("An unexpected error occurred");
+            console.error("makeOrder error: ", error);
+            return rejectWithValue("An unexpected error occurred when creating an order");
         }
     }
 );

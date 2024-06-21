@@ -2,10 +2,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { login, register, resetAuth } from '../actions/authActions';
 import { AuthState } from '../../types/authTypes';
 import { ReducerStates } from '../../types/sharedTypes';
+import { apiErrorInitialValue } from '../../initialValues/authInitials';
+import { ApiError } from '../../types/errorTypes';
 
 const initialState: AuthState = {
   loading: false,
-  error: undefined,
+  error: apiErrorInitialValue,
   isLoggedIn: false,
   status: ReducerStates.Idle
 };
@@ -20,7 +22,7 @@ const authSlice = createSlice({
         state.loading = true;
         state.status = ReducerStates.Pending;
       })
-      .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<void | undefined>) => {//add payload action
+      .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<void | undefined>) => {
         state.loading = false;
         state.isLoggedIn = true;
         state.status = ReducerStates.Fulfilled;
@@ -39,7 +41,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(register.rejected, (state: AuthState, action: PayloadAction<string | undefined>) => {
+      .addCase(register.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
         state.status = ReducerStates.Rejected

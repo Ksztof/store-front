@@ -2,11 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PaymentState } from "../../initialValues/paymentInitials";
 import { payWithCard, resetPayment, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
 import { ReducerStates } from "../../types/sharedTypes";
+import { apiErrorInitialValue } from "../../initialValues/authInitials";
+import { ApiError } from "../../types/errorTypes";
 
 const initialState: PaymentState = {
   loading: false,
   status: ReducerStates.Idle,
-  error: "",
+  error: apiErrorInitialValue,
 };
 
 const paymentSlice = createSlice({
@@ -23,7 +25,7 @@ const paymentSlice = createSlice({
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(payWithCard.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
+      .addCase(payWithCard.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
         state.error = action.payload;
         state.status = ReducerStates.Rejected;

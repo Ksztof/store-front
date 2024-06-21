@@ -2,16 +2,16 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
 import { payUsingCard } from "../../api/paymentService";
-import { isApiError } from "../../utils/responseUtils";
+import { isApiError, isSignalrError } from "../../utils/responseUtils";
 import { PaymentStatusResponse } from '../../types/paymentTypes';
 import { AboutPayment } from '../../types/paymentTypes';
-import { isErrorContent } from '../../utils/responseUtils';
-import { ReducerStates } from "../../types/sharedTypes";
+import { NoContentApiResponse } from "../../types/noContentApiResponse";
+import { ApiError } from "../../types/errorTypes";
 
 export const payWithCard = createAsyncThunk<
-    null,
+    void,
     PayWithCardPayload,
-    { rejectValue: string }
+    { rejectValue: ApiError | string }
 >(
     'payment/payWithCard',
     async (payload: PayWithCardPayload, { rejectWithValue }) => {
@@ -36,31 +36,28 @@ export const payWithCard = createAsyncThunk<
             if (error?.message) {
                 console.error(error);
                 return rejectWithValue(error.message);
-            } else {
-                if (typeof paymentMethod !== "undefined") {
-                    //amount in grosz - stripe requirement
-                    amount = amount * 100;
-                    const paymentDetails: PaymentDetails = {
-                        paymentMethodId: paymentMethod.id,
-                        amount: amount,
-                        currency: "PLN"
-                    }
+            }
 
-                    const response = await payUsingCard(paymentDetails);
-
-                    if (isApiError(response)) {
-                        const apiError = response.error;
-                        return rejectWithValue(`Error code: ${apiError.code} Error description: ${apiError.description}`);
-                    }
-                } else {
-                    return rejectWithValue("The payment method wasn't created correctly");
+            if (typeof paymentMethod !== "undefined") {
+                //amount in grosz - stripe requirement
+                amount = amount * 100;
+                const paymentDetails: PaymentDetails = {
+                    paymentMethodId: paymentMethod.id,
+                    amount: amount,
+                    currency: "PLN"
                 }
 
-                return null;
+                const response: NoContentApiResponse | ApiError = await payUsingCard(paymentDetails);
+
+                if (isApiError(response)) {
+                    return rejectWithValue(response);
+                }
+
+                return;
             }
-        } catch (error: unknown) {
-            console.error("Unexpected error:", error);
-            return rejectWithValue("An unexpected error occurred");
+        } catch (error: any) {
+            console.error("payWithCard error: ", error);
+            return rejectWithValue("An unexpected error occurred when paying by card");
         }
     }
 );
@@ -75,11 +72,13 @@ export const updatePaymentStatus = createAsyncThunk<
         try {
             if (payload.status === PaymentStatusResponse.Succeeded) {
                 return PaymentStatusResponse.Succeeded;
-            } else if (payload.error && isErrorContent(payload.error)) {
-                return rejectWithValue(`Payment failed with code:  ${payload.error.code} and message ${payload.error.description} - applies to order with id: ${payload.orderId}`);
-            } else {
-                return rejectWithValue("payment status doesn't match");
             }
+
+            if (payload.error && isSignalrError(payload.error)) {
+                return rejectWithValue(`Payment failed with code:  ${payload.error.code} and message ${payload.error.description} - applies to order with id: ${payload.orderId}`);
+            }
+
+            return rejectWithValue("payment status doesn't match");
         } catch {
             return rejectWithValue("An uncexpected error occured during payment status check.");
         }

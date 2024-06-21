@@ -84,6 +84,19 @@ export const ZodSuccessResponseNoContent = z.object({
     isEmpty: z.literal(true),
 });
 
+const ZodErrorContentSignalR = z.object({
+    code: z.string(),
+    description: z.string().optional(),
+});
+
+export const ZodPaymentStatusResponse = z.enum(["succeeded", "failed"]);
+
+export const ZodAboutPayment = z.object({
+    orderId: z.string(),
+    status: ZodPaymentStatusResponse,
+    error: ZodErrorContentSignalR.optional(),
+  });
+
 export type ErrorContentZodType = z.infer<typeof ZodErrorContent>;
 export type ProblemDetailsZodType = z.infer<typeof ZodProblemDetails>;
 export type AboutCartZodType = z.infer<typeof ZodAboutCart>;
@@ -91,3 +104,6 @@ export type OrderResponseZodType = z.infer<typeof ZodOrderResponse>;
 export type ProductDetailsArrayZodType = z.infer<typeof ZodProductDetailsArray>;
 export type ApiErrorZodType = z.infer<typeof ZodApiError>;
 export type ApiResponseNoContentZodType = z.infer<typeof ZodSuccessResponseNoContent>;
+export type ErrorContentSignalRZodType = z.infer<typeof ZodErrorContentSignalR>;
+export type PaymentStatusResponseZodType = z.infer<typeof ZodPaymentStatusResponse>;
+export type AboutPaymentZodType = z.infer<typeof ZodAboutPayment>;

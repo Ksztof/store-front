@@ -1,3 +1,4 @@
+import { ApiError } from "./errorTypes";
 import { ProductDetails } from "./productTypes";
 
 export interface CheckCart {
@@ -19,7 +20,7 @@ export interface AboutCart {
 export interface CartState {
   loading: boolean;
   cartData: AboutCart;
-  error: string | undefined;
+  error: ApiError | string | undefined;
   isEmpty: boolean,
 };
 
