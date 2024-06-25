@@ -10,12 +10,12 @@ export interface ProblemDetails {
     errors: ErrorContent[],
 };
 
-export interface ErrorContentSignalR {
-    code: string;
-    description?: string;
-};
-
 export interface ApiError {
     isSuccess: false;
     error: ProblemDetails;
+};
+
+export interface ErrorContentSignalR {
+    code: string;
+    description?: string;
 };

@@ -1,0 +1,21 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #00f7ff;
+    display: flex;
+}
+
+.navbarOptions {
+    display: flex;
+    width: 60%;
+    align-items: center;
+}
+
+.navbarLink {
+    width: 100%;
+}
+
+.logo {
+    width: 40%;
+}

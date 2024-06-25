@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Order } from './components/Order';
 import RegisterPage from './pages/RegisterPage';
-import { Navbar } from './components/navbar';
+import { Navbar } from './components/Navbar/Navbar';
 
 const App: React.FC = () => {
   return (
