@@ -6,19 +6,20 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Order } from './components/Order';
 import RegisterPage from './pages/RegisterPage';
-import { Navbar } from './components/Navbar/Navbar';
+import { Header } from './components/Header/Header';
+import './app.modules.scss';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="App">
         <Router>
-          <Navbar />
+          <Header />
           <Routes>
-            <Route path="/" element={ <Main />} />
-            <Route path="/login" element={ <Login /> } />
-            <Route path="/order" element={ <Order /> } />
-            <Route path="/register" element={ <RegisterPage /> } />
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </Router>
       </div>

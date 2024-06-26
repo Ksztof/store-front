@@ -21,7 +21,6 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(resetAuth());
       navigate('/');
     }
   }, [isLoggedIn, navigate, dispatch]);
