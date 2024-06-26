@@ -52,3 +52,4 @@ export const register = createAsyncThunk<
 );
 
 export const resetAuth = createAction('auth/reset');
+

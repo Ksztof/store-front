@@ -47,7 +47,7 @@ const authSlice = createSlice({
         state.status = ReducerStates.Rejected
       })
 
-      .addCase(resetAuth, () => initialState);
+      .addCase(resetAuth, () => initialState)
   },
 });
 
