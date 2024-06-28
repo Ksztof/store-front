@@ -5,7 +5,7 @@
     padding: 10px;
     height: 60px;
     background-color: #dfecec;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Dodaje cień pod navbar */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 
     .logo {
         flex: 1;
@@ -26,6 +26,10 @@
         margin-right: 20%;
         align-items: center;
         justify-content: flex-end;
+
+        .nav {
+            display: flex;
+        }
     }
 
     .navbarLink {
@@ -41,6 +45,49 @@
 
         &:hover {
             color: #00A0FF;
+        }
+    }
+
+    .hamburger {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        height: 85%;
+
+        .logo {
+            flex: 1;
+            display: flex;
+            align-items: center;
+
+            img {
+                max-height: 3.25rem;
+                max-width: 11.15rem;
+            }
+        }
+
+        .navbarLink {
+            display: none;
+        }
+
+        .hamburger {
+
+            display: block;
+            color: #25575e
+        }
+
+        .navbarOptions.open {
+            .nav {
+                display:table-column;
+
+                .navbarLink {
+                    display:list-item;
+                }
+            }
         }
     }
 }
