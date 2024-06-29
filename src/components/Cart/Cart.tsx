@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { AboutCart, CheckCart } from '../types/cartTypes';
-import { useAppDispatch } from '../hooks';
-import { changeCartContentGlobally, setCurrentCart, synchronizeCartWithApi } from '../redux/actions/cartActions';
-import { ProductInCart } from './ProductInCart';
-import { isGuestUser } from '../utils/cookiesUtils';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { RootState } from '../../redux/store';
+import { AboutCart, CheckCart } from '../../types/cartTypes';
+import { isGuestUser } from '../../utils/cookiesUtils';
+import { ProductInCart } from '../ProductInCart';
+import { synchronizeCartWithApi, setCurrentCart, changeCartContentGlobally } from '../../redux/actions/cartActions';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export const Cart: React.FC = () => {
         } else {
 
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn, dispatch]);
 
     const handleOrder = () => {
@@ -70,7 +70,20 @@ export const Cart: React.FC = () => {
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </>
             ) : (
-                <p>Koszyk jest pusty</p>
+                <div>
+                    <p>Koszyk jest pusty</p>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+
+                    
+                </div>
             )}
         </div>
     );
