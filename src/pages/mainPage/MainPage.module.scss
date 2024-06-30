@@ -6,18 +6,17 @@
     margin-top: 80px;
     background-color: aqua;
 
-
-
     .optionsCartSection {
         background-color: pink;
         width: 50px;
         height: 50px;
         display: flex;
-        position: fixed; 
+        position: fixed;
         align-items: center;
         justify-content: center;
         border: 2px solid black;
         border-radius: 50%;
+        cursor: pointer;
 
         .cartLogo {
             display: flex;
@@ -29,57 +28,62 @@
     .optionsFiltersSection {
         background-color: yellow;
         width: 50px;
-        height: 50px;       
-        position: fixed; 
+        height: 50px;
+        position: fixed;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 2px solid black;
         border-radius: 50%;
         margin-top: 60px;
+        cursor: pointer;
     }
 
     .cartFiltersContainer {
-        flex: 10;
+        flex: 3;
+        width: 100%;
         display: flex;
         background-color: gray;
         border: 2px solid black;
         flex-direction: column;
+        transition: flex 0.3s ease-in-out;
 
-        .cartContent {
+        &.closed {
+            flex: 0;
+            overflow: hidden;
+        }
+
+        .cartContent, .filtersContent {
             flex-direction: column;
             background-color: blue;
             overflow-y: auto;
             overflow-x: hidden;
             flex: 1;
             border-bottom: 2px solid black;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
 
+        .cartContent.hidden, .filtersContent.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .filtersContent {
             background-color: orange;
-            flex: 1;
+        }
+    }
+    
+    .productsContainer {
+        flex: 8;
+        background-color: gray;
+        transition: flex 0.3s ease-in-out;
+
+        &.cartOpen {
+            flex: 6;
         }
 
-
-    }
-
-    .productsContainer {
-        flex: 20;
-        background-color: gray;
+        &.cartCollapsed {
+            flex: 10;
+        }
     }
 }
-
-// @media (max-width: 768px) {
-//     .mainContainer {
-//         .optionsBar {}
-//     }
-// }
-
-
-// .optionsBar {
-//     width: 2%;
-//     display: flex;
-//     flex-direction: column;
-//  
-//}
