@@ -49,6 +49,9 @@
         &.open::before {
             opacity: 1;
         }
+
+
+        
     }
 
     .navbarLink {
@@ -136,5 +139,10 @@
             display: block;
             margin-right: 5%;
         }
+    }
+}
+@media (min-width: 769px) {
+    .navbarOptions::before {
+        display: none;
     }
 }

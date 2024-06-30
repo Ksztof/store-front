@@ -81,6 +81,16 @@ export const Cart: React.FC = () => {
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
                     <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+            <p>Koszyk jest pusty</p>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
 
                     
                 </div>

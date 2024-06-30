@@ -3,49 +3,62 @@
     width: 100%;
     height: 100%;
     position: relative;
+    margin-top: 80px;
+    background-color: aqua;
 
-    .optionsBar {
-        width: 2%;
+
+
+    .optionsCartSection {
+        background-color: pink;
+        width: 50px;
+        height: 50px;
         display: flex;
-        flex-direction: column;
-        background-color: aqua;
-        height: 100%;
-        margin-top: 80px;
-        
-        
-        .optionsCartSection {
-            flex: 1;
+        position: fixed; 
+        align-items: center;
+        justify-content: center;
+        border: 2px solid black;
+        border-radius: 50%;
+
+        .cartLogo {
             display: flex;
-
-            align-items: center;
-            justify-content: center;
-            background-color: aqua;
-            align-items: center;
-            
-        }
-
-        .optionsFiltersSection {
-            flex: 1;
-            background-color: yellow;
-
+            max-width: 100%;
+            max-height: 100%;
         }
     }
 
-    .cartContainer {
+    .optionsFiltersSection {
+        background-color: yellow;
+        width: 50px;
+        height: 50px;       
+        position: fixed; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid black;
+        border-radius: 50%;
+        margin-top: 60px;
+    }
+
+    .cartFiltersContainer {
         flex: 10;
+        display: flex;
         background-color: gray;
         border: 2px solid black;
-        transition: width 0.3s ease;
-        overflow: hidden;
+        flex-direction: column;
 
         .cartContent {
-            margin-top: 45%;
-
-            display: flex;
             flex-direction: column;
             background-color: blue;
-            max-height: 30%;
             overflow-y: auto;
+            overflow-x: hidden;
+            flex: 1;
+            border-bottom: 2px solid black;
+
+        }
+
+        .filtersContent {
+            background-color: orange;
+            flex: 1;
         }
 
 
@@ -54,8 +67,6 @@
     .productsContainer {
         flex: 20;
         background-color: gray;
-        transition: flex-grow 0.3s ease;
-
     }
 }
 
@@ -64,3 +75,11 @@
 //         .optionsBar {}
 //     }
 // }
+
+
+// .optionsBar {
+//     width: 2%;
+//     display: flex;
+//     flex-direction: column;
+//  
+//}

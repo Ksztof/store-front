@@ -13,25 +13,30 @@ export const Main = () => {
 
     return (
         <div className={styles.mainContainer}>
-            <div className={styles.optionsBar}>
-                <div className={styles.optionsCartSection}>
-                    <div className={styles.cartLogo}>
-                        <FaShoppingCart size={25} />
-                    </div>
-                </div>
-                <div className={styles.optionsFiltersSection}>
-
+            <div className={styles.optionsCartSection}>
+                <div className={styles.cartLogo}>
+                    <FaShoppingCart size={15} />
                 </div>
             </div>
+            <div className={styles.optionsFiltersSection}>
+                <p>F</p>
+            </div>
 
-            <div className={`${styles.cartContainer} ${isCartOpen ? '' : styles.collapsed}`}>
+            <div className={styles.cartFiltersContainer}>
                 <div className={styles.cartContent}>
                     <Cart />
                 </div>
+                <div className={styles.filtersContent}>
+                    <p>fitlers</p>
+                </div>
             </div>
+
             <div className={`${styles.productsContainer} ${isCartOpen ? styles.cartOpen : styles.cartCollapsed}`}>
                 <Products />
             </div>
         </div>
     );
 }
+
+            /* <div className={styles.optionsBar}> */
+            /* </div> */
