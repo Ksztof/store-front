@@ -38,7 +38,7 @@ export const Main = () => {
                     <p>F</p>
                 </div>
             )}
-            <div className={`${styles.cartFiltersContainer} ${(isCartOpen || isFiltersOpen) ? styles.open : styles.closed}`}>
+            <div className={`${styles.cartAndFiltersContainer} ${(isCartOpen || isFiltersOpen) ? styles.open : styles.closed}`}>
                 <div className={`${styles.cartContent} ${isCartOpen ? styles.visible : styles.hidden}`}>
                     <div className={styles.closeButtonWrapper}>
                         <button className={styles.closeButton} onClick={closeCart}><FaTimes size={15} /></button>
