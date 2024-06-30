@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Products } from "../../components/Products";
 import { Cart } from '../../components/Cart/Cart';
 import styles from './MainPage.module.scss';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa';
+import { FaFilter, FaShoppingCart, FaTimes } from 'react-icons/fa';
 
 export const Main = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -28,14 +28,12 @@ export const Main = () => {
         <div className={styles.mainContainer}>
             {!isCartOpen && (
                 <div className={styles.optionsCartSection} onClick={toggleCart}>
-                    <div className={styles.cartLogo}>
-                        <FaShoppingCart size={15} />
-                    </div>
+                        <FaShoppingCart size={15}/>
                 </div>
             )}
             {!isFiltersOpen && (
                 <div className={styles.optionsFiltersSection} onClick={toggleFilters}>
-                    <p>F</p>
+                   <FaFilter size={15}/>
                 </div>
             )}
             <div className={`${styles.cartAndFiltersContainer} ${(isCartOpen || isFiltersOpen) ? styles.open : styles.closed}`}>
