@@ -7,16 +7,24 @@
     background-color: aqua;
 
     .optionsCartSection {
-        background-color: pink;
+        background-color: #dfecec;
         width: 50px;
         height: 50px;
         display: flex;
         position: fixed;
         align-items: center;
         justify-content: center;
-        border: 2px solid black;
         border-radius: 50%;
         cursor: pointer;
+        margin-top: 10px;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+        right: 80px;
+        opacity: 50%;
+        z-index: 1002;
+
+        &:hover {
+            opacity: 100%;
+        }
 
         .cartLogo {
             display: flex;
@@ -26,64 +34,121 @@
     }
 
     .optionsFiltersSection {
-        background-color: yellow;
+        background-color: #e1ebeb;
         width: 50px;
         height: 50px;
         position: fixed;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 2px solid black;
         border-radius: 50%;
-        margin-top: 60px;
+        margin-top: 10px;
+        right: 20px;
         cursor: pointer;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+        opacity: 50%;
+        z-index: 1002;
+
+        &:hover {
+            opacity: 100%;
+        }
     }
 
     .cartFiltersContainer {
-        flex: 3;
-        width: 100%;
+        width: 30%;
+        height: calc(100% - 90px);
+        position: fixed;
+        top: 90px;
+        left: 0;
         display: flex;
-        background-color: gray;
-        border: 2px solid black;
         flex-direction: column;
+        background-color: gray;
         transition: flex 0.3s ease-in-out;
+        z-index: 1001;
 
         &.closed {
-            flex: 0;
-            overflow: hidden;
+            display: none;
         }
 
-        .cartContent, .filtersContent {
-            flex-direction: column;
-            background-color: blue;
+        .cartContent,
+        .filtersContent {
             overflow-y: auto;
             overflow-x: hidden;
-            flex: 1;
-            border-bottom: 2px solid black;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 3px 0 3px rgba(0, 0, 0, 0.15);
+            background-color: #dfecec;
         }
 
-        .cartContent.hidden, .filtersContent.hidden {
-            opacity: 0;
-            visibility: hidden;
+        .cartContent {
+            order: 1; 
+            box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+            flex: 0 0 40%; /* Ustaw wysokość dla cartContent na 60% */
+
+            .closeButtonWrapper {
+                position: sticky;
+                top: 0;
+                background-color: inherit;
+                display: flex;
+                justify-content: flex-end;
+                padding: 10px;
+                z-index: 1003;
+            }
         }
 
         .filtersContent {
-            background-color: orange;
+            order: 2;
+            box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+            flex: 0 0 40%; /* Ustaw wysokość dla cartContent na 60% */
+
+            .closeButtonWrapper {
+                position: sticky;
+                top: 0;
+                background-color: inherit;
+                display: flex;
+                justify-content: flex-end;
+                padding: 10px;
+                z-index: 1003;
+            }
+        }
+
+        .visible {
+            opacity: 1;
+            visibility: visible;
+            height: 50%;
+        }
+
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            height: 0;
+        }
+
+        .closeButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
         }
     }
-    
-    .productsContainer {
-        flex: 8;
-        background-color: gray;
-        transition: flex 0.3s ease-in-out;
 
-        &.cartOpen {
-            flex: 6;
+    .productsContainer {
+        flex: 1;
+        background-color: gray;
+        margin-left: 30%;
+        transition: margin-left 0.3s ease-in-out;
+
+        .productsContent {
+            margin-left: 0%;
         }
 
-        &.cartCollapsed {
-            flex: 10;
+        &.cartOpen,
+        &.filtersOpen {
+            margin-left: 30%;
+        }
+
+        &.collapsed {
+            margin-left: 0%;
         }
     }
 }

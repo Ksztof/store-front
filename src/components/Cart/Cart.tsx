@@ -54,7 +54,9 @@ export const Cart: React.FC = () => {
             margin: '20px',
             padding: '20px',
             whiteSpace: 'pre-wrap',
-            wordBreak: 'break-word'
+            wordBreak: 'break-word',
+            maxWidth: '200px',
+            position: 'relative'
         }}>
             <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
             {cartContent && cartContent.totalCartValue !== 0 ? (
