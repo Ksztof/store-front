@@ -1,0 +1,117 @@
+.productContainer {
+    flex:1;
+    display: flex;
+    background-color: rgb(205, 228, 203);
+    padding: 20px;
+    align-content: space-between;
+    &:first-child {
+        margin-top: 100px;
+    }
+
+    .imageContainer {
+        width: 300px;
+        height: 250px;
+        background-color: aqua;
+
+        img {
+            max-width: 300px;
+            max-height: 250px;
+        }
+    }
+
+    .infoContainer {
+        flex-direction: column;
+        width: 500px;
+        height: 250px;
+        min-width: 500px;
+        flex: 1;
+
+
+        .productName {
+            font-family: Open Sans, sans-serif;
+            line-height: 15px;
+            margin-left: 10px;
+            font-size: 35px;
+            font-weight: 400;
+        }
+
+        .productPrice {
+
+            margin-left: 10px;
+            font-weight: 500;
+            font-size: 56px;
+            font-family: Roboto, sans-serif;
+            margin-top: 120px;
+            height: 70px;
+            width: auto;
+            max-width: 80%;
+
+            .price {
+                margin-right: 10px;
+            }
+
+            .currency {
+                margin-right: 35px;
+            }
+        }
+    }
+
+    .quantityContainer {
+        flex: 1;
+        align-self: center;
+
+        input {
+            background-color: rgb(205, 228, 203);
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            font-size: 25px;
+            text-align: center;
+
+            // &:focus {
+            //     border-color: #5fe27d;
+            //     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            //     outline: none;
+            // }
+
+            // &:hover {
+            //     border-color: yellow;
+            // }
+
+            // &:disabled {
+            //     background-color: pink;
+            //     cursor: not-allowed;
+            // }
+
+            // &.error {
+            //     border-color: red;
+            // }
+        }
+    }
+
+    .addBtnContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0;
+
+        button {
+            width: 150px;
+            height: 80px;
+            background-color: rgb(205, 228, 203);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            border-radius: 15px;
+
+            &:hover {
+                background-color: rgb(178, 238, 171);
+            }
+
+            &:active {
+                background-color: #5fe27d;
+            }
+        }
+    }
+}
