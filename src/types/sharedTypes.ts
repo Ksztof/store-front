@@ -4,3 +4,7 @@ export enum ReducerStates {
     Fulfilled = "FULFILLED",
     Rejected = "REJECTED",
 }
+
+export enum Currency {
+    PLN = "zł"
+}

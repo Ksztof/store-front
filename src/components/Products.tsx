@@ -4,7 +4,7 @@ import { getProducts } from "../redux/actions/productActions";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ProductDetails } from "../types/productTypes";
-import { Product } from "./Product";
+import { Product } from "./product/Product";
 
 export const Products: React.FC = () => {
     const dispatch = useAppDispatch();

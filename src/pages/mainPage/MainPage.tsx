@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Products } from "../../components/Products";
-import { Cart } from '../../components/Cart/Cart';
 import styles from './MainPage.module.scss';
 import { FaFilter, FaShoppingCart, FaTimes } from 'react-icons/fa';
+import { Cart } from '../../components/cart/Cart';
 
 export const Main = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
