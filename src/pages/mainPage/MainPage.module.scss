@@ -5,6 +5,9 @@
     position: relative;
     margin-top: 80px;
     background-color: #dfecec;
+    min-width: 100%;
+    min-height: 100%;
+    flex-direction: column;
 
     .optionsCartSection {
         background-color: #dfecec;
@@ -58,6 +61,7 @@
         transition: height 0.3s ease-in-out;
         z-index: 1001;
         margin-top: 100px;
+
         &.closed {
             height: 0;
         }
@@ -75,7 +79,7 @@
         .cartContent {
             order: 1;
             box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-
+            
             .closeButtonWrapper {
                 position: sticky;
                 top: 0;
