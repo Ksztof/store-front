@@ -1,13 +1,13 @@
 .mainContainer {
+    flex: 1;
     display: flex;
+    flex-direction: block;
+    margin-top: 80px;
     width: 100%;
     height: 100%;
-    position: relative;
-    margin-top: 80px;
-    background-color: #dfecec;
-    min-width: 100%;
     min-height: 100%;
-    flex-direction: column;
+    background-color: #dfecec;
+    //overflow: auto;
 
     .optionsCartSection {
         background-color: #dfecec;
@@ -52,32 +52,34 @@
     }
 
     .cartAndFiltersContainer {
-        width: 35%;
-        height: calc(100% - 250px);
+        height: 100%;
+        width: 60px;
         position: fixed;
         left: 0;
         display: flex;
         flex-direction: column;
         transition: height 0.3s ease-in-out;
         z-index: 1001;
-        margin-top: 100px;
+        background-color: blue;
 
-        &.closed {
-            height: 0;
-        }
+        // &.closed {
+        //     height: 0;
+        // }
 
         .cartContent,
         .filtersContent {
             overflow-y: auto;
-            overflow-x: hidden;
             transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            position: relative;
-            background-color: #dfecec;
-            width: 75%;
+            background-color: blue;
+            bottom: 20%;
+            right: 20%;
+            position: fixed;
+            left:0px;
+            top: 90px;
+            width: 40%;
         }
 
         .cartContent {
-            order: 1;
             box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
             
             .closeButtonWrapper {
@@ -92,7 +94,6 @@
         }
 
         .filtersContent {
-            order: 2;
             box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
 
             .closeButtonWrapper {
@@ -124,6 +125,19 @@
             cursor: pointer;
             color: black;
         }
+
+        &.bothOpen {
+            .cartContent {
+
+                height: 50%; 
+                top: 90px; 
+            }
+            .filtersContent {
+
+                height: 20%; 
+                top: 70%; 
+            }
+        }
     }
 
     .productsContainer {
@@ -131,14 +145,13 @@
         background-color: #dfecec;
         margin-left: 30%;
         transition: margin-left 0.3s ease-in-out;
-
-        .productsContent {
-            margin-left: 0%;
-        }
+        height:100%;
+        width: 100%;
+      
 
         &.cartOpen,
         &.filtersOpen {
-            margin-left: 30%;
+            margin-left: 40%;
         }
 
         &.collapsed {

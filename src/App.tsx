@@ -6,13 +6,13 @@ import { store } from './redux/store'
 import { Order } from './components/Order';
 import RegisterPage from './pages/RegisterPage';
 import { Header } from './components/header/Header';
-import './app.modules.scss';
+import styles from './app.module.scss';
 import { Main } from './pages/mainPage/MainPage';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className={styles.app}>
         <Router>
           <Header />
           <Routes>
