@@ -1,7 +1,7 @@
 .mainContainer {
     flex: 1;
     display: flex;
-    flex-direction: block;
+    flex-direction: column;
     position: relative;
     margin-top: 80px;
     width: 100%;
@@ -11,7 +11,7 @@
     overflow: hidden;
 
     .optionsBar {
-        background-color: #cdf6f6;
+        background-color: white;
         position: fixed;
         display: flex;
         flex-direction: column;
@@ -21,6 +21,7 @@
         justify-content: flex-start;
         gap: 4%;
         z-index: 1003;
+        box-shadow: 0.4vw 0 0.4vw rgba(0, 0, 0, 0.3);
 
         .showCartButton,
         .showFiltersButton {
@@ -31,13 +32,15 @@
             position: relative;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 0.4vw  0.4vw rgba(0, 0, 0, 0.2);
             align-items: center;
             justify-content: center;
             opacity: 50%;
+            color: rgb(6, 37, 42);
 
             &:hover {
                 opacity: 100%;
+                color: rgb(6, 37, 42);
             }
 
             &.optionBarOpen {
@@ -79,14 +82,15 @@
             display: flex;
             position: absolute;
             z-index: 1002;
-            right: 0.5vw;
+            right: 2vw;
             top: 1.5vw;
             visibility: hidden;
 
             .closeButtonLogo {
                 font-size: 2vw;
                 opacity: 50%;
-                
+                position: fixed;
+
                 &:hover {
                     opacity: 100%;
                     color: red;
@@ -150,18 +154,38 @@
 
     .productsContainer {
         flex: 1;
-        background-color: #dfecec;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(6, 37, 42);
         height: 100%;
-        width: 100%;
+        width: 93vw;
         overflow-y: auto;
         overflow-x: auto;
         position: absolute;
-        left: calc(5%);
-        transition: left 0.2s ease;
+        left: 5%;
+        transition: left 0.3s ease-in-out;
+        padding: 2vw;
 
         &.leftBarOpen {
-            left: calc(30% + 4vw + 5%);
-            /* 30% (cartAndFiltersContainer) + 4vw (padding) + 5% (optionsBar) */
+            left: 39vw;
+            width: 59vw;
+        }
+    }
+
+    .searchBar {
+        flex:1;
+        position: absolute;
+        background-color: white;
+        z-index: 1;
+        width: 60vw;
+        height: 5vw;
+        left: 20%;
+        top: 1vw;
+        border-radius: 30%;
+
+        &.leftBarOpen {
+            left: 59vw;
+            width: 26vw;
         }
     }
 }

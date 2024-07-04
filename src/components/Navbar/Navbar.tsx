@@ -33,8 +33,8 @@ export const Navbar: React.FC = () => {
             <div className={`${styles.navbarOptions} ${isMenuOpen ? styles.open : ""}`}>
                 <nav className={styles.nav}>
                     <Link className={styles.navbarLink} to="/"> Main </Link>
-                    {isLoggedIn ? <Link className={styles.navbarLink} to="" onClick={handleLogout}>Logout</Link> : <Link className={styles.navbarLink} to="/login"> Login </Link>}
-                    <Link className={styles.navbarLink} to="/register"> Register </Link>
+                    {isLoggedIn ? <Link className={styles.navbarLink} to="" onClick={handleLogout}>Logout</Link> : <Link className={styles.navbarLink} to="/login"> Login/register </Link>}
+                    {/* <Link className={styles.navbarLink} to="/register"> Register </Link> */}
                 </nav>
             </div>
             <div className={styles.hamburger} onClick={toggleMenu}>

@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import { addProductToCart } from "../../redux/actions/cartActions";
 import { ProductProps } from "../../props/productProps";
-import styles from './Products.module.scss';
-import productImg from '../../pictures/hpcLogo.png'
+import styles from './Product.module.scss';
+import productImg from '../../pictures/kielbasa.jpg'
 import { Currency } from "../../types/sharedTypes";
 
 export const Product: React.FC<ProductProps> = ({ productId }) => {
@@ -17,7 +17,7 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
 
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: string = event.target.value;
-        const parsedValue: number = parseFloat(value);
+        const parsedValue: number = parseInt(value);
         if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 100) {
             setProductQuantity(parsedValue);
         }

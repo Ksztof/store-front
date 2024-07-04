@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Products } from "../../components/Products";
+import { Products } from "../../components/products/Products";
 import styles from './MainPage.module.scss';
 import { FaShoppingCart, FaSlidersH, FaTimes } from 'react-icons/fa';
 import { Cart } from '../../components/cart/Cart';
@@ -53,6 +53,9 @@ export const Main = () => {
                 <div className={styles.filtersContent}>
                     <p>filters</p>
                 </div>
+            </div>
+            <div className={`${styles.searchBar} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
+                
             </div>
             <div className={`${styles.productsContainer} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
                 <Products />

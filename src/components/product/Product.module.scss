@@ -1,0 +1,144 @@
+.productContainer {
+    display: flex;
+    position: relative;
+    background-color: rgb(51, 51, 51);
+    border-radius: 0.7vw;
+    height: 9vw;
+
+    &:first-child {
+        margin-top: 5vw;
+    }
+
+    .imageContainer {
+        height: 9vw;
+        background-color: aqua;
+        border-radius: 0.7vw;
+
+        img {
+
+            min-width: 12vw;
+            min-height: 9vw;
+            max-width: 12vw;
+            max-height: 9vw;
+            border-top-left-radius: 0.7vw;
+            border-bottom-left-radius: 0.7vw;
+        }
+    }
+
+    .infoContainer {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 9vw;
+        margin-left: 1vw;
+
+        .productName {
+            font-family: Open Sans, sans-serif;
+            line-height: 0.3vw;
+            font-size: 1.5vw;
+            font-weight: 400;
+            color: white;
+
+        }
+
+        .productPrice {
+            font-weight: 500;
+            font-size: 2.5vw;
+            font-family: Roboto, sans-serif;
+            margin-top: 3vw;
+            color: white;
+
+            .price {
+                margin-right: 0.5vw;
+            }
+        }
+    }
+
+    .quantityContainer {
+        display: flex;
+        flex: 1;
+        height: 9vw;
+        align-items: center;
+
+        input {
+            background-color: rgb(82, 83, 82);
+            width: 6vw;
+            height: 4vw;
+            border-radius: 1vw;
+            font-size: 1.7vw;
+            text-align: center;
+            color: white;
+            border: 0.2vw solid 1vw ;
+            border-left: 0.1vw solid; 
+            border-top: 0.1vw solid; 
+            border-color: white;
+
+            &:focus {
+                border-color: #00ff3c;
+                outline: none;
+            }
+
+            &:hover {
+                border-color: yellow;
+            }
+
+            &:hover:focus {
+                border-color: #00ff3c;
+            }
+        }
+    }
+
+    .addBtnContainer {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        button {
+            width: 10vw;
+            height: 4vw;
+            background-color: rgb(82, 83, 82);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+            border-radius: 1.4vw;
+            color: white;
+            font-size: 1.5vw;
+            border: 0.2vw solid 1vw ;
+            border-left: 0.1vw solid; 
+            border-top: 0.1vw solid; 
+            border-color: white;
+
+
+            &:hover {
+                border-color: yellow;
+                outline: none; 
+
+            }
+
+            &:active {
+                background-color: #5fe27d;
+
+
+            }
+
+            &:focus {
+                outline: none; 
+                border-color: #00ff3c; 
+            }
+
+            &:focus:not(:active) {
+                border-color: white;
+            }
+           
+            &:hover:focus {
+                border-color: #00ff3c;
+
+            }
+            
+            &:hover:focus:not(:active) {
+                border-color: yellow;
+
+            }
+        }
+    }
+}

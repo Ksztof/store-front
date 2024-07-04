@@ -4,8 +4,8 @@
     align-items: center;
     padding: 10px;
     height: 60px;
-    background-color: #dfecec;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    box-shadow: 0 0.4vw 0.4vw rgba(0, 0, 0, 0.3);
     width: 100%;
     max-width: 100%;
 
@@ -41,7 +41,7 @@
             left: 0;
             right: 0;
             height: 10px;
-            box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0.4vw 0.4vw rgba(0, 0, 0, 0.3);
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
@@ -51,7 +51,7 @@
         }
 
 
-        
+
     }
 
     .navbarLink {
@@ -64,8 +64,10 @@
         padding-bottom: 5px;
         padding-left: 10px;
         font-family: 'Inter', sans-serif;
+        color: black;
+
         &:hover {
-            color: #00A0FF;
+            color: rgb(0, 230, 238);
         }
     }
 
@@ -106,12 +108,13 @@
 
             &.open {
 
-                max-height: 100%;
+                max-height: 100vw;
                 visibility: visible;
                 opacity: 1;
                 pointer-events: auto;
                 transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s;
                 box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12);
+                overflow-y: auto;
             }
 
             .nav {
@@ -120,12 +123,14 @@
                 background-color: #dfecec;
 
                 .navbarLink {
-                    width: 100%;
+                    width: 100vw;
                     align-self: flex-end;
                     border-bottom: 1px solid #ccc;
                     text-align: right;
-                    padding: 15px 10px;
+                    padding: 3vw 2vw;
                     box-sizing: border-box;
+                    height: 12vw;
+                    font-size: 6vw;
 
                     &:last-child {
                         border-bottom: none;
@@ -140,7 +145,8 @@
         }
     }
 }
-@media (min-width: 76px) {
+
+@media (min-width: 769px) {
     .navbarOptions::before {
         display: none;
     }
