@@ -15,44 +15,56 @@ export const Main = () => {
     }, [isCartOpen, isFiltersOpen]);
 
     const toggleCart = () => {
+        if (isFiltersOpen) {
+            setIsFiltersOpen(false);
+        }
+
         setIsCartOpen(!isCartOpen);
     };
 
     const toggleFilters = () => {
+        if (isCartOpen) {
+            setIsCartOpen(false);
+        }
+
         setIsFiltersOpen(!isFiltersOpen);
     };
 
-    const closeCart = () => {
-        setIsCartOpen(false);
-    };
-
-    const closeFilters = () => {
-        setIsFiltersOpen(false);
+    const closeOption = () => {
+        if (isCartOpen) {
+            setIsCartOpen(false);
+        } else if (isFiltersOpen) {
+            setIsFiltersOpen(false);
+        }
     };
 
     return (
         <div className={styles.mainContainer}>
             <div className={styles.optionsBar}>
-                <div className={`${styles.optionsCartSection} ${isCartOpen || isFiltersOpen ? styles.optionBarOpen : ''}`} onClick={toggleCart}>
-                    <FaShoppingCart className={styles.cartLogo}  />
+                <div className={`${styles.showCartButton} ${isCartOpen ? styles.optionBarOpen : ''}`} onClick={toggleCart}>
+                    <FaShoppingCart className={styles.cartLogo} />
+                    {isCartOpen && <FaTimes className={styles.closeCartLogo} />}
                 </div>
-                <div className={`${styles.optionsFiltersSection} ${isCartOpen || isFiltersOpen ? styles.optionBarOpen : ''}`} onClick={toggleFilters}>
-                    <FaSlidersH className={styles.filtersLogo}  />
+                <div className={`${styles.showFiltersButton} ${isFiltersOpen ? styles.optionBarOpen : ''}`} onClick={toggleFilters}>
+                    <FaSlidersH className={styles.filtersLogo} />
+                    {isFiltersOpen && <FaTimes className={styles.closeFiltersLogo} />}
                 </div>
             </div>
-            <div className={styles.cartAndFiltersContainer}>
+            <div className={
+                `
+                ${styles.cartAndFiltersContainer} 
+                ${isCartOpen ? styles.cartContentOpen : ''}
+                ${isFiltersOpen ? styles.filtersContentOpen : ''}
+                `
+            }>
+                <button className={styles.closeButton} onClick={closeOption}><FaTimes className={styles.closeButtonLogo} /></button>
                 <div className={styles.cartContent}>
-                    <div className={styles.closeButtonWrapper}>
-                        <button className={styles.closeButton} onClick={closeCart}><FaTimes size={15} /></button>
-                    </div>
+
                     <Cart />
                 </div>
-                {/* <div className={styles.filtersContent}>
-                    <div className={styles.closeButtonWrapper}>
-                        <button className={styles.closeButton} onClick={closeFilters}><FaTimes size={15} /></button>
-                    </div>
+                <div className={styles.filtersContent}>
                     <p>filters</p>
-                </div> */}
+                </div>
             </div>
             <div className={styles.productsContainer}>
                 <Products />
@@ -62,41 +74,3 @@ export const Main = () => {
 };
 
 export default Main;
-// /${(isCartOpen || isFiltersOpen) ? styles.open : styles.closed}
-
-
-// return (
-//     <div className={styles.mainContainer}>
-//         {!isCartOpen && (
-//             <div className={styles.optionsCartSection} onClick={toggleCart}>
-//                 <FaShoppingCart size={15} />
-//             </div>
-//         )}
-//         {!isFiltersOpen && (
-//             <div className={styles.optionsFiltersSection} onClick={toggleFilters}>
-//                 <FaFilter size={15} />
-//             </div>
-//         )}
-//         <div>
-            
-//         </div>
-//         <div className={`${styles.cartAndFiltersContainer}  ${cartAndFilterOpen ? styles.bothOpen : ''}`}>
-//             <div className={`${styles.cartContent} ${isCartOpen ? styles.visible : styles.hidden}`}>
-//                 <div className={styles.closeButtonWrapper}>
-//                     <button className={styles.closeButton} onClick={closeCart}><FaTimes size={15} /></button>
-//                 </div>
-//                 <Cart />
-//             </div>
-//             <div className={`${styles.filtersContent} ${isFiltersOpen ? styles.visible : styles.hidden}`}>
-//                 <div className={styles.closeButtonWrapper}>
-//                     <button className={styles.closeButton} onClick={closeFilters}><FaTimes size={15} /></button>
-//                 </div>
-//                 <p>filters</p>
-//             </div>
-//         </div>
-//         <div className={`${styles.productsContainer} ${(isCartOpen || isFiltersOpen) ? styles.cartOpen : styles.collapsed}`}>
-//             <Products />
-//         </div>
-//     </div>
-// );
-// };

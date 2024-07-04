@@ -20,8 +20,8 @@
         justify-content: flex-start;
         gap: 4%;
 
-        .optionsCartSection,
-        .optionsFiltersSection {
+        .showCartButton,
+        .showFiltersButton {
             width: 3.2vw;
             height: 3.2vw;
             top: 1vw;
@@ -38,19 +38,26 @@
                 opacity: 100%;
             }
 
+            &.optionBarOpen {
+                opacity: 100%;
+            }
+
             .filtersLogo,
             .cartLogo {
                 font-size: 1.2vw;
             }
-
-            .optionsCartSection
-            &.optionBarOpen {
-                opacity: 100%;
-            }
         }
 
+        .closeCartLogo {
+            margin-bottom: 1.5vw;
+            font-size: 0.8vw;
 
+        }
 
+        .closeFiltersLogo {
+            margin-bottom: 1.5vw;
+            font-size: 0.8vw;
+        }
     }
 
     .cartAndFiltersContainer {
@@ -65,56 +72,52 @@
         background-color: #cdf6f6;
         border-left: 1.5px solid rgb(133, 179, 249);
         overflow-y: auto;
+        visibility: hidden;
+        padding: 2vw;
 
-        // &.closed {
-        //     height: 0;
-        // }
-
+        .closeButton {
+            background-color: inherit;
+            display: flex;
+            position: absolute;
+            z-index: 1002;
+            right: 0.5vw;
+            top: 1.5vw;
+            .closeButtonLogo {
+                font-size: 2vw;
+            }
+        }
+        
         .cartContent,
         .filtersContent {
             background-color: #cdf6f6;
-            position: relative;
+            position: absolute;
             width: 100%;
-            height: 100%;
+            height: 100%;            
         }
 
-        .cartContent {
 
-            .closeButtonWrapper {
-                position: sticky;
-                top: 0;
-                background-color: inherit;
-                display: flex;
-                justify-content: flex-end;
-                padding: 10px;
-                z-index: 1003;
-            }
-        }
-
-        .filtersContent {
-            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-
-            .closeButtonWrapper {
-                position: sticky;
-                top: 0;
-                background-color: inherit;
-                display: flex;
-                justify-content: flex-end;
-                padding: 10px;
-                z-index: 1003;
-            }
-        }
-
-        .visible {
-            opacity: 1;
+        &.cartContentOpen {
             visibility: visible;
-            height: 50%;
+
+            .cartContent {
+                visibility: visible;
+            }
+
+            .filtersContent {
+                visibility: hidden;
+            }
         }
 
-        .hidden {
-            opacity: 0;
-            visibility: hidden;
-            height: 0;
+        &.filtersContentOpen {
+            visibility: visible;
+
+            .cartContent {
+                visibility: hidden;
+            }
+
+            .filtersContent {
+                visibility: visible;
+            }
         }
 
         .closeButton {
@@ -122,20 +125,6 @@
             border: none;
             cursor: pointer;
             color: black;
-        }
-
-        &.bothOpen {
-            .cartContent {
-
-                height: 50%;
-                top: 90px;
-            }
-
-            .filtersContent {
-
-                height: 20%;
-                top: 70%;
-            }
         }
     }
 
