@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../hooks";
-import { getProducts } from "../redux/actions/productActions";
+import { useAppDispatch } from "../../hooks";
+import { getProducts } from "../../redux/actions/productActions";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { ProductDetails } from "../types/productTypes";
-import { Product } from "./product/Product";
-
+import { RootState } from "../../redux/store";
+import { ProductDetails } from "../../types/productTypes";
+import { Product } from "../product/Product";
+import styles from './Products.module.scss';
 export const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const isDataLoading = useSelector((state: RootState) => state.product.loading);
@@ -18,7 +18,7 @@ export const Products: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <div className={styles.productsContainer}>
              {Array.isArray(products) && products.length > 0 ? (
                 <>
                     {products.map((product: ProductDetails) => (
