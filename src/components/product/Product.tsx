@@ -8,6 +8,7 @@ import { ProductProps } from "../../props/productProps";
 import styles from './Product.module.scss';
 import productImg from '../../pictures/kielbasa.jpg'
 import { Currency } from "../../types/sharedTypes";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
 export const Product: React.FC<ProductProps> = ({ productId }) => {
     const dispatch = useAppDispatch();
@@ -23,7 +24,15 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
         }
     };
 
-    if (!product) return null;
+    const increaseQuantity = () => {
+        setProductQuantity((prevQuantity) => prevQuantity + 1);
+      };
+    
+      const decreaseQuantity = () => {
+        setProductQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
+      };
+
+    if (!product) return null; //???
 
     return (
         <div className={styles.productContainer}>
@@ -40,11 +49,13 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
                 </div>
             </div>
             <div className={styles.quantityContainer}>
+                <FaCaretLeft  className={styles.quantityLeftArrow}  onClick={decreaseQuantity}/>
                 <input
                     type="number"
                     onChange={handleQuantityChange}
                     value={productQuantity}
                 />
+                <FaCaretRight className={styles.quantityRightArrow} onClick={increaseQuantity}/>
             </div>
             <div className={styles.addBtnContainer}>
                 <button onClick={() =>

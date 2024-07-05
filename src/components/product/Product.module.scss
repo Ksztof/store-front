@@ -4,6 +4,20 @@
     background-color: rgb(51, 51, 51);
     border-radius: 0.7vw;
     height: 9vw;
+    border: 1px dotted transparent;
+
+    &:hover {
+        border: 0.1vw dotted yellow;
+
+        .productName {
+            color: yellow !important;
+            opacity: 80% !important;
+
+            &:hover {
+                opacity: 100% !important;
+            }
+        }
+    }
 
     &:first-child {
         margin-top: 5vw;
@@ -38,9 +52,9 @@
             font-size: 1.5vw;
             font-weight: 400;
             color: white;
-
+            cursor: pointer;
         }
-
+       
         .productPrice {
             font-weight: 500;
             font-size: 2.5vw;
@@ -60,6 +74,42 @@
         height: 9vw;
         align-items: center;
 
+        .quantityLeftArrow,
+        .quantityRightArrow {
+            position: relative;
+            font-size: 5vw;
+            cursor: pointer;
+            width: 5vw;
+            height: 6vw;
+            stroke: white;
+            stroke-width: 7px;
+            color: rgb(6, 37, 42);
+
+            &:hover {
+                stroke: yellow;
+            }
+
+           
+        }
+
+        .quantityLeftArrow {
+            right: -1vw;
+            z-index: 900;
+
+            &:active {
+                stroke: red
+            }
+        }
+
+        .quantityRightArrow {
+            left: -1vw;
+            z-index: 900;
+
+            &:active {
+                stroke: rgb(0, 255, 0);
+            }
+        }
+
         input {
             background-color: rgb(82, 83, 82);
             width: 6vw;
@@ -68,10 +118,16 @@
             font-size: 1.7vw;
             text-align: center;
             color: white;
-            border: 0.2vw solid 1vw ;
-            border-left: 0.1vw solid; 
-            border-top: 0.1vw solid; 
-            border-color: white;
+            background-color: rgb(6, 37, 42);
+            border: 0.1vw solid white;
+            z-index: 1002;
+            cursor: pointer;
+
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+            }
 
             &:focus {
                 border-color: #00ff3c;
@@ -92,10 +148,11 @@
         flex: 1;
         display: flex;
         align-items: center;
+
         button {
             width: 10vw;
             height: 4vw;
-            background-color: rgb(82, 83, 82);
+            background-color: rgb(6, 37, 42);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -103,41 +160,34 @@
             border-radius: 1.4vw;
             color: white;
             font-size: 1.5vw;
-            border: 0.2vw solid 1vw ;
-            border-left: 0.1vw solid; 
-            border-top: 0.1vw solid; 
-            border-color: white;
+            border: 0.1vw solid white;
+            cursor: pointer;
 
 
             &:hover {
                 border-color: yellow;
-                outline: none; 
-
+                outline: none;
             }
 
             &:active {
                 background-color: #5fe27d;
-
-
             }
 
             &:focus {
-                outline: none; 
-                border-color: #00ff3c; 
+                outline: none;
+                border-color: #00ff3c;
             }
 
             &:focus:not(:active) {
                 border-color: white;
             }
-           
+
             &:hover:focus {
                 border-color: #00ff3c;
-
             }
-            
+
             &:hover:focus:not(:active) {
                 border-color: yellow;
-
             }
         }
     }
