@@ -1,0 +1,119 @@
+.productInCartContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 0.7vw;
+    width: 96%;
+    height: 5vw;
+
+    .imageContainer {
+        height: 5vw;
+        background-color: aqua;
+        border-radius: 0.7vw;
+
+        img {
+
+            min-width: 8vw;
+            min-height: 5vw;
+            max-width: 8vw;
+            max-height: 5vw;
+            border-top-left-radius: 0.7vw;
+            border-bottom-left-radius: 0.7vw;
+        }
+    }
+
+    .summaryContainer {
+        flex-direction: column;
+        display: flex;
+        flex: 1;
+        height: 5vw;
+        border-top-right-radius: 0.7vw;
+        border-bottom-right-radius: 0.7vw;
+        background-color: white;
+
+        .summaryTitle {
+            background-color: red;
+            height: 45%;
+            display: flex;
+            align-items: center;
+
+            .quantityLeftArrow,
+            .quantityRightArrow {
+                position: relative;
+                cursor: pointer;
+                width: 2vw;
+                height: 2.5vw;
+                stroke: white;
+                stroke-width: 15px;
+                color: rgb(6, 37, 42);
+
+                &:hover {
+                    stroke: yellow;
+                }
+            }
+
+            .quantityLeftArrow {
+                right: -0.3vw;
+
+                &:active {
+                    stroke: red
+                }
+            }
+
+            .quantityRightArrow {
+                left: -0.3vw;
+
+                &:active {
+                    stroke: rgb(0, 255, 0);
+                }
+            }
+
+            input {
+                background-color: rgb(82, 83, 82);
+                width: 2.7vw;
+                height: 1.4vw;
+                border-radius: 10%;
+                font-size: 1.2vw;
+                text-align: center;
+                color: white;
+                background-color: rgb(6, 37, 42);
+                border: 0.1vw solid white;
+                cursor: pointer;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                }
+
+                &:focus {
+                    border-color: #00ff3c;
+                    outline: none;
+                }
+
+                &:hover {
+                    border-color: yellow;
+                }
+
+                &:hover:focus {
+                    border-color: #00ff3c;
+                }
+            }
+
+            .productName {
+                font-family: Open Sans, sans-serif;
+                line-height: 0.3vw;
+                font-size: 1.1vw;
+                font-weight: 400;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .restStuff {
+            height: 60%;
+            background-color: #00ff3c;
+        }
+    }
+}

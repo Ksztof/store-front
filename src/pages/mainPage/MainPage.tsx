@@ -47,15 +47,22 @@ export const Main = () => {
                 `
             }>
                 <button className={styles.closeButton} onClick={closeOption}><FaTimes className={`${styles.closeButtonLogo} ${isCartOpen || isFiltersOpen ? styles.optionOpen : ''}`} /></button>
+                <div className={styles.cartHeader}>
+                    <div className={styles.cartHeaderTitle}>Cart</div>
+                    <div className={styles.cartHeaderTotal}>Total: 105,55 zł</div>
+                </div>
                 <div className={styles.cartContent}>
                     <Cart />
                 </div>
                 <div className={styles.filtersContent}>
                     <p>filters</p>
                 </div>
+                <div>
+                    
+                </div>
             </div>
             <div className={`${styles.searchBar} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
-                
+
             </div>
             <div className={`${styles.productsContainer} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
                 <Products />

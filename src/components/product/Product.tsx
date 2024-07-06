@@ -26,20 +26,18 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
 
     const increaseQuantity = () => {
         setProductQuantity((prevQuantity) => prevQuantity + 1);
-      };
-    
-      const decreaseQuantity = () => {
+    };
+
+    const decreaseQuantity = () => {
         setProductQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
-      };
+    };
 
     if (!product) return null; //???
 
     return (
         <div className={styles.productContainer}>
             <div className={styles.imageContainer}>
-                <div className={styles.productImage}>
                     <img className={styles.img} src={productImg} alt="prodImg" loading="lazy" />
-                </div>
             </div>
             <div className={styles.infoContainer}>
                 <h2 className={styles.productName}>{product.name}</h2>
@@ -49,13 +47,13 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
                 </div>
             </div>
             <div className={styles.quantityContainer}>
-                <FaCaretLeft  className={styles.quantityLeftArrow}  onClick={decreaseQuantity}/>
+                <FaCaretLeft className={styles.quantityLeftArrow} onClick={decreaseQuantity} />
                 <input
                     type="number"
                     onChange={handleQuantityChange}
                     value={productQuantity}
                 />
-                <FaCaretRight className={styles.quantityRightArrow} onClick={increaseQuantity}/>
+                <FaCaretRight className={styles.quantityRightArrow} onClick={increaseQuantity} />
             </div>
             <div className={styles.addBtnContainer}>
                 <button onClick={() =>
