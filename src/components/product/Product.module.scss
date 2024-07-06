@@ -101,6 +101,7 @@
                     stroke: white;
                     stroke-width: 7px;
                     color: rgb(6, 37, 42);
+                    z-index: 900;
 
                     &:hover {
                         stroke: yellow;
@@ -109,7 +110,6 @@
 
                 .quantityLeftArrow {
                     right: -0.5vw;
-                    z-index: 900;
 
                     &:active {
                         stroke: red
@@ -118,7 +118,6 @@
 
                 .quantityRightArrow {
                     left: -0.5vw;
-                    z-index: 900;
 
                     &:active {
                         stroke: rgb(0, 255, 0);
@@ -128,8 +127,8 @@
                 input {
                     background-color: rgb(82, 83, 82);
                     width: 6vw;
-                    height: 4vw;
-                    border-radius: 1vw;
+                    height: 2.8vw;
+                    border-radius: 0.6vw;
                     font-size: 1.7vw;
                     text-align: center;
                     color: white;
@@ -171,7 +170,7 @@
                     align-items: center;
                     justify-content: center;
                     transition: background-color 0.2s ease;
-                    border-radius: 1.4vw;
+                    border-radius: 0.6vw;
                     color: white;
                     font-size: 1.5vw;
                     border: 0.1vw solid white;
