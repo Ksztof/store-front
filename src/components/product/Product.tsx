@@ -37,29 +37,34 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
     return (
         <div className={styles.productContainer}>
             <div className={styles.imageContainer}>
-                    <img className={styles.img} src={productImg} alt="prodImg" loading="lazy" />
+                <img className={styles.img} src={productImg} alt="prodImg" loading="lazy" />
             </div>
-            <div className={styles.infoContainer}>
-                <h2 className={styles.productName}>{product.name}</h2>
-                <div className={styles.productPrice}>
-                    <span className={styles.price}>{product.price}</span>
-                    <span className={styles.currency}>{currency}</span>
+            <div className={styles.detailsContainer}>
+                <div className={styles.nameContainer}>
+                    <h2 className={styles.productName}>{product.name}</h2>
                 </div>
-            </div>
-            <div className={styles.quantityContainer}>
-                <FaCaretLeft className={styles.quantityLeftArrow} onClick={decreaseQuantity} />
-                <input
-                    type="number"
-                    onChange={handleQuantityChange}
-                    value={productQuantity}
-                />
-                <FaCaretRight className={styles.quantityRightArrow} onClick={increaseQuantity} />
-            </div>
-            <div className={styles.addBtnContainer}>
-                <button onClick={() =>
-                    dispatch(addProductToCart({ product: product, quantity: productQuantity }))}>
-                    Add
-                </button>
+                <div className={styles.infoContainer}>
+                    <div className={styles.productPrice}>
+                        <span className={styles.price}>{product.price}</span>
+                        <span className={styles.currency}>{currency}</span>
+                    </div>
+
+                    <div className={styles.quantityContainer}>
+                        <FaCaretLeft className={styles.quantityLeftArrow} onClick={decreaseQuantity} />
+                        <input
+                            type="number"
+                            onChange={handleQuantityChange}
+                            value={productQuantity}
+                        />
+                        <FaCaretRight className={styles.quantityRightArrow} onClick={increaseQuantity} />
+                    </div>
+                    <div className={styles.addBtnContainer}>
+                        <button onClick={() =>
+                            dispatch(addProductToCart({ product: product, quantity: productQuantity }))}>
+                            Add
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
