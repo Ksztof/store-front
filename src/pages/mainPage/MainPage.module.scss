@@ -16,13 +16,12 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        width: 5%;
+        width: 5vw;
         align-items: center;
         justify-content: flex-start;
-        gap: 4%;
         z-index: 1003;
         box-shadow: 0.4vw 0 0.4vw rgba(0, 0, 0, 0.3);
-        gap: 1vw;
+        gap: 0.7vw;
 
         .showCartButton,
         .showFiltersButton {
@@ -33,7 +32,7 @@
             position: relative;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 0.4vw  0.4vw rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 0.4vw 0.4vw rgba(0, 0, 0, 0.1);
             align-items: center;
             justify-content: center;
             opacity: 50%;
@@ -42,7 +41,7 @@
             &:hover {
                 opacity: 100%;
                 color: rgb(6, 37, 42);
-                box-shadow: 0 0 0.4vw  0.4vw rgba(9, 255, 0, 0.15);
+                box-shadow: 0 0 0.4vw 0.4vw rgba(9, 255, 0, 0.15);
             }
 
             &.optionBarOpen {
@@ -50,7 +49,7 @@
             }
 
             &.optionBarOpen:hover {
-                box-shadow: 0 0 0.4vw  0.4vw rgba(255, 0, 0, 0.1);
+                box-shadow: 0 0 0.4vw 0.4vw rgba(255, 0, 0, 0.1);
             }
 
             .filtersLogo,
@@ -68,10 +67,10 @@
 
     .cartAndFiltersContainer {
         position: fixed;
-        height: 100%;
+        height: 100vw;
         width: 0;
         top: 80px;
-        left: 5%;
+        left: 5vw;
         display: flex;
         flex-direction: column;
         z-index: 1001;
@@ -79,16 +78,16 @@
         border-left: 1.5px solid rgb(133, 179, 249);
         overflow-y: hidden;
         visibility: hidden;
-        padding: 2vw;
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        background-color: yellow;
 
         .closeButton {
             background-color: inherit;
             display: flex;
             position: absolute;
             z-index: 1002;
-            right: 2vw;
-            top: 1.5vw;
+            right: 1.8vw;
+            top: 0.8vw;
             visibility: hidden;
 
             .closeButtonLogo {
@@ -107,7 +106,6 @@
             }
         }
 
-
         .cartContent,
         .filtersContent {
             position: absolute;
@@ -115,18 +113,51 @@
             width: 100%;
             height: 100%;
             visibility: hidden;
-
+            display: flex;
         }
 
+        .cartContent {
+            top:6vw;
+            flex-direction: column;
+            background-color: blue; // rgb(6, 37, 42);
+            overflow-y: auto;
+            bottom: 5vw;     
+            gap: 0.5vw;
+        }
 
         &.cartContentOpen {
             visibility: visible;
-            width: 30%;
-            overflow-y: auto;
+            width: 36vw;
+            
+            .cartHeader{
+                display: flex;
+                flex-direction: row;
+                font-family: 'Inter', sans-serif;
+                background-color: white;
+                box-shadow: 0 0.4vw 0.4vw rgba(192, 192, 192, 0.3);
+                z-index: 1000;
+                height: 6vw;
 
+                .cartHeaderTitle {
+                    width: 20%;
+                    font-size: 2.5vw;
+                    font-weight: 600;
+                    padding: 2vw;
+                    height: 2vw;
+                }
+
+                .cartHeaderTotal {
+                    width: 60%;
+                    font-size: 2vw;
+                    padding: 2vw;
+                    line-height: 3.2vw;
+                    height: 2vw;
+                    padding-left: 0;
+                }
+            }
             .cartContent {
                 visibility: visible;
-
+                padding: 2%;
             }
 
             .filtersContent {
@@ -141,6 +172,8 @@
 
             .cartContent {
                 visibility: hidden;
+                
+
             }
 
             .filtersContent {
@@ -163,22 +196,23 @@
         flex-direction: column;
         background-color: rgb(6, 37, 42);
         height: 100%;
-        width: 93vw;
+        width: 91vw;
         overflow-y: auto;
         overflow-x: auto;
         position: absolute;
         left: 5%;
         transition: left 0.3s ease-in-out;
         padding: 2vw;
-
+        
         &.leftBarOpen {
-            left: 39vw;
-            width: 59vw;
+            left: 41vw;
+            width: 56vw;
+            
         }
     }
 
     .searchBar {
-        flex:1;
+        flex: 1;
         position: absolute;
         background-color: white;
         z-index: 1;

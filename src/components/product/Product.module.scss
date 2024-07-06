@@ -7,7 +7,11 @@
     border: 1px dotted transparent;
 
     &:hover {
-        border: 0.1vw dotted yellow;
+        box-shadow:
+            0 0.4vw 0.4vw rgba(255, 255, 255, 0.6),
+            0 -0.4vw 0.4vw rgba(255, 255, 255, 0.6),
+            0.4vw 0 0.4vw rgba(255, 255, 255, 0.6),
+            -0.4vw 0 0.4vw rgba(255, 255, 255, 0.6);
 
         .productName {
             color: yellow !important;
@@ -54,7 +58,7 @@
             color: white;
             cursor: pointer;
         }
-       
+
         .productPrice {
             font-weight: 500;
             font-size: 2.5vw;
@@ -79,8 +83,8 @@
             position: relative;
             font-size: 5vw;
             cursor: pointer;
-            width: 5vw;
-            height: 6vw;
+            width: 4vw;
+            height: 4vw;
             stroke: white;
             stroke-width: 7px;
             color: rgb(6, 37, 42);
@@ -89,11 +93,11 @@
                 stroke: yellow;
             }
 
-           
+
         }
 
         .quantityLeftArrow {
-            right: -1vw;
+            right: -0.5vw;
             z-index: 900;
 
             &:active {
@@ -102,7 +106,7 @@
         }
 
         .quantityRightArrow {
-            left: -1vw;
+            left: -0.5vw;
             z-index: 900;
 
             &:active {
@@ -122,7 +126,6 @@
             border: 0.1vw solid white;
             z-index: 1002;
             cursor: pointer;
-
 
             &::-webkit-outer-spin-button,
             &::-webkit-inner-spin-button {

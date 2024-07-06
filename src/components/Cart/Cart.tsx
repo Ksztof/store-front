@@ -5,8 +5,9 @@ import { useAppDispatch } from '../../hooks';
 import { RootState } from '../../redux/store';
 import { AboutCart, CheckCart } from '../../types/cartTypes';
 import { isGuestUser } from '../../utils/cookiesUtils';
-import { ProductInCart } from '../ProductInCart';
+import { ProductInCart } from '../productInCart/ProductInCart';
 import { synchronizeCartWithApi, setCurrentCart, changeCartContentGlobally } from '../../redux/actions/cartActions';
+import styles from './Cart.module.scss';
 
 export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -42,61 +43,23 @@ export const Cart: React.FC = () => {
     };
 
     return (
-        <div style={{
-            width: '300px',
-            height: 'auto',
-            backgroundColor: 'lightgrey',
-            border: '1px solid black',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '20px',
-            padding: '20px',
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-word',
-            maxWidth: '200px',
-            position: 'relative'
-        }}>
-            <h4 style={{ textAlign: 'center' }}>Koszyk</h4>
+        <>
             {cartContent && cartContent.totalCartValue !== 0 ? (
                 <>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <div>
-                        {cartContent.aboutProductsInCart.map((p: CheckCart) => (
-                            <ProductInCart key={p.productId} product={p} />
-                        ))}
-                        <p>{cartContent.createdAt.toString()}</p>
+                    {cartContent.aboutProductsInCart.map((p: CheckCart) => (
+                        <ProductInCart key={p.productId} product={p} />
+                    ))}
+                    <p>{cartContent.createdAt.toString()}</p>
 
-                    </div>
+                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
+
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </>
             ) : (
                 <div>
                     <p>Koszyk jest pusty</p>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-            <p>Koszyk jest pusty</p>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-
-                    
                 </div>
             )}
-        </div>
+        </>
     );
 };
