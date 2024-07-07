@@ -53,17 +53,15 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                         onKeyDown={handleKeyPress}
                     />
                     <FaCaretRight className={styles.quantityRightArrow} onClick={() => dispatch(adjustProductQuantity({ productId: product.productId, operationType: AdjustProductQuantityType.Increase }))} />
-                    <h3 className={styles.productName}>x {product.productName} </h3>
+                    <div className={styles.productName}>
+                        <h3 className={styles.nameWriting}>x {product.productName} </h3>
+                    </div>
                 </div>
                 <div className={styles.totalSummary}>
                     <p className={styles.totalTitle}>Product total: {product.productTotalPrice} zł</p>
-                    <p className={styles.unitPriceInfo}>unit price: {product.productUnitPrice} zł</p>
+                    <p className={styles.unitPriceInfo}>unit price: <br></br> {product.productUnitPrice} zł</p>
                 </div>
             </div>
-
-            {/* <p>quantity: </p>
-            <p>unit price: {product.productUnitPrice}</p>
-            <p>total price: {product.productTotalPrice}</p> */}
         </div>
     );
 };

@@ -13,7 +13,6 @@ export const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (
@@ -33,14 +32,7 @@ export const Cart: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn, dispatch]);
 
-    const handleOrder = () => {
-        if (cartContent !== null) {
-            navigate('/order');
-        }
-        if (cartContent !== null) {
-            dispatch(changeCartContentGlobally(cartContent))
-        }
-    };
+
 
     return (
         <>
@@ -51,13 +43,10 @@ export const Cart: React.FC = () => {
                     ))}
                     <p>{cartContent.createdAt.toString()}</p>
 
-                    <h5>Wartość koszyka: {cartContent.totalCartValue} zł</h5>
-
-                    <button type="submit" onClick={handleOrder}>Order</button>
                 </>
             ) : (
-                <div>
-                    <p>Koszyk jest pusty</p>
+                <div className={styles.emptyInfo}>
+                    <h2>Cart is empty</h2>
                 </div>
             )}
         </>
