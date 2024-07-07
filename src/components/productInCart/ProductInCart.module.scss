@@ -7,7 +7,10 @@
     border-radius: 0.7vw;
     width: 96%;
     height: 5vw;
-
+    border: 0.1vw solid transparent;
+    &:hover {
+        border: 0.1vw solid white;
+    }
     .imageContainer {
         height: 5vw;
         background-color: yellow;
@@ -15,7 +18,8 @@
         background-color: rgb(57, 224, 196);
 
         img {
-
+            display: flex;
+            flex: 1;
             min-width: 8vw;
             min-height: 5vw;
             max-width: 8vw;
@@ -37,8 +41,9 @@
             height: 50%;
             align-items: center;
             justify-content: start;
-            background-color: rgb(57, 224, 196);
+            background-color: rgb(170, 251, 201);
             display: flex;
+            border-top-right-radius: 0.7vw;
 
             .quantityLeftArrow,
             .quantityRightArrow {
@@ -46,7 +51,7 @@
                 cursor: pointer;
                 height: 2vw;
                 width: 2vw;
-                stroke: white;
+                stroke: rgb(0, 255, 106);
                 stroke-width: 15px;
                 color: rgb(6, 37, 42);
                 z-index: 900;
@@ -106,12 +111,19 @@
             }
 
             .productName {
-                font-family: Open Sans, sans-serif;
-                line-height: 0.3vw;
-                font-size: 1.1vw;
-                font-weight: 400;
-                color: white;
-                cursor: pointer;
+                color: black;
+
+                .nameWriting {
+                    font-family: Open Sans, sans-serif;
+                    line-height: 0.3vw;
+                    font-size: 1.1vw;
+                    font-weight: 500;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: blue;
+                    }
+                }
             }
         }
 
@@ -123,14 +135,14 @@
             font-family: Open Sans, sans-serif;
             color: white;
             font-weight: 400;
-            background-color: rgb(57, 224, 196);
+            background-color: rgb(51, 51, 51);
+            border-bottom-right-radius: 0.7vw;
 
             .totalTitle {
                 display: flex;
-                flex: 6;
 
                 margin-left: 1vw;
-                font-size: 1.5vw;
+                font-size: 1.2vw;
                 width: 80%;
                 cursor: pointer;
                 justify-content: start;
@@ -138,9 +150,9 @@
 
             .unitPriceInfo {
                 display: flex;
-                flex:1;
+                flex-grow: 1;
                 font-size: 0.8vw;
-                color: gray;
+                color: rgb(172, 172, 172);
                 justify-content: center;
 
             }

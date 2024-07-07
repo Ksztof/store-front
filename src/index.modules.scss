@@ -1,9 +1,11 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
-overflow: hidden;
+  overflow: hidden;
 }
 
 body {
@@ -13,6 +15,6 @@ body {
 
 #root {
   display: flex;
-  position: relative; 
+  position: relative;
   background-color: yellow;
 }

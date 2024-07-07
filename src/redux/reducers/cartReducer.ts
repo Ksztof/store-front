@@ -53,6 +53,7 @@ const cartSlice = createSlice({
       .addCase(adjustProductQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
         state.loading = false;
         state.cartData = action.payload;
+        state.isEmpty = action.payload.aboutProductsInCart.length === 0;
       })
       .addCase(adjustProductQuantity.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
@@ -65,6 +66,7 @@ const cartSlice = createSlice({
       .addCase(changeProductInCartQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {
         state.loading = false;
         state.cartData = action.payload;
+        state.isEmpty = action.payload.aboutProductsInCart.length === 0;
       })
       .addCase(changeProductInCartQuantity.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
         state.loading = false;

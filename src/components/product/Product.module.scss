@@ -8,10 +8,10 @@
 
     &:hover {
         box-shadow:
-            0 0.4vw 0.4vw rgba(255, 255, 255, 0.6),
-            0 -0.4vw 0.4vw rgba(255, 255, 255, 0.6),
-            0.4vw 0 0.4vw rgba(255, 255, 255, 0.6),
-            -0.4vw 0 0.4vw rgba(255, 255, 255, 0.6);
+            0 0.4vw 0.4vw rgba(255, 255, 255, 0.4),
+            0 -0.4vw 0.4vw rgba(255, 255, 255, 0.4),
+            0.4vw 0 0.4vw rgba(255, 255, 255, 0.4),
+            -0.4vw 0 0.4vw rgba(255, 255, 255, 0.4);
 
         .productName {
             color: yellow !important;
@@ -33,6 +33,8 @@
         border-radius: 0.7vw;
 
         img {
+            display: flex;
+            flex:1;
             min-width: 12vw;
             min-height: 9vw;
             max-width: 12vw;
