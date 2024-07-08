@@ -17,7 +17,7 @@
         align-items: center;
         justify-content: flex-start;
         z-index: 1003;
-        box-shadow: 0.4vw 0 0.4vw rgba(0, 0, 0, 0.3);
+        box-shadow: 0.4vw 0px 0.4vw rgba(192, 192, 192, 0.7);
         gap: 0.7vw;
 
         .showCartButton,
@@ -72,7 +72,6 @@
         flex-direction: column;
         z-index: 1001;
         background-color: #cdf6f6;
-        border-left: 1.5px solid rgb(133, 179, 249);
         overflow-y: hidden;
         overflow-x: hidden;
         visibility: hidden;
@@ -106,6 +105,7 @@
         }
 
         .cartHeader {
+            
             display: flex;
             flex-direction: row;
             font-family: 'Inter', sans-serif;
@@ -114,6 +114,7 @@
             height: 6vw;
             box-shadow: 0 0.3vw 0.3vw rgba(255, 255, 255, 0.2);
             visibility: hidden;
+
             .cartHeaderTitle {
                 width: 20%;
                 font-size: 2.5vw;
@@ -137,7 +138,7 @@
             position: absolute;
             background-color: #cdf6f6;
             width: 100%;
-            height: calc(100% - 10vw); 
+            height: calc(100% - 10vw);
             visibility: hidden;
             display: flex;
         }
@@ -156,53 +157,53 @@
 
         .cartFooter {
             display: flex;
-            align-items: center; 
-            justify-content: center; 
+            align-items: center;
+            justify-content: center;
             font-family: 'Inter', sans-serif;
             background-color: white;
             box-shadow: 0 -0.3vw 0.3vw rgba(255, 255, 255, 0.2);
             width: 100%;
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
+            position: absolute;
+            bottom: 0;
+            left: 0;
             height: 4vw;
             visibility: hidden;
-    
+
             button {
-                flex: 1; 
+                flex: 1;
                 display: flex;
-                align-items: center; 
-                justify-content: center; 
+                align-items: center;
+                justify-content: center;
                 font-family: 'Inter', sans-serif;
                 font-size: 1.6vw;
                 border: 0.1vw solid white;
                 opacity: 65%;
-                background: none; 
+                background: none;
                 cursor: pointer;
                 margin: 0;
-                box-sizing: border-box; 
-    
+                box-sizing: border-box;
+
                 &:hover {
                     opacity: 100%;
                 }
             }
-    
+
             &.empty {
                 button {
                     color: grey;
                     pointer-events: none;
-    
+
                     &:hover {
                         opacity: 65%;
                     }
                 }
             }
         }
-    
+
         &.cartContentOpen {
             visibility: visible;
             width: 36vw;
-           
+
             .cartContent {
                 visibility: visible;
                 padding: 2%;
@@ -237,53 +238,63 @@
                 cursor: pointer;
                 color: black;
             }
+
             .cartHeader {
                 visibility: visible;
             }
-            
-            .cartFooter{
+
+            .cartFooter {
                 visibility: visible;
             }
         }
     }
 
-    .productsContainer {
+    .searchAndProductWrapper {
         display: flex;
-        flex-direction: column;
-        background-color: rgb(6, 37, 42);
-        width: calc(100% - 5vw);
-        height: calc(100% - 80px); 
-        overflow-y: auto;
-        overflow-x: auto;
-        position: fixed;
-        transition: left 0.3s ease-in-out;
+        flex: 1;
+        position: relative; 
+        flex-direction: column; 
         top: 80px;
         left: 5vw;
-        padding: 2vw;
-        box-sizing: border-box; 
         
-        &.leftBarOpen {
-            left: 41vw;
-            width: 59vw;
-            padding: 2vw;
+        .searchBar {
+            color: black;
+            display: flex;
+            position: absolute; 
+            background-color: white;
+            z-index: 902;
+            height: 3.5vw; 
+            width: calc(100% - 5vw); 
+            align-items: center;
+            justify-content: center;
+            overflow-y: hidden;
+            font-size: 2vw;
+            box-shadow: 0 0.4vw 0.4vw rgba(0, 0, 0, 0.5);
 
+            &.leftBarOpen {
+                left: 35.85%;
+                width: 59.2%;
+            }
         }
-    }
 
-    .searchBar {
-        flex: 1;
-        position: fixed;
-        background-color: white;
-        z-index: 1;
-        width: 60vw;
-        height: 3vw;
-        left: 20%;
-        top: 90px;
-        border-radius: 30%;
+        .productsContainer {
+            flex-direction: column;
+            background-color: rgb(6, 37, 42);
+            width: calc(100% - 5vw);
+            height: calc(100% - 80px - 3.5vh);
+            overflow-y: visible;
+            overflow-x: auto;
+            position: absolute;
+            transition: left 0.3s ease-in-out;
+            padding: 2vw;
+            padding-bottom: 5vw;
+            box-sizing: border-box;
+            top: 3.5vw;
 
-        &.leftBarOpen {
-            left: 59vw;
-            width: 26vw;
+            &.leftBarOpen {
+                left: 36vw;
+                width: 59.25vw;
+            }
         }
     }
 }

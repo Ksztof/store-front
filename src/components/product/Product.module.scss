@@ -22,10 +22,6 @@
             }
         }
     }
-
-    &:first-child {
-        margin-top: 5vw;
-    }
    
     .imageContainer {
         height: 9vw;
@@ -136,7 +132,7 @@
                     color: white;
                     background-color: rgb(6, 37, 42);
                     border: 0.1vw solid white;
-                    z-index: 1002;
+                    z-index: 901;
                     cursor: pointer;
 
                     &::-webkit-outer-spin-button,

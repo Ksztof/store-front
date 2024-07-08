@@ -71,7 +71,7 @@ export const Main = () => {
 
 
                 <div className={styles.cartHeader}>
-                    
+
                     <div className={styles.cartHeaderTitle}>Cart</div>
                     <div className={styles.cartHeaderContent}>
                         {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue} zł` : '0 zł'}
@@ -81,7 +81,7 @@ export const Main = () => {
                 <div className={styles.cartContent}>
                     <Cart />
                 </div>
-                
+
                 <div className={`${styles.cartFooter} ${isCartEmpty ? styles.empty : ''}`}>
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </div>
@@ -91,10 +91,15 @@ export const Main = () => {
                     <p>filters</p>
                 </div>
             </div>
-            <div className={`${styles.searchBar} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}></div>
-            <div className={`${styles.productsContainer} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
-                <Products />
+
+
+            <div className={styles.searchAndProductWrapper}>
+                <div className={`${styles.searchBar} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>searchBar</div>
+                <div className={`${styles.productsContainer} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
+                    <Products />
+                </div>
             </div>
+
         </div>
     );
 };
