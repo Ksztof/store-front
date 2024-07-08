@@ -1,0 +1,10 @@
+.registerContainer {
+    display: flex;
+    flex:1;
+    position: relative;
+    top: 80px;
+    background-color: rgb(6, 37, 42);
+    color:white; // to move to form
+    font-family: 'Inter', sans-serif;
+    justify-content: center;
+}

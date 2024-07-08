@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Login } from './pages/login';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Order } from './components/Order';
-import RegisterPage from './pages/RegisterPage';
+import RegisterPage from './pages/registerPage/RegisterPage';
 import { Header } from './components/header/Header';
 import styles from './app.module.scss';
 import { Main } from './pages/mainPage/MainPage';
+import LoginPage from './pages/mainPage/loginPage/LoginPage';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const App: React.FC = () => {
           <Header />
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/order" element={<Order />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>

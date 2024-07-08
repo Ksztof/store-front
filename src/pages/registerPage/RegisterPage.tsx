@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { RegisterForm } from '../components/RegisterForm';
-import { RegisterCredentials } from '../types/authTypes';
-import { registerCredentialsInitialValues } from '../initialValues/authInitials';
-import { register, resetAuth } from '../redux/actions/authActions';
-import { useAppDispatch } from '../hooks';
+import { RegisterForm } from '../../components/RegisterForm';
+import { RegisterCredentials } from '../../types/authTypes';
+import { registerCredentialsInitialValues } from '../../initialValues/authInitials';
+import { register, resetAuth } from '../../redux/actions/authActions';
+import { useAppDispatch } from '../../hooks';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { ReducerStates } from '../types/sharedTypes';
+import { RootState } from '../../redux/store';
+import { ReducerStates } from '../../types/sharedTypes';
 import { Link } from 'react-router-dom';
+import styles from './RegisterPage.module.scss';
 
 export const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export const RegisterPage: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className={styles.registerContainer}>
             {registrationState === ReducerStates.Fulfilled ? (
                 <>
                     <p>Thank you for your registration!</p>
@@ -36,6 +37,7 @@ export const RegisterPage: React.FC = () => {
             ) : (
                 <>
                     <RegisterForm handleSetRegisterCredentials={handleSetRegisterCredentials} setIsFormValid={setIsFormValid} />
+                    Login: <Link className={styles.navbarLink} to="/login"> Login </Link>
                     {isFormValid && (
                         <>
                             <button onClick={handleRegister}>Register</button>
