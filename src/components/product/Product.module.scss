@@ -5,7 +5,7 @@
     border-radius: 0.7vw;
     height: 9vw;
     border: 1px dotted transparent;
-
+    
     &:hover {
         box-shadow:
             0 0.4vw 0.4vw rgba(255, 255, 255, 0.4),
@@ -26,7 +26,7 @@
     &:first-child {
         margin-top: 5vw;
     }
-
+   
     .imageContainer {
         height: 9vw;
         background-color: aqua;

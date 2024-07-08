@@ -5,7 +5,6 @@
     position: relative;
     background-color: red;
     overflow: hidden;
-    top: 1vw;
 
     .optionsBar {
         background-color: white;
@@ -65,7 +64,7 @@
 
     .cartAndFiltersContainer {
         position: fixed;
-        height: 100%;
+        height: calc(100% - 80px);
         width: 0;
         top: 80px;
         left: 5vw;
@@ -75,6 +74,7 @@
         background-color: #cdf6f6;
         border-left: 1.5px solid rgb(133, 179, 249);
         overflow-y: hidden;
+        overflow-x: hidden;
         visibility: hidden;
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
         background-color: yellow;
@@ -105,15 +105,6 @@
             }
         }
 
-        .cartContent,
-        .filtersContent {
-            position: absolute;
-            background-color: #cdf6f6;
-            width: 100%;
-            height: 100%;
-            visibility: hidden;
-            display: flex;
-        }
         .cartHeader {
             display: flex;
             flex-direction: row;
@@ -121,8 +112,8 @@
             background-color: white;
             z-index: 1000;
             height: 6vw;
-            box-shadow:  0.2vw 0.2vw rgba(255, 255, 255, 0.2);
-
+            box-shadow: 0 0.3vw 0.3vw rgba(255, 255, 255, 0.2);
+            visibility: hidden;
             .cartHeaderTitle {
                 width: 20%;
                 font-size: 2.5vw;
@@ -140,63 +131,82 @@
                 padding-left: 0;
             }
         }
+
+        .cartContent,
+        .filtersContent {
+            position: absolute;
+            background-color: #cdf6f6;
+            width: 100%;
+            height: calc(100% - 10vw); 
+            visibility: hidden;
+            display: flex;
+        }
+
+
         .cartContent {
             top: 6vw;
             flex-direction: column;
             background-color: rgb(6, 37, 42);
-            overflow-y: auto;
-            bottom: 5vw;
-            gap: 0.5vw;
+            overflow-y: scroll;
+            bottom: 4vw;
+            gap: 0.7vw;
+            visibility: hidden;
+            width: 96%;
+        }
 
-            .cartFooter {
-                align-self: center;
+        .cartFooter {
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            box-shadow: 0 -0.3vw 0.3vw rgba(255, 255, 255, 0.2);
+            width: 100%;
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            height: 4vw;
+            visibility: hidden;
+    
+            button {
+                flex: 1; 
+                display: flex;
+                align-items: center; 
+                justify-content: center; 
                 font-family: 'Inter', sans-serif;
-                background-color: white;
-                box-shadow: 0 -0.3vw 0.3vw rgba(255, 255, 255, 0.2);
-                z-index: 1000;
-                height: 3vw;
-                width: 100%;
-                position: absolute;
-                left: 0;
-                bottom: 7.6vw;
-
-                &.empty {
-                    button {
-                        color: grey;
-                        pointer-events: none;  
-
-                        &:hover {
-                            opacity: 65%;
-                        }
-                    }
+                font-size: 1.6vw;
+                border: 0.1vw solid white;
+                opacity: 65%;
+                background: none; 
+                cursor: pointer;
+                margin: 0;
+                box-sizing: border-box; 
+    
+                &:hover {
+                    opacity: 100%;
                 }
-
+            }
+    
+            &.empty {
                 button {
-                    font-family: 'Inter', sans-serif;
-                    width: 100%;
-                    height: 100%;
-                    font-size: 1.6vw;
-                    border: 0.1vw solid white;
-                    opacity: 65%;
-
+                    color: grey;
+                    pointer-events: none;
+    
                     &:hover {
-                        opacity: 100%;
+                        opacity: 65%;
                     }
                 }
             }
         }
-
+    
         &.cartContentOpen {
             visibility: visible;
             width: 36vw;
-
-            
-
+           
             .cartContent {
                 visibility: visible;
                 padding: 2%;
-
-
+                height: auto;
             }
 
             .filtersContent {
@@ -207,7 +217,7 @@
         &.filtersContentOpen {
             overflow-y: auto;
             visibility: visible;
-            width: 30%;
+            width: 36vw;
 
             .cartContent {
                 visibility: hidden;
@@ -218,12 +228,22 @@
             }
         }
 
-        .closeButton {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: black;
-
+        &.cartContentOpen,
+        .filtersContentOpen {
+            .closeButton {
+                visibility: visible;
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: black;
+            }
+            .cartHeader {
+                visibility: visible;
+            }
+            
+            .cartFooter{
+                visibility: visible;
+            }
         }
     }
 
@@ -231,8 +251,8 @@
         display: flex;
         flex-direction: column;
         background-color: rgb(6, 37, 42);
-        min-width: 91vw;
-        min-height: 100%;
+        width: calc(100% - 5vw);
+        height: calc(100% - 80px); 
         overflow-y: auto;
         overflow-x: auto;
         position: fixed;
@@ -240,10 +260,11 @@
         top: 80px;
         left: 5vw;
         padding: 2vw;
-
+        box-sizing: border-box; 
+        
         &.leftBarOpen {
             left: 41vw;
-            min-width: 55vw;
+            width: 59vw;
             padding: 2vw;
 
         }

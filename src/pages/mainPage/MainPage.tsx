@@ -44,8 +44,8 @@ export const Main = () => {
     };
 
     useEffect(() => {
-        console.log("is null: "+ cartContent.aboutProductsInCart === null);
-    },[cartContent]);
+        console.log("is null: " + cartContent.aboutProductsInCart === null);
+    }, [cartContent]);
 
     return (
         <div className={styles.mainContainer}>
@@ -67,18 +67,26 @@ export const Main = () => {
                 `
             }>
                 <button className={styles.closeButton} onClick={closeOption}><FaTimes className={`${styles.closeButtonLogo} ${isCartOpen || isFiltersOpen ? styles.optionOpen : ''}`} /></button>
+
+
+
                 <div className={styles.cartHeader}>
+                    
                     <div className={styles.cartHeaderTitle}>Cart</div>
                     <div className={styles.cartHeaderContent}>
                         {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue} zł` : '0 zł'}
                     </div>
                 </div>
+
                 <div className={styles.cartContent}>
                     <Cart />
-                    <div className={`${styles.cartFooter} ${isCartEmpty ? styles.empty : ''}`}>
-                        <button type="submit" onClick={handleOrder}>Order</button>
-                    </div>
                 </div>
+                
+                <div className={`${styles.cartFooter} ${isCartEmpty ? styles.empty : ''}`}>
+                    <button type="submit" onClick={handleOrder}>Order</button>
+                </div>
+
+
                 <div className={styles.filtersContent}>
                     <p>filters</p>
                 </div>
