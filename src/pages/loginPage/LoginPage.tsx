@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { LoginForm } from '../../../components/LoginForm';
-import { useAppDispatch } from '../../../hooks';
-import { loginCredentialsInitialValues } from '../../../initialValues/authInitials';
-import { login } from '../../../redux/actions/authActions';
-import { RootState } from '../../../redux/store';
-import { LoginCredentials } from '../../../types/authTypes';
+import { LoginForm } from '../../components/loginForm/LoginForm';
+import { useAppDispatch } from '../../hooks';
+import { loginCredentialsInitialValues } from '../../initialValues/authInitials';
+import { login } from '../../redux/actions/authActions';
+import { RootState } from '../../redux/store';
+import { LoginCredentials } from '../../types/authTypes';
 import styles from './LoginPage.module.scss';
 
 const LoginPage: React.FC = () => {
@@ -33,14 +33,15 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={styles.loginContainer}>
-      <LoginForm handleSetLoginCredentials={handleSetLoginCredentials} setIsFormValid={setIsFormValid} />
-      Register: <Link className={styles.navbarLink} to="/register"> Register </Link>
-
-      {isFormValid && (
-        <>
-          <button onClick={handleLogin}>Login</button>
-        </>
-      )}
+      <div className={styles.loginForm}>
+        <LoginForm handleSetLoginCredentials={handleSetLoginCredentials} setIsFormValid={setIsFormValid} />
+      </div>
+       <div className={styles.loginLink}>
+        New customer? Start here: <Link to="/register"> Register </Link>
+      </div>
+      <div className={`${styles.loginButton} ${isFormValid ? styles.formValid : ''}`}>
+      <button  onClick={handleLogin}>Login</button>
+      </div >
     </div>
   );
 };

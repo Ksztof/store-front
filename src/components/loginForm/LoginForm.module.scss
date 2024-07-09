@@ -1,0 +1,36 @@
+.loginFormContainer {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vw;
+    border: 0.1vw solid white;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 2vw;
+    
+    label,
+    input {
+        width: 30vw;
+        border-radius: 1vw;
+        display: flex;
+        
+    }
+
+    label {
+        font-size: 1.2vw;
+        color: white;
+        margin-bottom: 0.5vw;
+    }
+
+    input {
+        font-size: 1vw;
+        background-color: rgb(15, 63, 71);
+        color: white;
+        padding: 0.3vw;
+    }
+
+    .errorMsg {
+        color: red;
+        font-size: 1vw;
+        margin-bottom: 1vw;
+    }
+}

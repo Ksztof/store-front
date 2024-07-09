@@ -1,10 +1,11 @@
 import { ErrorMessage, Form, Formik, FormikProps } from "formik";
 import { useEffect, useRef } from "react";
-import { LoginFormProps } from "../props/authProps";
-import { loginCredentialsInitialValues } from "../initialValues/authInitials";
-import { loginSchema } from "../validation/validationSchemas";
-import TextField from "./TextField";
-import { formatEmailInput, formatPasswordInput } from "../validation/validationUtils";
+import { LoginFormProps } from "../../props/authProps";
+import { loginCredentialsInitialValues } from "../../initialValues/authInitials";
+import { loginSchema } from "../../validation/validationSchemas";
+import TextField from "../TextField";
+import { formatEmailInput, formatPasswordInput } from "../../validation/validationUtils";
+import styles from './LoginForm.module.scss';
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
@@ -24,7 +25,7 @@ export const LoginForm: React.FC<LoginFormProps> =
         });
 
         return (
-            <div>
+            <div className={styles.loginFormContainer}>
                 <Formik
                     innerRef={formikRef}
                     initialValues={loginCredentialsInitialValues}
@@ -32,25 +33,14 @@ export const LoginForm: React.FC<LoginFormProps> =
                     onSubmit={() => { }}
                 >
                     {() => (
-                        <Form style={{ display: 'block' }}>
-                            <style>
-                                {`
-                                form > div {
-                                    margin-bottom: 10px;
-                                }
-                                label, input {
-                                    display: block;
-                                    width: 100%;
-                                }
-                            `}
-                            </style>
+                        <Form>
                             <TextField
                                 name="email"
                                 type="email" formatValue={formatEmailInput}
                                 label="Email"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetLoginCredentials} />
-                            <ErrorMessage name="email" component="div" />
+                            <ErrorMessage  className={styles.errorMsg} name="email" component="div" />
 
                             <TextField
                                 name="password"
@@ -58,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> =
                                 label="Password"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetLoginCredentials} />
-                            <ErrorMessage name="password" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="password" component="div" />
                         </Form>
                     )}
                 </Formik>

@@ -7,7 +7,7 @@ import RegisterPage from './pages/registerPage/RegisterPage';
 import { Header } from './components/header/Header';
 import styles from './app.module.scss';
 import { Main } from './pages/mainPage/MainPage';
-import LoginPage from './pages/mainPage/loginPage/LoginPage';
+import LoginPage from './pages/loginPage/LoginPage';
 
 const App: React.FC = () => {
   return (
