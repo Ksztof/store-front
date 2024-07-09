@@ -1,0 +1,72 @@
+.loginContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(6, 37, 42);
+    font-family: 'Inter', sans-serif;
+    top: 80px; 
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 80px);
+    overflow-y: visible;
+    overflow-x: auto;
+    box-sizing: border-box;
+    padding-bottom: 6vw;
+
+    .loginForm {    
+        margin-top: 130px;
+        display: flex;
+        flex: 3;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .loginLink {
+        flex-grow: 1;
+        color: white;
+        font-size: 1.2vw;
+        margin-top: 1vw;
+
+        a {
+            color: rgb(111, 255, 0);
+
+            &:hover {
+                color: rgb(25, 0, 255);
+            }
+        }
+    }
+
+    .loginButton {
+        flex-grow: 2;
+        border-radius: 1vw;
+        align-self: center;
+        justify-content: center;
+        align-items: start;
+        display: flex;
+        pointer-events: none;
+
+        button {
+            opacity: 65%;
+            width: 20vw;
+            font-size: 1.5vw;
+            border-radius: 1vw;
+
+        }
+
+        &.formValid {
+
+            button {
+                opacity: 100%;
+                pointer-events: all;
+                cursor: pointer;
+            }
+        }
+
+
+    }
+
+
+}
