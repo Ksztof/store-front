@@ -1,10 +1,11 @@
 import { ErrorMessage, Form, Formik, FormikProps } from "formik";
-import TextField from "./TextField";
-import { registerCredentialsInitialValues } from "../initialValues/authInitials";
-import { registerSchema } from "../validation/validationSchemas";
-import { formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../validation/validationUtils";
-import { RegisterFormProps } from "../props/authProps";
 import { useEffect, useRef } from "react";
+import { registerCredentialsInitialValues } from "../../initialValues/authInitials";
+import { RegisterFormProps } from "../../props/authProps";
+import { registerSchema } from "../../validation/validationSchemas";
+import TextField from "../TextField";
+import { formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../../validation/validationUtils";
+import styles from './RegisterForm.module.scss';
 
 export const RegisterForm: React.FC<RegisterFormProps> =
     ({ handleSetRegisterCredentials, setIsFormValid }) => {
@@ -24,7 +25,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
         });
 
         return (
-            <div>
+            <div className={styles.registerFormContainer}>
                 <Formik
                     innerRef={formikRef}
                     initialValues={registerCredentialsInitialValues}
@@ -32,19 +33,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                     onSubmit={() => { }}
                 >
                     {() => (
-                        <Form style={{ display: 'block' }}>
-                            <style>
-                                {`
-                                form > div {
-                                    margin-bottom: 10px;
-                                }
-                                label, input {
-                                    display: block;
-                                    width: 100%;
-                                }
-                            `}
-                            </style>
-
+                        <Form>
                             <TextField
                                 name="login"
                                 type="text"
@@ -52,7 +41,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                 label="Login"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                            <ErrorMessage name="login" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="login" component="div" />
 
                             <TextField
                                 name="email"
@@ -60,7 +49,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                 label="Email"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                            <ErrorMessage name="email" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="email" component="div" />
 
                             <TextField
                                 name="password"
@@ -68,7 +57,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                 label="Password"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                            <ErrorMessage name="password" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="password" component="div" />
 
                             <TextField
                                 name="confirmPassword"
@@ -76,7 +65,7 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                                 label="Confirm Password"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetRegisterCredentials} />
-                            <ErrorMessage name="confirmPassword" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="confirmPassword" component="div" />
                         </Form>
                     )}
                 </Formik>

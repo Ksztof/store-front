@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
       <div className={styles.loginForm}>
         <LoginForm handleSetLoginCredentials={handleSetLoginCredentials} setIsFormValid={setIsFormValid} />
       </div>
-       <div className={styles.loginLink}>
+       <div className={styles.registerLink}>
         New customer? Start here: <Link to="/register"> Register </Link>
       </div>
       <div className={`${styles.loginButton} ${isFormValid ? styles.formValid : ''}`}>
