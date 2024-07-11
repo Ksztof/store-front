@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { Order } from './components/Order';
-import RegisterPage from './pages/registerPage/RegisterPage';
 import { Header } from './components/header/Header';
 import styles from './app.module.scss';
 import { Main } from './pages/mainPage/MainPage';
 import LoginPage from './pages/loginPage/LoginPage';
+import { RegisterPage } from './pages/registerPage/RegisterPage';
 
 const App: React.FC = () => {
   return (
