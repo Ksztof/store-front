@@ -20,6 +20,7 @@ export const LoginForm: React.FC<LoginFormProps> =
         useEffect(() => {
             const checkFormValidity = () => {
                 const formik = formikRef.current;
+
                 if (formik) {
                     const isFormFullyTouched = Object.keys(formik.touched).length === Object.keys(loginCredentialsInitialValues).length;
                     const formIsValid = formik.isValid && isFormFullyTouched;
@@ -30,18 +31,27 @@ export const LoginForm: React.FC<LoginFormProps> =
             checkFormValidity();
         });
 
-        
+
         useEffect(() => {
             const formik = formikRef.current;
+
             if (formik && validationError && isApiError(validationError)) {
+                const apiErrors: { [key: string]: string } = {};
+
+                const formFields = Object.keys(formik.initialValues);
+                console.log(`form fields: ${formFields}`);
                 validationError.error.errors
                     .forEach(error => {
                         const errorCode: string = error.code;
                         const propertyName: string = errorCode.split('.')[0].toLowerCase();
-
-                        formik.errors[propertyName] = (formik.errors[propertyName] ? `${formik.errors[propertyName]}, ` : '') + error.description
+                        if (!formFields.includes(propertyName)) {
+                            apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
+                        } else {
+                            apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
+                        }
                     });
-                formik.setErrors(formik.errors);
+                console.log(apiErrors)
+                formik.setErrors(apiErrors);
             }
         }, [validationError]);
 
