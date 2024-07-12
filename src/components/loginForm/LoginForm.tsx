@@ -6,14 +6,21 @@ import { loginSchema } from "../../validation/validationSchemas";
 import TextField from "../TextField";
 import { formatEmailInput, formatPasswordInput } from "../../validation/validationUtils";
 import styles from './LoginForm.module.scss';
+import { isApiError } from "../../utils/responseUtils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { ApiError } from "../../types/errorTypes";
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
+        const validationError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
+
         const formikRef = useRef<FormikProps<any>>(null);
 
         useEffect(() => {
             const checkFormValidity = () => {
                 const formik = formikRef.current;
+
                 if (formik) {
                     const isFormFullyTouched = Object.keys(formik.touched).length === Object.keys(loginCredentialsInitialValues).length;
                     const formIsValid = formik.isValid && isFormFullyTouched;
@@ -23,6 +30,30 @@ export const LoginForm: React.FC<LoginFormProps> =
 
             checkFormValidity();
         });
+
+
+        useEffect(() => {
+            const formik = formikRef.current;
+
+            if (formik && validationError && isApiError(validationError)) {
+                const apiErrors: { [key: string]: string } = {};
+
+                const formFields = Object.keys(formik.initialValues);
+                console.log(`form fields: ${formFields}`);
+                validationError.error.errors
+                    .forEach(error => {
+                        const errorCode: string = error.code;
+                        const propertyName: string = errorCode.split('.')[0].toLowerCase();
+                        if (!formFields.includes(propertyName)) {
+                            apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
+                        } else {
+                            apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
+                        }
+                    });
+                console.log(apiErrors)
+                formik.setErrors(apiErrors);
+            }
+        }, [validationError]);
 
         return (
             <div className={styles.loginFormContainer}>
@@ -40,7 +71,7 @@ export const LoginForm: React.FC<LoginFormProps> =
                                 label="Email"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetLoginCredentials} />
-                            <ErrorMessage  className={styles.errorMsg} name="email" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="email" component="div" />
 
                             <TextField
                                 name="password"

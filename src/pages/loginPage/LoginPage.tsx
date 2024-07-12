@@ -24,7 +24,10 @@ const LoginPage: React.FC = () => {
     if (isLoggedIn) {
       navigate('/');
     }
-  }, [isLoggedIn, navigate, dispatch]);
+    if(isFormValid){
+      console.log("form is valid now");
+    }
+  }, [isLoggedIn, navigate, dispatch, isFormValid]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,11 +39,11 @@ const LoginPage: React.FC = () => {
       <div className={styles.loginForm}>
         <LoginForm handleSetLoginCredentials={handleSetLoginCredentials} setIsFormValid={setIsFormValid} />
       </div>
-       <div className={styles.registerLink}>
+      <div className={styles.registerLink}>
         New customer? Start here: <Link to="/register"> Register </Link>
       </div>
       <div className={`${styles.loginButton} ${isFormValid ? styles.formValid : ''}`}>
-      <button  onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin}>Login</button>
       </div >
     </div>
   );
