@@ -6,9 +6,15 @@ import { loginSchema } from "../../validation/validationSchemas";
 import TextField from "../TextField";
 import { formatEmailInput, formatPasswordInput } from "../../validation/validationUtils";
 import styles from './LoginForm.module.scss';
+import { isApiError } from "../../utils/responseUtils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { ApiError } from "../../types/errorTypes";
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
+        const validationError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
+
         const formikRef = useRef<FormikProps<any>>(null);
 
         useEffect(() => {
@@ -23,6 +29,21 @@ export const LoginForm: React.FC<LoginFormProps> =
 
             checkFormValidity();
         });
+
+        
+        useEffect(() => {
+            const formik = formikRef.current;
+            if (formik && validationError && isApiError(validationError)) {
+                validationError.error.errors
+                    .forEach(error => {
+                        const errorCode: string = error.code;
+                        const propertyName: string = errorCode.split('.')[0].toLowerCase();
+
+                        formik.errors[propertyName] = (formik.errors[propertyName] ? `${formik.errors[propertyName]}, ` : '') + error.description
+                    });
+                formik.setErrors(formik.errors);
+            }
+        }, [validationError]);
 
         return (
             <div className={styles.loginFormContainer}>
@@ -40,7 +61,7 @@ export const LoginForm: React.FC<LoginFormProps> =
                                 label="Email"
                                 onBlur={() => { }}
                                 handleSetRegisterCredentials={handleSetLoginCredentials} />
-                            <ErrorMessage  className={styles.errorMsg} name="email" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="email" component="div" />
 
                             <TextField
                                 name="password"

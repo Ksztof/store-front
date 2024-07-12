@@ -27,9 +27,9 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(login.rejected, (state: AuthState) => {
+      .addCase(login.rejected, (state: AuthState,  action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        state.error = 'Wrong credentials.';
+        state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 

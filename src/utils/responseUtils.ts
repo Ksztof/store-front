@@ -1,4 +1,3 @@
-//CHANGE FILE NAME MAYBE FOR TYPEGUARDS?
 import { SafeParseReturnType } from "zod";
 import { AboutCart } from "../types/cartTypes";
 import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
