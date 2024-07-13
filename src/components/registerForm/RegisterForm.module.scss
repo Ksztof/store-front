@@ -6,15 +6,16 @@
     box-sizing: border-box;
     height: 100%;
     padding: 2vw;
-    padding-bottom: 3.5vw;
-    padding-top: 1.5vw;
+    padding-bottom: 2.5vw;
+    padding-top: 2.5vw;
+
 
     label,
     input {
         width: 30vw;
         border-radius: 1vw;
         display: flex;
-        
+
     }
 
     label {
@@ -22,7 +23,6 @@
         color: white;
         margin-bottom: 0.3vw;
         margin-left: 0.5vw;
-        margin-top: 0.8vw;
     }
 
     input {
@@ -30,11 +30,14 @@
         background-color: rgb(15, 63, 71);
         color: white;
         padding: 0.3vw;
+        margin-bottom: 1vw;
     }
 
     .errorMsg {
         color: red;
         font-size: 1vw;
         margin-bottom: 1vw;
+        margin-left: 0.5vw;
+        max-width: 32vw;
     }
 }
