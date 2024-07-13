@@ -6,9 +6,15 @@ import { registerSchema } from "../../validation/validationSchemas";
 import TextField from "../TextField";
 import { formatEmailInput, formatLoginAndSetLength, formatPasswordInput } from "../../validation/validationUtils";
 import styles from './RegisterForm.module.scss';
+import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { ApiError } from "../../types/errorTypes";
+import { isApiError } from "../../utils/responseUtils";
+import { toCamelCase } from "../../utils/localStorageUtils";
 
 export const RegisterForm: React.FC<RegisterFormProps> =
     ({ handleSetRegisterCredentials, setIsFormValid }) => {
+        const apiError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
         const formikRef = useRef<FormikProps<any>>(null);
 
         useEffect(() => {
@@ -23,6 +29,32 @@ export const RegisterForm: React.FC<RegisterFormProps> =
 
             checkFormValidity();
         });
+
+        useEffect(() => {
+            const formik = formikRef.current;
+
+            if (formik && apiError && isApiError(apiError)) {
+                const apiErrors: { [key: string]: string } = {};
+                const formFields = Object.keys(formik.initialValues);
+                
+                apiError.error.errors
+                    .forEach(error => {
+                        const errorCode: string = error.code;
+                        const propertyName: string = toCamelCase(errorCode.split('.')[0]);
+                        console.log(`propertyName: ${propertyName}` )
+                        if (formFields.includes(propertyName)) {
+                            apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
+                        } else if (propertyName === "userValidation") {
+                            apiErrors["confirmPassword"] = (apiErrors["confirmPassword"] ? `${apiErrors["confirmPassword"]}, ` : '') + error.description;
+                        }
+                        else {
+                            alert(error.description);
+                        }
+                    });
+                console.log(apiErrors)
+                formik.setErrors(apiErrors);
+            }
+        }, [apiError]);
 
         return (
             <div className={styles.registerFormContainer}>

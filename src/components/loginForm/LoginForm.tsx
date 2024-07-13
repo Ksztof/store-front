@@ -10,10 +10,11 @@ import { isApiError } from "../../utils/responseUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { ApiError } from "../../types/errorTypes";
+import { toCamelCase } from "../../utils/localStorageUtils";
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
-        const validationError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
+        const apiError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
 
         const formikRef = useRef<FormikProps<any>>(null);
 
@@ -35,25 +36,28 @@ export const LoginForm: React.FC<LoginFormProps> =
         useEffect(() => {
             const formik = formikRef.current;
 
-            if (formik && validationError && isApiError(validationError)) {
+            if (formik && apiError && isApiError(apiError)) {
                 const apiErrors: { [key: string]: string } = {};
-
                 const formFields = Object.keys(formik.initialValues);
-                console.log(`form fields: ${formFields}`);
-                validationError.error.errors
+                
+                apiError.error.errors
                     .forEach(error => {
                         const errorCode: string = error.code;
-                        const propertyName: string = errorCode.split('.')[0].toLowerCase();
-                        if (!formFields.includes(propertyName)) {
-                            apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
-                        } else {
+                        const propertyName: string = toCamelCase(errorCode.split('.')[0]);
+                        console.log(`propertyName: ${propertyName}` )
+                        if (formFields.includes(propertyName)) {
                             apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
+                        } else if (propertyName === "userValidation") {
+                            apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
+                        }
+                        else {
+                            alert(error.description);
                         }
                     });
                 console.log(apiErrors)
                 formik.setErrors(apiErrors);
             }
-        }, [validationError]);
+        }, [apiError]);
 
         return (
             <div className={styles.loginFormContainer}>
