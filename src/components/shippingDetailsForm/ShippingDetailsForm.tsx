@@ -1,12 +1,12 @@
 import { ErrorMessage, Form, Formik, FormikProps } from "formik";
-import { shippingDetailsSchema } from "../validation/validationSchemas";
-import TextField from "./TextField";
-import NumericField from "./NumericField";
-import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatNumericField, formatPhoneNumber, formatPostCode } from "../validation/validationUtils";
-import { ShippingDetailsFormProps } from "../props/orderProps";
-import { shippingDetailsInitialValues } from "../initialValues/orderInitials";
+import { shippingDetailsSchema } from "../../validation/validationSchemas";
+import TextField from "../TextField";
+import NumericField from "../NumericField";
+import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatNumericField, formatPhoneNumber, formatPostCode } from "../../validation/validationUtils";
+import { ShippingDetailsFormProps } from "../../props/orderProps";
+import { shippingDetailsInitialValues } from "../../initialValues/orderInitials";
 import { useEffect, useRef } from "react";
-
+import styles from './ShippingDetailsForm.module.scss';
 
 export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
     ({ handleSetShippingDetails, setIsFormValid }) => {
@@ -26,7 +26,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
         });
 
         return (
-            <div>
+            <div className={styles.shippDetContainer}>
                 <Formik
                     innerRef={formikRef}
                     initialValues={shippingDetailsInitialValues}
@@ -34,19 +34,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                     onSubmit={() => { }}
                 >
                     {() => (
-                        <Form style={{ display: 'block' }}>
-                            <style>
-                                {`
-                                form > div {
-                                    margin-bottom: 10px;
-                                }
-                                label, input {
-                                    display: block;
-                                    width: 100%;
-                                }
-                            `}
-                            </style>
-
+                        <Form>
                             <TextField
                                 name="firstName"
                                 type="text"
@@ -54,7 +42,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="First Name"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="firstName" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="firstName" component="div" />
 
                             <TextField
                                 name="lastName"
@@ -63,7 +51,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Last Name"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="lastName" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="lastName" component="div" />
 
                             <TextField
                                 name="email"
@@ -71,7 +59,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Email"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="email" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="email" component="div" />
 
                             <TextField
                                 name="street"
@@ -80,7 +68,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Street"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="street" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="street" component="div" />
 
                             <NumericField
                                 name="streetNumber"
@@ -88,7 +76,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Street Number"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="streetNumber" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="streetNumber" component="div" />
 
                             <NumericField
                                 name="homeNumber"
@@ -96,7 +84,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Home Number"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="homeNumber" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="homeNumber" component="div" />
 
                             <TextField
                                 name="postCode"
@@ -104,7 +92,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Post Code"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="postCode" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="postCode" component="div" />
 
                             <TextField
                                 name="city"
@@ -113,7 +101,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="City"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="city" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="city" component="div" />
 
                             <TextField
                                 name="phoneNumber"
@@ -122,7 +110,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 label="Phone Number"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
-                            <ErrorMessage name="phoneNumber" component="div" />
+                            <ErrorMessage className={styles.errorMsg} name="phoneNumber" component="div" />
                         </Form>
                     )}
                 </Formik>
