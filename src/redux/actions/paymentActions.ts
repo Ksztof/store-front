@@ -23,7 +23,7 @@ export const payWithCard = createAsyncThunk<
             }
 
             const cardElement = elements.getElement(CardElement);
-
+            
             if (!cardElement) {
                 return rejectWithValue("CardElement not found.");
             }

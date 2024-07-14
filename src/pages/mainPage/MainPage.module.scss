@@ -78,7 +78,7 @@
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
         background-color: rgb(6, 37, 42);
         box-shadow: 0.4vw 0px 0.4vw rgba(192, 192, 192, 0.7);
-
+        
         .closeButton {
             background-color: inherit;
             display: flex;
@@ -141,6 +141,7 @@
             height: calc(100% - 10vw);
             visibility: hidden;
             display: flex;
+            align-items: center;
         }
 
 
