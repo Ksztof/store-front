@@ -27,9 +27,10 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(login.rejected, (state: AuthState,  action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(login.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        state.error = action.payload;
+        if (action.payload)
+          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 
@@ -43,7 +44,8 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        state.error = action.payload;
+        if (action.payload)
+          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 

@@ -8,6 +8,7 @@ import { Main } from './pages/mainPage/MainPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import { RegisterPage } from './pages/registerPage/RegisterPage';
 import { OrderPage } from './pages/orderPage/OrderPage';
+import TestComponent from './components/TestComponent';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,8 @@ const App: React.FC = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/order" element={<OrderPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/test" element={<TestComponent />} />
+
           </Routes>
         </Router>
       </div>

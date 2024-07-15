@@ -95,7 +95,18 @@ export const ZodAboutPayment = z.object({
     orderId: z.string(),
     status: ZodPaymentStatusResponse,
     error: ZodErrorContentSignalR.optional(),
+});
+
+export const ZodPaymentIntent = z.object({
+    id: z.string(),
+    amount: z.number(),
+    currency: z.string(),
+    clientSecret: z.string(),
   });
+
+export const ZodPaymentIntentObject = z.object({
+    paymentIntent: ZodPaymentIntent,
+})
 
 export type ErrorContentZodType = z.infer<typeof ZodErrorContent>;
 export type ProblemDetailsZodType = z.infer<typeof ZodProblemDetails>;
@@ -107,3 +118,4 @@ export type ApiResponseNoContentZodType = z.infer<typeof ZodSuccessResponseNoCon
 export type ErrorContentSignalRZodType = z.infer<typeof ZodErrorContentSignalR>;
 export type PaymentStatusResponseZodType = z.infer<typeof ZodPaymentStatusResponse>;
 export type AboutPaymentZodType = z.infer<typeof ZodAboutPayment>;
+export type PaymentIntentObjectZodType = z.infer<typeof ZodPaymentIntentObject>;

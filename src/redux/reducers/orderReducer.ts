@@ -32,7 +32,8 @@ const orderSlice = createSlice({
       })
       .addCase(makeOrder.rejected, (state: OrderState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        state.error = action.payload;
+        if (action.payload)
+          state.error = action.payload;
         state.status = ReducerStates.Rejected;
       })
 

@@ -1,6 +1,6 @@
 import { SafeParseReturnType } from "zod";
 import { AboutCart } from "../types/cartTypes";
-import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
+import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, PaymentIntentObjectZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodPaymentIntentObject, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
 
 
 export function isApiError(response: any): response is ApiErrorZodType {
@@ -35,5 +35,10 @@ export function isOrderResponse(data: any): data is OrderResponseZodType {
 
 export function isSignalrError(data: any): data is AboutPaymentZodType {
   const result = ZodAboutPayment.safeParse(data);
+  return result.success;
+}
+
+export function isPaymentIntent(data: any): data is PaymentIntentObjectZodType {
+  const result = ZodPaymentIntentObject.safeParse(data);
   return result.success;
 }

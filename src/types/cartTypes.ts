@@ -20,14 +20,14 @@ export interface AboutCart {
 export interface CartState {
   loading: boolean;
   cartData: AboutCart;
-  error: ApiError | string | undefined;
+  error: ApiError | string;
   isEmpty: boolean,
 };
 
 export interface CartDetails {
   loading: boolean;
   aboutCart: AboutCart;
-  error: string | undefined;
+  error: string;
 };
 
 export interface CartSliceState {
@@ -73,7 +73,7 @@ export interface checkCurrentCartPayload{
 }
 
 export interface addProductToReduxStorePayload{
-  cartContent: AboutCart | undefined;
+  cartContent: AboutCart;
   newProduct: ProductDetails;
   newProductQuantity: number;
 }

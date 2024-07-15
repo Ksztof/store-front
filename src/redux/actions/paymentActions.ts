@@ -1,20 +1,22 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { PayWithCardPayload, PaymentDetails } from "../../types/paymentTypes";
+import { PaymentDetails, PaymentIntentObject, StartOrderPayload } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
-import { payUsingCard } from "../../api/paymentService";
-import { isApiError, isSignalrError } from "../../utils/responseUtils";
+import { isApiError, isNoContentResponse, isSignalrError } from "../../utils/responseUtils";
 import { PaymentStatusResponse } from '../../types/paymentTypes';
 import { AboutPayment } from '../../types/paymentTypes';
-import { NoContentApiResponse } from "../../types/noContentApiResponse";
 import { ApiError } from "../../types/errorTypes";
+import { confirmPayment, startOrder } from "../../api/paymentService";
+import { OkApiResponse } from "../../types/okApiResponse";
+import { PaymentIntent } from "@stripe/stripe-js";
+import { NoContentApiResponse } from "../../types/noContentApiResponse";
 
-export const payWithCard = createAsyncThunk<
-    void,
-    PayWithCardPayload,
+export const startOrderProcess = createAsyncThunk<
+    PaymentIntent,
+    StartOrderPayload,
     { rejectValue: ApiError | string }
 >(
-    'payment/payWithCard',
-    async (payload: PayWithCardPayload, { rejectWithValue }) => {
+    'payment/startOrderProcess',
+    async (payload: StartOrderPayload, { rejectWithValue }) => {
         try {
             let { amount, stripe, elements } = payload;
 
@@ -23,11 +25,10 @@ export const payWithCard = createAsyncThunk<
             }
 
             const cardElement = elements.getElement(CardElement);
-            
+
             if (!cardElement) {
                 return rejectWithValue("CardElement not found.");
             }
-
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: 'card',
                 card: cardElement,
@@ -44,20 +45,50 @@ export const payWithCard = createAsyncThunk<
                 const paymentDetails: PaymentDetails = {
                     paymentMethodId: paymentMethod.id,
                     amount: amount,
-                    currency: "PLN"
+                    currency: "PLN",
                 }
 
-                const response: NoContentApiResponse | ApiError = await payUsingCard(paymentDetails);
+                const response: OkApiResponse<PaymentIntentObject> | ApiError = await startOrder(paymentDetails);
 
                 if (isApiError(response)) {
                     return rejectWithValue(response);
                 }
 
-                return;
+                if (response && response.entity) {
+                    return response.entity.paymentIntent;
+                } else {
+                    return rejectWithValue("Cannot start order, payment intent doesn't exist");
+                }
+            } else {
+                return rejectWithValue("Payment method creation failed");
             }
         } catch (error: any) {
             console.error("payWithCard error: ", error);
             return rejectWithValue("An unexpected error occurred when paying by card");
+        }
+    }
+);
+
+export const startPaymentConfirmation = createAsyncThunk<
+    void,
+    PaymentIntentObject,
+    { rejectValue: ApiError | string }
+>(
+    'payment/startPaymentConfirmation',
+    async (payload: PaymentIntentObject, { rejectWithValue }) => {
+        try {
+            const response: NoContentApiResponse | ApiError = await confirmPayment(payload);
+
+            if (isApiError(response)) {
+                return rejectWithValue(response);
+            }
+
+            if (isNoContentResponse(response)) {
+                return;
+            }
+        } catch (error: any) {
+            console.error("startPaymentConfirmation error: ", error);
+            return rejectWithValue("An unexpected error occurred during payment confirmation ");
         }
     }
 );

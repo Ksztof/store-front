@@ -44,9 +44,8 @@ export const OrderPage: React.FC = () => {
                 dispatch(resetOrder());
                 dispatch(resetPayment());
                 dispatch(resetCart());
-            };
+            }
         }
-
     }, [paymentState, isCartEmpty, dispatch]);
 
     return (
@@ -70,7 +69,7 @@ export const OrderPage: React.FC = () => {
                             <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                             {paymentMethod === MethodOfPayment.Card ? (
                                 <div className={styles.paymentContainer}>
-                                    <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} isFormValid={isFormValid}/>
+                                    <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} isFormValid={isFormValid} />
                                 </div>
                             ) : paymentMethod === MethodOfPayment.OnDelivery ? (
                                 <div className={`${styles.OrderNowBtn} ${isFormValid ? styles.formValid : ''}`}>
@@ -84,6 +83,5 @@ export const OrderPage: React.FC = () => {
         </div>
     );
 };
-
 
 export default OrderPage;
