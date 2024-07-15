@@ -1,10 +1,10 @@
-import { Stripe, StripeElements } from "@stripe/stripe-js";
+import { PaymentIntent, Stripe, StripeElements } from "@stripe/stripe-js";
 import { ErrorContentSignalR} from "./errorTypes";
 
-export interface PayWithCardPayload {
-  amount: number;
-  stripe: Stripe | null;
-  elements: StripeElements | null;
+export interface StartOrderPayload {
+  amount: number,
+  stripe: Stripe | null,
+  elements: StripeElements | null,
 }
 
 export interface PaymentDetails {
@@ -13,10 +13,14 @@ export interface PaymentDetails {
   currency: string
 }
 
+export interface PaymentIntentObject {
+  paymentIntent: PaymentIntent,
+}
+
 export interface AboutPayment {
-  orderId: string;
-  status: PaymentStatusResponse;
-  error?: ErrorContentSignalR;
+  orderId: string,
+  status: PaymentStatusResponse,
+  error?: ErrorContentSignalR,
 }
 
 export enum PaymentStatusResponse {

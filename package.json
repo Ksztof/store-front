@@ -6,7 +6,7 @@
     "@microsoft/signalr": "^8.0.0",
     "@reduxjs/toolkit": "^2.1.0",
     "@stripe/react-stripe-js": "^2.7.3",
-    "@stripe/stripe-js": "^3.5.0",
+    "@stripe/stripe-js": "^4.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/axios": "^0.14.0",
     "@types/humps": "^2.0.6",
     "cross-env": "^7.0.3"
