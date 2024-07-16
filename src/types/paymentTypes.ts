@@ -1,16 +1,19 @@
 import { PaymentIntent, Stripe, StripeElements } from "@stripe/stripe-js";
-import { ErrorContentSignalR} from "./errorTypes";
+import { ErrorContentSignalR } from "./errorTypes";
 
 export interface StartOrderPayload {
-  amount: number,
-  stripe: Stripe | null,
-  elements: StripeElements | null,
+  amount: number
 }
 
 export interface PaymentDetails {
-  paymentMethodId: string,
   amount: number,
   currency: string
+}
+
+export interface PaymentConfirmationPayload {
+  clientSecret: string | null,
+  stripe: Stripe | null,
+  elements: StripeElements | null
 }
 
 export interface PaymentIntentObject {
@@ -26,4 +29,10 @@ export interface AboutPayment {
 export enum PaymentStatusResponse {
   Succeeded = "succeeded",
   Failed = "failed"
+}
+
+
+export interface ConfirmPaymentPayload {
+  PaymentIntentId: string,
+  PaymentMethodId: string,
 }

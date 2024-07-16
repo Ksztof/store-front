@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NoContentApiResponse } from "../types/noContentApiResponse";
-import { PaymentDetails, PaymentIntentObject } from "../types/paymentTypes";
+import { ConfirmPaymentPayload, PaymentDetails, PaymentIntentObject } from "../types/paymentTypes";
 import { isPaymentIntent, isProblemDetails } from "../utils/responseUtils";
 import { ApiError } from "../types/errorTypes";
 import { OkApiResponse } from "../types/okApiResponse";
@@ -8,9 +8,9 @@ import { OkApiResponse } from "../types/okApiResponse";
 axios.defaults.withCredentials = true;
 
 
-export const startOrder = async (paymentDetails: PaymentDetails): Promise<OkApiResponse<PaymentIntentObject> | ApiError> => {
+export const startOrder = async (payload: PaymentDetails): Promise<OkApiResponse<PaymentIntentObject> | ApiError> => {
     try {
-        const response = await axios.post<PaymentIntentObject>('https://localhost:5004/api/Payments', paymentDetails);
+        const response = await axios.post<PaymentIntentObject>('https://localhost:5004/api/Payments', payload);
 
         if (isPaymentIntent(response.data)) {
             const responseDetails: OkApiResponse<PaymentIntentObject> = { isSuccess: true, entity: response.data };
@@ -29,9 +29,9 @@ export const startOrder = async (paymentDetails: PaymentDetails): Promise<OkApiR
     };
 };
 
-export const confirmPayment = async (intentPayload: PaymentIntentObject): Promise<NoContentApiResponse | ApiError> => {
+export const confirmPayment = async (payload: ConfirmPaymentPayload): Promise<NoContentApiResponse | ApiError> => {
     try {
-        await axios.post('https://localhost:5004/api/Payments/confirm-payment', intentPayload);
+        await axios.post('https://localhost:5004/api/Payments/confirm-payment', payload);
 
         const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
         return responseDetails;

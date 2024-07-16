@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { PaymentDetails, PaymentIntentObject, StartOrderPayload } from "../../types/paymentTypes";
+import { ConfirmPaymentPayload, PaymentConfirmationPayload, PaymentDetails, PaymentIntentObject, StartOrderPayload } from "../../types/paymentTypes";
 import { CardElement } from "@stripe/react-stripe-js";
 import { isApiError, isNoContentResponse, isSignalrError } from "../../utils/responseUtils";
 import { PaymentStatusResponse } from '../../types/paymentTypes';
@@ -18,49 +18,24 @@ export const startOrderProcess = createAsyncThunk<
     'payment/startOrderProcess',
     async (payload: StartOrderPayload, { rejectWithValue }) => {
         try {
-            let { amount, stripe, elements } = payload;
+            let { amount } = payload;
 
-            if (!stripe || !elements) {
-                return rejectWithValue("Stripe has not loaded yet.");
+            amount = amount * 100; //amount in grosz - stripe requirement
+            const paymentDetails: PaymentDetails = {
+                amount: amount,
+                currency: "PLN",
             }
 
-            const cardElement = elements.getElement(CardElement);
+            const response: OkApiResponse<PaymentIntentObject> | ApiError = await startOrder(paymentDetails);
 
-            if (!cardElement) {
-                return rejectWithValue("CardElement not found.");
-            }
-            const { error, paymentMethod } = await stripe.createPaymentMethod({
-                type: 'card',
-                card: cardElement,
-            });
-
-            if (error?.message) {
-                console.error(error);
-                return rejectWithValue(error.message);
+            if (isApiError(response)) {
+                return rejectWithValue(response);
             }
 
-            if (typeof paymentMethod !== "undefined") {
-                //amount in grosz - stripe requirement
-                amount = amount * 100;
-                const paymentDetails: PaymentDetails = {
-                    paymentMethodId: paymentMethod.id,
-                    amount: amount,
-                    currency: "PLN",
-                }
-
-                const response: OkApiResponse<PaymentIntentObject> | ApiError = await startOrder(paymentDetails);
-
-                if (isApiError(response)) {
-                    return rejectWithValue(response);
-                }
-
-                if (response && response.entity) {
-                    return response.entity.paymentIntent;
-                } else {
-                    return rejectWithValue("Cannot start order, payment intent doesn't exist");
-                }
+            if (response && response.entity) {
+                return response.entity.paymentIntent;
             } else {
-                return rejectWithValue("Payment method creation failed");
+                return rejectWithValue("Cannot start order, payment intent doesn't exist");
             }
         } catch (error: any) {
             console.error("payWithCard error: ", error);
@@ -71,25 +46,73 @@ export const startOrderProcess = createAsyncThunk<
 
 export const startPaymentConfirmation = createAsyncThunk<
     void,
-    PaymentIntentObject,
+    PaymentConfirmationPayload,
     { rejectValue: ApiError | string }
 >(
     'payment/startPaymentConfirmation',
-    async (payload: PaymentIntentObject, { rejectWithValue }) => {
+    async (payload: PaymentConfirmationPayload, { rejectWithValue }) => {
         try {
-            const response: NoContentApiResponse | ApiError = await confirmPayment(payload);
+            let { clientSecret, stripe, elements } = payload;
 
-            if (isApiError(response)) {
-                return rejectWithValue(response);
-            }
+            if (!stripe || !elements)
+                return rejectWithValue("Stripe has not loaded yet.");
 
-            if (isNoContentResponse(response)) {
-                return;
-            }
+            const cardElement = elements.getElement(CardElement);
+
+            if (!cardElement)
+                return rejectWithValue("CardElement not found.");
+
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error && error.message) {
+                console.error(error.message);
+                return rejectWithValue(error.message);
+            };
+
+            if (paymentMethod && clientSecret) {
+                const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: paymentMethod.id,
+                });
+
+                if (confirmError) {
+                    console.error('Error confirming PaymentIntent:', confirmError);
+                    return rejectWithValue("Error confirming PaymentIntent");
+                };
+
+                if (paymentIntent && paymentIntent.id) {
+                    const payload: ConfirmPaymentPayload = {
+                        PaymentIntentId: paymentIntent.id,
+                        PaymentMethodId: paymentMethod.id,
+                    };
+
+                    const response: NoContentApiResponse | ApiError = await confirmPayment(payload);
+
+                    if (isApiError(response)) {
+                        return rejectWithValue(response);
+                    };
+
+                    if (isNoContentResponse(response)) {
+                        return;
+                    };
+
+                    console.log('Payment successful!', paymentIntent);
+                } else {
+                    console.error(`paymentIntent: ${paymentIntent}`);
+                    console.error(`PaymentIntentId: ${paymentIntent?.id}`);
+                    return rejectWithValue("paymentIntent or PaymentIntentId is missing");
+                };
+            } else {
+                console.error(`paymentMethod: ${paymentMethod}`);
+                console.error(`clientSecret: ${clientSecret}`);
+                return rejectWithValue("paymentMethod or clientSecret is missing");
+            };
         } catch (error: any) {
             console.error("startPaymentConfirmation error: ", error);
             return rejectWithValue("An unexpected error occurred during payment confirmation ");
-        }
+        };
     }
 );
 

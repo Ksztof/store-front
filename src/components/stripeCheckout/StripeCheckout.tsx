@@ -12,36 +12,20 @@ import styles from './StripeCheckout.module.scss';
 import { Appearance, PaymentIntent } from '@stripe/stripe-js';
 import stripePromise from '../../stripe/stripe';
 import { startOrderProcess, startPaymentConfirmation } from '../../redux/actions/paymentActions';
-import { StartOrderPayload } from '../../types/paymentTypes';
+import { PaymentConfirmationPayload, StartOrderPayload } from '../../types/paymentTypes';
 
-const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, isFormValid }) => {
-    const stripe = useStripe();
-    const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
+const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, isFormValid, clientSecret }) => {
     const dispatch = useAppDispatch();
-    const orderState: string = useSelector((state: RootState) => state.order.status);
+    const stripe = useStripe();
     const elements = useElements();
-    const paymentIntentResponse: PaymentIntent | null = useSelector((state: RootState) => state.payment.paymentIntent);
-    const [clientSecret, setClientSecret] = useState<string | null>(null);
-    const [paymentIntent, setPaymentIntent] = useState<PaymentIntent | null>(null);
+    const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
+    const orderState: string = useSelector((state: RootState) => state.order.status);
 
-    const appearance: Appearance = {
-        theme: 'night',
+    const payload: PaymentConfirmationPayload = {
+        clientSecret: clientSecret,
+        stripe: stripe,
+        elements: elements,
     };
-
-    useEffect(() => {
-        if (stripe && elements) {
-            const startOrderPayload: StartOrderPayload = { amount, stripe, elements };
-            dispatch(startOrderProcess(startOrderPayload));
-        }
-    }, [stripe, elements, dispatch, amount]);
-
-    useEffect(() => {
-        if (paymentIntentResponse && paymentIntentResponse.id) {
-            setClientSecret(paymentIntentResponse.client_secret);
-            setPaymentIntent(paymentIntentResponse)
-        }
-    }, [paymentIntentResponse]);
-
 
     useEffect(() => {
         if (orderSummary.id) {
@@ -55,12 +39,12 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (paymentIntent && orderState === ReducerStates.Fulfilled) {
-            dispatch(startPaymentConfirmation({ paymentIntent: paymentIntent }));
+        if (orderState === ReducerStates.Fulfilled) {
+            dispatch(startPaymentConfirmation(payload));
         } else {
             const orderResult = await dispatch(makeOrder(orderDetails));
-            if (paymentIntent && orderResult.meta.requestStatus.endsWith("fulfilled")) {
-                dispatch(startPaymentConfirmation({ paymentIntent: paymentIntent }));
+            if (orderResult.meta.requestStatus.endsWith("fulfilled")) {
+                dispatch(startPaymentConfirmation(payload));
             }
         }
     };
@@ -69,8 +53,8 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
         <div className={styles.paymentFormContainer}>
             <form onSubmit={handleSubmit}>
                 <div className={styles.cardElement}>
-                    <PaymentElement/>
-                
+                    <PaymentElement />
+
                 </div>
                 <div className={`${styles.payButton} ${isFormValid ? styles.formValid : ''}`}>
                     <button type="submit" disabled={!stripe}>
@@ -82,16 +66,36 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
     );
 };
 
-const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, orderDetails, isFormValid }) => (
+const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, orderDetails, isFormValid }) => {
+    const dispatch = useAppDispatch();
+    const paymentIntentResponse: PaymentIntent | null = useSelector((state: RootState) => state.payment.paymentIntent);
+    const [clientSecret, setClientSecret] = useState<string>();
+    const appearance: Appearance = { theme: 'night' };
+
+    useEffect(() => {
+        const startOrderPayload: StartOrderPayload = { amount };
+        dispatch(startOrderProcess(startOrderPayload));
+    }, [dispatch, amount]);
+
+    useEffect(() => {
+        if (paymentIntentResponse && paymentIntentResponse.id && paymentIntentResponse.client_secret) {
+            setClientSecret(paymentIntentResponse.client_secret);
+        }
+    }, [paymentIntentResponse]);
 
 
-    <Elements stripe={stripePromise} >
-        <StripeCheckout
-            orderDetails={orderDetails}
-            isFormValid={isFormValid}
-            amount={amount} />
-    </Elements>
+    if (!clientSecret) return <div>Loading...</div>;
 
-);
+    return (
+        <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
+            <StripeCheckout
+                orderDetails={orderDetails}
+                isFormValid={isFormValid}
+                amount={amount}
+                clientSecret={clientSecret}
+            />
+        </Elements>
+    );
+};
 
 export default WrappedStripeCheckout;
