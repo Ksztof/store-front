@@ -1,6 +1,5 @@
 import { SafeParseReturnType } from "zod";
-import { AboutCart } from "../types/cartTypes";
-import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, PaymentIntentObjectZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodPaymentIntentObject, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
+import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, PaymentIntentObjectZodType, PaymentIntentZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodPaymentIntent, ZodPaymentIntentObject, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "../zod/schemas";
 
 
 export function isApiError(response: any): response is ApiErrorZodType {
@@ -14,7 +13,7 @@ export function isNoContentResponse(data: any): data is ApiResponseNoContentZodT
 }
 
 export function isAboutCart(data: any): data is AboutCartZodType {
-  const result: SafeParseReturnType<any, AboutCart> = ZodAboutCart.safeParse(data);
+  const result: SafeParseReturnType<any, AboutCartZodType> = ZodAboutCart.safeParse(data);
   return result.success;
 }
 
@@ -38,7 +37,7 @@ export function isSignalrError(data: any): data is AboutPaymentZodType {
   return result.success;
 }
 
-export function isPaymentIntent(data: any): data is PaymentIntentObjectZodType {
-  const result = ZodPaymentIntentObject.safeParse(data);
+export function isPaymentIntent(data: any): data is PaymentIntentZodType {
+  const result: SafeParseReturnType<any, PaymentIntentZodType> = ZodPaymentIntent.safeParse(data);
   return result.success;
 }

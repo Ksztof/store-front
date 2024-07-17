@@ -9,68 +9,80 @@ axios.defaults.withCredentials = true;
 
 export const getCartContent = async (): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
-    const response = await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
+    const response: AboutCart | any =
+      await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
 
     if (response.status === 204) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
-    } else {
-      if(isAboutCart(response.data)){
-        const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
-        return responseDetails;
-      }
-      throw new Error();
     }
+
+    if (isAboutCart(response.data)) {
+      const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+      return responseDetails;
+    }
+
+    throw new Error("Unexpected Http status code received from API when getting cart content");
   } catch (error: any) {
     const data = error.response?.data;
 
     if (isProblemDetails(data)) {
+
       const apiError: ApiError = { isSuccess: false, error: data };
       return apiError;
     }
 
-    throw new Error("Failed to get cart content because of unexpected error");
+    throw new Error(`Failed to get cart content because of unexpected error with message: ${error.message}`);
   };
 };
 
 export const saveCartContent = async (cartContent: NewProductsForApi): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
-    const response = await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
+    const response: AboutCart | any =
+      await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
+
     if (response.status === 204) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
-    } else {
-      if(isAboutCart(response.data)){
-        const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
-        return responseDetails;
-      }
-      throw new Error();
     }
+
+    if (isAboutCart(response.data)) {
+      const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+      return responseDetails;
+    }
+
+    throw new Error("Unexpected Http status code received from API when saving cart content");
   } catch (error: any) {
     const data = error.response?.data;
 
     if (isProblemDetails(data)) {
+      console.error(`Failed to save cart content with message: ${error.message}`);
+
       const apiError: ApiError = { isSuccess: false, error: data };
       return apiError;
     }
 
-    throw new Error("Failed to save cart content because of unexpected error");
+    console.error(`Failed to save cart content with message: ${error.message}`);
+    throw new Error(`Failed to save cart content because of unexpected error, with message: ${error.message}`);
   };
 };
 
 export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
-    const response = await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
+    const response: AboutCart | any =
+      await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
+
     if (response.status === 204) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
-    } else {
-      if(isAboutCart(response.data)){
-        const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
-        return responseDetails;
-      }
-      throw new Error();
     }
+
+    if (isAboutCart(response.data)) {
+      const responseDetails: OkApiResponse<AboutCart> = { isSuccess: true, entity: response.data };
+      return responseDetails;
+    }
+
+    throw new Error("Unexpected Http status code received from API when checking current cart");
   } catch (error: any) {
     const data = error.response?.data;
 
@@ -79,6 +91,6 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
       return apiError;
     }
 
-    throw new Error("Failed to check current cart because of unexpected error");
+    throw new Error(`Failed to check current cart because of unexpected error with message: ${error.message}`);
   };
 };

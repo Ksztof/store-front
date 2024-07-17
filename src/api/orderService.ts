@@ -8,14 +8,15 @@ axios.defaults.withCredentials = true;
 
 export const saveOrder = async (orderDetails: ShippingDetails): Promise<OkApiResponse<OrderResponse> | ApiError> => {
     try {
-        const response = await axios.post<OrderResponse>('https://localhost:5004/api/Orders', orderDetails);
+        const response: OrderResponse | any =
+            await axios.post<OrderResponse>('https://localhost:5004/api/Orders', orderDetails);
 
         if (isOrderResponse(response.data)) {
             const responseDetails: OkApiResponse<OrderResponse> = { isSuccess: true, entity: response.data };
             return responseDetails;
         }
 
-        throw new Error();
+        throw new Error("Unexpected Http status code received from API during saving order");
     } catch (error: any) {
         const data = error.response?.data;
 
@@ -24,6 +25,6 @@ export const saveOrder = async (orderDetails: ShippingDetails): Promise<OkApiRes
             return apiError;
         }
 
-        throw new Error("Failed to save order because of unexpected error");
+        throw new Error(`Failed to save order because of unexpected error, with message: ${error.message}`);
     };
 };

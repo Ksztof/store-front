@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { RootState } from '../../redux/store';
 import { AboutCart, CheckCart } from '../../types/cartTypes';

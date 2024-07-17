@@ -18,7 +18,6 @@ import styles from './OrderPage.module.scss';
 
 export const OrderPage: React.FC = () => {
     const dispatch = useAppDispatch();
-
     const toPay: number = useSelector((state: RootState) => state.cart.cartData.totalCartValue);
     const paymentState: string = useSelector((state: RootState) => state.payment.status);
     const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);

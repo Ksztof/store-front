@@ -37,6 +37,7 @@ export const register = createAsyncThunk<
   async (payload: RegisterCredentials, { rejectWithValue }) => {
     try {
       const response: NoContentApiResponse | ApiError = await registerUser(payload);
+      
       if (isApiError(response)) {
         return rejectWithValue(response);
       }
