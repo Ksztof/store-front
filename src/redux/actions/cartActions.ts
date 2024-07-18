@@ -164,12 +164,16 @@ export const changeCartContentGlobally = createAsyncThunk<
         const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await saveCartContent(newProductsForApi);
 
         if (isApiError(response)) {
+          console.log("changeCartContentGlobally ISAPIERROR")
           return rejectWithValue(response);
         }
 
         if (isNoContentResponse(response)) {
+          console.log("changeCartContentGlobally IS NO CONTENT ")
+
           return;
         }
+        console.log(`changeCartContentGlobally IS  content returned:  ${response.entity} `)
 
         return response.entity;
       } catch (error: any) {

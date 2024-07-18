@@ -1,16 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PaymentState } from "../../initialValues/paymentInitials";
-import { resetPayment, startOrderProcess, startPaymentConfirmation, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
+import { confirmPayment, getClientSecret, resetPayment, updatePaymentIntent, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
 import { ReducerStates } from "../../types/sharedTypes";
 import { apiErrorInitialValue } from "../../initialValues/authInitials";
 import { ApiError } from "../../types/errorTypes";
-import { PaymentIntent } from "@stripe/stripe-js";
 
 const initialState: PaymentState = {
   loading: false,
   status: ReducerStates.Idle,
   error: apiErrorInitialValue,
-  paymentIntent: null,
+  clientSecret: '',
 };
 
 const paymentSlice = createSlice({
@@ -19,36 +18,54 @@ const paymentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(startOrderProcess.pending, (state: PaymentState) => {
+      .addCase(getClientSecret.pending, (state: PaymentState) => {
         state.loading = true;
         state.status = ReducerStates.Pending;
       })
-      .addCase(startOrderProcess.fulfilled, (state: PaymentState, action: PayloadAction<PaymentIntent | undefined>) => {
+      .addCase(getClientSecret.fulfilled, (state: PaymentState, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.status = ReducerStates.Pending;
         if (action.payload) {
-          state.paymentIntent = action.payload;
+          state.clientSecret = action.payload;
         }
       })
-      .addCase(startOrderProcess.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(getClientSecret.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        if (action.payload)
+        if (action.payload) {
           state.error = action.payload;
+        }
         state.status = ReducerStates.Rejected;
       })
 
-      .addCase(startPaymentConfirmation.pending, (state: PaymentState) => {
+      .addCase(updatePaymentIntent.pending, (state: PaymentState) => {
         state.loading = true;
         state.status = ReducerStates.Pending;
       })
-      .addCase(startPaymentConfirmation.fulfilled, (state: PaymentState, action: PayloadAction<void>) => {
+      .addCase(updatePaymentIntent.fulfilled, (state: PaymentState, action: PayloadAction<void>) => {
+        state.loading = false;
+        state.status = ReducerStates.Pending;
+      })
+      .addCase(updatePaymentIntent.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+        state.loading = false;
+        if (action.payload) {
+          state.error = action.payload;
+        }
+        state.status = ReducerStates.Rejected;
+      })
+
+      .addCase(confirmPayment.pending, (state: PaymentState) => {
+        state.loading = true;
+        state.status = ReducerStates.Pending;
+      })
+      .addCase(confirmPayment.fulfilled, (state: PaymentState, action: PayloadAction<void>) => {
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(startPaymentConfirmation.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(confirmPayment.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        if (action.payload)
+        if (action.payload) {
           state.error = action.payload;
+        }
         state.status = ReducerStates.Rejected;
       })
 

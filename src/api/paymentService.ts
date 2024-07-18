@@ -1,40 +1,47 @@
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { NoContentApiResponse } from "../types/noContentApiResponse";
-import { ConfirmPaymentPayload, PaymentDetails, PaymentIntentObject } from "../types/paymentTypes";
-import { isPaymentIntent, isProblemDetails } from "../utils/responseUtils";
+import { ConfirmPaymentPayload, PaymentDetails } from "../types/paymentTypes";
+import { isProblemDetails } from "../utils/responseUtils";
 import { ApiError } from "../types/errorTypes";
-import { OkApiResponse } from "../types/okApiResponse";
+
 
 axios.defaults.withCredentials = true;
 
 
-export const startOrder = async (payload: PaymentDetails): Promise<OkApiResponse<PaymentIntentObject> | ApiError> => {
+export const getClientSecretApi = async (payload: PaymentDetails): Promise<string | ApiError> => {
     try {
-        const response = await axios.post<PaymentIntentObject>('https://localhost:5004/api/Payments', payload);
+        const response: string | any =
+            await axios.post<string>('https://localhost:5004/api/Payments', payload);
 
-        if (isPaymentIntent(response.data)) {
-            const responseDetails: OkApiResponse<PaymentIntentObject> = { isSuccess: true, entity: response.data };
+        if (typeof response.data === 'string' && response.data.trim() !== '') {
+            const responseDetails: string = response.data;
             return responseDetails;
         }
-        throw new Error();
+
+        throw new Error("Unexpected status code received from API during getting client secret");
     } catch (error: any) {
         const data = error.response?.data;
-
         if (isProblemDetails(data)) {
             const apiError: ApiError = { isSuccess: false, error: data };
             return apiError;
         }
 
-        throw new Error("Failed to start order because of unexpected error");
+        console.error(`Failed to get client secret because of unexpected error ${error.message}`);
+        throw new Error(`Failed to get client secret because of unexpected error: ${error.message}`);
     };
 };
 
-export const confirmPayment = async (payload: ConfirmPaymentPayload): Promise<NoContentApiResponse | ApiError> => {
+export const updatePaymentIntentApi = async (paymentIntentId: string): Promise<NoContentApiResponse | ApiError> => {
     try {
-        await axios.post('https://localhost:5004/api/Payments/confirm-payment', payload);
+        const response: void | any =
+            await axios.post<void>('https://localhost:5004/api/Payments/update-payment-intent', { paymentIntentId });
 
-        const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
-        return responseDetails;
+        if (response.status === HttpStatusCode.NoContent) {
+            const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+            return responseDetails;
+        }
+
+        throw new Error("Unexpected response format received from API when updating payment intent");
     } catch (error: any) {
         const data = error.response?.data;
 
@@ -43,7 +50,31 @@ export const confirmPayment = async (payload: ConfirmPaymentPayload): Promise<No
             return apiError;
         }
 
-        throw new Error("Failed to pay using card because of unexpected error");
+        console.error(`Failed to update payment intent because of unexpected error: ${error.message}`);
+        throw new Error(`Failed to update payment intent because of unexpected error: ${error.message}`);
+    };
+};
+
+export const confirmPaymentApi = async (payload: ConfirmPaymentPayload): Promise<NoContentApiResponse | ApiError> => {
+    try {
+        const response: void | any =
+            await axios.post<void>('https://localhost:5004/api/Payments/confirm-payment', payload);
+
+        if (response.status === HttpStatusCode.NoContent) {
+            const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+            return responseDetails;
+        }
+
+        throw new Error("Unexpected response format received from API during payment confirmation");
+    } catch (error: any) {
+        const data = error.response?.data;
+
+        if (isProblemDetails(data)) {
+            const apiError: ApiError = { isSuccess: false, error: data };
+            return apiError;
+        }
+
+        throw new Error(`Failed to confirm payment, because of unexpected error with message: ${error.message}`);
     };
 };
 

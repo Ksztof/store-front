@@ -27,12 +27,12 @@ export const ZodAboutCart = z.object({
     totalCartValue: z.number(),
     aboutProductsInCart: z.array(ZodAboutProductsInCart),
     createdAt: z.string().refine(val => {
-        const date = new Date(val);
-        return !isNaN(date.getTime()) && date.toISOString() === val;
+      const date = new Date(val);
+      return !isNaN(date.getTime());
     }, {
-        message: "Date format is not UTC format",
+      message: "Date format is not valid",
     }),
-});
+  });
 
 export const ZodCheckCart = z.object({
     productId: z.number(),
@@ -118,4 +118,5 @@ export type ApiResponseNoContentZodType = z.infer<typeof ZodSuccessResponseNoCon
 export type ErrorContentSignalRZodType = z.infer<typeof ZodErrorContentSignalR>;
 export type PaymentStatusResponseZodType = z.infer<typeof ZodPaymentStatusResponse>;
 export type AboutPaymentZodType = z.infer<typeof ZodAboutPayment>;
+export type PaymentIntentZodType = z.infer<typeof ZodPaymentIntent>;
 export type PaymentIntentObjectZodType = z.infer<typeof ZodPaymentIntentObject>;
