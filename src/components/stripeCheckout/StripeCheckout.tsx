@@ -12,7 +12,8 @@ import styles from './StripeCheckout.module.scss';
 import { Appearance, StripePaymentElementOptions } from '@stripe/stripe-js';
 import stripePromise from '../../stripe/stripe';
 import { confirmPayment, getClientSecret } from '../../redux/actions/paymentActions';
-import { PaymentConfirmationPayload } from '../../types/paymentTypes';
+import { AsyncTasksParams, PaymentConfirmationPayload } from '../../types/paymentTypes';
+import useAsyncEffect from '../../hooks/useAsyncEffect ';
 
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, isFormValid, clientSecret }) => {
     const dispatch = useAppDispatch();
@@ -89,37 +90,35 @@ const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, o
     const [clientSecret, setClientSecret] = useState<string>();
     const appearance: Appearance = { theme: 'night' };
 
-    const performAsyncTasks = async (
-        orderState: string,
-        amount: number,
-        orderDetails: ShippingDetails,
-        dispatch: AppDispatch,
-        isMounted: boolean
-    ) => {
+    const performAsyncTasks = async ({
+        orderState,
+        amount,
+        orderDetails,
+        dispatch,
+        signal,
+    }: AsyncTasksParams) => {
         if (orderState === ReducerStates.Fulfilled) {
-            if (isMounted) {
-                await dispatch(getClientSecret({ amount: amount }));
-            }
+            await dispatch(getClientSecret({ amount }));
             return;
         }
 
         const orderResult = await dispatch(makeOrder(orderDetails));
         if (orderResult.meta.requestStatus.endsWith("fulfilled")) {
-            if (isMounted) {
-                await dispatch(getClientSecret({ amount: amount }));
+            if (!signal.aborted) {
+                await dispatch(getClientSecret({ amount }));
             }
         }
     };
-
-    useEffect(() => {
-        let isMounted = true;
-
-        performAsyncTasks(orderState, amount, orderDetails, dispatch, isMounted);
-
-        return () => {
-            isMounted = false;
-        };
-    }, [dispatch, amount, orderState, orderDetails]);
+    
+    useAsyncEffect(async (signal: AbortSignal) => {
+        await performAsyncTasks({
+            orderState,
+            amount,
+            orderDetails,
+            dispatch,
+            signal,
+        });
+    }, [orderState, amount, orderDetails, dispatch]);
 
     useEffect(() => {
         if (typeof clientSecretResponse === 'string' && clientSecretResponse.trim() !== '') {
