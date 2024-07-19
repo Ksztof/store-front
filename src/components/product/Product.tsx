@@ -32,7 +32,7 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
         setProductQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
     };
 
-    if (!product) return null; //???
+    if (!product) return null; 
 
     return (
         <div className={styles.productContainer}>

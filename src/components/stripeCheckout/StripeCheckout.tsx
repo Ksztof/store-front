@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useElements, Elements, PaymentElement, useStripe } from '@stripe/react-stripe-js';
 import { useAppDispatch } from '../../hooks';
-import { StripeCheckoutProps, WrappedStripeCheckoutProps } from '../../props/stripeCheckoutProps';
+import { paymentOptions, StripeCheckoutProps, WrappedStripeCheckoutProps } from '../../props/stripeCheckoutProps';
 import { makeOrder } from '../../redux/actions/orderActions';
 import { useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../redux/store';
+import { RootState } from '../../redux/store';
 import { startConnection } from '../../signalR/hubConnection';
-import { OrderResponse, ShippingDetails } from '../../types/orderTypes';
+import { OrderResponse } from '../../types/orderTypes';
 import { ReducerStates } from '../../types/sharedTypes';
 import styles from './StripeCheckout.module.scss';
-import { Appearance, StripePaymentElementOptions } from '@stripe/stripe-js';
+import { Appearance } from '@stripe/stripe-js';
 import stripePromise from '../../stripe/stripe';
-import { confirmPayment, getClientSecret } from '../../redux/actions/paymentActions';
+import { confirmPayment, getClientSecret, updatePaymentIntent } from '../../redux/actions/paymentActions';
 import { AsyncTasksParams, PaymentConfirmationPayload } from '../../types/paymentTypes';
 import useAsyncEffect from '../../hooks/useAsyncEffect ';
+import { HubConnection } from '@microsoft/signalr';
 
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, isFormValid, clientSecret }) => {
     const dispatch = useAppDispatch();
@@ -22,50 +23,36 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
     const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
     const orderState: string = useSelector((state: RootState) => state.order.status);
 
+    const connectionRef = useRef<HubConnection | null>(null);
+
     const payload: PaymentConfirmationPayload = {
-        clientSecret: clientSecret,
         stripe: stripe,
         elements: elements,
     };
 
-    const paymentOptions: StripePaymentElementOptions = {
-        fields: {
-            billingDetails: {
-                address: {
-                    country: 'never',
-                },
-            }
-        },
-        wallets: {
-            applePay: 'never',
-            googlePay: 'never'
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        const connection: HubConnection = startConnection(dispatch, orderSummary.id);
+        connectionRef.current = connection;
+
+        await dispatch(makeOrder(orderDetails))
+        await dispatch(updatePaymentIntent(clientSecret))
+        await dispatch(confirmPayment(payload));
+
+        if (orderState === ReducerStates.Fulfilled) {
+            await dispatch(confirmPayment(payload));
+            return;
         }
     };
 
     useEffect(() => {
-        console.log(`orderSummary.id ${orderSummary.id}`)
-        if (orderSummary.id) {
-            const connection = startConnection(dispatch, orderSummary.id);
-            return () => {
-                connection.stop();
-            };
-        }
-    }, [orderSummary, orderState, dispatch]);
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        dispatch(makeOrder(orderDetails))
-
-        if (orderState === ReducerStates.Fulfilled) {
-            dispatch(confirmPayment(payload));
-        } else {
-            const orderResult = await dispatch(makeOrder(orderDetails));
-            if (orderResult.meta.requestStatus.endsWith("fulfilled")) {
-                dispatch(confirmPayment(payload));
+        return () => {
+            if (connectionRef.current) {
+                connectionRef.current.stop();
             }
-        }
-    };
+        };
+    }, []);
 
     return (
         <div className={styles.paymentFormContainer}>
@@ -85,51 +72,39 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
 
 const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, orderDetails, isFormValid }) => {
     const dispatch = useAppDispatch();
-    const orderState: string = useSelector((state: RootState) => state.order.status);
     const clientSecretResponse: string = useSelector((state: RootState) => state.payment.clientSecret);
     const [clientSecret, setClientSecret] = useState<string>();
     const appearance: Appearance = { theme: 'night' };
 
     const performAsyncTasks = async ({
-        orderState,
         amount,
-        orderDetails,
         dispatch,
         signal,
     }: AsyncTasksParams) => {
-        if (orderState === ReducerStates.Fulfilled) {
-            await dispatch(getClientSecret({ amount }));
-            return;
-        }
 
-        const orderResult = await dispatch(makeOrder(orderDetails));
-        if (orderResult.meta.requestStatus.endsWith("fulfilled")) {
-            if (!signal.aborted) {
-                await dispatch(getClientSecret({ amount }));
-            }
+        if (!signal.aborted && amount && clientSecretResponse !== clientSecret) {
+            await dispatch(getClientSecret({ amount }));
         }
     };
-    
+
     useAsyncEffect(async (signal: AbortSignal) => {
         await performAsyncTasks({
-            orderState,
             amount,
-            orderDetails,
             dispatch,
             signal,
         });
-    }, [orderState, amount, orderDetails, dispatch]);
+    }, [amount, dispatch]);
 
     useEffect(() => {
-        if (typeof clientSecretResponse === 'string' && clientSecretResponse.trim() !== '') {
+        if (clientSecretResponse && clientSecretResponse !== clientSecret && typeof clientSecretResponse === 'string' && clientSecretResponse.trim() !== '') {
             setClientSecret(clientSecretResponse);
         }
-    }, [clientSecretResponse]);
+    }, [clientSecretResponse, clientSecret]);
 
     if (!clientSecret) return <div>Loading...</div>;
-
+    console.log(clientSecret)
     return (
-        <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
+        <Elements stripe={stripePromise} options={{ clientSecret, appearance }} key={clientSecret}>
             <StripeCheckout
                 orderDetails={orderDetails}
                 isFormValid={isFormValid}
