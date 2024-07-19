@@ -40,8 +40,6 @@ export const Cart: React.FC = () => {
                     {cartContent.aboutProductsInCart.map((p: CheckCart) => (
                         <ProductInCart key={p.productId} product={p} />
                     ))}
-                    <p>{cartContent.createdAt.toString()}</p>
-
                 </>
             ) : (
                 <div className={styles.emptyInfo}>

@@ -31,10 +31,10 @@ export const getClientSecretApi = async (payload: PaymentDetails): Promise<strin
     };
 };
 
-export const updatePaymentIntentApi = async (paymentIntentId: string): Promise<NoContentApiResponse | ApiError> => {
+export const updatePaymentIntentApi = async (clientSecret: string): Promise<NoContentApiResponse | ApiError> => {
     try {
         const response: void | any =
-            await axios.post<void>('https://localhost:5004/api/Payments/update-payment-intent', { paymentIntentId });
+            await axios.post<void>('https://localhost:5004/api/Payments/update-payment-intent', { clientSecret });
 
         if (response.status === HttpStatusCode.NoContent) {
             const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };

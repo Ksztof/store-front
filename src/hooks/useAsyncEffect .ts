@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 
 const useAsyncEffect = (effect: (signal: AbortSignal) => Promise<void>, dependencies: any[]) => {
-    const memoizedEffect = useCallback(effect, [effect, ...dependencies]);
+    const memoizedEffect = useCallback(effect, dependencies);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -10,6 +10,7 @@ const useAsyncEffect = (effect: (signal: AbortSignal) => Promise<void>, dependen
         const asyncEffect = async () => {
             try {
                 await memoizedEffect(signal);
+                console.log("ASYNC EFFFEEECT");
             } catch (error: unknown) {
                 if (error instanceof Error && error.name !== 'AbortError') {
                     console.error('An error occurred:', error);

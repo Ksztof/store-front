@@ -1,7 +1,6 @@
 import { PaymentIntent, Stripe, StripeElements } from "@stripe/stripe-js";
 import { ErrorContentSignalR } from "./errorTypes";
 import { AppDispatch } from "../redux/store";
-import { ShippingDetails } from "./orderTypes";
 
 export interface StartOrderPayload {
   amount: number
@@ -13,7 +12,6 @@ export interface PaymentDetails {
 }
 
 export interface PaymentConfirmationPayload {
-  clientSecret: string | null,
   stripe: Stripe | null,
   elements: StripeElements | null
 }
@@ -40,9 +38,7 @@ export interface ConfirmPaymentPayload {
 }
 
 export interface AsyncTasksParams {
-  orderState: string;
   amount: number;
-  orderDetails: ShippingDetails;
   dispatch: AppDispatch;
   signal: AbortSignal;
 }
