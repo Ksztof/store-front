@@ -2,7 +2,7 @@ import React from 'react';
 import { MethodOfPayment, OrderResponse, OrderSummaryProps } from '../types/orderTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { OrderedProducts } from './OrderedProducts';
+import { OrderedProducts } from './orderedProducts/OrderedProducts';
 import { CheckCart } from '../types/cartTypes';
 
 export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => {

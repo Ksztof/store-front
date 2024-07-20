@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { ProductDetails } from "../../types/productTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import { addProductToCart } from "../../redux/actions/cartActions";
 import { ProductProps } from "../../props/productProps";
@@ -13,26 +13,56 @@ import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 export const Product: React.FC<ProductProps> = ({ productId }) => {
     const dispatch = useAppDispatch();
     const currency: string = Currency.PLN;
-    const [productQuantity, setProductQuantity] = useState<number>(1);
+    const [productQuantity, setProductQuantity] = useState<number | string>(1);
     const product: ProductDetails | undefined = useSelector((state: RootState) => state.product.productsData.find((p: ProductDetails) => p.id === productId));
+    const [productQuantityNum, setProductQuantityNum] = useState<number>(1);
+
+    useEffect(() => {
+        if (productQuantity === '') {
+            setProductQuantityNum(1);
+        }
+        if (typeof (productQuantity) === "number" && productQuantity < 1000) {
+            setProductQuantityNum(productQuantity);
+        }
+
+    }, [productQuantity]);
+
 
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: string = event.target.value;
-        const parsedValue: number = parseInt(value);
-        if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 100) {
+
+        if (value === '') {
+            setProductQuantity('');
+            return;
+        }
+
+        const parsedValue: number = parseInt(value, 10);
+        if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 1000) {
             setProductQuantity(parsedValue);
         }
     };
 
     const increaseQuantity = () => {
-        setProductQuantity((prevQuantity) => prevQuantity + 1);
+        setProductQuantity((prevQuantity) => {
+            const quantity = typeof prevQuantity === 'number' ? prevQuantity : parseInt(prevQuantity, 10);
+            if (isNaN(quantity)) {
+                return 1;
+            }
+            return quantity + 1;
+        });
     };
 
     const decreaseQuantity = () => {
-        setProductQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
+        setProductQuantity((prevQuantity) => {
+            const quantity = typeof prevQuantity === 'number' ? prevQuantity : parseInt(prevQuantity, 10);
+            if (isNaN(quantity) || quantity <= 1) {
+                return 1;
+            }
+            return quantity - 1;
+        });
     };
 
-    if (!product) return null; 
+    if (!product) return null;
 
     return (
         <div className={styles.productContainer}>
@@ -60,7 +90,7 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
                     </div>
                     <div className={styles.addBtnContainer}>
                         <button onClick={() =>
-                            dispatch(addProductToCart({ product: product, quantity: productQuantity }))}>
+                            dispatch(addProductToCart({ product: product, quantity: productQuantityNum }))}>
                             Add
                         </button>
                     </div>

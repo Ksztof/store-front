@@ -20,7 +20,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
 
     const handleBlur = () => {
         const quantity = parseInt(inputValue, 10);
-        if (isNaN(quantity) || quantity < 1) {
+        if (isNaN(quantity) || quantity < 1 || quantity > 1000 || product.quantity > 1000) {
             setInputValue(product.quantity.toString());
 
             dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: product.quantity }));

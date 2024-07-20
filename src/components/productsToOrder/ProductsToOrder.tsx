@@ -1,20 +1,19 @@
 import { useSelector } from "react-redux";
-import { AboutCart, CheckCart } from "../types/cartTypes";
-import { RootState } from "../redux/store";
-import { OrderedProducts } from "./OrderedProducts";
+import { OrderedProducts } from "../orderedProducts/OrderedProducts";
+import { AboutCart, CheckCart } from "../../types/cartTypes";
+import { RootState } from "../../redux/store";
+import styles from './ProductsToOrder.module.scss';
 
 export const ProductsToOrder: React.FC = () => {
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
 
     return (
-        <div>
-            <h1>Order Summary</h1>
-            <p>Total Amount: {cartContent.totalCartValue}</p>
-            <p>Products</p>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
+        <>
+            <>
+                <table className={styles.summaryTable}>
+                    <thead className={styles.tableHeader}>
+                        <tr className={styles.headerRow}>
+                            <th></th>
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
@@ -27,8 +26,11 @@ export const ProductsToOrder: React.FC = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
-        </div>
+
+                <p className={styles.amountRow}>Total Amount: {cartContent.totalCartValue}</p>
+
+            </>
+        </>
     );
 };
 
