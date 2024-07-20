@@ -5,7 +5,6 @@ import { RootState } from '../../redux/store';
 import { ShippingDetails, MethodOfPayment } from '../../types/orderTypes';
 import { ShippingDetailsForm } from '../../components/shippingDetailsForm/ShippingDetailsForm';
 import PaymentMethodSelector from '../../components/paymentMethodSelector/PaymentMethodSelector';
-import ProductsToOrder from '../../components/ProductsToOrder';
 import { useAppDispatch } from '../../hooks';
 import { makeOrder, resetOrder } from '../../redux/actions/orderActions';
 import { resetPayment, updatePaymentStatusSuccess } from '../../redux/actions/paymentActions';
@@ -15,6 +14,7 @@ import { resetCart } from '../../redux/actions/cartActions';
 import { shippingDetailsInitialValues } from '../../initialValues/orderInitials';
 import { ReducerStates } from "../../types/sharedTypes";
 import styles from './OrderPage.module.scss';
+import ProductsToOrder from '../../components/productsToOrder/ProductsToOrder';
 
 export const OrderPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -59,7 +59,12 @@ export const OrderPage: React.FC = () => {
                 </>
             ) : (
                 <div className={styles.orderSummaryContainer}>
-                    <ProductsToOrder />
+                    <h3 className={styles.summaryTitle}>
+                        Order Summary
+                    </h3>
+                    <div className={styles.productsToOrderContainer}>
+                        <ProductsToOrder />
+                    </div>
                     <div className={styles.shipDetForm}>
                         <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
                     </div>

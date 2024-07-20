@@ -1,0 +1,26 @@
+.summaryTable {
+    width: 100%;
+
+    th,
+    td {
+
+
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    .tableHeader th {
+        padding-bottom: 2%;
+        padding-top: 2%;
+
+    }
+
+
+}
+
+.amountRow {
+    margin-top: 2%;
+    font-weight: bold;
+    align-self: flex-end;
+    padding: 1%
+}
