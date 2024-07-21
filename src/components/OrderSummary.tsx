@@ -2,7 +2,7 @@ import React from 'react';
 import { MethodOfPayment, OrderResponse, OrderSummaryProps } from '../types/orderTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { OrderedProducts } from './orderedProducts/OrderedProducts';
+import { OrderedProduct } from './orderedProduct/OrderedProduct';
 import { CheckCart } from '../types/cartTypes';
 
 export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => {
@@ -33,7 +33,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
                     </thead>
                     <tbody>
                         {orderSummary.aboutProductsInCart.map((product: CheckCart) => (
-                            <OrderedProducts key={product.productId} product={product} />
+                            <OrderedProduct key={product.productId} product={product} />
                         ))}
                     </tbody>
                 </table>

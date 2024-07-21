@@ -10,6 +10,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
     const dispatch = useAppDispatch();
     const product: CheckCart = props.product;
     const [inputValue, setInputValue] = useState(product.quantity.toString());
+
     useEffect(() => {
         setInputValue(product.quantity.toString());
     }, [product.quantity]);
@@ -35,6 +36,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
             handleBlur();
         }
     };
+    
     return (
         <div className={styles.productInCartContainer} key={product.productId}>
             <div className={styles.imageContainer}>
