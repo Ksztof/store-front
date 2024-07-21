@@ -1,26 +1,36 @@
-.summaryTable {
-    width: 100%;
+.summaryHeader {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
 
-    th,
-    td {
+    font-size: 14px;
+    border: 2px solid white;
 
-
-        border: 1px solid #ccc;
-        text-align: center;
+    .title {
+        display: flex;
+        width: 20%;
+        white-space: nowrap;
+        justify-content: center;
     }
-
-    .tableHeader th {
-        padding-bottom: 2%;
-        padding-top: 2%;
-
-    }
-
 
 }
 
-.amountRow {
-    margin-top: 2%;
-    font-weight: bold;
-    align-self: flex-end;
-    padding: 1%
+.orderedProductsContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 515px) {
+    .summaryHeader {
+        gap: 8%;
+    }
+}
+
+@media (max-width: 397px) {
+    .summaryHeader {
+        gap: 5%;
+        font-size: 10px;
+    }
 }
