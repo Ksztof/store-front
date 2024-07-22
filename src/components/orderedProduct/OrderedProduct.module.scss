@@ -22,8 +22,8 @@
         .quantityRightArrow {
             position: relative;
             cursor: pointer;
-            height: 30%;
-            width: 20%;
+            height: 30px;
+            width: 20px;
             stroke: rgb(0, 255, 106);
             stroke-width: 15px;
             color: rgb(6, 37, 42);
@@ -35,7 +35,7 @@
         }
 
         .quantityLeftArrow {
-            right: -2%;
+            right: -2px;
 
             &:active {
                 stroke: red
@@ -43,7 +43,7 @@
         }
 
         .quantityRightArrow {
-            left: -2%;
+            left: -2px;
 
             &:active {
                 stroke: rgb(0, 255, 0);
@@ -52,10 +52,10 @@
 
         input {
             background-color: rgb(82, 83, 82);
-            width: 30%;
-            height: 20%;
+            width: 35px;
+            height: 20px;
             border-radius: 10%;
-            font-size: 20px;
+            font-size: 13px;
             justify-content: center;
             text-align: center;
             color: white;
@@ -90,19 +90,123 @@
     width: 20%;
     justify-content: center;
     height: 100%;
-    font-size: 18px;
-    border-bottom: 1px solid yellow;
+    font-size: 16px;
+    border-bottom: 1px dotted yellow;
     box-sizing: border-box;
     word-break: break-word;
 
     &:first-child {
-        border-left: 1px solid yellow;
+        border-left: 1px dotted yellow;
     }
 
     &:last-child {
-        border-right: 1px solid yellow;
-        border-left: 1px solid yellow;
+        border-right: 1px dotted yellow;
+        border-left: 1px dotted yellow;
 
     }
 
+}
+
+@media (max-width: 935px) {
+    
+    .cell {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 824px) {
+    .orderedProduct {
+        .quantityCell {
+
+            .quantityLeftArrow,
+            .quantityRightArrow {
+                height: 27px;
+                width: 20px;
+            }
+
+            input {
+                width: 30px;
+                height: 17px;
+                font-size: 13px;
+            }
+        }
+    }
+
+    .cell {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 703px) {
+
+    .orderedProduct {
+        .quantityCell {
+
+            .quantityLeftArrow,
+            .quantityRightArrow {
+                height: 30px;
+                width: 20px;
+            }
+
+            input {
+
+                font-size: 11px;
+            }
+        }
+    }
+
+    .cell {
+        font-size: 10px;
+    }
+}
+
+
+@media (max-width: 475px) {
+
+    .orderedProduct {
+        .quantityCell {
+
+            .quantityLeftArrow,
+            .quantityRightArrow {
+                height: 22px;
+                width: 15px;
+                left: 0;
+                right: 0;
+            }
+
+            input {
+                width: 22px;
+                height: 14px;
+                font-size: 10px;
+            }
+        }
+    }
+
+    .cell {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .orderedProduct {
+        .quantityCell {
+
+            .quantityLeftArrow,
+            .quantityRightArrow {
+                height: 62px;
+                width: 55px;
+
+            }
+
+            input {
+                width: 70px;
+                height: 55px;
+                font-size: 22px;
+            }
+        }
+    }
+
+    .cell {
+        font-size: 22px;
+    }
 }

@@ -11,7 +11,7 @@ export const ProductsToOrder: React.FC = () => {
         <>
             <div className={styles.summaryHeader}>
                 <div className={styles.title}></div>
-                <div className={styles.title}>Product Name</div>
+                <div className={styles.title}>Name</div>
                 <div className={styles.title}>Quantity</div>
                 <div className={styles.title}>Unit Price</div>
                 <div className={styles.title}>Total Price</div>
@@ -22,8 +22,8 @@ export const ProductsToOrder: React.FC = () => {
                 ))}
             </div>
             <div className={styles.amountRow}>
-                <div className={styles.amountTitle}>Total Amount:</div>
-                <div className={styles.amountValue}>{cartContent.totalCartValue}</div>
+                <div className={styles.amountTitle}>Total:</div>
+                <div className={styles.amountValue}>888888.88 zł</div>
             </div>
 
         </>
@@ -31,3 +31,4 @@ export const ProductsToOrder: React.FC = () => {
 };
 
 export default ProductsToOrder;
+//{cartContent.totalCartValue}
