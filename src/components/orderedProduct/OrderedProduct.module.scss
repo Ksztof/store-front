@@ -3,20 +3,106 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 2px solid white;
+    width: 100%;
+
     .imageContainer {
-        
-        .img{
+
+        .img {
+            flex: 1;
+            display: flex;
+            max-width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+    }
+
+    .quantityCell {
+
+        .quantityLeftArrow,
+        .quantityRightArrow {
+            position: relative;
+            cursor: pointer;
+            height: 30%;
             width: 20%;
+            stroke: rgb(0, 255, 106);
+            stroke-width: 15px;
+            color: rgb(6, 37, 42);
+            white-space: nowrap;
+
+            &:hover {
+                stroke: yellow;
+            }
+        }
+
+        .quantityLeftArrow {
+            right: -2%;
+
+            &:active {
+                stroke: red
+            }
+        }
+
+        .quantityRightArrow {
+            left: -2%;
+
+            &:active {
+                stroke: rgb(0, 255, 0);
+            }
+        }
+
+        input {
+            background-color: rgb(82, 83, 82);
+            width: 30%;
+            height: 20%;
+            border-radius: 10%;
+            font-size: 20px;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background-color: rgb(6, 37, 42);
+            border: 0.1vw solid white;
+            cursor: pointer;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+            }
+
+            &:focus {
+                border-color: #00ff3c;
+                outline: none;
+            }
+
+            &:hover {
+                border-color: yellow;
+            }
+
+            &:hover:focus {
+                border-color: #00ff3c;
+            }
         }
     }
 }
 
 .cell {
-    
+    align-items: center;
     display: flex;
     width: 20%;
-    white-space: nowrap;
     justify-content: center;
+    height: 100%;
+    font-size: 18px;
+    border-bottom: 1px solid yellow;
+    box-sizing: border-box;
+    word-break: break-word;
+
+    &:first-child {
+        border-left: 1px solid yellow;
+    }
+
+    &:last-child {
+        border-right: 1px solid yellow;
+        border-left: 1px solid yellow;
+
+    }
 
 }
