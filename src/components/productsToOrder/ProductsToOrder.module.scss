@@ -1,25 +1,25 @@
 .summaryHeader {
     display: flex;
     flex-direction: row;
+    font-family: Open Sans, sans-serif;
 
     .title {
         display: flex;
-        white-space: nowrap;
         justify-content: center;
-        border-bottom: 1px solid yellow;
-        border-top: 1px solid yellow;
+        border-bottom: 1px dotted yellow;
+        border-top: 1px dotted yellow;
         padding: 5px;
         box-sizing: border-box;
         width: 20%;
         font-size: 18px;
 
         &:first-child {
-            border-left: 1px solid yellow;
+            border-left: 1px dotted yellow;
         }
 
         &:last-child {
-            border-right: 1px solid yellow;
-            border-left: 1px solid yellow;
+            border-right: 1px dotted yellow;
+            border-left: 1px dotted yellow;
 
         }
 
@@ -34,45 +34,92 @@
 
 .amountRow {
     display: flex;
-    flex-direction: row;
-    border-right: 1px solid yellow;
-    border-left: 1px solid yellow;
-    border-bottom: 1px solid yellow;
+    border: 1px dotted yellow;
+    border-top: none;
 
-    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     box-sizing: border-box;
     align-self: end;
     width: 40%;
-    white-space: nowrap;
-    background-color: green;
-    font-size: 22px;
+    font-size: 16px;
+    max-width: 40%;
+    word-wrap: break-word;
+    word-break: break-all;
 
     .amountTitle {
         flex: 1;
         display: flex;
         justify-content: center;
-
+        width: 30%;
     }
 
     .amountValue {
         flex: 1;
         display: flex;
         justify-content: center;
-
+        width: 20%;
     }
-
-
 }
 
-// @media (max-width: 515px) {
-//     .summaryHeader {
-//         gap: 8%;
-//     }
-// }
+@media (max-width: 935px) {
+    .summaryHeader {
+        .title {
+            font-size: 16px;
+        }
+    }
 
-// @media (max-width: 397px) {
-//     .summaryHeader {
-//         gap: 5%;
-//         font-size: 10px;
-//     }
-// }
+    .amountRow {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 824px) {
+    .summaryHeader {
+        .title {
+            font-size: 14px;
+        }
+    }
+
+    .amountRow {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 703px) {
+    .summaryHeader {
+        .title {
+            font-size: 11px;
+        }
+    }
+
+    .amountRow {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 502px) {
+    .summaryHeader {
+        .title {
+            font-size: 9px;
+        }
+    }
+
+    .amountRow {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .summaryHeader {
+        .title {
+            font-size: 30px;
+        }
+    }
+
+    .amountRow {
+
+        font-size: 28px;
+    }
+}
+
