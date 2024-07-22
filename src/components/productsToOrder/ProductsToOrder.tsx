@@ -10,19 +10,22 @@ export const ProductsToOrder: React.FC = () => {
     return (
         <>
             <div className={styles.summaryHeader}>
-                <div className={styles.title}>picture</div>
+                <div className={styles.title}></div>
                 <div className={styles.title}>Product Name</div>
-                <div className={styles.title}>   Quantity</div>
-                <div className={styles.title}>  Unit Price</div>
-                <div className={styles.title}>  Total Price</div>
+                <div className={styles.title}>Quantity</div>
+                <div className={styles.title}>Unit Price</div>
+                <div className={styles.title}>Total Price</div>
             </div>
             <div className={styles.orderedProductsContainer}>
                 {cartContent.aboutProductsInCart.map((product: CheckCart) => (
                     <OrderedProduct key={product.productId} product={product} />
                 ))}
-
-                <p className={styles.amountRow}>Total Amount: {cartContent.totalCartValue}</p>
             </div>
+            <div className={styles.amountRow}>
+                <div className={styles.amountTitle}>Total Amount:</div>
+                <div className={styles.amountValue}>{cartContent.totalCartValue}</div>
+            </div>
+
         </>
     );
 };
