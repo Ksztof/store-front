@@ -43,6 +43,7 @@ export const register = createAsyncThunk<
       }
       
       if (isNoContentResponse(response)) {
+        console.log("register: isNoContentResponse")
         return;
       }
     } catch (error: any) {

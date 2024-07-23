@@ -15,20 +15,21 @@
     padding-bottom: 60px;
 
     .registerForm {
-        margin-top: 120px;
+        margin-top: 5%;
         display: flex;
         flex: 1;
-        width: 300px;
+        width: 100%;
         justify-content: center;
 
     }
 
     .loginLink {
+        padding: 1%;
         flex: 0.5;
         color: white;
-        font-size: 1vw;
-        margin-top: 10px;
-        margin-bottom: 25px;
+        font-size: 16px;
+        margin-bottom: 5px;
+        max-width: 40%;
 
         a {
             color: rgb(111, 255, 0);
@@ -44,14 +45,15 @@
         flex: 4;
         align-self: center;
         justify-content: center;
-        align-items: start;
+        align-items: flex-start;
         display: flex;
         pointer-events: none;
+        width: 15%;
 
         button {
             opacity: 65%;
-            width: 20vw;
-            font-size: 1.5vw;
+            width: 100%;
+            font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
         }
@@ -62,11 +64,18 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
+                border: solid 2px rgb(111, 255, 0);
+                color: rgb(111, 255, 0);
+                background-color: black;
+
 
                 &:hover {
-                    border: solid 2px rgb(111, 255, 0);
-                    color: rgb(111, 255, 0);
-                    background-color: black;
+                    opacity: 100%;
+                }
+
+                &:active {
+                    background-color: green;
+                    opacity: 100%;
                 }
             }
         }
@@ -81,11 +90,9 @@
     font-family: 'Inter', sans-serif;
     top: 80px;
     align-items: center;
-    position: absolute;
-    width: 100%;
+    width: 70%;
     height: calc(100% - 80px);
-    overflow-y: visible;
-    overflow-x: auto;
+    font-size: 24px;
     box-sizing: border-box;
     padding-bottom: 60px;
 
@@ -93,13 +100,13 @@
         color: white;
         margin-top: 120px;
         display: flex;
-        width: 400px;
+        width: 100%;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        border-radius: 1vw;
-        border: 0.1vw solid rgb(111, 255, 0);
-        padding: 2vw;
+        border-radius: 10px;
+        border: 1px solid rgb(111, 255, 0);
+        padding: 25px;
 
         p {
             margin-top: -10px
@@ -114,5 +121,64 @@
                 color: rgb(25, 0, 255);
             }
         }
+    }
+}
+
+@media(max-width: 850px) {
+    .registerContainer {
+        .loginLink {
+            font-size: 14px;
+            max-width: 40%;
+        }
+
+        .registerButton {
+            button {
+                font-size: 15px;
+                width: 100%;
+            }
+        }
+    }
+
+    .summaryConatiner {
+        font-size: 20px;
+    }
+}
+
+@media(max-width: 690px) {
+    .registerContainer {
+        .loginLink {
+            font-size: 12px;
+            max-width: 50%;
+        }
+
+        .registerButton {
+            button {
+                font-size: 12px;
+                width: 100%;
+            }
+        }
+    }
+
+    .summaryConatiner {
+        font-size: 15px;
+    }
+}
+
+@media(max-width: 520px) {
+    .registerContainer {
+        .loginLink {
+            font-size: 10px;
+            max-width: 65%;
+        }
+
+        .registerButton {
+            button {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .summaryConatiner {
+        font-size: 12px;
     }
 }

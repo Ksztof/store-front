@@ -29,6 +29,16 @@
         box-sizing: border-box;
     }
 
+    .orderSummary {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .shipDetForm {
         margin-top: 120px;
         flex: 1;
@@ -40,7 +50,7 @@
         box-sizing: border-box;
     }
 
-    .optionsContainer{
+    .optionsContainer {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -49,8 +59,8 @@
         width: 100%;
         box-sizing: border-box;
 
-        .paymentContainer{
-            flex:1;
+        .paymentContainer {
+            flex: 1;
             display: flex;
             width: 100%;
             padding-top: 5%;
@@ -59,19 +69,22 @@
         }
     }
 
-   
+
 
     .OrderNowBtn {
-        display: flex;
-        pointer-events: none;
-        margin-top: 1vw;
-
+        width: 30%;
+        padding: 5%;
+        align-self: center;
+        
         button {
             opacity: 65%;
-            width: 20vw;
-            font-size: 1.5vw;
+            width: 100%;
+            font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
+            
+
+
         }
 
         &.formValid {
@@ -80,29 +93,68 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
+                border: solid 2px rgb(111, 255, 0);
+                color: rgb(111, 255, 0);
+                background-color: black;
 
                 &:hover {
-                    border: solid 2px rgb(111, 255, 0);
-                    color: rgb(111, 255, 0);
-                    background-color: black;
+                    opacity: 100%;
+                }
+
+                &:active {
+                    background-color: green;
+                    opacity: 100%;
                 }
             }
         }
     }
 }
 
+@media (max-width: 824px) {
+    .shippDetContainer {
+        label {
+            font-size: 16px;
+        }
+
+        input {
+            font-size: 12px;
+        }
+
+        .errorMsg {
+            font-size: 10px;
+        }
+    }
+}
+
+@media (max-width: 703px) {
+    .shippDetContainer {
+        label {
+            font-size: 14px;
+        }
+
+        input {
+            font-size: 10px;
+        }
+
+        .errorMsg {
+            font-size: 10px;
+        }
+    }
+}
+
+
 @media(min-width: 1500px) {
     .orderSummaryContainer {
         .productsToOrderContainer {
-            width: 70%;
+            width: 50%;
         }
 
         .shipDetForm {
-            width: 70%;
+            width: 50%;
         }
 
-        .optionsContainer{
-            width: 70%;
+        .optionsContainer {
+            width: 50%;
         }
 
     }

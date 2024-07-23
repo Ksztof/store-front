@@ -5,6 +5,7 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
+
     .paymentElementContainer {
         display: flex;
         flex-direction: column;
@@ -13,9 +14,10 @@
 
 
     .payButton {
+        width: 30%;
+        padding: 5%;
 
         button {
-
             opacity: 65%;
             width: 100%;
             font-size: 20px;
@@ -33,17 +35,15 @@
                 color: rgb(111, 255, 0);
                 background-color: black;
 
+
                 &:hover {
                     opacity: 100%;
                 }
 
-                &:active  {
+                &:active {
                     background-color: green;
                     opacity: 100%;
                 }
-
-
-
             }
         }
     }

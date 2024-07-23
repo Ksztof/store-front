@@ -7,7 +7,7 @@
     top: 80px;
     align-items: center;
     position: absolute;
-    width: 100vw;
+    width: 100%;
     height: calc(100% - 80px);
     overflow-y: visible;
     overflow-x: auto;
@@ -15,19 +15,21 @@
     padding-bottom: 60px;
 
     .loginForm {
-        margin-top: 120px;
+       
+        margin-top: 5%;
         display: flex;
         flex: 1;
-        width: 300px;
+        width: 100%;
         justify-content: center;
     }
 
     .registerLink {
+        padding: 1%;
         flex: 0.5;
         color: white;
-        font-size: 1vw;
-        margin-top: 10px;
+        font-size: 16px;
         margin-bottom: 5px;
+        max-width: 30%;
 
         a {
             color: rgb(111, 255, 0);
@@ -40,17 +42,18 @@
     }
 
     .loginButton {
-        flex: 4;
+        flex: 6;
         align-self: center;
         justify-content: center;
         align-items: flex-start;
         display: flex;
         pointer-events: none;
+        width: 15%;
 
         button {
             opacity: 65%;
-            width: 20vw;
-            font-size: 1.5vw;
+            width: 100%;
+            font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
         }
@@ -61,12 +64,67 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
+                border: solid 2px rgb(111, 255, 0);
+                color: rgb(111, 255, 0);
+                background-color: black;
+
 
                 &:hover {
-                    border: solid 2px rgb(111, 255, 0);
-                    color: rgb(111, 255, 0);
-                    background-color: black;
+                    opacity: 100%;
                 }
+
+                &:active {
+                    background-color: green;
+                    opacity: 100%;
+                }
+            }
+        }
+    }
+}
+
+
+@media(max-width: 850px) {
+    .loginContainer {
+        .registerLink {
+            font-size: 14px;
+            max-width: 40%;
+        }
+
+        .loginButton {
+            button {
+                font-size: 15px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media(max-width: 560px) {
+    .loginContainer {
+        .registerLink {
+            font-size: 12px;
+            max-width: 50%;
+        }
+
+        .loginButton {
+            button {
+                font-size: 12px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media(max-width: 420px) {
+    .loginContainer {
+        .registerLink {
+            font-size: 10px;
+            max-width: 65%;
+        }
+
+        .loginButton {
+            button {
+                font-size: 10px;
             }
         }
     }
