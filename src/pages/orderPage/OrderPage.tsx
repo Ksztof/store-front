@@ -48,7 +48,7 @@ export const OrderPage: React.FC = () => {
     }, [paymentState, isCartEmpty, dispatch]);
 
     return (
-        <div>
+        <>
             {paymentState === ReducerStates.Fulfilled ? (
                 <>
                     <h1>Thank you for your order!</h1>
@@ -69,7 +69,7 @@ export const OrderPage: React.FC = () => {
                         <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
                     </div>
                     {isCartEmpty !== true && (
-                        <>
+                        <div className={styles.optionsContainer}>
                             <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                             {paymentMethod === MethodOfPayment.Card ? (
                                 <div className={styles.paymentContainer}>
@@ -80,11 +80,11 @@ export const OrderPage: React.FC = () => {
                                     <button onClick={handleDeliveryOrder}>Order Now</button>
                                 </div>
                             ) : null}
-                        </>
+                        </div>
                     )}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

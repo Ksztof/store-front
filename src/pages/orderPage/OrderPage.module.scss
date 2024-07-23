@@ -27,16 +27,39 @@
         padding-right: 5%;
         width: 100%;
         box-sizing: border-box;
-        height: auto;
     }
 
     .shipDetForm {
         margin-top: 120px;
-        display: flex;
         flex: 1;
-        width: 300px;
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 100%;
+        box-sizing: border-box;
     }
+
+    .optionsContainer{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 100%;
+        box-sizing: border-box;
+
+        .paymentContainer{
+            flex:1;
+            display: flex;
+            width: 100%;
+            padding-top: 5%;
+            box-sizing: border-box;
+            justify-content: center;
+        }
+    }
+
+   
 
     .OrderNowBtn {
         display: flex;
@@ -71,13 +94,15 @@
 @media(min-width: 1500px) {
     .orderSummaryContainer {
         .productsToOrderContainer {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding-left: 5%;
-            padding-right: 5%;
             width: 70%;
-            box-sizing: border-box;
+        }
+
+        .shipDetForm {
+            width: 70%;
+        }
+
+        .optionsContainer{
+            width: 70%;
         }
 
     }

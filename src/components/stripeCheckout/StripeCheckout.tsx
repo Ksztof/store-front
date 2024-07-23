@@ -55,18 +55,16 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
     }, []);
 
     return (
-        <div className={styles.paymentFormContainer}>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.cardElement}>
-                    <PaymentElement options={paymentOptions} />
-                </div>
-                <div className={`${styles.payButton} ${isFormValid ? styles.formValid : ''}`}>
-                    <button type="submit" disabled={!stripe}>
-                        <p> Pay {amount} zł</p>
-                    </button>
-                </div>
-            </form>
-        </div>
+        <form className={styles.paymentForm} onSubmit={handleSubmit}>
+            <div className={styles.paymentElementContainer}>
+                <PaymentElement options={paymentOptions} />
+            </div>
+            <div className={`${styles.payButton} ${isFormValid ? styles.formValid : ''}`}>
+                <button type="submit" disabled={!stripe}>
+                    <p> Pay {amount} zł</p>
+                </button>
+            </div>
+        </form>
     );
 };
 
@@ -74,7 +72,13 @@ const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, o
     const dispatch = useAppDispatch();
     const clientSecretResponse: string = useSelector((state: RootState) => state.payment.clientSecret);
     const [clientSecret, setClientSecret] = useState<string>();
-    const appearance: Appearance = { theme: 'night' };
+    const appearance: Appearance = {
+        theme: 'night',
+        variables: {
+            fontFamily: 'Open Sans, sans-serif',
+            fontSizeBase: '18px', 
+        }
+    };
 
     const performAsyncTasks = async ({
         amount,

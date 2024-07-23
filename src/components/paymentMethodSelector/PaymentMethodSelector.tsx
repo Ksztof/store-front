@@ -12,7 +12,7 @@ export const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({ se
 
     return (
         <div className={styles.methodSelectorContainer}>
-            <h3>Choose payment method:</h3>
+            <div className={styles.header}>Choose payment method:</div>
             <div className={styles.methods}>
                 <label>
                     <input type="radio"
