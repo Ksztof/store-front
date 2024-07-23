@@ -23,12 +23,10 @@ export const ProductsToOrder: React.FC = () => {
             </div>
             <div className={styles.amountRow}>
                 <div className={styles.amountTitle}>Total:</div>
-                <div className={styles.amountValue}>888888.88 zł</div>
+                <div className={styles.amountValue}>{cartContent.totalCartValue} zł</div>
             </div>
-
         </>
     );
 };
 
 export default ProductsToOrder;
-//{cartContent.totalCartValue}

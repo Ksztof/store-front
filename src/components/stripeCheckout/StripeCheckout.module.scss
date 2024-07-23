@@ -1,35 +1,49 @@
-.paymentFormContainer {
-    flex: 1;
+.paymentForm {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    width: 35vw;
+    justify-content: center;
     align-items: center;
-    // .cardElement {
-    //     margin-top: 1vw;
-    //     background-color: white;
-    //     width: 30vw;
-    // }
+    flex-direction: column;
+    overflow: hidden;
+
+    .paymentElementContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
 
     .payButton {
-        flex: 1;
-        display: flex;
-        pointer-events: none;           
-        margin-top: 1vw;
-        width: 15vw;
-        height: 10vw;
-        align-items: center;
-        justify-content: center;
+        width: 30%;
+        padding: 5%;
+
         button {
             opacity: 65%;
-            font-size: 1.5vw;
+            width: 100%;
+            font-size: 20px;
             border-radius: 10px;
+            border: solid 2px transparent;
         }
 
         &.formValid {
+
             button {
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
+                border: solid 2px rgb(111, 255, 0);
+                color: rgb(111, 255, 0);
+                background-color: black;
+
+
+                &:hover {
+                    opacity: 100%;
+                }
+
+                &:active {
+                    background-color: green;
+                    opacity: 100%;
+                }
             }
         }
     }

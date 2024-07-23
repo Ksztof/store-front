@@ -20,7 +20,6 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
                     <>Payment upon delivery</>
                 )}
             </p>
-            <p>Products</p>
             <div>
                 <table>
                     <thead>

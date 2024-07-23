@@ -48,44 +48,43 @@ export const OrderPage: React.FC = () => {
     }, [paymentState, isCartEmpty, dispatch]);
 
     return (
-        <div>
-            {paymentState === ReducerStates.Fulfilled ? (
-                <>
-                    <h1>Thank you for your order!</h1>
-                    <OrderSummary paymentMethod={paymentMethod} />
-                    <div>
-                        <Link to="/">OK</Link>
+        <>
+            <div className={styles.orderSummaryContainer}>
+                {paymentState === ReducerStates.Fulfilled ? (
+                    <div className={styles.orderSummary}>
+                        <h1>Thank you for your order!</h1>
+                        <OrderSummary paymentMethod={paymentMethod} />
+                        <div>
+                            <Link to="/">OK</Link>
+                        </div>
                     </div>
-                </>
-            ) : (
-                <div className={styles.orderSummaryContainer}>
-                    <h3 className={styles.summaryTitle}>
-                        Order Summary
-                    </h3>
-                    <div className={styles.productsToOrderContainer}>
-                        <ProductsToOrder />
-                    </div>
-                    <div className={styles.shipDetForm}>
-                        <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
-                    </div>
-                    {isCartEmpty !== true && (
-                        <>
-                            <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
-                            {paymentMethod === MethodOfPayment.Card ? (
-                                <div className={styles.paymentContainer}>
-                                    <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} isFormValid={isFormValid} />
-                                </div>
-                            ) : paymentMethod === MethodOfPayment.OnDelivery ? (
-                                <div className={`${styles.OrderNowBtn} ${isFormValid ? styles.formValid : ''}`}>
-                                    <button onClick={handleDeliveryOrder}>Order Now</button>
-                                </div>
-                            ) : null}
-                        </>
-                    )}
-                </div>
-            )}
-        </div>
+                ) : (
+                    <>
+                        <h3 className={styles.summaryTitle}>Order Summary</h3>
+                        <div className={styles.productsToOrderContainer}>
+                            <ProductsToOrder />
+                        </div>
+                        <div className={styles.shipDetForm}>
+                            <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
+                        </div>
+                        {isCartEmpty !== true && (
+                            <div className={styles.optionsContainer}>
+                                <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
+                                {paymentMethod === MethodOfPayment.Card ? (
+                                    <div className={styles.paymentContainer}>
+                                        <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} isFormValid={isFormValid} />
+                                    </div>
+                                ) : paymentMethod === MethodOfPayment.OnDelivery ? (
+                                    <div className={`${styles.OrderNowBtn} ${isFormValid ? styles.formValid : ''}`}>
+                                        <button onClick={handleDeliveryOrder}>Order Now</button>
+                                    </div>
+                                ) : null}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </>
     );
-};
-
+}
 export default OrderPage;

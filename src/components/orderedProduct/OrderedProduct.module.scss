@@ -30,7 +30,7 @@
             white-space: nowrap;
 
             &:hover {
-                stroke: yellow;
+                stroke: white;
             }
         }
 
@@ -74,7 +74,7 @@
             }
 
             &:hover {
-                border-color: yellow;
+                border-color: white;
             }
 
             &:hover:focus {
@@ -91,17 +91,17 @@
     justify-content: center;
     height: 100%;
     font-size: 16px;
-    border-bottom: 1px dotted yellow;
+    border-bottom: 1px solid white;
     box-sizing: border-box;
     word-break: break-word;
 
     &:first-child {
-        border-left: 1px dotted yellow;
+        border-left: 1px solid white;
     }
 
     &:last-child {
-        border-right: 1px dotted yellow;
-        border-left: 1px dotted yellow;
+        border-right: 1px solid white;
+        border-left: 1px solid white;
 
     }
 

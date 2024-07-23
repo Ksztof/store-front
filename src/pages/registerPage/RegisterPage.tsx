@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RegisterCredentials } from '../../types/authTypes';
 import { registerCredentialsInitialValues } from '../../initialValues/authInitials';
 import { register, resetAuth } from '../../redux/actions/authActions';
@@ -25,32 +25,34 @@ export const RegisterPage: React.FC = () => {
         event.preventDefault();
         await dispatch(register(registerCredentials));
     };
-
+    useEffect(() => {
+        console.log(registrationState)
+    }, [registrationState])
     return (
         <>
-            {registrationState === ReducerStates.Fulfilled ? (
-                <div className={styles.summaryConatiner}>
-                    <div className={styles.summaryContent}>
-                        <h2>We're glad you joined us!</h2>
-                        <p>Please check your email and click the activation link.</p>
-                        <Link to="/" onClick={() => dispatch(resetAuth())}>Home</Link>
+            <div className={styles.registerContainer}>
+                {registrationState === ReducerStates.Fulfilled ? (
+                    <div className={styles.summaryConatiner}>
+                        <div className={styles.summaryContent}>
+                            <h2>We're glad you joined us!</h2>
+                            <p>Please check your email and click the activation link.</p>
+                            <Link to="/" onClick={() => dispatch(resetAuth())}>Home</Link>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <>
-                    <div className={styles.registerContainer}>
+                ) : (
+                    <>
                         <div className={styles.registerForm}>
                             <RegisterForm handleSetRegisterCredentials={handleSetRegisterCredentials} setIsFormValid={setIsFormValid} />
                         </div>
                         <div className={styles.loginLink}>
-                            Already have an account? Login here: <Link className={styles.navbarLink} to="/login"> Login </Link>
+                            Already have an account? Login here: <Link className={styles.navbarLink} to="/login">Login</Link>
                         </div>
                         <div className={`${styles.registerButton} ${isFormValid ? styles.formValid : ''}`}>
                             <button onClick={handleRegister}>Register</button>
-                        </div >
-                    </div>
-                </>
-            )}
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     );
-};
+}      
