@@ -15,10 +15,6 @@
     padding-bottom: 60px;
     color: white;
 
-    .summaryTitle {
-        padding-top: 25px;
-    }
-
     .productsToOrderContainer {
         flex: 1;
         display: flex;
@@ -27,6 +23,19 @@
         padding-right: 5%;
         width: 100%;
         box-sizing: border-box;
+        padding-top: 5%;
+    }
+
+    .orderedProducts {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 100%;
+        box-sizing: border-box;
+        padding-top: 5%;
+        height: 100%;
     }
 
     .orderSummary {
@@ -69,21 +78,17 @@
         }
     }
 
-
-
     .OrderNowBtn {
         width: 30%;
         padding: 5%;
         align-self: center;
-        
+
         button {
             opacity: 65%;
             width: 100%;
             font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
-            
-
 
         }
 
@@ -142,10 +147,13 @@
     }
 }
 
-
 @media(min-width: 1500px) {
     .orderSummaryContainer {
         .productsToOrderContainer {
+            width: 50%;
+        }
+
+        .orderSummary {
             width: 50%;
         }
 
@@ -157,5 +165,8 @@
             width: 50%;
         }
 
+        .orderedProducts {
+            width: 50%;
+        }
     }
 }
