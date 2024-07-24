@@ -8,7 +8,7 @@ import PaymentMethodSelector from '../../components/paymentMethodSelector/Paymen
 import { useAppDispatch } from '../../hooks';
 import { makeOrder, resetOrder } from '../../redux/actions/orderActions';
 import { resetPayment, updatePaymentStatusSuccess } from '../../redux/actions/paymentActions';
-import OrderSummary from '../../components/OrderSummary';
+import OrderSummary from '../../components/orderSummary/OrderSummary';
 import { Link } from 'react-router-dom';
 import { resetCart } from '../../redux/actions/cartActions';
 import { shippingDetailsInitialValues } from '../../initialValues/orderInitials';
@@ -51,16 +51,13 @@ export const OrderPage: React.FC = () => {
         <>
             <div className={styles.orderSummaryContainer}>
                 {paymentState === ReducerStates.Fulfilled ? (
-                    <div className={styles.orderSummary}>
-                        <h1>Thank you for your order!</h1>
-                        <OrderSummary paymentMethod={paymentMethod} />
-                        <div>
-                            <Link to="/">OK</Link>
+                    <>
+                        <div className={styles.orderedProducts}>
+                            <OrderSummary paymentMethod={paymentMethod} />
                         </div>
-                    </div>
+                    </>
                 ) : (
                     <>
-                        <h3 className={styles.summaryTitle}>Order Summary</h3>
                         <div className={styles.productsToOrderContainer}>
                             <ProductsToOrder />
                         </div>
