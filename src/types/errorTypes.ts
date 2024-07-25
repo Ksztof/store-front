@@ -3,6 +3,7 @@ export interface ErrorContent {
     description?: string;
     type: number;
 };
+
 export interface ProblemDetails {
     type: string;
     title: string;
@@ -19,3 +20,7 @@ export interface ErrorContentSignalR {
     code: string;
     description?: string;
 };
+
+export interface ErrorState {
+    error: ApiError | string | null;
+}

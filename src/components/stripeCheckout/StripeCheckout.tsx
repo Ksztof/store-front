@@ -6,7 +6,7 @@ import { makeOrder } from '../../redux/actions/orderActions';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { startConnection } from '../../signalR/hubConnection';
-import { OrderResponse } from '../../types/orderTypes';
+import { MakeOrderPayload, OrderResponse } from '../../types/orderTypes';
 import { ReducerStates } from '../../types/sharedTypes';
 import styles from './StripeCheckout.module.scss';
 import { Appearance } from '@stripe/stripe-js';
@@ -16,7 +16,7 @@ import { AsyncTasksParams, PaymentConfirmationPayload } from '../../types/paymen
 import useAsyncEffect from '../../hooks/useAsyncEffect ';
 import { HubConnection } from '@microsoft/signalr';
 
-const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, isFormValid, clientSecret }) => {
+const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, shippingDetails, isFormValid, clientSecret }) => {
     const dispatch = useAppDispatch();
     const stripe = useStripe();
     const elements = useElements();
@@ -35,8 +35,8 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
 
         const connection: HubConnection = startConnection(dispatch, orderSummary.id);
         connectionRef.current = connection;
-
-        await dispatch(makeOrder(orderDetails))
+        const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: null };
+        await dispatch(makeOrder(makeOrderPayload))
         await dispatch(updatePaymentIntent(clientSecret))
         await dispatch(confirmPayment(payload));
 
@@ -68,7 +68,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, orderDetails, i
     );
 };
 
-const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, orderDetails, isFormValid }) => {
+const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, shippingDetails, isFormValid }) => {
     const dispatch = useAppDispatch();
     const clientSecretResponse: string = useSelector((state: RootState) => state.payment.clientSecret);
     const [clientSecret, setClientSecret] = useState<string>();
@@ -76,7 +76,7 @@ const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, o
         theme: 'night',
         variables: {
             fontFamily: 'Open Sans, sans-serif',
-            fontSizeBase: '18px', 
+            fontSizeBase: '18px',
         }
     };
 
@@ -110,7 +110,7 @@ const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, o
     return (
         <Elements stripe={stripePromise} options={{ clientSecret, appearance }} key={clientSecret}>
             <StripeCheckout
-                orderDetails={orderDetails}
+                shippingDetails={shippingDetails}
                 isFormValid={isFormValid}
                 amount={amount}
                 clientSecret={clientSecret}

@@ -12,12 +12,20 @@ export interface ShippingDetails {
     city: string;
     phoneNumber: string;
 };
+export interface MakeOrderPayload {
+    shippingDetails: ShippingDetails,
+    orderMethod?: OrderMethod | null
+}
+
+export enum OrderMethod {
+    UponDelivery = "UponDelivery"
+} 
 
 export interface MakeOrderCardPaymentPayload {
     amount: number;
     stripe: Stripe | null;
     elements: StripeElements | null;
-    orderDetails: ShippingDetails;
+    shippingDetails: ShippingDetails;
 };
 
 interface ShippingDetailResponse {

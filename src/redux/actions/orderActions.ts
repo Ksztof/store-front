@@ -1,21 +1,22 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { isApiError } from "../../utils/responseUtils";
-import { ShippingDetails, OrderResponse } from "../../types/orderTypes";
-import { saveOrder } from "../../api/orderService";
+import { OrderResponse, MakeOrderPayload } from "../../types/orderTypes";
 import { OkApiResponse } from "../../types/okApiResponse";
 import { ApiError } from "../../types/errorTypes";
+import { saveOrder } from "../../api/orderService";
 
 export const makeOrder = createAsyncThunk<
     OrderResponse,
-    ShippingDetails,
+    MakeOrderPayload,
     { rejectValue: ApiError | string }
 >(
     'order/makeOrder',
-    async (shippingDetails: ShippingDetails, { rejectWithValue }) => {
+    async (makeOrderPayload: MakeOrderPayload, { rejectWithValue }) => {
         try {
-            const response: OkApiResponse<OrderResponse> | ApiError = await saveOrder(shippingDetails);
+            const response: OkApiResponse<OrderResponse> | ApiError = await saveOrder(makeOrderPayload);
 
             if (isApiError(response)) {
+                console.log("make order has been rejected");
                 return rejectWithValue(response);
             }
 

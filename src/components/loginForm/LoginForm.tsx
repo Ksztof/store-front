@@ -14,7 +14,7 @@ import { toCamelCase } from "../../utils/localStorageUtils";
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
-        const apiError: ApiError | string | undefined = useSelector((state: RootState) => state.auth.error);
+        const apiError: ApiError | string = useSelector((state: RootState) => state.auth.error);
 
         const formikRef = useRef<FormikProps<any>>(null);
 

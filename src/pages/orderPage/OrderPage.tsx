@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import WrappedStripeCheckout from '../../components/stripeCheckout/StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { ShippingDetails, MethodOfPayment } from '../../types/orderTypes';
+import { ShippingDetails, MethodOfPayment, MakeOrderPayload, OrderMethod } from '../../types/orderTypes';
 import { ShippingDetailsForm } from '../../components/shippingDetailsForm/ShippingDetailsForm';
 import PaymentMethodSelector from '../../components/paymentMethodSelector/PaymentMethodSelector';
 import { useAppDispatch } from '../../hooks';
 import { makeOrder, resetOrder } from '../../redux/actions/orderActions';
 import { resetPayment, updatePaymentStatusSuccess } from '../../redux/actions/paymentActions';
 import OrderSummary from '../../components/orderSummary/OrderSummary';
-import { Link } from 'react-router-dom';
 import { resetCart } from '../../redux/actions/cartActions';
 import { shippingDetailsInitialValues } from '../../initialValues/orderInitials';
 import { ReducerStates } from "../../types/sharedTypes";
@@ -31,7 +30,8 @@ export const OrderPage: React.FC = () => {
 
     const handleDeliveryOrder = async (event: React.FormEvent) => {
         event.preventDefault();
-        const orderResult = await dispatch(makeOrder(shippingDetails));
+        const makeOrderPayload: MakeOrderPayload = {shippingDetails: shippingDetails, orderMethod: OrderMethod.UponDelivery}
+        const orderResult = await dispatch(makeOrder(makeOrderPayload));
         if (orderResult.type.endsWith('fulfilled')) {
             dispatch(updatePaymentStatusSuccess());
         }
@@ -69,7 +69,7 @@ export const OrderPage: React.FC = () => {
                                 <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                                 {paymentMethod === MethodOfPayment.Card ? (
                                     <div className={styles.paymentContainer}>
-                                        <WrappedStripeCheckout amount={toPay} orderDetails={shippingDetails} isFormValid={isFormValid} />
+                                        <WrappedStripeCheckout amount={toPay} shippingDetails={shippingDetails} isFormValid={isFormValid} />
                                     </div>
                                 ) : paymentMethod === MethodOfPayment.OnDelivery ? (
                                     <div className={`${styles.OrderNowBtn} ${isFormValid ? styles.formValid : ''}`}>
