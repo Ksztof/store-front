@@ -1,15 +1,19 @@
 import axios from "axios";
-import { ShippingDetails, OrderResponse } from "../types/orderTypes";
+import { OrderResponse, MakeOrderPayload } from "../types/orderTypes";
 import { isOrderResponse, isProblemDetails } from "../utils/responseUtils";
 import { OkApiResponse } from "../types/okApiResponse";
 import { ApiError } from "../types/errorTypes";
 
 axios.defaults.withCredentials = true;
 
-export const saveOrder = async (orderDetails: ShippingDetails): Promise<OkApiResponse<OrderResponse> | ApiError> => {
+export const saveOrder = async (payload: MakeOrderPayload): Promise<OkApiResponse<OrderResponse> | ApiError> => {
     try {
+        const url: string = payload.orderMethod
+            ? `https://localhost:5004/api/Orders/${payload.orderMethod}`
+            : `https://localhost:5004/api/Orders`;
+
         const response: OrderResponse | any =
-            await axios.post<OrderResponse>('https://localhost:5004/api/Orders', orderDetails);
+            await axios.post<OrderResponse>(url, payload.shippingDetails);
 
         if (isOrderResponse(response.data)) {
             const responseDetails: OkApiResponse<OrderResponse> = { isSuccess: true, entity: response.data };
@@ -21,6 +25,8 @@ export const saveOrder = async (orderDetails: ShippingDetails): Promise<OkApiRes
         const data = error.response?.data;
 
         if (isProblemDetails(data)) {
+            console.log("make order isProblemDetails");
+
             const apiError: ApiError = { isSuccess: false, error: data };
             return apiError;
         }

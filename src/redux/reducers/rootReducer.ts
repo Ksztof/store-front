@@ -4,14 +4,23 @@ import cartReducer from './cartReducer';
 import productReducer from './productReducer';
 import paymentReducer from './paymentReducer';
 import orderReducer from './orderReducer';
+import errorReducer from './errorReducer';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   product: productReducer,
   payment: paymentReducer,
-  order: orderReducer
+  order: orderReducer,
+  error: errorReducer,
 });
+
+const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: any) => {
+  if (action.type === 'RESET_APP') {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 export default rootReducer;
 

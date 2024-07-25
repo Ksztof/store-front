@@ -10,7 +10,6 @@ const useAsyncEffect = (effect: (signal: AbortSignal) => Promise<void>, dependen
         const asyncEffect = async () => {
             try {
                 await memoizedEffect(signal);
-                console.log("ASYNC EFFFEEECT");
             } catch (error: unknown) {
                 if (error instanceof Error && error.name !== 'AbortError') {
                     console.error('An error occurred:', error);
