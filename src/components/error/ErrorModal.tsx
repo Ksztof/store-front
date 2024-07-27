@@ -5,6 +5,7 @@ import { clearError } from '../../redux/reducers/errorReducer';
 import { ApiError } from '../../types/errorTypes';
 import Modal from 'react-modal';
 import styles from './ErrorModal.module.scss';
+import { removeGuestSessionId } from '../../redux/actions/authActions';
 
 Modal.setAppElement('#root');
 
@@ -13,13 +14,14 @@ const ErrorModal: React.FC = () => {
     const error = useSelector((state: RootState) => state.error.error);
 
     const handleReset = () => {
+        dispatch(removeGuestSessionId());
         dispatch(clearError());
         dispatch({ type: 'RESET_APP' });
+        window.location.href = '/';
     };
 
     if (!error) return null;
 
-    // Funkcja sprawdzająca, czy błąd powinien być wyświetlony w modal
     const shouldDisplayErrorInModal = (error: ApiError | string): boolean => {
         if (typeof error === 'string') return true;
 
