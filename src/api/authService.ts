@@ -51,3 +51,27 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<No
     throw new Error(`Failed to register because of unexpected error with message: ${error.message}`);
   };
 };
+
+export const removeGuestSessionIdApi = async (): Promise<NoContentApiResponse | ApiError> => {
+  try {
+    const response: void | any =
+      await axios.get('https://localhost:5004/api/User', {});
+
+    if (response.status === HttpStatusCode.NoContent) {
+      const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+      return responseDetails;
+    }
+
+    throw new Error("Unexpected Http status code received from API during removing guest session Id");
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
+    }
+
+    throw new Error(`Failed to remove guest session Id because of unexpected error with message: ${error.message}`);
+  };
+};
+
