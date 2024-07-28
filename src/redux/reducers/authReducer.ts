@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { login, register, removeGuestSessionId, resetAuth } from '../actions/authActions';
+import { login, logout, register, removeGuestSessionId, resetAuth } from '../actions/authActions';
 import { AuthState } from '../../types/authTypes';
 import { ReducerStates } from '../../types/sharedTypes';
 import { apiErrorInitialValue } from '../../initialValues/authInitials';
@@ -58,6 +58,22 @@ const authSlice = createSlice({
         state.status = ReducerStates.Fulfilled;
       })
       .addCase(removeGuestSessionId.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
+        state.loading = false;
+        if (action.payload)
+          state.error = action.payload;
+        state.status = ReducerStates.Rejected
+      })
+
+      .addCase(logout.pending, (state: AuthState) => {
+        state.loading = true;
+        state.status = ReducerStates.Pending;
+      })
+      .addCase(logout.fulfilled, (state: AuthState) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+        state.status = ReducerStates.LoggedOut;
+      })
+      .addCase(logout.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
         if (action.payload)
           state.error = action.payload;

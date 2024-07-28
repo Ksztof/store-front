@@ -10,7 +10,7 @@ const errorSlice = createSlice({
     name: 'error',
     initialState,
     reducers: {
-        clearError: (state) => {
+        clearError: (state: ErrorState) => {
             state.error = null;
         },
     },

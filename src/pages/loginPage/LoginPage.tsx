@@ -24,9 +24,7 @@ const LoginPage: React.FC = () => {
     if (isLoggedIn) {
       navigate('/');
     }
-    if(isFormValid){
-      console.log("form is valid now");
-    }
+    
   }, [isLoggedIn, navigate, dispatch, isFormValid]);
 
   const handleLogin = async (e: React.FormEvent) => {
