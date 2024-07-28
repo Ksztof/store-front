@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser, registerUser, removeGuestSessionIdApi } from '../../api/authService';
+import { loginUser, logoutApi, registerUser, removeGuestSessionIdApi } from '../../api/authService';
 import { LoginCredentials, RegisterCredentials } from '../../types/authTypes';
 import { NoContentApiResponse } from '../../types/noContentApiResponse';
 import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
@@ -37,11 +37,11 @@ export const register = createAsyncThunk<
   async (payload: RegisterCredentials, { rejectWithValue }) => {
     try {
       const response: NoContentApiResponse | ApiError = await registerUser(payload);
-      
+
       if (isApiError(response)) {
         return rejectWithValue(response);
       }
-      
+
       if (isNoContentResponse(response)) {
         console.log("register: isNoContentResponse")
         return;
@@ -71,10 +71,35 @@ export const removeGuestSessionId = createAsyncThunk<
       }
     } catch (error: any) {
       console.error("removeGuestSessionId error:", error);
-      return rejectWithValue("Unexpected error occured when removing guest session Id.");
+      return rejectWithValue(`Unexpected error occured when removing guest session Id with message: ${error.message}`);
+    }
+  }
+);
+
+export const logout = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: ApiError | string }
+>(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response: NoContentApiResponse | ApiError = await logoutApi();
+      if (isApiError(response)) {
+        return rejectWithValue(response);
+      }
+
+      if (isNoContentResponse(response)) {
+        return;
+      }
+    } catch (error: any) {
+      console.error("logout error:", error);
+      return rejectWithValue(`Unexpected error occured when logging out with message: ${error.message}`);
     }
   }
 );
 
 export const resetAuth = createAction('auth/reset');
+
+
 

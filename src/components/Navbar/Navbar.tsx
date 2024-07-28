@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { useAppDispatch } from '../../hooks';
 import { useEffect, useState } from 'react';
-import { resetAuth } from '../../redux/actions/authActions';
+import { logout, resetAuth } from '../../redux/actions/authActions';
 import styles from './Navbar.module.scss'
 import logo from '../../pictures/hpcLogo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -19,6 +19,7 @@ export const Navbar: React.FC = () => {
 
     const handleLogout = () => {
         dispatch(resetAuth());
+        dispatch(logout());
     };
 
     const toggleMenu = () => {
