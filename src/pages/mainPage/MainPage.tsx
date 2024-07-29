@@ -9,9 +9,12 @@ import { RootState } from '../../redux/store';
 import { useAppDispatch } from '../../hooks';
 import { changeCartContentGlobally } from '../../redux/actions/cartActions';
 import { useNavigate } from 'react-router-dom';
+import { ApiError } from '../../types/errorTypes';
 
 export const Main = () => {
     const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
+    const authError: ApiError|string = useSelector((state: RootState) => state.auth.error);
+
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -44,8 +47,8 @@ export const Main = () => {
     };
 
     useEffect(() => {
-        console.log("is null: " + cartContent.aboutProductsInCart === null);
-    }, [cartContent]);
+        console.log(authError);
+    }, [authError]);
 
     return (
         <div className={styles.mainContainer}>

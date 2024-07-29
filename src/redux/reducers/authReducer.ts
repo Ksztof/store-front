@@ -25,7 +25,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state: AuthState) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.LoggedIn;
       })
       .addCase(login.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
@@ -40,7 +40,7 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state: AuthState) => {
         state.loading = false;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.Registered;
       })
       .addCase(register.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
@@ -55,7 +55,7 @@ const authSlice = createSlice({
       })
       .addCase(removeGuestSessionId.fulfilled, (state: AuthState) => {
         state.loading = false;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.GuestSessionIdRemoved;
       })
       .addCase(removeGuestSessionId.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;

@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 import { AboutCart, CheckCart } from '../../types/cartTypes';
 import { isGuestUser } from '../../utils/cookiesUtils';
 import { ProductInCart } from '../productInCart/ProductInCart';
-import { synchronizeCartWithApi, setCurrentCart, changeCartContentGlobally } from '../../redux/actions/cartActions';
+import { synchronizeCartWithApi, setCurrentCart } from '../../redux/actions/cartActions';
 import styles from './Cart.module.scss';
 
 export const Cart: React.FC = () => {
