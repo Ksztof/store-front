@@ -30,22 +30,12 @@ export const OrderPage: React.FC = () => {
 
     const handleDeliveryOrder = async (event: React.FormEvent) => {
         event.preventDefault();
-        const makeOrderPayload: MakeOrderPayload = {shippingDetails: shippingDetails, orderMethod: OrderMethod.UponDelivery}
+        const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: OrderMethod.UponDelivery }
         const orderResult = await dispatch(makeOrder(makeOrderPayload));
         if (orderResult.type.endsWith('fulfilled')) {
             dispatch(updatePaymentStatusSuccess());
         }
     };
-
-    useEffect(() => {
-        return () => {
-            if (paymentState === ReducerStates.Fulfilled) {
-                dispatch(resetOrder());
-                dispatch(resetPayment());
-                dispatch(resetCart());
-            }
-        }
-    }, [paymentState, isCartEmpty, dispatch]);
 
     return (
         <>

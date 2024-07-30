@@ -1,4 +1,3 @@
-import { ApiError } from "./errorTypes";
 import { ProductDetails } from "./productTypes";
 
 export interface CheckCart {
@@ -20,7 +19,6 @@ export interface AboutCart {
 export interface CartState {
   loading: boolean;
   cartData: AboutCart;
-  error: ApiError | string;
   isEmpty: boolean,
 };
 
@@ -81,4 +79,9 @@ export interface addProductToReduxStorePayload{
 export interface increaseProductInCartQuantityStorePayload{
   productId: number;
   cartContent: AboutCart;
+}
+
+export enum RenderPhase{
+  Mount = "MOUNT",
+  Unmount = "UNMOUNT"
 }

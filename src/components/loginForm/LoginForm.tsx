@@ -14,7 +14,7 @@ import { toCamelCase } from "../../utils/localStorageUtils";
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
-        const apiError: ApiError | string = useSelector((state: RootState) => state.auth.error);
+        const apiError: ApiError | string | null = useSelector((state: RootState) => state.error.error);
 
         const formikRef = useRef<FormikProps<any>>(null);
 
@@ -49,9 +49,6 @@ export const LoginForm: React.FC<LoginFormProps> =
                             apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
                         } else if (propertyName === "userValidation") {
                             apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
-                        }
-                        else {
-                            alert(error.description);
                         }
                     });
                 console.log(apiErrors)

@@ -1,37 +1,28 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks';
-import { RootState } from '../../redux/store';
-import { AboutCart, CheckCart } from '../../types/cartTypes';
-import { isGuestUser } from '../../utils/cookiesUtils';
+import { AppDispatch, RootState } from '../../redux/store';
+import { AboutCart, CheckCart, RenderPhase } from '../../types/cartTypes';
 import { ProductInCart } from '../productInCart/ProductInCart';
-import { synchronizeCartWithApi, setCurrentCart } from '../../redux/actions/cartActions';
+import { synchronizeCart } from '../../redux/actions/cartActions';
 import styles from './Cart.module.scss';
 
 export const Cart: React.FC = () => {
-    const dispatch = useAppDispatch();
+    const dispatch: AppDispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
     const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
+    const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
 
     useEffect(() => {
-        if (
-            (!cartContent && isLoggedIn)
-            || (!cartContent && isGuestUser())
-            || (cartContent.createdAt.trim() === "" && isLoggedIn)
-            || (cartContent.createdAt.trim() === "" && isGuestUser())
-        ) {
-            dispatch(synchronizeCartWithApi());
-        } else if (
-            (cartContent && isLoggedIn)
-            || (cartContent && isGuestUser())) {
-            dispatch(setCurrentCart());
-        } else {
+        console.log("1111111")
+        dispatch(synchronizeCart(RenderPhase.Mount));
 
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoggedIn, dispatch]);
+        return () => {
+            console.log("2222222222")
 
-
+            dispatch(synchronizeCart(RenderPhase.Unmount));
+        };
+    }, [isLoggedIn]);
 
     return (
         <>

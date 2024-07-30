@@ -23,7 +23,6 @@ export interface LoginCredentials {
 
 export interface AuthState {
   loading: boolean;
-  error: ApiError | string;
   isLoggedIn: boolean;
   status: string;
 }

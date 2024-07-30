@@ -16,7 +16,6 @@ export const shippingDetailsInitialValues: ShippingDetails = {
 export interface OrderState {
     loading: boolean;
     orderData: OrderResponse;
-    error: ApiError | string;
     status: string;
 }
 

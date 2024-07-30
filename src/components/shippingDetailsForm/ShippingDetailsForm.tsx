@@ -23,8 +23,8 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
             };
 
             checkFormValidity();
-        });
-
+        }, []);
+        
         return (
             <div className={styles.shippDetContainer}>
                 <Formik

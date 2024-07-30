@@ -6,10 +6,21 @@ import { CheckCart } from '../../types/cartTypes';
 import { OrderedProductSummary } from '../orderedProductSummary/OrderedProductSummary';
 import styles from './OrderSummary.module.scss';
 import { Link } from 'react-router-dom';
+import { resetOrder } from '../../redux/actions/orderActions';
+import { resetPayment } from '../../redux/actions/paymentActions';
+import { resetCart } from '../../redux/actions/cartActions';
+import { useAppDispatch } from '../../hooks';
 
 export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => {
     const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
+    const dispatch = useAppDispatch();
 
+    const handleRedirect = () => {
+        dispatch(resetOrder());
+        dispatch(resetPayment());
+        dispatch(resetCart());
+    };
+    
     return (
         <>
             <div className={styles.summaryTitle}>
@@ -40,7 +51,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
                 <div className={styles.amountValue}>{orderSummary.totalCartValue} zł</div>
             </div>
             <div className={styles.mainLink}>
-                <Link to="/">OK</Link>
+                <Link to="/" onClick={handleRedirect}>OK</Link>
             </div>
         </>
     );

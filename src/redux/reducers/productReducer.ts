@@ -26,7 +26,6 @@ const productSlice = createSlice({
       })
       .addCase(getProducts.rejected, (state: ProductState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-       
       });
   },
 });

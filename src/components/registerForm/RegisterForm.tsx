@@ -14,7 +14,7 @@ import { toCamelCase } from "../../utils/localStorageUtils";
 
 export const RegisterForm: React.FC<RegisterFormProps> =
     ({ handleSetRegisterCredentials, setIsFormValid }) => {
-        const apiError: ApiError | string = useSelector((state: RootState) => state.auth.error);
+        const apiError: ApiError | string | null = useSelector((state: RootState) => state.error.error);
         const formikRef = useRef<FormikProps<any>>(null);
 
         useEffect(() => {
@@ -46,9 +46,6 @@ export const RegisterForm: React.FC<RegisterFormProps> =
                             apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
                         } else if (propertyName === "userValidation") {
                             apiErrors["confirmPassword"] = (apiErrors["confirmPassword"] ? `${apiErrors["confirmPassword"]}, ` : '') + error.description;
-                        }
-                        else {
-                            alert(error.description);
                         }
                     });
                 console.log(apiErrors)
