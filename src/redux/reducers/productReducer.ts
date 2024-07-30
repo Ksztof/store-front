@@ -2,12 +2,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductDetails, ProductState } from '../../types/productTypes';
 import { getProducts } from '../actions/productActions';
 import { ApiError } from '../../types/errorTypes';
-import { apiErrorInitialValue } from '../../initialValues/authInitials';
+import { useAppDispatch } from '../../hooks';
 
 const initialState: ProductState = {
   loading: false,
   productsData: [],
-  error: apiErrorInitialValue,
 };
 
 const productSlice = createSlice({
@@ -27,8 +26,6 @@ const productSlice = createSlice({
       })
       .addCase(getProducts.rejected, (state: ProductState, action: PayloadAction<ApiError | string | undefined>) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       });
   },
 });

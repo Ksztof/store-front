@@ -7,7 +7,6 @@ import { ApiError } from '../../types/errorTypes';
 
 const initialState: AuthState = {
   loading: false,
-  error: apiErrorInitialValue,
   isLoggedIn: false,
   status: ReducerStates.Idle
 };
@@ -25,12 +24,10 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state: AuthState) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.LoggedIn;
       })
-      .addCase(login.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(login.rejected, (state: AuthState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 
@@ -40,12 +37,10 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state: AuthState) => {
         state.loading = false;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.Registered;
       })
-      .addCase(register.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(register.rejected, (state: AuthState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 
@@ -55,12 +50,10 @@ const authSlice = createSlice({
       })
       .addCase(removeGuestSessionId.fulfilled, (state: AuthState) => {
         state.loading = false;
-        state.status = ReducerStates.Fulfilled;
+        state.status = ReducerStates.GuestSessionIdRemoved;
       })
-      .addCase(removeGuestSessionId.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(removeGuestSessionId.rejected, (state: AuthState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 
@@ -73,10 +66,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.status = ReducerStates.LoggedOut;
       })
-      .addCase(logout.rejected, (state: AuthState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(logout.rejected, (state: AuthState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
         state.status = ReducerStates.Rejected
       })
 

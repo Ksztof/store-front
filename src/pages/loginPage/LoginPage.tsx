@@ -8,6 +8,7 @@ import { login } from '../../redux/actions/authActions';
 import { RootState } from '../../redux/store';
 import { LoginCredentials } from '../../types/authTypes';
 import styles from './LoginPage.module.scss';
+import { resetCart } from '../../redux/actions/cartActions';
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      dispatch(resetCart());
       navigate('/');
     }
     

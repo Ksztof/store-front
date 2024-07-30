@@ -4,7 +4,6 @@ import { ReducerStates } from "../types/sharedTypes";
 export interface PaymentState {
     loading: boolean,
     status: ReducerStates, 
-    error: ApiError | string ,
     clientSecret: string,
 }
 

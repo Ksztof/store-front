@@ -2,6 +2,7 @@ import { AboutCart, CheckCart, NewProductsForApi } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 import { ModifyProductInCartQuantityPayload } from "../types/cartTypes";
 import { produce } from 'immer';
+import { isGuestUser } from "./cookiesUtils";
 
 export const mapProductDetailsToCheckCart = (productDetails: ProductDetails, quantity: number): CheckCart => ({
     productId: productDetails.id,
@@ -46,3 +47,18 @@ export const mapAboutCartToNewProductsForApi = (aboutCart: AboutCart): NewProduc
         }))
     };
 };
+
+export const needToSetCurrentCart = (isCartEmpty: boolean, isLoggedIn: boolean): boolean => {
+    return (!isCartEmpty && isLoggedIn) || (!isCartEmpty && isGuestUser());
+}
+
+export const needSynchronization = (isCartEmpty: boolean, isLoggedIn: boolean, cartContent: AboutCart): boolean => {
+    return (isCartEmpty && isLoggedIn)
+        || (isCartEmpty && isGuestUser())
+        || (cartContent.createdAt.trim() === "" && isLoggedIn)
+        || (cartContent.createdAt.trim() === "" && isGuestUser());
+}
+
+export const needToClearCart = (isCartEmpty: boolean, isLoggedIn: boolean): boolean => {
+    return (isCartEmpty && isGuestUser()) || (isCartEmpty && isLoggedIn);
+}

@@ -85,6 +85,7 @@ export const logout = createAsyncThunk<
   async (_, { rejectWithValue }) => {
     try {
       const response: NoContentApiResponse | ApiError = await logoutApi();
+      
       if (isApiError(response)) {
         return rejectWithValue(response);
       }

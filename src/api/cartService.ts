@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import { AboutCart, NewProductsForApi, checkCurrentCartPayload } from '../types/cartTypes';
 import { isAboutCart, isProblemDetails } from '../utils/responseUtils';
 import { ApiError } from '../types/errorTypes';
@@ -12,7 +12,7 @@ export const getCartContent = async (): Promise<NoContentApiResponse | OkApiResp
     const response: AboutCart | any =
       await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
 
-    if (response.status === 204) {
+    if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
     }
@@ -41,7 +41,7 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<N
     const response: AboutCart | any =
       await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
 
-    if (response.status === 204) {
+    if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
     }
@@ -72,7 +72,7 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
     const response: AboutCart | any =
       await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
 
-    if (response.status === 204) {
+    if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
       return responseDetails;
     }
@@ -92,5 +92,28 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
     }
 
     throw new Error(`Failed to check current cart because of unexpected error with message: ${error.message}`);
+  };
+};
+
+export const clearCartApi = async (): Promise<NoContentApiResponse | ApiError> => {
+  try {
+    const response: void | any =
+      await axios.delete('https://localhost:5004/api/Carts', {});
+
+    if (response.status === HttpStatusCode.NoContent) {
+      const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+      return responseDetails;
+    }
+
+    throw new Error("Unexpected Http status code received from API while clearing cart");
+  } catch (error: any) {
+    const data = error.response?.data;
+
+    if (isProblemDetails(data)) {
+      const apiError: ApiError = { isSuccess: false, error: data };
+      return apiError;
+    }
+
+    throw new Error(`Failed to clear cart because of unexpected error with message: ${error.message}`);
   };
 };

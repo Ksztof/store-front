@@ -28,10 +28,12 @@ export const RegisterPage: React.FC = () => {
     useEffect(() => {
         console.log(registrationState)
     }, [registrationState])
+
+    
     return (
         <>
             <div className={styles.registerContainer}>
-                {registrationState === ReducerStates.Fulfilled ? (
+                {registrationState === ReducerStates.Registered ? (
                     <div className={styles.summaryConatiner}>
                         <div className={styles.summaryContent}>
                             <h2>We're glad you joined us!</h2>

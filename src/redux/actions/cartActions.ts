@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { checkCurrentCart, getCartContent, saveCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload } from '../../types/cartTypes';
+import { checkCurrentCart, clearCartApi, getCartContent, saveCartContent } from '../../api/cartService';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload, RenderPhase } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
 import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
-import { RootState } from '../store';
+import { AppDispatch, RootState } from '../store';
 import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from '../../utils/localStorageUtils';
-import { mapAboutCartToNewProductsForApi } from '../../utils/cartUtils';
+import { mapAboutCartToNewProductsForApi, needSynchronization, needToClearCart, needToSetCurrentCart } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 import { NoContentApiResponse } from '../../types/noContentApiResponse';
 import { OkApiResponse } from '../../types/okApiResponse';
@@ -179,5 +179,60 @@ export const changeCartContentGlobally = createAsyncThunk<
       }
     }
   );
-  
+
+export const clearCart = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: ApiError | string }
+>(
+  'cart/clearCart',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response: NoContentApiResponse | ApiError = await clearCartApi();
+
+      if (isApiError(response)) {
+        return rejectWithValue(response);
+      }
+
+      if (isNoContentResponse(response)) {
+        return;
+      }
+    } catch (error: any) {
+      console.error("clearCart error:", error);
+      return rejectWithValue(`Unexpected error occured while clearing cart with message: ${error.message}`);
+    }
+  }
+);
+
+export const synchronizeCart = createAsyncThunk<
+  void,
+  string,
+  { dispatch: AppDispatch, state: RootState }
+>(
+  'cart/synchronizeCart',
+  async (renderPhase: string, { dispatch, getState }) => {
+    const state: RootState = getState();
+    const isCartEmpty: boolean = state.cart.isEmpty;
+    const isLoggedIn: boolean = state.auth.isLoggedIn;
+    const cartContent: AboutCart = state.cart.cartData;
+
+
+    if (needSynchronization(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+      await dispatch(synchronizeCartWithApi());
+    };
+
+    if (needToSetCurrentCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Mount) {
+      await dispatch(setCurrentCart());
+    }
+
+    if (!isCartEmpty && renderPhase === RenderPhase.Unmount) {
+      dispatch(changeCartContentGlobally(cartContent))
+    }
+
+    if (needToClearCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Unmount) {
+      dispatch(clearCart());
+    }
+  }
+);
+
 export const resetCart = createAction('cart/reset');

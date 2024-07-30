@@ -2,13 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PaymentState } from "../../initialValues/paymentInitials";
 import { confirmPayment, getClientSecret, resetPayment, updatePaymentIntent, updatePaymentStatus, updatePaymentStatusSuccess } from "../actions/paymentActions";
 import { ReducerStates } from "../../types/sharedTypes";
-import { apiErrorInitialValue } from "../../initialValues/authInitials";
-import { ApiError } from "../../types/errorTypes";
 
 const initialState: PaymentState = {
   loading: false,
   status: ReducerStates.Idle,
-  error: apiErrorInitialValue,
   clientSecret: '',
 };
 
@@ -29,11 +26,8 @@ const paymentSlice = createSlice({
           state.clientSecret = action.payload;
         }
       })
-      .addCase(getClientSecret.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(getClientSecret.rejected, (state: PaymentState) => {
         state.loading = false;
-        if (action.payload) {
-          state.error = action.payload;
-        }
         state.status = ReducerStates.Rejected;
       })
 
@@ -41,15 +35,12 @@ const paymentSlice = createSlice({
         state.loading = true;
         state.status = ReducerStates.Pending;
       })
-      .addCase(updatePaymentIntent.fulfilled, (state: PaymentState, action: PayloadAction<void>) => {
+      .addCase(updatePaymentIntent.fulfilled, (state: PaymentState) => {
         state.loading = false;
         state.status = ReducerStates.Pending;
       })
-      .addCase(updatePaymentIntent.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(updatePaymentIntent.rejected, (state: PaymentState) => {
         state.loading = false;
-        if (action.payload) {
-          state.error = action.payload;
-        }
         state.status = ReducerStates.Rejected;
       })
 
@@ -57,15 +48,12 @@ const paymentSlice = createSlice({
         state.loading = true;
         state.status = ReducerStates.Pending;
       })
-      .addCase(confirmPayment.fulfilled, (state: PaymentState, action: PayloadAction<void>) => {
+      .addCase(confirmPayment.fulfilled, (state: PaymentState) => {
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(confirmPayment.rejected, (state: PaymentState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(confirmPayment.rejected, (state: PaymentState) => {
         state.loading = false;
-        if (action.payload) {
-          state.error = action.payload;
-        }
         state.status = ReducerStates.Rejected;
       })
 
@@ -76,10 +64,8 @@ const paymentSlice = createSlice({
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(updatePaymentStatus.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
+      .addCase(updatePaymentStatus.rejected, (state: PaymentState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(updatePaymentStatusSuccess.pending, (state: PaymentState) => {
@@ -89,10 +75,8 @@ const paymentSlice = createSlice({
         state.loading = false;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(updatePaymentStatusSuccess.rejected, (state: PaymentState, action: PayloadAction<string | undefined>) => {
+      .addCase(updatePaymentStatusSuccess.rejected, (state: PaymentState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(resetPayment, () => initialState);

@@ -9,7 +9,6 @@ import { apiErrorInitialValue } from '../../initialValues/authInitials';
 const initialState: OrderState = {
   loading: false,
   orderData: initialOrderData,
-  error: apiErrorInitialValue,
   status: ReducerStates.Idle
 };
 
@@ -30,10 +29,8 @@ const orderSlice = createSlice({
         state.orderData = action.payload;
         state.status = ReducerStates.Fulfilled;
       })
-      .addCase(makeOrder.rejected, (state: OrderState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(makeOrder.rejected, (state: OrderState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
         state.status = ReducerStates.Rejected;
       })
 

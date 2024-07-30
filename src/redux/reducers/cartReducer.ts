@@ -1,15 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiErrorInitialValue } from "../../initialValues/authInitials";
 import { cartDataInitialValues } from "../../initialValues/cartInitials";
 import { CartState, AboutCart } from "../../types/cartTypes";
-import { ApiError } from "../../types/errorTypes";
-import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, resetCart } from "../actions/cartActions";
+import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, resetCart, clearCart } from "../actions/cartActions";
 
 
 const initialState: CartState = {
   loading: false,
   cartData: cartDataInitialValues,
-  error: apiErrorInitialValue,
   isEmpty: true,
 };
 
@@ -29,24 +26,20 @@ const cartSlice = createSlice({
           state.isEmpty = false;
         }
       })
-      .addCase(synchronizeCartWithApi.rejected, (state: CartState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(synchronizeCartWithApi.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(addProductToCart.pending, (state: CartState) => {
         state.loading = true;
       })
-      .addCase(addProductToCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(addProductToCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {
         state.loading = false;
         state.cartData = action.payload;
         state.isEmpty = false;
       })
-      .addCase(addProductToCart.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
+      .addCase(addProductToCart.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(adjustProductQuantity.pending, (state: CartState) => {
@@ -55,12 +48,11 @@ const cartSlice = createSlice({
       .addCase(adjustProductQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
         state.loading = false;
         state.cartData = action.payload;
-        state.isEmpty = action.payload.aboutProductsInCart.length === 0;
+        const numberOfProductsInCart: number = 0;
+        state.isEmpty = action.payload.aboutProductsInCart.length === numberOfProductsInCart;
       })
-      .addCase(adjustProductQuantity.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
+      .addCase(adjustProductQuantity.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(changeProductInCartQuantity.pending, (state: CartState) => {
@@ -69,12 +61,11 @@ const cartSlice = createSlice({
       .addCase(changeProductInCartQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {
         state.loading = false;
         state.cartData = action.payload;
-        state.isEmpty = action.payload.aboutProductsInCart.length === 0;
+        const numberOfProductsInCart: number = 0;
+        state.isEmpty = action.payload.aboutProductsInCart.length === numberOfProductsInCart;
       })
-      .addCase(changeProductInCartQuantity.rejected, (state: CartState, action: PayloadAction<string | undefined>) => {
+      .addCase(changeProductInCartQuantity.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(changeCartContentGlobally.pending, (state: CartState) => {
@@ -85,10 +76,8 @@ const cartSlice = createSlice({
         if (action.payload)
           state.cartData = action.payload;
       })
-      .addCase(changeCartContentGlobally.rejected, (state: CartState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(changeCartContentGlobally.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
       })
 
       .addCase(setCurrentCart.pending, (state: CartState) => {
@@ -99,10 +88,18 @@ const cartSlice = createSlice({
         if (action.payload)
           state.cartData = action.payload;
       })
-      .addCase(setCurrentCart.rejected, (state: CartState, action: PayloadAction<ApiError | string | undefined>) => {
+      .addCase(setCurrentCart.rejected, (state: CartState) => {
         state.loading = false;
-        if (action.payload)
-          state.error = action.payload;
+      })
+
+      .addCase(clearCart.pending, (state: CartState) => {
+        state.loading = true;
+      })
+      .addCase(clearCart.fulfilled, (state: CartState) => {
+        state.loading = false;
+      })
+      .addCase(clearCart.rejected, (state: CartState) => {
+        state.loading = false;
       })
 
       .addCase(resetCart, () => initialState);

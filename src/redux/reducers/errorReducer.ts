@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Action } from 'redux';
+import { createSlice, isRejectedWithValue, PayloadAction } from '@reduxjs/toolkit';
 import { ApiError, ErrorState } from '../../types/errorTypes';
 
 const initialState: ErrorState = {
@@ -13,16 +12,25 @@ const errorSlice = createSlice({
         clearError: (state: ErrorState) => {
             state.error = null;
         },
+        addError: (state, action: PayloadAction<ApiError | string | undefined>) => {
+            if (action.payload) {
+                state.error = action.payload;
+            }
+        },
     },
     extraReducers: (builder) => {
-        builder
-            .addMatcher((action: Action) => action.type.endsWith('/rejected'),
-                (state: ErrorState, action: PayloadAction<ApiError | string | undefined>) => {
-                    state.error = action.payload || 'An unknown error occurred';
+        builder.addMatcher(
+            (action: PayloadAction<ApiError | string | undefined>) => isRejectedWithValue(action),
+            (state, action: PayloadAction<ApiError | string | undefined>) => {
+                if (action.payload) {
+                    state.error = action.payload;
+                } else {
+                    state.error = 'An unknown error occurred';
                 }
-            );
+            }
+        );
     },
 });
 
-export const { clearError } = errorSlice.actions;
+export const { clearError, addError} = errorSlice.actions;
 export default errorSlice.reducer;

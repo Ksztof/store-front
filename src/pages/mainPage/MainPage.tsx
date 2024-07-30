@@ -11,16 +11,15 @@ import { changeCartContentGlobally } from '../../redux/actions/cartActions';
 import { useNavigate } from 'react-router-dom';
 
 export const Main = () => {
-    const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
+    const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    
     const handleOrder = () => {
         if (cartContent !== null) {
-            dispatch(changeCartContentGlobally(cartContent))
             navigate('/order');
         };
     };
@@ -42,10 +41,6 @@ export const Main = () => {
         else
             setIsFiltersOpen(false);
     };
-
-    useEffect(() => {
-        console.log("is null: " + cartContent.aboutProductsInCart === null);
-    }, [cartContent]);
 
     return (
         <div className={styles.mainContainer}>

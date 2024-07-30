@@ -12,7 +12,6 @@ export interface ProductDetails {
 export interface ProductState {
   loading: boolean;
   productsData: ProductDetails[];
-  error: ApiError | string;
 }
 export interface addProductToCartPayload {
   product: ProductDetails;
