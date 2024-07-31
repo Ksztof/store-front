@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { checkCurrentCart, clearCartApi, getCartContent, saveCartContent } from '../../api/cartService';
 import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload, RenderPhase } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
@@ -216,21 +216,28 @@ export const synchronizeCart = createAsyncThunk<
     const isLoggedIn: boolean = state.auth.isLoggedIn;
     const cartContent: AboutCart = state.cart.cartData;
 
-
-    if (needSynchronization(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
-      await dispatch(synchronizeCartWithApi());
+    if (needSynchronization(isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+      console.log("synchronizeCartWithApi");
+      await dispatch(synchronizeCartWithApi()); //Get cart content
     };
 
     if (needToSetCurrentCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Mount) {
-      await dispatch(setCurrentCart());
+      console.log("setCurrentCart");
+      await dispatch(setCurrentCart()); //https://localhost:5004/api/Carts/check-current-cart
+
+    }
+
+    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+      console.log("needToClearCart");
+      const result = await dispatch(setCurrentCart()).unwrap();
+      if (result === undefined) {
+        await dispatch(clearCart());
+      }
     }
 
     if (!isCartEmpty && renderPhase === RenderPhase.Unmount) {
-      dispatch(changeCartContentGlobally(cartContent))
-    }
-
-    if (needToClearCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Unmount) {
-      dispatch(clearCart());
+      console.log("changeCartContentGlobally")
+      await dispatch(changeCartContentGlobally(cartContent))
     }
   }
 );

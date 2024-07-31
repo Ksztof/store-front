@@ -52,13 +52,11 @@ export const needToSetCurrentCart = (isCartEmpty: boolean, isLoggedIn: boolean):
     return (!isCartEmpty && isLoggedIn) || (!isCartEmpty && isGuestUser());
 }
 
-export const needSynchronization = (isCartEmpty: boolean, isLoggedIn: boolean, cartContent: AboutCart): boolean => {
-    return (isCartEmpty && isLoggedIn)
-        || (isCartEmpty && isGuestUser())
-        || (cartContent.createdAt.trim() === "" && isLoggedIn)
+export const needSynchronization = (isLoggedIn: boolean, cartContent: AboutCart): boolean => {
+    return (cartContent.createdAt.trim() === "" && isLoggedIn)
         || (cartContent.createdAt.trim() === "" && isGuestUser());
 }
 
-export const needToClearCart = (isCartEmpty: boolean, isLoggedIn: boolean): boolean => {
-    return (isCartEmpty && isGuestUser()) || (isCartEmpty && isLoggedIn);
+export const needToClearCart = (isCartEmpty: boolean, isLoggedIn: boolean, cartContent: AboutCart): boolean => {
+    return (isCartEmpty && isGuestUser() && cartContent.createdAt.trim() !== "") || (isCartEmpty && isLoggedIn && cartContent.createdAt.trim() !== "");
 }

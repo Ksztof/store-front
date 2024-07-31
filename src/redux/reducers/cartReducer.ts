@@ -23,7 +23,8 @@ const cartSlice = createSlice({
         state.loading = false;
         if (action.payload) {
           state.cartData = action.payload;
-          state.isEmpty = false;
+          const numberOfProductsInCart: number = 0;
+          state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
         }
       })
       .addCase(synchronizeCartWithApi.rejected, (state: CartState) => {
@@ -36,7 +37,8 @@ const cartSlice = createSlice({
       .addCase(addProductToCart.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {
         state.loading = false;
         state.cartData = action.payload;
-        state.isEmpty = false;
+        const numberOfProductsInCart: number = 0;
+        state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
       })
       .addCase(addProductToCart.rejected, (state: CartState) => {
         state.loading = false;
@@ -45,11 +47,11 @@ const cartSlice = createSlice({
       .addCase(adjustProductQuantity.pending, (state: CartState) => {
         state.loading = true;
       })
-      .addCase(adjustProductQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {// PayloadAction<AboutCart | null> resolve null value
+      .addCase(adjustProductQuantity.fulfilled, (state: CartState, action: PayloadAction<AboutCart>) => {
         state.loading = false;
         state.cartData = action.payload;
         const numberOfProductsInCart: number = 0;
-        state.isEmpty = action.payload.aboutProductsInCart.length === numberOfProductsInCart;
+        state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
       })
       .addCase(adjustProductQuantity.rejected, (state: CartState) => {
         state.loading = false;
@@ -62,7 +64,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.cartData = action.payload;
         const numberOfProductsInCart: number = 0;
-        state.isEmpty = action.payload.aboutProductsInCart.length === numberOfProductsInCart;
+        state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
       })
       .addCase(changeProductInCartQuantity.rejected, (state: CartState) => {
         state.loading = false;
@@ -75,6 +77,8 @@ const cartSlice = createSlice({
         state.loading = false;
         if (action.payload)
           state.cartData = action.payload;
+        const numberOfProductsInCart: number = 0;
+        state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
       })
       .addCase(changeCartContentGlobally.rejected, (state: CartState) => {
         state.loading = false;
