@@ -4,33 +4,30 @@ import { useAppDispatch } from '../../hooks';
 import { AppDispatch, RootState } from '../../redux/store';
 import { AboutCart, CheckCart, RenderPhase } from '../../types/cartTypes';
 import { ProductInCart } from '../productInCart/ProductInCart';
-import { clearCart, synchronizeCart } from '../../redux/actions/cartActions';
+import { synchronizeCart } from '../../redux/actions/cartActions';
 import styles from './Cart.module.scss';
-import { isGuestUser } from '../../utils/cookiesUtils';
 
 export const Cart: React.FC = () => {
     const dispatch: AppDispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
-    const isLoggedIn: boolean = useSelector((state: RootState) => state.auth.isLoggedIn);
     const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
-    //const [hasBeenMounted, setHasBeenMounted] = useState<boolean>(false);
+    const isCartSaved: boolean = useSelector((state: RootState) => state.cart.isCartSaved);
 
     useEffect(() => {
-            dispatch(synchronizeCart(RenderPhase.Mount));
-        
+        dispatch(synchronizeCart(RenderPhase.Mount));
+        console.log("mounteeeed");
+        console.log(`isCartSaved: ${isCartSaved}`);
+    }, [ dispatch])
+
+    useEffect(() => {
         return () => {
+            console.log("unmounteeeeed");
             dispatch(synchronizeCart(RenderPhase.Unmount));
         };
-    }, []);
+    }, [dispatch]);
 
-    useEffect(() => {
-        if((isCartEmpty && isGuestUser()) || (isCartEmpty && isLoggedIn )){
-            dispatch(clearCart());
-        }
-    }, [isCartEmpty, isLoggedIn, dispatch])
-
+   
     
-
     return (
         <>
             {cartContent && cartContent.totalCartValue !== 0 ? (

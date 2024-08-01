@@ -10,6 +10,7 @@ import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 import { NoContentApiResponse } from '../../types/noContentApiResponse';
 import { OkApiResponse } from '../../types/okApiResponse';
 import { ApiError } from '../../types/errorTypes';
+import { isGuestUser } from '../../utils/cookiesUtils';
 
 const getCartData = (state: RootState) => state.cart.cartData;
 
@@ -188,6 +189,8 @@ export const clearCart = createAsyncThunk<
   'cart/clearCart',
   async (_, { rejectWithValue }) => {
     try {
+      console.log("CART CLEARED");
+
       const response: NoContentApiResponse | ApiError = await clearCartApi();
 
       if (isApiError(response)) {
@@ -215,29 +218,46 @@ export const synchronizeCart = createAsyncThunk<
     const isCartEmpty: boolean = state.cart.isEmpty;
     const isLoggedIn: boolean = state.auth.isLoggedIn;
     const cartContent: AboutCart = state.cart.cartData;
+    const isCartCleared: boolean = state.cart.isCartCleared;
+    const isCartSaved: boolean = state.cart.isCartSaved;
 
     if (needSynchronization(isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
       console.log("synchronizeCartWithApi");
-      await dispatch(synchronizeCartWithApi()); //Get cart content
+      await dispatch(synchronizeCartWithApi());
     };
 
     if (needToSetCurrentCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Mount) {
       console.log("setCurrentCart");
-      await dispatch(setCurrentCart()); //https://localhost:5004/api/Carts/check-current-cart
+      const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
+      if(result === undefined && !isCartSaved){
+        console.log("additional cart saving after setting cart");
 
+        await dispatch(changeCartContentGlobally(cartContent));
+      }
     }
 
-    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount && !isCartCleared) {
       console.log("needToClearCart");
-      const result = await dispatch(setCurrentCart()).unwrap();
+      const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
+
+      console.log(`needToClearCart result: ${result}`)
       if (result === undefined) {
         await dispatch(clearCart());
       }
     }
 
-    if (!isCartEmpty && renderPhase === RenderPhase.Unmount) {
+    if (!isCartEmpty && !isLoggedIn && !isGuestUser() && renderPhase === RenderPhase.Mount) {
       console.log("changeCartContentGlobally")
       await dispatch(changeCartContentGlobally(cartContent))
+    }
+
+    if (!isCartEmpty && !isCartSaved && renderPhase === RenderPhase.Unmount) {
+      console.log("changeCartContentGlobally")
+      await dispatch(changeCartContentGlobally(cartContent))
+    }
+
+    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Unmount && !isCartCleared){
+      await dispatch(clearCart());
     }
   }
 );

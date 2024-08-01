@@ -20,6 +20,8 @@ export interface CartState {
   loading: boolean;
   cartData: AboutCart;
   isEmpty: boolean,
+  isCartCleared: boolean,
+  isCartSaved: boolean,
 };
 
 export interface CartDetails {
