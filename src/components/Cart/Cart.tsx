@@ -17,6 +17,7 @@ export const Cart: React.FC = () => {
         dispatch(synchronizeCart(RenderPhase.Mount));
         console.log("mounteeeed");
         console.log(`isCartSaved: ${isCartSaved}`);
+        console.log(`cartContent from CART component:${JSON.stringify(cartContent)}`);
     }, [ dispatch])
 
     useEffect(() => {

@@ -21,11 +21,12 @@ export const shippingDetailsSchema = Yup.object({
     .matches(/^[A-Za-z]+$/, 'Only letters are allowed')
     .transform(value => value.charAt(0).toUpperCase() + value.slice(1)),
   streetNumber: Yup.string()
-    .matches(/^\d{1,6}$/, 'Street number must be up to 6 digits')
+    .matches(/^[a-zA-Z0-9]{1,6}$/, 'Street number must be up to 6 digits')
     .required('Street number is required'),
   homeNumber: Yup.string()
-    .matches(/^\d{1,6}$/, 'Home number must be up to 6 digits')
+    .matches(/^[a-zA-Z0-9]{1,6}$/, 'Home number must be up to 6 alphanumeric characters')
     .required('Home number is required'),
+
   postCode: Yup.string()
     .matches(/^\d{2}-\d{3}$/, 'Invalid post code format')
     .required('Post code is required'),

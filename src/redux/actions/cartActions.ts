@@ -52,6 +52,7 @@ export const setCurrentCart = createAsyncThunk<
 
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
+        console.log(`Payload for  checkCurrentCart: ${JSON.stringify(payload)}`)
         const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await checkCurrentCart(payload);
 
         if (isApiError(response)) {
@@ -216,47 +217,70 @@ export const synchronizeCart = createAsyncThunk<
   async (renderPhase: string, { dispatch, getState }) => {
     const state: RootState = getState();
     const isCartEmpty: boolean = state.cart.isEmpty;
-    const isLoggedIn: boolean = state.auth.isLoggedIn;
+    let isLoggedIn: boolean = state.auth.isLoggedIn;
     const cartContent: AboutCart = state.cart.cartData;
     const isCartCleared: boolean = state.cart.isCartCleared;
     const isCartSaved: boolean = state.cart.isCartSaved;
+    let isUserOrGuest: boolean = isLoggedIn || isGuestUser();
 
-    if (needSynchronization(isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
       console.log("synchronizeCartWithApi");
       await dispatch(synchronizeCartWithApi());
     };
 
-    if (needToSetCurrentCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Mount) {
+    if (!isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
+      console.log("synchronizeCartWithApi with cartContent");
+      const result: void | AboutCart = await dispatch(synchronizeCartWithApi()).unwrap();
+
+      if (result === undefined) {
+        await dispatch(changeCartContentGlobally(cartContent));
+        console.log("synchronizeCartWithApi with cartContent ADDING TO DATABASE");
+      }
+    };
+
+    if (isUserOrGuest && cartContent.createdAt.trim() !== "" && !isCartEmpty && renderPhase === RenderPhase.Mount) {
       console.log("setCurrentCart");
       const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
-      if(result === undefined && !isCartSaved){
+      if (result === undefined && !isCartSaved) {
         console.log("additional cart saving after setting cart");
-
         await dispatch(changeCartContentGlobally(cartContent));
       }
     }
 
-    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount && !isCartCleared) {
-      console.log("needToClearCart");
+    if (!isUserOrGuest && !isCartEmpty && renderPhase === RenderPhase.Mount) {
+      console.log("changeCartContentGlobally for new user");
+
+      await dispatch(changeCartContentGlobally(cartContent));
+    }
+
+    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() !== "" && renderPhase === RenderPhase.Mount) {
+      console.log("setting empty cart")
       const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
 
       console.log(`needToClearCart result: ${result}`)
-      if (result === undefined) {
+      if (result === undefined && !isCartCleared) {
+        console.log("cartClearing");
         await dispatch(clearCart());
       }
-    }
 
-    if (!isCartEmpty && !isLoggedIn && !isGuestUser() && renderPhase === RenderPhase.Mount) {
-      console.log("changeCartContentGlobally")
-      await dispatch(changeCartContentGlobally(cartContent))
+     
     }
 
     if (!isCartEmpty && !isCartSaved && renderPhase === RenderPhase.Unmount) {
       console.log("changeCartContentGlobally")
       await dispatch(changeCartContentGlobally(cartContent))
     }
+    const updatedState: RootState = getState();
+    isLoggedIn = updatedState.auth.isLoggedIn;
+    isUserOrGuest = isLoggedIn || isGuestUser();
 
-    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Unmount && !isCartCleared){
+    if (!isCartEmpty && !isUserOrGuest && renderPhase === RenderPhase.Unmount) {
+      console.log("changeCartContentGlobally")
+      await dispatch(changeCartContentGlobally(cartContent))
+    }
+
+    if (!isCartCleared && isCartEmpty && isUserOrGuest && renderPhase === RenderPhase.Unmount) {
+      console.log("clear at unmount");
       await dispatch(clearCart());
     }
   }
