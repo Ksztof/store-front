@@ -49,7 +49,7 @@ export const mapAboutCartToNewProductsForApi = (aboutCart: AboutCart): NewProduc
 };
 
 export const needToSetCurrentCart = (isCartEmpty: boolean, isLoggedIn: boolean): boolean => {
-    return (!isCartEmpty && isLoggedIn) || (!isCartEmpty && isGuestUser());
+    return (isLoggedIn) || (isGuestUser());
 }
 
 export const needSynchronization = (isLoggedIn: boolean, cartContent: AboutCart): boolean => {

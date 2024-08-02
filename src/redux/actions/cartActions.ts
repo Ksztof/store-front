@@ -10,6 +10,7 @@ import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 import { NoContentApiResponse } from '../../types/noContentApiResponse';
 import { OkApiResponse } from '../../types/okApiResponse';
 import { ApiError } from '../../types/errorTypes';
+import { isGuestUser } from '../../utils/cookiesUtils';
 
 const getCartData = (state: RootState) => state.cart.cartData;
 
@@ -51,6 +52,7 @@ export const setCurrentCart = createAsyncThunk<
 
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
+        console.log(`Payload for  checkCurrentCart: ${JSON.stringify(payload)}`)
         const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await checkCurrentCart(payload);
 
         if (isApiError(response)) {
@@ -188,6 +190,8 @@ export const clearCart = createAsyncThunk<
   'cart/clearCart',
   async (_, { rejectWithValue }) => {
     try {
+      console.log("CART CLEARED");
+
       const response: NoContentApiResponse | ApiError = await clearCartApi();
 
       if (isApiError(response)) {
@@ -213,31 +217,71 @@ export const synchronizeCart = createAsyncThunk<
   async (renderPhase: string, { dispatch, getState }) => {
     const state: RootState = getState();
     const isCartEmpty: boolean = state.cart.isEmpty;
-    const isLoggedIn: boolean = state.auth.isLoggedIn;
+    let isLoggedIn: boolean = state.auth.isLoggedIn;
     const cartContent: AboutCart = state.cart.cartData;
+    const isCartCleared: boolean = state.cart.isCartCleared;
+    const isCartSaved: boolean = state.cart.isCartSaved;
+    let isUserOrGuest: boolean = isLoggedIn || isGuestUser();
 
-    if (needSynchronization(isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
+    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
       console.log("synchronizeCartWithApi");
-      await dispatch(synchronizeCartWithApi()); //Get cart content
+      await dispatch(synchronizeCartWithApi());
     };
 
-    if (needToSetCurrentCart(isCartEmpty, isLoggedIn) && renderPhase === RenderPhase.Mount) {
-      console.log("setCurrentCart");
-      await dispatch(setCurrentCart()); //https://localhost:5004/api/Carts/check-current-cart
+    if (!isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
+      console.log("synchronizeCartWithApi with cartContent");
+      const result: void | AboutCart = await dispatch(synchronizeCartWithApi()).unwrap();
 
-    }
-
-    if (needToClearCart(isCartEmpty, isLoggedIn, cartContent) && renderPhase === RenderPhase.Mount) {
-      console.log("needToClearCart");
-      const result = await dispatch(setCurrentCart()).unwrap();
       if (result === undefined) {
-        await dispatch(clearCart());
+        await dispatch(changeCartContentGlobally(cartContent));
+        console.log("synchronizeCartWithApi with cartContent ADDING TO DATABASE");
+      }
+    };
+
+    if (isUserOrGuest && cartContent.createdAt.trim() !== "" && !isCartEmpty && renderPhase === RenderPhase.Mount) {
+      console.log("setCurrentCart");
+      const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
+      if (result === undefined && !isCartSaved) {
+        console.log("additional cart saving after setting cart");
+        await dispatch(changeCartContentGlobally(cartContent));
       }
     }
 
-    if (!isCartEmpty && renderPhase === RenderPhase.Unmount) {
+    if (!isUserOrGuest && !isCartEmpty && renderPhase === RenderPhase.Mount) {
+      console.log("changeCartContentGlobally for new user");
+
+      await dispatch(changeCartContentGlobally(cartContent));
+    }
+
+    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() !== "" && renderPhase === RenderPhase.Mount) {
+      console.log("setting empty cart")
+      const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
+
+      console.log(`needToClearCart result: ${result}`)
+      if (result === undefined && !isCartCleared) {
+        console.log("cartClearing");
+        await dispatch(clearCart());
+      }
+
+     
+    }
+
+    if (!isCartEmpty && !isCartSaved && renderPhase === RenderPhase.Unmount) {
       console.log("changeCartContentGlobally")
       await dispatch(changeCartContentGlobally(cartContent))
+    }
+    const updatedState: RootState = getState();
+    isLoggedIn = updatedState.auth.isLoggedIn;
+    isUserOrGuest = isLoggedIn || isGuestUser();
+
+    if (!isCartEmpty && !isUserOrGuest && renderPhase === RenderPhase.Unmount) {
+      console.log("changeCartContentGlobally")
+      await dispatch(changeCartContentGlobally(cartContent))
+    }
+
+    if (!isCartCleared && isCartEmpty && isUserOrGuest && renderPhase === RenderPhase.Unmount) {
+      console.log("clear at unmount");
+      await dispatch(clearCart());
     }
   }
 );

@@ -23,7 +23,7 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
             };
 
             checkFormValidity();
-        }, []);
+        });
         
         return (
             <div className={styles.shippDetContainer}>
@@ -70,17 +70,15 @@ export const ShippingDetailsForm: React.FC<ShippingDetailsFormProps> =
                                 handleSetShippingDetails={handleSetShippingDetails} />
                             <ErrorMessage className={styles.errorMsg} name="street" component="div" />
 
-                            <NumericField
+                            <TextField
                                 name="streetNumber"
-                                formatValue={formatNumericField}
                                 label="Street Number"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />
                             <ErrorMessage className={styles.errorMsg} name="streetNumber" component="div" />
 
-                            <NumericField
+                            <TextField
                                 name="homeNumber"
-                                formatValue={formatNumericField}
                                 label="Home Number"
                                 onBlur={() => { }}
                                 handleSetShippingDetails={handleSetShippingDetails} />

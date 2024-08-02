@@ -5,7 +5,7 @@ import { clearError } from '../../redux/reducers/errorReducer';
 import { ApiError } from '../../types/errorTypes';
 import Modal from 'react-modal';
 import styles from './ErrorModal.module.scss';
-import { removeGuestSessionId } from '../../redux/actions/authActions';
+import { logout, removeGuestSessionId } from '../../redux/actions/authActions';
 
 Modal.setAppElement('#root');
 
@@ -13,10 +13,11 @@ const ErrorModal: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const error = useSelector((state: RootState) => state.error.error);
 
-    const handleReset = () => {
-        dispatch(removeGuestSessionId());
-        dispatch(clearError());
-        dispatch({ type: 'RESET_APP' });
+    const handleReset = async () => {
+        await dispatch(logout());
+        await dispatch(removeGuestSessionId());
+        await dispatch(clearError());
+        await dispatch({ type: 'RESET_APP' });
         window.location.href = '/';
     };
 
