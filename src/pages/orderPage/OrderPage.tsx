@@ -9,11 +9,12 @@ import { useAppDispatch } from '../../hooks';
 import { makeOrder, resetOrder } from '../../redux/actions/orderActions';
 import { resetPayment, updatePaymentStatusSuccess } from '../../redux/actions/paymentActions';
 import OrderSummary from '../../components/orderSummary/OrderSummary';
-import { resetCart } from '../../redux/actions/cartActions';
+import { changeCartContentGlobally, resetCart } from '../../redux/actions/cartActions';
 import { shippingDetailsInitialValues } from '../../initialValues/orderInitials';
 import { ReducerStates } from "../../types/sharedTypes";
 import styles from './OrderPage.module.scss';
 import ProductsToOrder from '../../components/productsToOrder/ProductsToOrder';
+import { AboutCart } from '../../types/cartTypes';
 
 export const OrderPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -23,6 +24,12 @@ export const OrderPage: React.FC = () => {
     const [paymentMethod, setPaymentMethod] = useState<MethodOfPayment>(MethodOfPayment.NotSet);
     const [shippingDetails, setShippingDetailsState] = useState<ShippingDetails>(shippingDetailsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
+    const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
+    const isCartChanged: boolean = useSelector((state: RootState) => state.cart.isCartChanged);
+    
+    useEffect(() => {
+        console.log(`isCartChanged: ${isCartChanged}`)
+    }, [isCartChanged]);
 
     const handleSetShippingDetails = (values: Partial<ShippingDetails>) => {
         setShippingDetailsState(prev => ({ ...prev, ...values }));
@@ -30,6 +37,13 @@ export const OrderPage: React.FC = () => {
 
     const handleDeliveryOrder = async (event: React.FormEvent) => {
         event.preventDefault();
+        console.log(`isCartChanged in handleDeliveryOrder: ${isCartChanged}`)
+
+        if (isCartChanged) {
+            console.log("Is in isCartChanged == true block")
+            await dispatch(changeCartContentGlobally(cartContent));
+        }
+
         const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: OrderMethod.UponDelivery }
         const orderResult = await dispatch(makeOrder(makeOrderPayload));
         if (orderResult.type.endsWith('fulfilled')) {
@@ -54,7 +68,7 @@ export const OrderPage: React.FC = () => {
                         <div className={styles.shipDetForm}>
                             <ShippingDetailsForm handleSetShippingDetails={handleSetShippingDetails} setIsFormValid={setIsFormValid} />
                         </div>
-                        {isCartEmpty !== true && (
+                        {!isCartEmpty && (
                             <div className={styles.optionsContainer}>
                                 <PaymentMethodSelector setPaymentMethod={setPaymentMethod} />
                                 {paymentMethod === MethodOfPayment.Card ? (

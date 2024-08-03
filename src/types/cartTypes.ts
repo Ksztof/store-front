@@ -22,6 +22,7 @@ export interface CartState {
   isEmpty: boolean,
   isCartCleared: boolean,
   isCartSaved: boolean,
+  isCartChanged: boolean,
 };
 
 export interface CartDetails {

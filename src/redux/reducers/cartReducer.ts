@@ -10,6 +10,7 @@ const initialState: CartState = {
   isEmpty: true,
   isCartCleared: false,
   isCartSaved: false,
+  isCartChanged: false
 };
 
 const cartSlice = createSlice({
@@ -59,6 +60,7 @@ const cartSlice = createSlice({
         state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
         state.isCartCleared = false;
         state.isCartSaved = false;
+        state.isCartChanged = true;
       })
       .addCase(adjustProductQuantity.rejected, (state: CartState) => {
         state.loading = false;
@@ -74,6 +76,7 @@ const cartSlice = createSlice({
         state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
         state.isCartCleared = false;
         state.isCartSaved = false;
+        state.isCartChanged = true;
       })
       .addCase(changeProductInCartQuantity.rejected, (state: CartState) => {
         state.loading = false;
@@ -89,6 +92,7 @@ const cartSlice = createSlice({
         const numberOfProductsInCart: number = 0;
         state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
         state.isCartSaved = true;
+        state.isCartChanged = false;
       })
       .addCase(changeCartContentGlobally.rejected, (state: CartState) => {
         state.loading = false;
@@ -112,6 +116,7 @@ const cartSlice = createSlice({
       .addCase(clearCart.fulfilled, (state: CartState) => {
         state.loading = false;
         state.isCartCleared = true;
+        state.isCartChanged = true;
       })
       .addCase(clearCart.rejected, (state: CartState) => {
         state.loading = false;
