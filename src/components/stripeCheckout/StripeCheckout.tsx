@@ -15,6 +15,8 @@ import { confirmPayment, getClientSecret, updatePaymentIntent } from '../../redu
 import { AsyncTasksParams, PaymentConfirmationPayload } from '../../types/paymentTypes';
 import useAsyncEffect from '../../hooks/useAsyncEffect ';
 import { HubConnection } from '@microsoft/signalr';
+import { AboutCart } from '../../types/cartTypes';
+import { changeCartContentGlobally } from '../../redux/actions/cartActions';
 
 const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, shippingDetails, isFormValid, clientSecret }) => {
     const dispatch = useAppDispatch();
@@ -22,7 +24,8 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, shippingDetails
     const elements = useElements();
     const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
     const orderState: string = useSelector((state: RootState) => state.order.status);
-
+    const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
+    const isCartChanged: boolean = useSelector((state: RootState) => state.cart.isCartChanged);
     const connectionRef = useRef<HubConnection | null>(null);
 
     const payload: PaymentConfirmationPayload = {
@@ -35,6 +38,11 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, shippingDetails
 
         const connection: HubConnection = startConnection(dispatch, orderSummary.id);
         connectionRef.current = connection;
+
+        if(isCartChanged){
+            await dispatch(changeCartContentGlobally(cartContent));
+        }
+
         const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: null };
         await dispatch(makeOrder(makeOrderPayload))
         await dispatch(updatePaymentIntent(clientSecret))
