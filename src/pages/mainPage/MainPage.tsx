@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Products } from "../../components/products/Products";
 import styles from './MainPage.module.scss';
 import { FaShoppingCart, FaSlidersH, FaTimes } from 'react-icons/fa';
@@ -6,8 +6,6 @@ import { Cart } from '../../components/cart/Cart';
 import { useSelector } from 'react-redux';
 import { AboutCart } from '../../types/cartTypes';
 import { RootState } from '../../redux/store';
-import { useAppDispatch } from '../../hooks';
-import { changeCartContentGlobally } from '../../redux/actions/cartActions';
 import { useNavigate } from 'react-router-dom';
 
 export const Main = () => {
@@ -67,7 +65,6 @@ export const Main = () => {
 
                 <div className={styles.cartHeader}>
 
-                    <div className={styles.cartHeaderTitle}>Cart</div>
                     <div className={styles.cartHeaderContent}>
                         {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue} zł` : '0 zł'}
                     </div>

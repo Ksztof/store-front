@@ -13,23 +13,23 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        width: 5vw;
+        width: 5%;
         align-items: center;
         justify-content: flex-start;
         z-index: 1003;
-        box-shadow: 0.4vw 0px 0.4vw rgba(192, 192, 192, 0.7);
-        gap: 0.7vw;
+        box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
+        gap: 0.8%;
 
         .showCartButton,
         .showFiltersButton {
-            width: 3.2vw;
-            height: 3.2vw;
-            top: 1vw;
+            width: 80%;
+            height: 5%;
+            top: 3%;
             display: flex;
             position: relative;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 0.4vw 0.4vw rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 4% 0.4vw rgba(0, 0, 0, 0.1);
             align-items: center;
             justify-content: center;
             opacity: 50%;
@@ -38,7 +38,7 @@
             &:hover {
                 opacity: 100%;
                 color: rgb(6, 37, 42);
-                box-shadow: 0 0 0.4vw 0.4vw rgba(9, 255, 0, 0.15);
+                box-shadow: 0 0 4% 4% rgba(9, 255, 0, 0.15);
             }
 
             &.optionBarOpen {
@@ -46,18 +46,18 @@
             }
 
             &.optionBarOpen:hover {
-                box-shadow: 0 0 0.4vw 0.4vw rgba(255, 0, 0, 0.1);
+                box-shadow: 0 0 4% 4% rgba(255, 0, 0, 0.1);
             }
 
             .filtersLogo,
             .cartLogo {
-                font-size: 1.2vw;
+                font-size: 24px;
             }
         }
 
         .closeLogo {
-            margin-bottom: 1.5vw;
-            font-size: 0.8vw;
+            margin-bottom: 45%;
+            font-size: 12px;
             color: red;
         }
     }
@@ -67,7 +67,7 @@
         height: calc(100% - 80px);
         width: 0;
         top: 80px;
-        left: 5vw;
+        left: 5%;
         display: flex;
         flex-direction: column;
         z-index: 1001;
@@ -77,19 +77,20 @@
         visibility: hidden;
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
         background-color: rgb(6, 37, 42);
-        box-shadow: 0.4vw 0px 0.4vw rgba(192, 192, 192, 0.7);
-        
+        box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
+        border-right: 2px solid black;
+
         .closeButton {
             background-color: inherit;
             display: flex;
             position: absolute;
             z-index: 1002;
-            right: 1.8vw;
-            top: 0.8vw;
+            right: 5%;
+            top: 2%;
             visibility: hidden;
 
             .closeButtonLogo {
-                font-size: 2vw;
+                font-size: 25px;
                 opacity: 50%;
                 position: fixed;
 
@@ -105,31 +106,22 @@
         }
 
         .cartHeader {
-            
+
             display: flex;
             flex-direction: row;
             font-family: 'Inter', sans-serif;
             background-color: white;
             z-index: 1000;
-            height: 6vw;
-            box-shadow: 0 0.3vw 0.3vw rgba(255, 255, 255, 0.2);
+            height: 8%;
+            box-shadow: 0 3% 3% rgba(255, 255, 255, 0.2);
             visibility: hidden;
 
-            .cartHeaderTitle {
-                width: 20%;
-                font-size: 2.5vw;
-                font-weight: 600;
-                padding: 2vw;
-                height: 2vw;
-            }
-
             .cartHeaderContent {
-                width: 60%;
-                font-size: 1.5vw;
-                padding: 2vw;
-                line-height: 3.2vw;
-                height: 2vw;
-                padding-left: 0;
+                display: flex;
+                flex: 1;
+                font-size: 25px;
+                justify-content: center;
+                align-items: center;
             }
         }
 
@@ -146,46 +138,48 @@
 
 
         .cartContent {
-            top: 6vw;
+            top: 8%;
             flex-direction: column;
             background-color: rgb(6, 37, 42);
             overflow-y: scroll;
-            bottom: 4vw;
-            gap: 0.7vw;
+            bottom: 4.5%;
+            gap: 2%;
             visibility: hidden;
             width: 96%;
         }
 
         .cartFooter {
+            align-items: flex-end;
+            justify-content: flex-end;
             display: flex;
-            align-items: center;
-            justify-content: center;
             font-family: 'Inter', sans-serif;
             background-color: white;
-            box-shadow: 0 -0.3vw 0.3vw rgba(255, 255, 255, 0.2);
+            //box-shadow: 0 -3% 3% rgba(255, 255, 255, 0.2);
             width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 4vw;
+            height: 100%;
+            // bottom: 0;
+            // left: 0;
+            // height: 4.5%;
             visibility: hidden;
 
             button {
                 flex: 1;
                 display: flex;
+                height: 5%;
                 align-items: center;
                 justify-content: center;
                 font-family: 'Inter', sans-serif;
-                font-size: 1.6vw;
-                border: 0.1vw solid white;
+                font-size: 24px;
+                border: 1px solid transparent;
                 opacity: 65%;
                 background: none;
                 cursor: pointer;
-                margin: 0;
+                padding: 2%;
                 box-sizing: border-box;
 
                 &:hover {
                     opacity: 100%;
+                    border: 1px solid rgb(0, 255, 76);
                 }
             }
 
@@ -203,7 +197,7 @@
 
         &.cartContentOpen {
             visibility: visible;
-            width: 36vw;
+            width: 36%;
 
             .cartContent {
                 visibility: visible;
@@ -219,7 +213,7 @@
         &.filtersContentOpen {
             overflow-y: auto;
             visibility: visible;
-            width: 36vw;
+            width: 36%;
 
             .cartContent {
                 visibility: hidden;
@@ -253,25 +247,25 @@
     .searchAndProductWrapper {
         display: flex;
         flex: 1;
-        position: relative; 
-        flex-direction: column; 
+        position: relative;
+        flex-direction: column;
         top: 80px;
-        left: 5vw;
+        left: 5%;
         transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 
         .searchBar {
             color: black;
             display: flex;
-            position: absolute; 
+            position: absolute;
             background-color: white;
             z-index: 902;
-            height: 3.5vw; 
-            width: calc(100% - 5vw); 
+            height: 5%;
+            width: 95%;
             align-items: center;
             justify-content: center;
             overflow-y: hidden;
-            font-size: 2vw;
-            box-shadow: 0 0.4vw 0.4vw rgba(0, 0, 0, 0.5);
+            font-size: 24px;
+            box-shadow: 0 4% 4% rgba(0, 0, 0, 0.5);
             transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 
             &.leftBarOpen {
@@ -283,20 +277,19 @@
         .productsContainer {
             flex-direction: column;
             background-color: rgb(6, 37, 42);
-            width: calc(100% - 5vw);
-            height: calc(100% - 80px - 3.5vh);
+            width: 95%;
+            height: calc(95% - 80px);
             overflow-y: visible;
             overflow-x: auto;
             position: absolute;
             transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
-            padding: 2vw;
-            padding-bottom: 5vw;
+            padding: 2%;
             box-sizing: border-box;
-            top: 3.5vw;
+            top: 5%;
 
             &.leftBarOpen {
-                left: 36vw;
-                width: 59.25vw;
+                left: 36%;
+                width: 59%;
             }
         }
     }

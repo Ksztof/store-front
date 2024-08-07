@@ -56,7 +56,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                     />
                     <FaCaretRight className={styles.quantityRightArrow} onClick={() => dispatch(adjustProductQuantity({ productId: product.productId, operationType: AdjustProductQuantityType.Increase }))} />
                     <div className={styles.productName}>
-                        <h3 className={styles.nameWriting}>x {product.productName} </h3>
+                        <div className={styles.nameWriting}>x {product.productName} </div>
                     </div>
                 </div>
                 <div className={styles.totalSummary}>
