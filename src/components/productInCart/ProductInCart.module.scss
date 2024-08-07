@@ -171,8 +171,6 @@
 
                 .productName {
                     .nameWriting {
-                        font-family: Open Sans, sans-serif;
-                        line-height: 2.5px;
                         font-size: 15px;
                     }
                 }
@@ -181,6 +179,115 @@
             .totalSummary {
                 .totalTitle {
                     font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    height: 22px;
+                    width: 22px;
+
+                }
+
+                input {
+                    font-size: 14px;
+                    width: 15%;
+                    height: 50%;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .totalTitle {
+                    font-size: 11px;
+                }
+
+                .unitPriceInfo {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    height: 22px;
+                    width: 22px;
+
+                }
+
+                input {
+                    font-size: 14px;
+                    width: 15%;
+                    height: 50%;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .totalTitle {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    height: 22px;
+                    width: 22px;
+
+                }
+
+                input {
+                    font-size: 12px;
+                    width: 10%;
+                    height: 50%;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .totalTitle {
+                    font-size: 11px;
                 }
             }
         }
