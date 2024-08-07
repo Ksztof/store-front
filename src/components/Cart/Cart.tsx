@@ -10,9 +10,7 @@ import styles from './Cart.module.scss';
 export const Cart: React.FC = () => {
     const dispatch: AppDispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
-    const isCartEmpty: boolean = useSelector((state: RootState) => state.cart.isEmpty);
-    const isCartSaved: boolean = useSelector((state: RootState) => state.cart.isCartSaved);
-
+   
     useEffect(() => {
         dispatch(synchronizeCart(RenderPhase.Mount));
         console.log("mounteeeed");
