@@ -24,7 +24,7 @@
         .showFiltersButton {
             width: 80%;
             height: 5%;
-            top: 3%;
+            top: 1.5%;
             display: flex;
             position: relative;
             border-radius: 50%;
@@ -86,7 +86,7 @@
             position: absolute;
             z-index: 1002;
             right: 5%;
-            top: 2%;
+            top: 1%;
             visibility: hidden;
 
             .closeButtonLogo {
@@ -154,12 +154,8 @@
             display: flex;
             font-family: 'Inter', sans-serif;
             background-color: white;
-            //box-shadow: 0 -3% 3% rgba(255, 255, 255, 0.2);
             width: 100%;
             height: 100%;
-            // bottom: 0;
-            // left: 0;
-            // height: 4.5%;
             visibility: hidden;
 
             button {
@@ -290,6 +286,59 @@
             &.leftBarOpen {
                 left: 36%;
                 width: 59%;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .mainContainer {
+        .cartAndFiltersContainer {
+            .closeButton {
+                right: 8%;
+            }
+
+            .cartHeader {
+                .cartHeaderContent {
+                    font-size: 21px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .mainContainer {
+        .optionsBar {
+            gap: 0.2%;
+        }
+
+        .cartAndFiltersContainer {
+            &.cartContentOpen {
+                width: 85%;
+            }
+
+            &.filtersContentOpen {
+                width: 85%;
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .mainContainer {
+        .optionsBar {
+            gap: 0%;
+            width: 8%;
+        }
+
+        .cartAndFiltersContainer {
+            left: 8%;
+
+            .cartHeader {
+                .cartHeaderContent {
+                    font-size: 19px;
+                }
             }
         }
     }
