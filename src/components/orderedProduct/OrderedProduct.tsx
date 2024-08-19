@@ -6,6 +6,7 @@ import { adjustProductQuantity, changeProductInCartQuantity } from "../../redux/
 import { AppDispatch } from "../../redux/store";
 import { useAppDispatch } from "../../hooks";
 import { useState, useEffect } from "react";
+import React from 'react';
 
 
 export const OrderedProduct: React.FC<ProductInCartProps> = (props) => {

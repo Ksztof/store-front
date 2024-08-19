@@ -1,6 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { ConfirmPaymentPayload, PaymentConfirmationPayload, PaymentDetails, StartOrderPayload } from "../../types/paymentTypes";
-import { CardElement } from "@stripe/react-stripe-js";
 import { isApiError, isNoContentResponse, isSignalrError } from "../../utils/responseUtils";
 import { PaymentStatusResponse } from '../../types/paymentTypes';
 import { AboutPayment } from '../../types/paymentTypes';

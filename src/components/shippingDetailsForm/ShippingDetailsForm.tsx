@@ -1,7 +1,7 @@
 import { ErrorMessage, Form, Formik, FormikProps } from "formik";
 import { shippingDetailsSchema } from "../../validation/validationSchemas";
 import TextField from "../TextField";
-import NumericField from "../NumericField";
+import React from 'react';
 import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatNumericField, formatPhoneNumber, formatPostCode } from "../../validation/validationUtils";
 import { ShippingDetailsFormProps } from "../../props/orderProps";
 import { shippingDetailsInitialValues } from "../../initialValues/orderInitials";

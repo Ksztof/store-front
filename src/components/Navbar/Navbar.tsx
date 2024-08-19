@@ -7,6 +7,7 @@ import { logout, resetAuth } from '../../redux/actions/authActions';
 import styles from './Navbar.module.scss'
 import logo from '../../pictures/hpcLogo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import React from 'react';
 
 export const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();

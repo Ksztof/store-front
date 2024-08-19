@@ -6,6 +6,8 @@ import { RootState } from "../../redux/store";
 import { ProductDetails } from "../../types/productTypes";
 import { Product } from "../product/Product";
 import styles from './Products.module.scss';
+import React from 'react';
+
 export const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const isDataLoading = useSelector((state: RootState) => state.product.loading);
