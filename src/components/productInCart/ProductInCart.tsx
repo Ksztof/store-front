@@ -5,6 +5,7 @@ import { adjustProductQuantity, changeProductInCartQuantity } from "../../redux/
 import styles from './ProductInCart.module.scss';
 import productImg from '../../pictures/kielbasa.jpg'
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import React from 'react';
 
 export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
     const dispatch = useAppDispatch();

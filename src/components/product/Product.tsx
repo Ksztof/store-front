@@ -9,6 +9,7 @@ import styles from './Product.module.scss';
 import productImg from '../../pictures/kielbasa.jpg'
 import { Currency } from "../../types/sharedTypes";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import React from 'react';
 
 export const Product: React.FC<ProductProps> = ({ productId }) => {
     const dispatch = useAppDispatch();

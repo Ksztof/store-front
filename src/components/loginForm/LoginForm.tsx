@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { ApiError } from "../../types/errorTypes";
 import { toCamelCase } from "../../utils/localStorageUtils";
+import React from 'react';
 
 export const LoginForm: React.FC<LoginFormProps> =
     ({ handleSetLoginCredentials, setIsFormValid }) => {
