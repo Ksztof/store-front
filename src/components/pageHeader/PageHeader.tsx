@@ -1,8 +1,8 @@
 import Navbar from "../navbar/Navbar"
-import styles from "./Header.module.scss";
+import styles from "./PageHeader.module.scss";
 import React from 'react';
 
-export const Header: React.FC = () => {
+export const PageHeader: React.FC = () => {
     return (
         <header className={styles.header}>
             <Navbar />
