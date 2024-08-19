@@ -3,6 +3,7 @@ import { AboutCart, CheckCart } from "../../types/cartTypes";
 import { RootState } from "../../redux/store";
 import styles from './ProductsToOrder.module.scss';
 import { OrderedProduct } from "../orderedProduct/OrderedProduct";
+import React from 'react';
 
 export const ProductsToOrder: React.FC = () => {
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
