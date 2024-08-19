@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@microsoft/signalr": "^8.0.7",
     "@reduxjs/toolkit": "^2.2.7",
     "@stripe/react-stripe-js": "^2.8.0",
@@ -45,6 +46,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "20.x"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
