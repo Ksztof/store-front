@@ -5,7 +5,7 @@ import { updatePaymentStatus } from '../redux/actions/paymentActions';
 
 export const startConnection = (dispatch: AppDispatch, orderId: number): HubConnection => {
   const connection: HubConnection = new HubConnectionBuilder()
-    .withUrl("https://localhost:5004/paymentHub")
+    .withUrl("https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/paymentHub")
     .build();
 
   connection.start()
