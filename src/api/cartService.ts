@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 export const getCartContent = async (): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
     const response: AboutCart | any =
-      await axios.get<AboutCart>('https://localhost:5004/api/Carts', {});
+      await axios.get<AboutCart>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Carts', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -39,7 +39,7 @@ export const getCartContent = async (): Promise<NoContentApiResponse | OkApiResp
 export const saveCartContent = async (cartContent: NewProductsForApi): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
     const response: AboutCart | any =
-      await axios.put<AboutCart>('https://localhost:5004/api/Carts', cartContent);
+      await axios.put<AboutCart>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Carts', cartContent);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -70,7 +70,7 @@ export const saveCartContent = async (cartContent: NewProductsForApi): Promise<N
 export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promise<NoContentApiResponse | OkApiResponse<AboutCart> | ApiError> => {
   try {
     const response: AboutCart | any =
-      await axios.post<AboutCart>('https://localhost:5004/api/Carts/check-current-cart', payload);
+      await axios.post<AboutCart>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Carts/check-current-cart', payload);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -98,7 +98,7 @@ export const checkCurrentCart = async (payload: checkCurrentCartPayload): Promis
 export const clearCartApi = async (): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.delete('https://localhost:5004/api/Carts', {});
+      await axios.delete('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Carts', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
