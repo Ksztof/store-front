@@ -27,6 +27,8 @@ jobs:
 
       - name: Build And Deploy
         id: builddeploy
+        env:
+          REACT_APP_STRIPE_PUBLIC_KEY: ${{ secrets.REACT_APP_STRIPE_PUBLIC_KEY }}
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_PLANT_05B90C103 }}
@@ -35,8 +37,6 @@ jobs:
           app_location: "./"
           api_location: ""
           output_location: "build"
-          env:
-          REACT_APP_STRIPE_PUBLIC_KEY: ${{ secrets.REACT_APP_STRIPE_PUBLIC_KEY }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
