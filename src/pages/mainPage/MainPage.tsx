@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { AboutCart } from '../../types/cartTypes';
 import { RootState } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
-import { Cart } from '../../components/cart/Cart';
+import { UserCart } from '../../components/cart/UserCart';
 
 export const Main = () => {
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
@@ -71,7 +71,7 @@ export const Main = () => {
                 </div>
 
                 <div className={styles.cartContent}>
-                    <Cart />
+                    <UserCart />
                 </div>
 
                 <div className={`${styles.cartFooter} ${isCartEmpty ? styles.empty : ''}`}>
