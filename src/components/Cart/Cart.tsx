@@ -7,7 +7,7 @@ import { ProductInCart } from '../productInCart/ProductInCart';
 import { synchronizeCart } from '../../redux/actions/cartActions';
 import styles from './Cart.module.scss';
 
-export const UserCart: React.FC = () => {
+export const Cart: React.FC = () => {
     const dispatch: AppDispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
    
