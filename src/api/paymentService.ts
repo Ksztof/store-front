@@ -58,7 +58,7 @@ export const updatePaymentIntentApi = async (clientSecret: string): Promise<NoCo
 export const confirmPaymentApi = async (payload: ConfirmPaymentPayload): Promise<NoContentApiResponse | ApiError> => {
     try {
         const response: void | any =
-            await axios.post<void>('https://localhost:5004/api/Payments/confirm-payment', payload);
+            await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Payments/confirm-payment', payload);
 
         if (response.status === HttpStatusCode.NoContent) {
             const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
