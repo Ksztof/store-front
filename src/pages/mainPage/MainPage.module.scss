@@ -5,7 +5,6 @@
     position: relative;
     background-color: rgb(6, 37, 42);
     overflow: hidden;
-
     .optionsBar {
         background-color: white;
         position: fixed;
@@ -24,7 +23,7 @@
         .showFiltersButton {
             width: 80%;
             height: 5%;
-            top: 1.5%;
+            top: 4%;
             display: flex;
             position: relative;
             border-radius: 50%;
@@ -51,13 +50,13 @@
 
             .filtersLogo,
             .cartLogo {
-                font-size: 24px;
+                font-size: 58px;
             }
         }
 
         .closeLogo {
-            margin-bottom: 45%;
-            font-size: 12px;
+            margin-bottom: 60%;
+            font-size: 35px;
             color: red;
         }
     }
@@ -106,7 +105,6 @@
         }
 
         .cartHeader {
-
             display: flex;
             flex-direction: row;
             font-family: 'Inter', sans-serif;
@@ -165,7 +163,7 @@
                 align-items: center;
                 justify-content: center;
                 font-family: 'Inter', sans-serif;
-                font-size: 24px;
+                font-size: 20px;
                 border: 1px solid transparent;
                 opacity: 65%;
                 background: none;
@@ -303,6 +301,12 @@
                     font-size: 21px;
                 }
             }
+
+            .cartFooter {
+                button {
+                    font-size: 17px;
+                }
+            }
         }
     }
 }
@@ -318,8 +322,28 @@
                 width: 85%;
             }
 
+            .closeButton {
+                .closeButtonLogo {
+                    right: 12%;
+                    font-size: 12px;
+
+                }
+            }
+
             &.filtersContentOpen {
                 width: 85%;
+            }
+
+            .cartHeader {
+                .cartHeaderContent {
+                    font-size: 12px;
+                }
+            }
+
+            .cartFooter {
+                button {
+                    font-size: 12px;
+                }
             }
         }
     }
@@ -335,9 +359,39 @@
         .cartAndFiltersContainer {
             left: 8%;
 
+
+            .cartFooter {
+                button {
+                    font-size: 8px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 300px) {
+    .mainContainer {
+        .cartAndFiltersContainer {
+            left: 8%;
+
+            .closeButton {
+                .closeButtonLogo {
+                    right: 7%;
+                    font-size: 15px;
+
+                }
+            }
+
             .cartHeader {
                 .cartHeaderContent {
-                    font-size: 19px;
+                    margin-right: 5%;
+                    font-size: 5px;
+                }
+            }
+
+            .cartFooter {
+                button {
+                    font-size: 8px;
                 }
             }
         }

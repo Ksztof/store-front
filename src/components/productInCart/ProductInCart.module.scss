@@ -8,7 +8,7 @@
     width: 96%;
     height: 10%;
     border: 1px solid transparent;
-
+    
     &:hover {
         border: 1px solid white;
     }
@@ -227,7 +227,7 @@
 
 @media (max-width: 800px) {
     .productInCartContainer {
-        height: 25%;
+        height: 15%;
         .summaryContainer {
             .summaryTitle {
 
@@ -263,6 +263,8 @@
 
 @media (max-width: 550px) {
     .productInCartContainer {
+        height: 20%;
+
         .summaryContainer {
             .summaryTitle {
 
@@ -299,7 +301,6 @@
         }
     }
 }
-
 
 @media (max-width: 180px) {
     .productInCartContainer {
