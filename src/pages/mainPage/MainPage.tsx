@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Products } from "../../components/products/Products";
 import styles from './MainPage.module.scss';
 import { FaShoppingCart, FaSlidersH, FaTimes } from 'react-icons/fa';
-import { Cart } from '../../components/cart/Cart';
 import { useSelector } from 'react-redux';
 import { AboutCart } from '../../types/cartTypes';
 import { RootState } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
+import { Cart } from '../../components/Cart/Cart';
 
 export const Main = () => {
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);

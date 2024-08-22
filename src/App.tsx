@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
-import { Header } from './components/header/Header';
 import styles from './app.module.scss';
 import { Main } from './pages/mainPage/MainPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import { RegisterPage } from './pages/registerPage/RegisterPage';
 import { OrderPage } from './pages/orderPage/OrderPage';
 import ErrorModal from './components/error/ErrorModal';
+import { Header } from './components/Header/Header';
 
 const App: React.FC = () => {
   return (
