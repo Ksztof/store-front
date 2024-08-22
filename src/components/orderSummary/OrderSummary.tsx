@@ -18,12 +18,14 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
     const dispatch = useAppDispatch();
 
     const handleRedirect = () => {
-        dispatch(removeGuestSessionIdApi());
+        if(isGuestUser()){
+            dispatch(removeGuestSessionIdApi());
+        }
         dispatch(resetOrder());
         dispatch(resetPayment());
         dispatch(resetCart());
     };
-
+    
     return (
         <>
             <div className={styles.summaryTitle}>
