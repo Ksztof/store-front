@@ -18,9 +18,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
     const dispatch = useAppDispatch();
 
     const handleRedirect = () => {
-        if (isGuestUser()) {
-            dispatch(removeGuestSessionIdApi());
-        }
+        dispatch(removeGuestSessionIdApi());
         dispatch(resetOrder());
         dispatch(resetPayment());
         dispatch(resetCart());
