@@ -5,7 +5,7 @@
     background-color: rgb(51, 51, 51);
     border-radius: 10px;
     border: 1px dotted transparent;
-
+    
     &:hover {
         box-shadow:
             0 0.4vw 0.4vw rgba(255, 255, 255, 0.4),
@@ -291,20 +291,20 @@
                     .quantityRightArrow {
                         font-size: 14px;
                         cursor: pointer;
-                        width: 38%;
+                        width: 28%;
                         height: 80%;
                     }
 
                     input {
-                        width: 50%;
-                        height: 50%;
-                        font-size: 18px;
+                        width: 40%;
+                        height: 40%;
+                        font-size: 14px;
                     }
                 }
 
                 .addBtnContainer {
                     button {
-                        font-size: 14px;
+                        font-size: 12px;
                     }
                 }
             }
@@ -328,7 +328,7 @@
 
             .infoContainer {
                 .productPrice {
-                    font-size: 18px;
+                    font-size: 15px;
                 }
 
                 .quantityContainer {
@@ -337,14 +337,20 @@
                     .quantityRightArrow {
                         font-size: 14px;
                         cursor: pointer;
-                        width: 32%;
-                        height: 70%;
+                        width: 25%;
+                        height: 40%;
                     }
 
                     input {
-                        width: 30%;
-                        height: 45%;
-                        font-size: 12px;
+                        width: 20%;
+                        height: 25%;
+                        font-size: 10px;
+                    }
+                }
+
+                .addBtnContainer {
+                    button {
+                        font-size: 7px;
                     }
                 }
             }

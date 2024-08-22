@@ -47,10 +47,10 @@ export const Main = () => {
                     <FaShoppingCart className={styles.cartLogo} />
                     {isCartOpen && <FaTimes className={styles.closeLogo} />}
                 </div>
-                <div className={`${styles.showFiltersButton} ${isFiltersOpen ? styles.optionBarOpen : ''}`} onClick={toggleFilters}>
+                {/* <div className={`${styles.showFiltersButton} ${isFiltersOpen ? styles.optionBarOpen : ''}`} onClick={toggleFilters}>
                     <FaSlidersH className={styles.filtersLogo} />
                     {isFiltersOpen && <FaTimes className={styles.closeLogo} />}
-                </div>
+                </div> */}
             </div>
             <div className={
                 `
