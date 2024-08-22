@@ -10,17 +10,22 @@ import { resetOrder } from '../../redux/actions/orderActions';
 import { resetPayment } from '../../redux/actions/paymentActions';
 import { resetCart } from '../../redux/actions/cartActions';
 import { useAppDispatch } from '../../hooks';
+import { removeGuestSessionIdApi } from '../../api/authService';
+import { isGuestUser } from '../../utils/cookiesUtils';
 
 export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => {
     const orderSummary: OrderResponse = useSelector((state: RootState) => state.order.orderData);
     const dispatch = useAppDispatch();
 
     const handleRedirect = () => {
+        if (isGuestUser()) {
+            dispatch(removeGuestSessionIdApi());
+        }
         dispatch(resetOrder());
         dispatch(resetPayment());
         dispatch(resetCart());
     };
-    
+
     return (
         <>
             <div className={styles.summaryTitle}>
