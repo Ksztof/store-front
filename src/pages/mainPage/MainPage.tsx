@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { AboutCart } from '../../types/cartTypes';
 import { RootState } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
-import { Cart } from '../../components/carts/Cart';
+import { Cart } from '../../components/cart/Cart';
 
 export const Main = () => {
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
