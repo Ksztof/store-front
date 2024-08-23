@@ -5,6 +5,7 @@
     position: relative;
     background-color: rgb(6, 37, 42);
     overflow: hidden;
+
     .optionsBar {
         background-color: white;
         position: fixed;
@@ -83,7 +84,7 @@
             background-color: inherit;
             display: flex;
             position: absolute;
-            z-index: 1002;
+            z-index: 1004;
             right: 5%;
             top: 1%;
             visibility: hidden;
@@ -109,7 +110,7 @@
             flex-direction: row;
             font-family: 'Inter', sans-serif;
             background-color: white;
-            z-index: 1000;
+            z-index: 1003;
             height: 8%;
             box-shadow: 0 3% 3% rgba(255, 255, 255, 0.2);
             visibility: hidden;
@@ -388,10 +389,73 @@
                     font-size: 5px;
                 }
             }
+        }
+    }
+}
+
+@media (max-height: 400px) {
+    .mainContainer {
+        .optionsBar {
+
+            .showCartButton,
+            .showFiltersButton {
+                top: 8%;
+
+            }
+        }
+
+        .cartAndFiltersContainer {
+            .closeButton {
+                .closeButtonLogo {
+                    font-size: 18px;
+                }
+            }
+
+            .cartHeader {
+                height: 18%;
+    
+                .cartHeaderContent {
+                   
+                    font-size: 14px;
+                   
+                }
+            }
+        }
+
+        
+
+    }
+}
+
+@media (max-height: 320px) {
+    .mainContainer {
+        .optionsBar {
+
+            .showCartButton,
+            .showFiltersButton {
+                top: 12%;
+
+            }
+        }
+        .cartAndFiltersContainer {
+            .closeButton {
+                .closeButtonLogo {
+                    font-size: 12px;
+                }
+            }
+
+            .cartHeader {
+                height: 22%;
+    
+                .cartHeaderContent {
+                    font-size: 12px;
+                }
+            }
 
             .cartFooter {
                 button {
                     font-size: 8px;
+                    padding: 0%;
                 }
             }
         }
