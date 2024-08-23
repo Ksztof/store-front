@@ -349,6 +349,10 @@
     .productInCartContainer {
         height: 30%;
 
+        &:first-child{
+            margin-top: 4%;
+        }
+
         .summaryContainer {
             .summaryTitle {
 
