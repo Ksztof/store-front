@@ -68,7 +68,6 @@
         height: calc(100% - 80px);
         top: 80px;
         left: 5%;
-        display: flex;
         flex-direction: column;
         z-index: 1001;
         background-color: #cdf6f6;
@@ -78,6 +77,7 @@
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
         background-color: rgb(6, 37, 42);
         box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
+        display: none;
 
         .closeButton {
             background-color: inherit;
@@ -126,17 +126,21 @@
         .cartContent {
             align-items: center;
             top: 8%;
-            display: flex;
             flex-direction: column;
             background-color: rgb(6, 37, 42);
             overflow-y: scroll;
             bottom: 4.5%;
             gap: 2%;
             visibility: hidden;
+            display: none; 
             width: 96%;
             min-height: 88%;
         }
 
+        .filtersContent{
+            visibility: hidden;
+
+        }
         .cartFooter {
             display: flex;
             font-family: 'Inter', sans-serif;
@@ -182,11 +186,14 @@
         &.cartContentOpen {
             visibility: visible;
             width: 36%;
+            display: flex;
 
             .cartContent {
                 visibility: visible;
                 padding: 2%;
                 height: auto;
+                display: flex;
+
             }
 
             .filtersContent {
@@ -198,9 +205,12 @@
             overflow-y: auto;
             visibility: visible;
             width: 36%;
+            display: flex;
 
             .cartContent {
                 visibility: hidden;
+                display: none;
+
             }
 
             .filtersContent {
@@ -212,6 +222,7 @@
         .filtersContentOpen {
             .closeButton {
                 visibility: visible;
+                display: flex;
                 background: none;
                 border: none;
                 cursor: pointer;
@@ -236,7 +247,7 @@
         top: 80px;
         left: 5%;
         transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
-
+        align-items: center;
         .searchBar {
             color: black;
             display: flex;
@@ -244,17 +255,20 @@
             background-color: white;
             z-index: 902;
             height: 5%;
-            width: 95%;
+            width: 60%;
             align-items: center;
             justify-content: center;
             overflow-y: hidden;
             font-size: 24px;
             box-shadow: 0 4% 4% rgba(0, 0, 0, 0.5);
             transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+            background-color: gray;
+            border-radius: 20%;
+         
 
             &.leftBarOpen {
-                left: 35.85%;
-                width: 59.2%;
+                left: 43.5%;
+                width: 45%;
             }
         }
 
@@ -295,7 +309,7 @@
             .cartFooter {
                 button {
                     font-size: 26px;
-                    padding-bottom: 4%;
+                    padding: 5%;
                 }
             }
         }
@@ -318,7 +332,7 @@
             .cartFooter {
                 button {
                     font-size: 24px;
-                    padding-bottom: 3%;
+                    padding: 3%;
                 }
             }
         }
@@ -444,14 +458,14 @@
             }
 
             .cartHeader {
-               min-height: 16%;
+                min-height: 16%;
 
                 .cartHeaderContent {
                     font-size: 12px;
                 }
             }
 
-            .cartContent{
+            .cartContent {
                 min-height: 80%;
             }
 
