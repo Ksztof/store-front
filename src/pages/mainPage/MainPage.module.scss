@@ -5,10 +5,11 @@
     position: relative;
     background-color: rgb(6, 37, 42);
     overflow: hidden;
+    box-sizing: border-box;
 
     .optionsBar {
         background-color: white;
-        position: fixed;
+        position: absolute;
         top: 80px;
         display: flex;
         flex-direction: column;
@@ -63,9 +64,8 @@
     }
 
     .cartAndFiltersContainer {
-        position: fixed;
+        position: absolute;
         height: calc(100% - 80px);
-        width: 0;
         top: 80px;
         left: 5%;
         display: flex;
@@ -78,7 +78,6 @@
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
         background-color: rgb(6, 37, 42);
         box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
-        border-right: 2px solid black;
 
         .closeButton {
             background-color: inherit;
@@ -111,7 +110,7 @@
             font-family: 'Inter', sans-serif;
             background-color: white;
             z-index: 1003;
-            height: 8%;
+            min-height: 8%;
             box-shadow: 0 3% 3% rgba(255, 255, 255, 0.2);
             visibility: hidden;
 
@@ -124,20 +123,10 @@
             }
         }
 
-        .cartContent,
-        .filtersContent {
-            position: absolute;
-            background-color: #cdf6f6;
-            width: 100%;
-            height: calc(100% - 10vw);
-            visibility: hidden;
-            display: flex;
-            align-items: center;
-        }
-
-
         .cartContent {
+            align-items: center;
             top: 8%;
+            display: flex;
             flex-direction: column;
             background-color: rgb(6, 37, 42);
             overflow-y: scroll;
@@ -145,32 +134,32 @@
             gap: 2%;
             visibility: hidden;
             width: 96%;
+            min-height: 88%;
         }
 
         .cartFooter {
-            align-items: flex-end;
-            justify-content: flex-end;
             display: flex;
             font-family: 'Inter', sans-serif;
             background-color: white;
             width: 100%;
-            height: 100%;
             visibility: hidden;
+            position: absolute;
+            bottom: 0%;
+            z-index: 1003;
 
             button {
-                flex: 1;
-                display: flex;
-                height: 5%;
-                align-items: center;
+                padding: 1%;
                 justify-content: center;
+                align-items: center;
+                width: 100%;
+                display: flex;
+                height: 100%;
                 font-family: 'Inter', sans-serif;
                 font-size: 20px;
                 border: 1px solid transparent;
                 opacity: 65%;
                 background: none;
                 cursor: pointer;
-                padding: 2%;
-                box-sizing: border-box;
 
                 &:hover {
                     opacity: 100%;
@@ -290,7 +279,30 @@
     }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 2400px) {
+    .mainContainer {
+        .cartAndFiltersContainer {
+            .closeButton {
+                right: 8%;
+            }
+
+            .cartHeader {
+                .cartHeaderContent {
+                    font-size: 23px;
+                }
+            }
+
+            .cartFooter {
+                button {
+                    font-size: 26px;
+                    padding-bottom: 4%;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
     .mainContainer {
         .cartAndFiltersContainer {
             .closeButton {
@@ -305,7 +317,8 @@
 
             .cartFooter {
                 button {
-                    font-size: 17px;
+                    font-size: 24px;
+                    padding-bottom: 3%;
                 }
             }
         }
@@ -343,7 +356,8 @@
 
             .cartFooter {
                 button {
-                    font-size: 12px;
+                    bottom: 0%;
+                    font-size: 22px;
                 }
             }
         }
@@ -359,13 +373,6 @@
 
         .cartAndFiltersContainer {
             left: 8%;
-
-
-            .cartFooter {
-                button {
-                    font-size: 8px;
-                }
-            }
         }
     }
 }
@@ -393,16 +400,11 @@
     }
 }
 
+
+
 @media (max-height: 400px) {
     .mainContainer {
-        .optionsBar {
 
-            .showCartButton,
-            .showFiltersButton {
-                top: 8%;
-
-            }
-        }
 
         .cartAndFiltersContainer {
             .closeButton {
@@ -413,17 +415,14 @@
 
             .cartHeader {
                 height: 18%;
-    
+
                 .cartHeaderContent {
-                   
+
                     font-size: 14px;
-                   
+
                 }
             }
         }
-
-        
-
     }
 }
 
@@ -434,9 +433,35 @@
             .showCartButton,
             .showFiltersButton {
                 top: 12%;
-
             }
         }
+
+        .cartAndFiltersContainer {
+            .closeButton {
+                .closeButtonLogo {
+                    font-size: 12px;
+                }
+            }
+
+            .cartHeader {
+               min-height: 16%;
+
+                .cartHeaderContent {
+                    font-size: 12px;
+                }
+            }
+
+            .cartContent{
+                min-height: 80%;
+            }
+
+
+        }
+    }
+}
+
+@media (max-height: 750px) {
+    .mainContainer {
         .cartAndFiltersContainer {
             .closeButton {
                 .closeButtonLogo {
@@ -446,18 +471,13 @@
 
             .cartHeader {
                 height: 22%;
-    
+
                 .cartHeaderContent {
                     font-size: 12px;
                 }
             }
 
-            .cartFooter {
-                button {
-                    font-size: 8px;
-                    padding: 0%;
-                }
-            }
+
         }
     }
 }
