@@ -8,18 +8,22 @@
     box-sizing: border-box;
 
     .optionsBar {
-        background-color: white;
+        box-sizing: border-box;
+        background-color: rgb(12, 55, 62);
         position: absolute;
         top: 80px;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        height: calc(100% - 80px);
         width: 5%;
         align-items: center;
         justify-content: flex-start;
         z-index: 1003;
         box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
         gap: 0.8%;
+        border-bottom: 1px solid yellow;
+        border-top: 2px solid yellow;
+        border-right: 1px solid yellow;
 
         .showCartButton,
         .showFiltersButton {
@@ -70,12 +74,11 @@
         left: 5%;
         flex-direction: column;
         z-index: 1001;
-        background-color: #cdf6f6;
         overflow-y: hidden;
         overflow-x: hidden;
         visibility: hidden;
         transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        background-color: rgb(6, 37, 42);
+        background-color: rgb(12, 55, 62);
         box-shadow: 4% 0px 4% rgba(192, 192, 192, 0.7);
         display: none;
 
@@ -90,8 +93,9 @@
 
             .closeButtonLogo {
                 font-size: 25px;
-                opacity: 50%;
+                opacity: 100%;
                 position: fixed;
+                color: white;
 
                 &:hover {
                     opacity: 100%;
@@ -105,10 +109,15 @@
         }
 
         .cartHeader {
+            color: white;
             display: flex;
             flex-direction: row;
             font-family: 'Inter', sans-serif;
-            background-color: white;
+
+            border-top: 2px solid yellow;
+            border-right: 1px solid yellow;
+            border-bottom: 1px solid yellow;
+
             z-index: 1003;
             min-height: 8%;
             box-shadow: 0 3% 3% rgba(255, 255, 255, 0.2);
@@ -125,53 +134,70 @@
 
         .cartContent {
             align-items: center;
+            box-sizing: border-box;
             top: 8%;
             flex-direction: column;
-            background-color: rgb(6, 37, 42);
+            background-color: rgb(12, 55, 62);
+            border-right: 1px solid yellow;
             overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
             bottom: 4.5%;
             gap: 2%;
             visibility: hidden;
-            display: none; 
-            width: 96%;
-            min-height: 88%;
+            display: none;
+            width: 100%;
+            min-height: 87%;
+            max-height: 87%;
         }
 
-        .filtersContent{
+        .cartContent::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filtersContent {
             visibility: hidden;
 
         }
+
         .cartFooter {
             display: flex;
             font-family: 'Inter', sans-serif;
-            background-color: white;
             width: 100%;
             visibility: hidden;
             position: absolute;
             bottom: 0%;
             z-index: 1003;
+            height: 5%;
 
             button {
-                padding: 1%;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
                 display: flex;
-                height: 100%;
                 font-family: 'Inter', sans-serif;
                 font-size: 20px;
                 border: 1px solid transparent;
-                opacity: 65%;
+                color: white;
                 background: none;
                 cursor: pointer;
+                border-right: 1px solid yellow;
+                border-top: 1px solid yellow;
+                border-bottom: 1px solid yellow;
+                box-sizing: border-box;
+                height: 100%;
+                margin: 0;
+                padding: 0;
 
                 &:hover {
                     opacity: 100%;
-                    border: 1px solid rgb(0, 255, 76);
+                    border: 2px solid rgb(0, 255, 76);
                 }
             }
 
             &.empty {
+                cursor: not-allowed;
+
                 button {
                     color: grey;
                     pointer-events: none;
@@ -248,6 +274,7 @@
         left: 5%;
         transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
         align-items: center;
+
         .searchBar {
             color: black;
             display: flex;
@@ -264,7 +291,7 @@
             transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
             background-color: gray;
             border-radius: 20%;
-         
+
 
             &.leftBarOpen {
                 left: 43.5%;
@@ -440,6 +467,8 @@
     }
 }
 
+
+
 @media (max-height: 320px) {
     .mainContainer {
         .optionsBar {
@@ -458,15 +487,41 @@
             }
 
             .cartHeader {
-                min-height: 16%;
+                min-height: 12%;
+
+                .cartHeaderContent {
+                    font-size: 10px;
+                }
+            }
+
+            .cartContent {
+                min-height: 82.5%;
+            }
+        }
+    }
+}
+
+@media (max-height: 550px) {
+    .mainContainer {
+        .cartAndFiltersContainer {
+            .closeButton {
+                .closeButtonLogo {
+                    font-size: 12px;
+                }
+            }
+
+            .cartHeader {
+                height: 22%;
 
                 .cartHeaderContent {
                     font-size: 12px;
                 }
             }
 
-            .cartContent {
-                min-height: 80%;
+            .cartFooter {
+                font-size: 10px;
+
+
             }
 
 
@@ -491,7 +546,11 @@
                 }
             }
 
-
+            .cartFooter {
+                button {
+                    font-size: 7px;
+                }
+            }
         }
     }
 }

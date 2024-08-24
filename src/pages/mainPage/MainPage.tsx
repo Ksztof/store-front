@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Products } from "../../components/products/Products";
 import styles from './MainPage.module.scss';
-import { FaShoppingCart, FaSlidersH, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { AboutCart } from '../../types/cartTypes';
 import { RootState } from '../../redux/store';
