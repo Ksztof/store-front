@@ -21,6 +21,7 @@
         display: flex;
         width: 100%;
 
+
     }
 
     label {
@@ -36,6 +37,11 @@
         color: white;
         padding: 3px;
         margin-bottom: 15px;
+        border-color: rgb(0, 173, 179);
+
+        &:focus {
+            outline: none;
+        }
     }
 
     .errorMsg {

@@ -345,7 +345,7 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
     .mainContainer {
         .cartAndFiltersContainer {
             .closeButton {
@@ -355,6 +355,14 @@
             .cartHeader {
                 .cartHeaderContent {
                     font-size: 21px;
+                }
+            }
+
+            .closeButton {
+                .closeButtonLogo {
+                    right: 60%;
+                    font-size: 20px;
+
                 }
             }
 
@@ -382,7 +390,7 @@
             .closeButton {
                 .closeButtonLogo {
                     right: 12%;
-                    font-size: 12px;
+                    font-size: 17px;
 
                 }
             }
