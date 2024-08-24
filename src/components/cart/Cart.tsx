@@ -13,12 +13,10 @@ export const Cart: React.FC = () => {
    
     useEffect(() => {
         dispatch(synchronizeCart(RenderPhase.Mount));
-        console.log("mounteeeed");
     }, [ dispatch])
 
     useEffect(() => {
         return () => {
-            console.log("unmounteeeeed");
             dispatch(synchronizeCart(RenderPhase.Unmount));
         };
     }, [dispatch]);

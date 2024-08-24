@@ -2,6 +2,46 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    .paginationContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .paginationButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(51, 51, 51);
+        border: 1px solid transparent;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover:not(:disabled) {
+            border-color: yellow;
+            color: yellow;
+        }
+
+        &:disabled {
+            opacity: 50%;
+            cursor: not-allowed;
+        }
+
+        &.activePage {
+            background-color: yellow;
+            color: black;
+        }
+
+        svg {
+            font-size: 0.8em;
+        }
+    }
 }
 
 @media (min-width: 3500px) {
