@@ -30,20 +30,20 @@
     .title {
         display: flex;
         justify-content: center;
-        border-bottom: 1px dotted white;
-        border-top: 1px dotted white;
+        border-bottom: 1px dotted rgb(0, 173, 179);
+        border-top: 1px dotted rgb(0, 173, 179);
         padding: 5px;
         box-sizing: border-box;
         width: 20%;
         font-size: 18px;
 
         &:first-child {
-            border-left: 1px dotted white;
+            border-left: 1px dotted rgb(0, 173, 179);
         }
 
         &:last-child {
-            border-right: 1px dotted white;
-            border-left: 1px dotted white;
+            border-right: 1px dotted rgb(0, 173, 179);
+            border-left: 1px dotted rgb(0, 173, 179);
 
         }
 
@@ -58,7 +58,7 @@
 
 .amountRow {
     display: flex;
-    border: 1px dotted white;
+    border: 1px dotted rgb(0, 173, 179);
     border-top: none;
 
     padding-top: 5px;

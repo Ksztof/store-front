@@ -30,7 +30,7 @@
             white-space: nowrap;
 
             &:hover {
-                stroke: white;
+                stroke: rgb(0, 173, 179);
             }
         }
 
@@ -60,7 +60,7 @@
             text-align: center;
             color: white;
             background-color: rgb(6, 37, 42);
-            border: 0.1vw solid white;
+            border: 0.1vw solid rgb(0, 173, 179);
             cursor: pointer;
 
             &::-webkit-outer-spin-button,
@@ -74,7 +74,7 @@
             }
 
             &:hover {
-                border-color: white;
+                border-color: rgb(0, 173, 179);
             }
 
             &:hover:focus {
@@ -91,17 +91,17 @@
     justify-content: center;
     height: 100%;
     font-size: 16px;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(0, 173, 179);
     box-sizing: border-box;
     word-break: break-word;
 
     &:first-child {
-        border-left: 1px solid white;
+        border-left: 1px solid rgb(0, 173, 179);
     }
 
     &:last-child {
-        border-right: 1px solid white;
-        border-left: 1px solid white;
+        border-right: 1px solid rgb(0, 173, 179);
+        border-left: 1px solid rgb(0, 173, 179);
 
     }
 

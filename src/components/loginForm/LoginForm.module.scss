@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 0.1vw solid white;
+    border: 0.1vw solid rgb(0, 173, 179);
     box-sizing: border-box;
     height: 100%;
     width: 70%;
@@ -21,7 +21,7 @@
 
     label {
         font-size: 24px;
-        color: white;
+        color: rgb(0, 173, 179);
         margin-bottom: 5px;
     }
 
@@ -31,6 +31,11 @@
         color: white;
         padding: 5px;
         margin-bottom: 15px;
+        border-color: rgb(0, 173, 179);
+
+        &:focus {
+            outline: none;
+        }
     }
 
     .errorMsg {
@@ -46,13 +51,14 @@
     .loginFormContainer {
         label {
             font-size: 20px;
-           
+
         }
-    
+
         input {
             font-size: 16px;
-            
+
         }
+
         .errorMsg {
             font-size: 15px;
         }
@@ -63,13 +69,14 @@
     .loginFormContainer {
         label {
             font-size: 18px;
-           
+
         }
-    
+
         input {
             font-size: 14px;
-            
+
         }
+
         .errorMsg {
             font-size: 12px;
             width: 90%;
@@ -81,13 +88,14 @@
     .loginFormContainer {
         label {
             font-size: 14px;
-           
+
         }
-    
+
         input {
             font-size: 12px;
-            
+
         }
+
         .errorMsg {
             font-size: 10px;
         }

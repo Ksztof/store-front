@@ -11,13 +11,13 @@
 
     &:hover {
         box-shadow:
-            0 0.1vw 0.1vw yellow,
-            0 -0.1vw 0.1vw yellow,
-            0.1vw 0 0.1vw yellow,
-            -0.1vw 0 0.1vw yellow;
+            0 0.1vw 0.1vw rgb(0, 173, 179),
+            0 -0.1vw 0.1vw rgb(0, 173, 179),
+            0.1vw 0 0.1vw rgb(0, 173, 179),
+            -0.1vw 0 0.1vw rgb(0, 173, 179);
 
         .productName {
-            color: yellow !important;
+            color: rgb(0, 173, 179) !important;
             opacity: 80% !important;
 
             &:hover {
@@ -105,7 +105,7 @@
                     z-index: 900;
 
                     &:hover {
-                        stroke: white;
+                        stroke: rgb(0, 173, 179);
                     }
                 }
 
@@ -148,7 +148,7 @@
                     }
 
                     &:hover {
-                        border-color: white;
+                        border-color: rgb(0, 173, 179);
                     }
 
                     &:hover:focus {
@@ -180,7 +180,7 @@
 
 
                     &:hover {
-                        border-color: white;
+                        border-color: rgb(0, 173, 179);
                         outline: none;
                     }
 
@@ -194,7 +194,7 @@
                     }
 
                     &:focus:not(:active) {
-                        border-color: white;
+                        border-color: rgb(0, 173, 179);
                     }
 
                     &:hover:focus {
@@ -202,7 +202,7 @@
                     }
 
                     &:hover:focus:not(:active) {
-                        border-color: yellow;
+                        border-color: rgb(0, 173, 179);
                     }
                 }
             }

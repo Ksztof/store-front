@@ -27,11 +27,11 @@ export const Main = () => {
         setIsCartOpen(!isCartOpen);
     };
 
-    const toggleFilters = () => {
-        if (isCartOpen)
-            setIsCartOpen(false);
-        setIsFiltersOpen(!isFiltersOpen);
-    };
+    // const toggleFilters = () => {
+    //     if (isCartOpen)
+    //         setIsCartOpen(false);
+    //     setIsFiltersOpen(!isFiltersOpen);
+    // };
 
     const closeOption = () => {
         if (isCartOpen)

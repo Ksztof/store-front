@@ -4,10 +4,9 @@
     align-items: center;
     padding: 10px;
     height: 60px;
-    background-color: white;
-    box-shadow: 0 0.4vw 0.4vw rgba(192, 192, 192, 0.7);
+    background-color: rgb(12, 55, 62);
     width: 100%;
-
+    border-bottom: 1px solid rgb(0, 173, 179);
     .logo {
         flex: 1;
         display: flex;
@@ -64,10 +63,11 @@
         padding-bottom: 5px;
         padding-left: 10px;
         font-family: 'Inter', sans-serif;
-        color: black;
+        color: white;
+        background-color: rgb(12, 55, 62);
 
         &:hover {
-            color: rgb(2, 154, 159);
+            color: rgb(0, 173, 179);
         }
     }
 
@@ -120,12 +120,11 @@
             .nav {
                 flex-direction: column;
                 width: 100%;
-                background-color: white;
 
                 .navbarLink {
                     width: 100vw;
                     align-self: flex-end;
-                    border-bottom: 1px solid #ccc;
+                    border-bottom: 1px solid rgb(0, 173, 179);
                     text-align: right;
                     padding: 3vw 2vw;
                     box-sizing: border-box;

@@ -10,7 +10,7 @@
     border: 1px solid transparent;
     
     &:hover {
-        border: 1px solid yellow;
+        border: 1px solid rgb(0, 173, 179);
     }
 
     .imageContainer {
@@ -55,7 +55,7 @@
                 z-index: 900;
 
                 &:hover {
-                    stroke: yellow;
+                    stroke: rgb(0, 173, 179);
                 }
             }
 
@@ -100,7 +100,7 @@
                 }
 
                 &:hover {
-                    border-color: yellow;
+                    border-color: rgb(0, 173, 179);
                 }
 
                 &:hover:focus {
