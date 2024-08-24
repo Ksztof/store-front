@@ -4,9 +4,9 @@
     align-items: center;
     padding: 10px;
     height: 60px;
-    background-color: white;
-    box-shadow: 0 0.4vw 0.4vw rgba(192, 192, 192, 0.7);
+    background-color: rgb(12, 55, 62);
     width: 100%;
+    border-bottom: 1px solid rgb(0, 173, 179);
 
     .logo {
         flex: 1;
@@ -40,7 +40,7 @@
             left: 0;
             right: 0;
             height: 10px;
-            box-shadow: 0 0.4vw 0.4vw rgba(192, 192, 192, 0.7);
+            box-shadow: 0 0.4vw 0.4vw rgba(0, 173, 179, 0.4);
 
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
@@ -64,10 +64,11 @@
         padding-bottom: 5px;
         padding-left: 10px;
         font-family: 'Inter', sans-serif;
-        color: black;
+        color: white;
+        background-color: rgb(12, 55, 62);
 
         &:hover {
-            color: rgb(2, 154, 159);
+            color: rgb(0, 173, 179);
         }
     }
 
@@ -113,28 +114,25 @@
                 opacity: 1;
                 pointer-events: auto;
                 transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s;
-                box-shadow: 0 3px 5px rgba(192, 192, 192, 0.5);
+                box-shadow: 0 3px 5px rgba(0, 173, 179, 0.4);
                 overflow-y: auto;
             }
 
             .nav {
                 flex-direction: column;
                 width: 100%;
-                background-color: white;
 
                 .navbarLink {
                     width: 100vw;
                     align-self: flex-end;
-                    border-bottom: 1px solid #ccc;
+                    border-bottom: 0.5px solid rgb(0, 173, 179);
                     text-align: right;
                     padding: 3vw 2vw;
                     box-sizing: border-box;
                     height: 12vw;
                     font-size: 6vw;
 
-                    &:last-child {
-                        border-bottom: none;
-                    }
+
                 }
             }
         }

@@ -80,8 +80,9 @@
 
     .OrderNowBtn {
         width: 30%;
-        padding: 5%;
+        margin: 5%;
         align-self: center;
+        cursor: not-allowed;
 
         button {
             opacity: 65%;
@@ -98,6 +99,7 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
+                pointer-events: all;
                 border: solid 2px rgb(111, 255, 0);
                 color: rgb(111, 255, 0);
                 background-color: black;
