@@ -17,7 +17,6 @@
     .registerForm {
         margin-top: 5%;
         display: flex;
-        flex: 1;
         width: 100%;
         justify-content: center;
 
@@ -25,7 +24,6 @@
 
     .loginLink {
         padding: 1%;
-        flex: 0.5;
         color: white;
         font-size: 16px;
         margin-bottom: 5px;
@@ -42,13 +40,12 @@
     }
 
     .registerButton {
-        flex: 4;
         align-self: center;
         justify-content: center;
         align-items: flex-start;
         display: flex;
-        pointer-events: none;
         width: 15%;
+        cursor: not-allowed;
 
         button {
             opacity: 65%;
@@ -56,6 +53,7 @@
             font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
+            pointer-events: none;
         }
 
         &.formValid {

@@ -83,14 +83,15 @@
         margin: 5%;
         align-self: center;
         cursor: not-allowed;
+
         button {
             opacity: 65%;
             width: 100%;
             font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
-            pointer-events: none;        box-sizing: border-box;
-
+            pointer-events: none;
+            box-sizing: border-box;
         }
 
         &.formValid {

@@ -376,3 +376,32 @@
         }
     }
 }
+
+
+@media (max-width: 300px) {
+    .productContainer {
+        .detailsContainer {
+            .infoContainer {
+                .addBtnContainer {
+                    button {
+                        font-size: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 205px) {
+    .productContainer {
+        .detailsContainer {
+            .infoContainer {
+                .addBtnContainer {
+                    button {
+                        font-size: 3px;
+                    }
+                }
+            }
+        }
+    }
+}
