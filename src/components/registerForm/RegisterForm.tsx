@@ -17,7 +17,7 @@ import { useAppDispatch } from "../../hooks";
 const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (isValid: boolean) => void, apiError: ApiError | string | null }) => {
     const formik = useFormikContext<any>();
     const [isErrorFromApi, setIsErrorFromApi] = useState<boolean>(false);
-    const dispatch: AppDispatch= useAppDispatch();
+    const dispatch: AppDispatch = useAppDispatch();
 
     useEffect(() => {
         const checkFormValidity = () => {
@@ -49,10 +49,9 @@ const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (i
                 }
             });
 
-            console.log(apiErrors);
             formik.setErrors(apiErrors);
         }
-    }, [apiError, formik, setIsErrorFromApi]);
+    }, [apiError, formik]);
 
     useEffect(() => {
         if (isErrorFromApi) {
@@ -67,7 +66,7 @@ const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (i
             dispatch(clearError());
 
         }
-    }, [formik.values, setIsErrorFromApi, setIsFormValid])
+    }, [formik.values])
 
     return null;
 };

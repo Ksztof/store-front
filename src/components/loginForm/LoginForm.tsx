@@ -1,5 +1,5 @@
 import { ErrorMessage, Form, Formik, useFormikContext } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LoginFormProps } from "../../props/authProps";
 import { loginCredentialsInitialValues } from "../../initialValues/authInitials";
 import { loginSchema } from "../../validation/validationSchemas";
@@ -8,12 +8,16 @@ import { formatEmailInput, formatPasswordInput } from "../../validation/validati
 import styles from './LoginForm.module.scss';
 import { isApiError } from "../../utils/responseUtils";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import { ApiError } from "../../types/errorTypes";
 import { toCamelCase } from "../../utils/localStorageUtils";
+import { useAppDispatch } from "../../hooks";
+import { clearError } from "../../redux/reducers/errorReducer";
 
 const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (isValid: boolean) => void, apiError: ApiError | string | null }) => {
     const formik = useFormikContext<any>();
+    const [isErrorFromApi, setIsErrorFromApi] = useState<boolean>(false);
+    const dispatch: AppDispatch = useAppDispatch();
 
     useEffect(() => {
         const checkFormValidity = () => {
@@ -25,7 +29,7 @@ const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (i
         };
 
         checkFormValidity();
-    }, [formik.values, formik.errors, formik.touched, setIsFormValid, formik]);
+    }, [setIsFormValid, formik]);
 
     useEffect(() => {
         if (formik && apiError && isApiError(apiError)) {
@@ -38,15 +42,31 @@ const FormValidationEffect = ({ setIsFormValid, apiError }: { setIsFormValid: (i
                 console.log(`propertyName: ${propertyName}`);
                 if (formFields.includes(propertyName)) {
                     apiErrors[propertyName] = (apiErrors[propertyName] ? `${apiErrors[propertyName]}, ` : '') + error.description;
+                    setIsErrorFromApi(true);
                 } else if (propertyName === "userValidation") {
                     apiErrors["password"] = (apiErrors["password"] ? `${apiErrors["password"]}, ` : '') + error.description;
+                    setIsErrorFromApi(true);
                 }
             });
 
-            console.log(apiErrors);
             formik.setErrors(apiErrors);
         }
     }, [apiError, formik]);
+
+    useEffect(() => {
+        if (isErrorFromApi) {
+            formik.setErrors({});
+            setIsFormValid(false);
+
+
+            formik.validateForm().then((errors) => {
+                setIsFormValid(Object.keys(errors).length === 0);
+            });
+
+            dispatch(clearError());
+
+        }
+    }, [formik.values])
 
     return null;
 };
