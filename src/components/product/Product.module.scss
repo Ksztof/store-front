@@ -2,7 +2,7 @@
     flex: 1;
     display: flex;
     position: relative;
-    background-color:  rgb(12, 55, 62);
+    background-color: rgb(12, 55, 62);
     border-radius: 10px;
     border: 1px solid rgb(0, 173, 179);
     box-sizing: border-box;
@@ -46,20 +46,27 @@
         flex: 1;
         display: flex;
         flex-direction: column;
+        max-width: 80%;
 
         .nameContainer {
+            max-width: 100%;
             height: 3%;
             flex: 1;
             display: flex;
             align-items: center;
+            overflow: hidden;
 
             .productName {
+                max-width: 100%;
                 margin-left: 2%;
                 font-family: Open Sans, sans-serif;
                 flex: 1;
                 font-size: 26px;
                 font-weight: 400;
                 color: white;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 cursor: pointer;
             }
         }
@@ -100,7 +107,8 @@
                     cursor: pointer;
                     width: 45%;
                     height: 90%;
-                    stroke: rgb(0, 173, 179);;
+                    stroke: rgb(0, 173, 179);
+                    ;
                     stroke-width: 7px;
                     color: rgb(6, 37, 42);
                     z-index: 900;
@@ -140,7 +148,8 @@
                     text-align: center;
                     color: white;
                     background-color: rgb(6, 37, 42);
-                    border: 1px solid rgb(0, 173, 179);;
+                    border: 1px solid rgb(0, 173, 179);
+                    ;
                     z-index: 901;
                     cursor: pointer;
 
@@ -182,7 +191,8 @@
                     border-radius: 10px;
                     color: white;
                     font-size: 20px;
-                    border: 1px solid rgb(0, 173, 179);;
+                    border: 1px solid rgb(0, 173, 179);
+                    ;
                     cursor: pointer;
 
 
