@@ -37,7 +37,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
             handleBlur();
         }
     };
-    
+
     return (
         <div className={styles.productInCartContainer} key={product.productId}>
             <div className={styles.imageContainer}>
@@ -61,8 +61,8 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                     </div>
                 </div>
                 <div className={styles.totalSummary}>
+                    <p className={styles.unitPriceInfo}>unit price:  {product.productUnitPrice} zł</p>
                     <p className={styles.totalTitle}>Product total: {product.productTotalPrice} zł</p>
-                    <p className={styles.unitPriceInfo}>unit price: <br></br> {product.productUnitPrice} zł</p>
                 </div>
             </div>
         </div>

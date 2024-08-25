@@ -8,6 +8,7 @@
     width: 96%;
     height: 16%;
     border: 1px solid rgb(12, 55, 62);
+    max-width: 96%;
 
     &:hover {
         border: 1px solid rgb(0, 173, 179);
@@ -17,6 +18,7 @@
         border-radius: 10px;
         display: flex;
         width: 30%;
+        min-width: 30%;
 
         img {
             width: 100%;
@@ -31,6 +33,7 @@
         display: flex;
         border-top-right-radius: 8.5px;
         border-bottom-right-radius: 8.5px;
+        max-width: 70%;
 
         .summaryTitle {
             height: 50%;
@@ -44,14 +47,15 @@
             .quantityRightArrow {
                 position: relative;
                 cursor: pointer;
-                height: 55px;
-                width: 35px;
+                height: 100px;
+                width: 8%;
+                max-height: 90%;
+                min-height: 60%;
+                min-width: 8%;
                 stroke: transparent;
                 stroke-width: 15px;
                 color: rgb(12, 55, 62);
                 z-index: 900;
-
-
             }
 
             .quantityLeftArrow {
@@ -80,16 +84,20 @@
 
             input {
                 background-color: rgb(82, 83, 82);
-                width: 12%;
-                height: 60%;
+                width: 80px;
+                min-width: 80px;
+                height: 50px;
+                max-height: 90%;
+                min-height: 60%;
                 border-radius: 10px;
-                font-size: 18px;
+                font-size: 28px;
                 justify-content: center;
                 text-align: center;
                 color: white;
                 background-color: rgb(12, 55, 62);
                 border: 1px solid rgb(12, 55, 62);
                 cursor: pointer;
+                box-sizing: border-box;
                 z-index: 1002;
 
                 &::-webkit-outer-spin-button,
@@ -113,12 +121,17 @@
 
             .productName {
                 color: black;
+                display: flex;
+                overflow: hidden;
 
                 .nameWriting {
                     font-family: Open Sans, sans-serif;
-                    line-height: 2.5px;
-                    font-size: 18px;
+                    font-size: 24px;
                     font-weight: 500;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 100%;
                     cursor: pointer;
 
                     &:hover {
@@ -131,50 +144,95 @@
         .totalSummary {
             height: 50%;
             display: flex;
-            align-items: center;
-            flex-direction: row;
+            flex-direction: column;
             font-family: Open Sans, sans-serif;
             color: white;
             font-weight: 400;
             background-color: rgb(51, 51, 51);
             border-bottom-right-radius: 10px;
-
-            .totalTitle {
-                display: flex;
-                margin-left: 2%;
-                font-size: 13px;
-                width: 70%;
-                justify-content: start;
-            }
+            align-items: flex-end;
+            margin-right: 2%;
 
             .unitPriceInfo {
+                flex: 2;
                 display: flex;
                 flex-grow: 1;
-                font-size: 12px;
+                font-size: 15px;
                 color: rgb(172, 172, 172);
-                justify-content: center;
+                align-items: flex-end;
+                margin-bottom: 0%;
+                margin-top: 5%;
+
             }
 
+            .totalTitle {
+                flex: 0.5;
+                display: flex;
+                font-size: 18px;
+                align-items: flex-start;
+                margin-top: 0%;
+            }
         }
     }
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 2500px) {
     .productInCartContainer {
         .summaryContainer {
             .summaryTitle {
 
                 .quantityLeftArrow,
                 .quantityRightArrow {
-                    height: 50px;
-                    width: 32px;
-
+                    height: 80px;
+                    width: 8%;
+                    min-width: 8%;
                 }
 
                 input {
-                    font-size: 16px;
-                    width: 12%;
-                    height: 55%;
+                    width: 70px;
+                    height: 50px;
+                    min-height: 60%;
+                    font-size: 24px;
+                    min-width: 70px;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 20px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .unitPriceInfo {
+                    font-size: 15px;
+                }
+
+                .totalTitle {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1900px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    height: 70px;
+                    width: 13%;
+                    min-width: 13%;
+                }
+
+                input {
+                    width: 50px;
+                    min-height: 60%;
+                    font-size: 18px;
+                    min-width: 50px;
                 }
 
                 .productName {
@@ -185,73 +243,50 @@
             }
 
             .totalSummary {
-                .totalTitle {
-                    font-size: 13px;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 1000px) {
-    .productInCartContainer {
-        .summaryContainer {
-            .summaryTitle {
-
-
-                .quantityLeftArrow,
-                .quantityRightArrow {
-                    height: 35px;
-                    width: 25px;
-
-                }
-
-                input {
-                    font-size: 15px;
-                    width: 17%;
-                    height: 58%;
-                }
-
-                .productName {
-                    .nameWriting {
-                        font-size: 12px;
-                    }
-                }
-            }
-
-            .totalSummary {
-                .totalTitle {
-                    font-size: 12px;
-                }
-
                 .unitPriceInfo {
-                    font-size: 10px;
+                    font-size: 14px;
                 }
 
+                .totalTitle {
+                    font-size: 16px;
+                }
             }
         }
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1300px) {
     .productInCartContainer {
-        height: 18%;
-
         .summaryContainer {
             .summaryTitle {
 
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    width: 17%;
+                    min-width: 17%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
 
                 .quantityLeftArrow,
                 .quantityRightArrow {
-                    height: 37px;
-                    width: 27px;
-
+                    width: 12%;
+                    min-width: 12%;
                 }
 
                 input {
-                    font-size: 14px;
-                    width: 10%;
-                    height: 55%;
+                    width: 35px;
+                    height: 50px;
+                    min-height: 40%;
+                    font-size: 15px;
+                    min-width: 35px;
                 }
 
                 .productName {
@@ -262,36 +297,87 @@
             }
 
             .totalSummary {
-                .totalTitle {
-                    font-size: 12px;
+                .unitPriceInfo {
+                    font-size: 10px;
                 }
 
-                .unitPriceInfo {
-                    font-size: 8px;
+                .totalTitle {
+                    font-size: 12px;
                 }
             }
         }
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 800px) {
     .productInCartContainer {
-        height: 20%;
-
         .summaryContainer {
             .summaryTitle {
 
                 .quantityLeftArrow,
                 .quantityRightArrow {
-                    height: 30px;
-                    width: 20px;
+                    height: 45px;
+                    width: 8%;
+                }
+            }
+        }
+    }
+}
 
+@media (max-width: 500px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    width: 11%;
+                    min-width: 11%;
                 }
 
                 input {
+                    width: 35px;
+                    height: 35px;
+                    font-size: 13px;
+                    min-width: 35px;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .unitPriceInfo {
+                    font-size: 9px;
+                }
+
+                .totalTitle {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-height: 700px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    width: 6%;
+                    min-width: 6%;
+                }
+
+                input {
+                    width: 30px;
+                    height: 35px;
                     font-size: 12px;
-                    width: 12%;
-                    height: 47%;
+                    min-width: 30px;
                 }
 
                 .productName {
@@ -302,58 +388,26 @@
             }
 
             .totalSummary {
-                .totalTitle {
-                    font-size: 10px;
-                }
-
                 .unitPriceInfo {
-                    font-size: 6px;
-                }
-            }
-        }
-    }
-}
+                    font-size: 7px;
+                    margin-top: 2%;
 
-@media (max-width: 250px) {
-    .productInCartContainer {
-        .summaryContainer {
-            .summaryTitle {
-
-                .quantityLeftArrow,
-                .quantityRightArrow {
-                    height: 28px;
-                    width: 18px;
                 }
 
-                input {
-                    font-size: 12px;
-                    width: 18%;
-                    height: 44%;
-                }
-
-                .productName {
-                    .nameWriting {
-                        font-size: 7px;
-                    }
-                }
-            }
-
-            .totalSummary {
                 .totalTitle {
-                    font-size: 6px;
+                    font-size: 8px;
                 }
             }
         }
     }
 }
-
 
 @media (max-height: 400px) {
     .productInCartContainer {
         height: 30%;
 
         &:first-child {
-            margin-top: 4%;
+            margin-top: 2%;
         }
 
         .summaryContainer {
@@ -362,19 +416,20 @@
                 .quantityLeftArrow,
                 .quantityRightArrow {
                     height: 6px;
-                    width: 6px;
-
+                    width: 7%;
+                    min-width: 7%;
                 }
 
                 input {
                     font-size: 7px;
-                    width: 5%;
-                    height: 35%;
+                    width: 10%;
+                    height: 70%;
+                    min-width: 10%;
                 }
 
                 .productName {
                     .nameWriting {
-                        font-size: 6px;
+                        font-size: 8px;
                     }
                 }
 
@@ -382,6 +437,8 @@
             }
 
             .totalSummary {
+                margin-right: 5%;
+
                 .totalTitle {
                     font-size: 6px;
                 }
@@ -396,25 +453,27 @@
     .productInCartContainer {
         height: 40%;
 
+
+
         .summaryContainer {
             .summaryTitle {
 
                 .quantityLeftArrow,
                 .quantityRightArrow {
-                    height: 5px;
-                    width: 5px;
-
+                    height: 10px;
+                    width: 10%;
+                    min-width: 10%;
                 }
 
                 input {
-                    font-size: 6px;
-                    width: 5%;
-                    height: 30%;
+                    font-size: 7px;
+                    width: 12%;
+                    min-width: 12%;
                 }
 
                 .productName {
                     .nameWriting {
-                        font-size: 5px;
+                        font-size: 6px;
                     }
                 }
 
@@ -422,14 +481,17 @@
             }
 
             .totalSummary {
-                .totalTitle {
+                .unitPriceInfo {
                     font-size: 5px;
+                    margin-top: 0%;
+
                 }
 
-                .unitPriceInfo {
-                    font-size: 4px;
+                .totalTitle {
+                    font-size: 6px;
                 }
             }
         }
+
     }
 }
