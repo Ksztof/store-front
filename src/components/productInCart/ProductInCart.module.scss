@@ -439,6 +439,7 @@
 
 @media (max-height: 700px) {
     .productInCartContainer {
+        height: 22%;
         .summaryContainer {
             .summaryTitle {
 
@@ -457,18 +458,24 @@
 
                 .productName {
                     .nameWriting {
-                        font-size: 10px;
+                        font-size: 9px;
+                    }
+                }
+
+                .deletProductIcon {
+                    svg {
+                        font-size: 1rem;
                     }
                 }
             }
 
             .totalSummary {
                 .unitPriceInfo {
-                    font-size: 9px;
+                    font-size: 7px;
                 }
 
                 .totalTitle {
-                    font-size: 11px;
+                    font-size: 7.5px;
                 }
             }
         }
@@ -506,7 +513,11 @@
                     }
                 }
 
-
+                .deletProductIcon {
+                    svg {
+                        font-size: 0.8rem;
+                    }
+                }
             }
 
             .totalSummary {
@@ -522,12 +533,9 @@
     }
 }
 
-@media (max-height: 250px) {
+@media (max-height: 310px) {
     .productInCartContainer {
         height: 40%;
-
-
-
         .summaryContainer {
             .summaryTitle {
 
