@@ -55,11 +55,15 @@
             .cartLogo {
                 font-size: 58px;
                 padding-right: 5%;
-                color:white;
+                color: white;
 
                 &:hover {
                     color: rgb(0, 173, 179);
 
+                }
+
+                &:active {
+                    color: rgb(0, 255, 0);
                 }
             }
         }
@@ -193,7 +197,12 @@
 
                 &:hover {
                     opacity: 100%;
-                    color: greenyellow;
+                    color: rgb(0, 173, 179);
+                    ;
+                }
+
+                &:active {
+                    color: rgb(0, 255, 0);
                 }
             }
 

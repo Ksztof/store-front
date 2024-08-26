@@ -30,11 +30,15 @@
         max-width: 40%;
 
         a {
-            color: rgb(111, 255, 0);
+            color: greenyellow;
             text-decoration: none;
 
             &:hover {
-                color: rgb(25, 0, 255);
+                color: rgb(0, 173, 179);
+            }
+
+            &:active {
+                color: rgb(0, 255, 0);
             }
         }
     }
@@ -62,18 +66,19 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
-                border: solid 2px rgb(111, 255, 0);
-                color: rgb(111, 255, 0);
-                background-color: black;
+                border: solid 2px rgb(0, 173, 179);
+                color: white;
+                background-color: rgb(6, 37, 42);
 
 
                 &:hover {
                     opacity: 100%;
+                    color: rgb(0, 173, 179);
                 }
 
                 &:active {
-                    background-color: green;
-                    opacity: 100%;
+                    border-color: rgb(0, 255, 0);
+                    color: rgb(0, 255, 0);
                 }
             }
         }

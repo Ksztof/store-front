@@ -37,7 +37,7 @@ export const Navbar: React.FC = () => {
                     {isLoggedIn ? <Link className={styles.navbarLink} to="" onClick={handleLogout}>Logout</Link> : <Link className={styles.navbarLink} to="/login"> Sign in </Link>}
                 </nav>
             </div>
-            <div className={styles.hamburger} onClick={toggleMenu}>
+            <div className={`${styles.hamburger} ${isMenuOpen ? styles.hamOpen : ""}`} onClick={toggleMenu}>
                 {isMenuOpen ? <FaTimes /> : <FaBars />}
             </div>
         </div>
