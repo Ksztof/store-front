@@ -492,7 +492,7 @@
 
             .showCartButton,
             .showFiltersButton {
-                top: 9%;
+                top: 10%;
             }
         }
 
@@ -568,6 +568,37 @@
                     font-size: 7px;
                 }
             }
+        }
+    }
+}
+
+
+@media (max-height: 150px) {
+    .mainContainer {
+        .optionsBar {
+
+            .showCartButton,
+            .showFiltersButton {
+                top: 40%;
+            }
+        }
+
+        .cartAndFiltersContainer {
+            .closeButton {
+                .closeButtonLogo {
+                    font-size: 8px;
+                }
+            }
+
+            .cartHeader {
+                min-height: 40%;
+
+                .cartHeaderContent {
+                    font-size: 10px;
+                }
+            }
+
+           
         }
     }
 }
