@@ -99,18 +99,18 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
-                pointer-events: all;
-                border: solid 2px rgb(111, 255, 0);
-                color: rgb(111, 255, 0);
-                background-color: black;
+                border: solid 2px rgb(0, 173, 179);
+                color: white;
+                background-color: rgb(6, 37, 42);
 
                 &:hover {
                     opacity: 100%;
+                    color: rgb(0, 173, 179);
                 }
 
                 &:active {
-                    background-color: green;
-                    opacity: 100%;
+                    border-color: rgb(0, 255, 0);
+                    color: rgb(0, 255, 0);
                 }
             }
         }

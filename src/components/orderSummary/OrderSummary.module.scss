@@ -5,7 +5,7 @@
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
-    border: 1px solid rgb(111, 255, 0);
+    border: 1px solid rgb(0, 255, 0);
     padding-left: 5%;
     padding-right: 5%;
     align-self: center;
@@ -102,6 +102,10 @@
         &:hover {
             color: rgb(0, 173, 179);
         }
+
+        &:active {
+            color: rgb(0, 255, 0);
+        }
     }
 }
 
@@ -195,4 +199,19 @@
 
         font-size: 28px;
     }
+}
+
+@media (min-width: 1100px) {
+    .summaryHeader {
+        .title {
+            font-size: 21px;
+        }
+        
+    }
+
+    .amountRow {
+
+        font-size: 24px;
+    }
+
 }

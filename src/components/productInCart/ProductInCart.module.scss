@@ -12,6 +12,20 @@
 
     &:hover {
         border: 1px solid rgb(0, 173, 179);
+
+        .summaryContainer {
+            .summaryTitle {
+                .productName {
+                    .nameWriting {
+                        color: white;
+
+                        &:hover {
+                            color: rgb(0, 255, 0);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .imageContainer {
@@ -120,9 +134,13 @@
             }
 
             .productName {
+                flex: 1;
                 color: black;
                 display: flex;
                 overflow: hidden;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
 
                 .nameWriting {
                     font-family: Open Sans, sans-serif;
@@ -131,11 +149,27 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    max-width: 100%;
                     cursor: pointer;
 
                     &:hover {
                         color: white;
+                    }
+                }
+            }
+
+            .deletProductIcon {
+                display: flex;
+                justify-content: flex-end;
+                align-self: flex-start;
+                margin-top: 1%;
+                margin-right: 1%;
+
+                svg {
+                    color: white;
+                    font-size: 1.2rem;
+
+                    &:hover {
+                        color: red;
                     }
                 }
             }
@@ -202,6 +236,8 @@
                     }
                 }
             }
+
+
 
             .totalSummary {
                 .unitPriceInfo {
@@ -336,8 +372,8 @@
                 }
 
                 input {
-                    width: 35px;
-                    height: 35px;
+                    width: 25px;
+                    height: 30px;
                     font-size: 13px;
                     min-width: 35px;
                 }
@@ -362,6 +398,45 @@
     }
 }
 
+@media (max-width: 350px) {
+    .productInCartContainer {
+        .summaryContainer {
+            .summaryTitle {
+
+                .quantityLeftArrow,
+                .quantityRightArrow {
+                    width: 10%;
+                    min-width: 10%;
+                }
+
+                input {
+                    width: 22px;
+                    height: 30px;
+                    font-size: 10px;
+                    min-width: 20px;
+                }
+
+                .productName {
+                    .nameWriting {
+                        font-size: 10px;
+                    }
+                }
+            }
+
+            .totalSummary {
+                .unitPriceInfo {
+                    font-size: 9px;
+                }
+
+                .totalTitle {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+
 @media (max-height: 700px) {
     .productInCartContainer {
         .summaryContainer {
@@ -369,33 +444,31 @@
 
                 .quantityLeftArrow,
                 .quantityRightArrow {
-                    width: 6%;
-                    min-width: 6%;
+                    width: 10%;
+                    min-width: 10%;
                 }
 
                 input {
-                    width: 30px;
-                    height: 35px;
-                    font-size: 12px;
-                    min-width: 30px;
+                    width: 22px;
+                    height: 30px;
+                    font-size: 10px;
+                    min-width: 20px;
                 }
 
                 .productName {
                     .nameWriting {
-                        font-size: 11px;
+                        font-size: 10px;
                     }
                 }
             }
 
             .totalSummary {
                 .unitPriceInfo {
-                    font-size: 7px;
-                    margin-top: 2%;
-
+                    font-size: 9px;
                 }
 
                 .totalTitle {
-                    font-size: 8px;
+                    font-size: 11px;
                 }
             }
         }
@@ -422,9 +495,9 @@
 
                 input {
                     font-size: 7px;
-                    width: 10%;
+                    width: 7%;
                     height: 70%;
-                    min-width: 10%;
+                    min-width: 7%;
                 }
 
                 .productName {

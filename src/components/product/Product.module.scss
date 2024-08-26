@@ -17,8 +17,8 @@
             -0.1vw 0 0.1vw rgb(0, 173, 179);
 
         .productName {
-            color: rgb(111, 255, 0) !important;
-            opacity: 80% !important;
+            color: rgb(0, 173, 179) !important;
+            opacity: 100% !important;
 
             &:hover {
                 color: rgb(111, 255, 0) !important;
@@ -202,7 +202,8 @@
                     }
 
                     &:active {
-                        background-color: #5fe27d;
+                        border-color: rgb(0, 255, 0);
+                        color: rgb(0, 255, 0);
                     }
 
                     &:focus {
@@ -370,6 +371,35 @@
                 .addBtnContainer {
                     button {
                         font-size: 7px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 300px) {
+    .productContainer {
+        .detailsContainer {
+            .infoContainer {
+                .addBtnContainer {
+                    button {
+                        font-size: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 205px) {
+    .productContainer {
+        .detailsContainer {
+            .infoContainer {
+                .addBtnContainer {
+                    button {
+                        font-size: 3px;
                     }
                 }
             }

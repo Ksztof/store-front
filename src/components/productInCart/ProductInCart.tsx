@@ -4,8 +4,8 @@ import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../
 import { adjustProductQuantity, changeProductInCartQuantity } from "../../redux/actions/cartActions";
 import styles from './ProductInCart.module.scss';
 import productImg from '../../pictures/kielbasa.jpg'
-import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import React from 'react';
+import { FaCaretLeft, FaCaretRight, FaTimes } from "react-icons/fa";
 
 export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
     const dispatch = useAppDispatch();
@@ -59,6 +59,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                     <div className={styles.productName}>
                         <div className={styles.nameWriting}>x {product.productName} </div>
                     </div>
+                    <div className={styles.deletProductIcon}><FaTimes /></div>
                 </div>
                 <div className={styles.totalSummary}>
                     <p className={styles.unitPriceInfo}>unit price:  {product.productUnitPrice} zł</p>

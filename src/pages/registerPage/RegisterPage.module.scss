@@ -17,7 +17,6 @@
     .registerForm {
         margin-top: 5%;
         display: flex;
-        flex: 1;
         width: 100%;
         justify-content: center;
 
@@ -25,30 +24,32 @@
 
     .loginLink {
         padding: 1%;
-        flex: 0.5;
         color: white;
         font-size: 16px;
         margin-bottom: 5px;
         max-width: 40%;
 
         a {
-            color: rgb(111, 255, 0);
+            color: greenyellow;
             text-decoration: none;
 
             &:hover {
-                color: rgb(25, 0, 255);
+                color: rgb(0, 173, 179);
+            }
+
+            &:active {
+                color: rgb(0, 255, 0);
             }
         }
     }
 
     .registerButton {
-        flex: 4;
         align-self: center;
         justify-content: center;
         align-items: flex-start;
         display: flex;
-        pointer-events: none;
         width: 15%;
+        cursor: not-allowed;
 
         button {
             opacity: 65%;
@@ -56,6 +57,7 @@
             font-size: 20px;
             border-radius: 10px;
             border: solid 2px transparent;
+            pointer-events: none;
         }
 
         &.formValid {
@@ -64,18 +66,19 @@
                 opacity: 100%;
                 pointer-events: all;
                 cursor: pointer;
-                border: solid 2px rgb(111, 255, 0);
-                color: rgb(111, 255, 0);
-                background-color: black;
+                border: solid 2px rgb(0, 173, 179);
+                color: white;
+                background-color: rgb(6, 37, 42);
 
 
                 &:hover {
                     opacity: 100%;
+                    color: rgb(0, 173, 179);
                 }
 
                 &:active {
-                    background-color: green;
-                    opacity: 100%;
+                    border-color: rgb(0, 255, 0);
+                    color: rgb(0, 255, 0);
                 }
             }
         }
