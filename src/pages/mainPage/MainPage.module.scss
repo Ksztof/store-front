@@ -233,7 +233,7 @@
                 padding: 2%;
                 height: auto;
                 display: flex;
-
+                padding-bottom: 10%;
             }
 
             .filtersContent {
@@ -502,86 +502,3 @@
         }
     }
 }
-
-// @media (max-height: 550px) {
-//     .mainContainer {
-//         .cartAndFiltersContainer {
-//             .closeButton {
-//                 .closeButtonLogo {
-//                     font-size: 12px;
-//                 }
-//             }
-
-//             .cartHeader {
-//                 height: 22%;
-
-//                 .cartHeaderContent {
-//                     font-size: 12px;
-//                 }
-//             }
-
-//             .cartFooter {
-//                 font-size: 10px;
-
-
-//             }
-
-
-//         }
-//     }
-// }
-
-// @media (max-height: 750px) {
-//     .mainContainer {
-//         .cartAndFiltersContainer {
-//             .closeButton {
-//                 .closeButtonLogo {
-//                     font-size: 12px;
-//                 }
-//             }
-
-//             .cartHeader {
-//                 height: 22%;
-
-//                 .cartHeaderContent {
-//                     font-size: 12px;
-//                 }
-//             }
-
-//             .cartFooter {
-//                 height: 8%;
-//             }
-//         }
-//     }
-// }
-
-
-// @media (max-height: 150px) {
-//     .mainContainer {
-//         .optionsBar {
-
-//             .showCartButton,
-//             .showFiltersButton {
-//                 top: 40%;
-//             }
-//         }
-
-//         .cartAndFiltersContainer {
-//             .closeButton {
-//                 .closeButtonLogo {
-//                     font-size: 8px;
-//                 }
-//             }
-
-//             .cartHeader {
-//                 min-height: 40%;
-
-//                 .cartHeaderContent {
-//                     font-size: 10px;
-//                 }
-//             }
-
-
-//         }
-//     }
-// }
