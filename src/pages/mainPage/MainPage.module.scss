@@ -139,13 +139,16 @@
         }
 
         .cartContent {
+            display: flex;
+            flex: 1;
             align-items: center;
             box-sizing: border-box;
             top: 8%;
             flex-direction: column;
             background-color: rgb(12, 55, 62);
             border-right: 1px solid rgb(0, 173, 179);
-            overflow-y: scroll;
+            overflow-y: visible;
+            overflow-x: auto;
             -ms-overflow-style: none;
             scrollbar-width: none;
             bottom: 4.5%;
@@ -153,8 +156,6 @@
             visibility: hidden;
             display: none;
             width: 100%;
-            min-height: 87%;
-            max-height: 87%;
         }
 
         .cartContent::-webkit-scrollbar {
@@ -163,6 +164,8 @@
 
         .filtersContent {
             visibility: hidden;
+            display: none;
+
 
         }
 
@@ -175,6 +178,7 @@
             bottom: 0%;
             z-index: 1003;
             height: 5%;
+            background-color: rgb(12, 55, 62);
 
             button {
                 justify-content: center;
@@ -191,14 +195,13 @@
                 border-top: 1px solid rgb(0, 173, 179);
                 border-bottom: 1px solid rgb(0, 173, 179);
                 box-sizing: border-box;
-                height: 100%;
                 margin: 0;
                 padding: 0;
+                flex: 1;
 
                 &:hover {
                     opacity: 100%;
                     color: rgb(0, 173, 179);
-                    ;
                 }
 
                 &:active {
@@ -235,6 +238,7 @@
 
             .filtersContent {
                 visibility: hidden;
+                display: none;
             }
         }
 
@@ -252,6 +256,7 @@
 
             .filtersContent {
                 visibility: visible;
+                display: flex;
             }
         }
 
@@ -282,7 +287,7 @@
         position: relative;
         flex-direction: column;
         top: 80px;
-        left: 5%;
+        left: 2.5%;
         transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
         align-items: center;
 
@@ -306,7 +311,7 @@
 
             &.leftBarOpen {
                 left: 43.5%;
-                width: 45%;
+                width: 47.5%;
             }
         }
 
@@ -324,7 +329,7 @@
             top: 5%;
 
             &.leftBarOpen {
-                left: 36%;
+                left: 38.5%;
                 width: 59%;
             }
         }
@@ -344,11 +349,7 @@
                 }
             }
 
-            .cartFooter {
-                button {
-                    font-size: 26px;
-                }
-            }
+
         }
     }
 }
@@ -460,7 +461,7 @@
 
 
 
-@media (max-height: 400px) {
+@media (max-height: 500px) {
     .mainContainer {
 
 
@@ -475,97 +476,15 @@
                 height: 18%;
 
                 .cartHeaderContent {
-
                     font-size: 14px;
-
-                }
-            }
-        }
-    }
-}
-
-
-
-@media (max-height: 320px) {
-    .mainContainer {
-        .optionsBar {
-
-            .showCartButton,
-            .showFiltersButton {
-                top: 10%;
-            }
-        }
-
-        .cartAndFiltersContainer {
-            .closeButton {
-                .closeButtonLogo {
-                    font-size: 12px;
-                }
-            }
-
-            .cartHeader {
-                min-height: 12%;
-
-                .cartHeaderContent {
-                    font-size: 10px;
-                }
-            }
-
-            .cartContent {
-                min-height: 82.5%;
-            }
-        }
-    }
-}
-
-@media (max-height: 550px) {
-    .mainContainer {
-        .cartAndFiltersContainer {
-            .closeButton {
-                .closeButtonLogo {
-                    font-size: 12px;
-                }
-            }
-
-            .cartHeader {
-                height: 22%;
-
-                .cartHeaderContent {
-                    font-size: 12px;
                 }
             }
 
             .cartFooter {
-                font-size: 10px;
+                height: 8%;
 
-
-            }
-
-
-        }
-    }
-}
-
-@media (max-height: 750px) {
-    .mainContainer {
-        .cartAndFiltersContainer {
-            .closeButton {
-                .closeButtonLogo {
-                    font-size: 12px;
-                }
-            }
-
-            .cartHeader {
-                height: 22%;
-
-                .cartHeaderContent {
-                    font-size: 12px;
-                }
-            }
-
-            .cartFooter {
                 button {
-                    font-size: 7px;
+                    font-size: 1rem;
                 }
             }
         }
@@ -573,32 +492,96 @@
 }
 
 
-@media (max-height: 150px) {
+
+@media (max-height: 350px) {
     .mainContainer {
-        .optionsBar {
-
-            .showCartButton,
-            .showFiltersButton {
-                top: 40%;
-            }
-        }
-
         .cartAndFiltersContainer {
-            .closeButton {
-                .closeButtonLogo {
-                    font-size: 8px;
-                }
+            .cartFooter {
+                height: 10%;
             }
-
-            .cartHeader {
-                min-height: 40%;
-
-                .cartHeaderContent {
-                    font-size: 10px;
-                }
-            }
-
-           
         }
     }
 }
+
+// @media (max-height: 550px) {
+//     .mainContainer {
+//         .cartAndFiltersContainer {
+//             .closeButton {
+//                 .closeButtonLogo {
+//                     font-size: 12px;
+//                 }
+//             }
+
+//             .cartHeader {
+//                 height: 22%;
+
+//                 .cartHeaderContent {
+//                     font-size: 12px;
+//                 }
+//             }
+
+//             .cartFooter {
+//                 font-size: 10px;
+
+
+//             }
+
+
+//         }
+//     }
+// }
+
+// @media (max-height: 750px) {
+//     .mainContainer {
+//         .cartAndFiltersContainer {
+//             .closeButton {
+//                 .closeButtonLogo {
+//                     font-size: 12px;
+//                 }
+//             }
+
+//             .cartHeader {
+//                 height: 22%;
+
+//                 .cartHeaderContent {
+//                     font-size: 12px;
+//                 }
+//             }
+
+//             .cartFooter {
+//                 height: 8%;
+//             }
+//         }
+//     }
+// }
+
+
+// @media (max-height: 150px) {
+//     .mainContainer {
+//         .optionsBar {
+
+//             .showCartButton,
+//             .showFiltersButton {
+//                 top: 40%;
+//             }
+//         }
+
+//         .cartAndFiltersContainer {
+//             .closeButton {
+//                 .closeButtonLogo {
+//                     font-size: 8px;
+//                 }
+//             }
+
+//             .cartHeader {
+//                 min-height: 40%;
+
+//                 .cartHeaderContent {
+//                     font-size: 10px;
+//                 }
+//             }
+
+
+//         }
+//     }
+// }
