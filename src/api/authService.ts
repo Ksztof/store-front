@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 export const loginUser = async (credentials: LoginCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.post<void>('https://localhost:5004/api/User/login', credentials);
+      await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User/login', credentials);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -32,7 +32,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<NoConten
 export const registerUser = async (credentials: RegisterCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.post('https://localhost:5004/api/User', credentials);
+      await axios.post('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User', credentials);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -55,7 +55,7 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<No
 export const removeGuestSessionIdApi = async (): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.get('https://localhost:5004/api/User', {});
+      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -78,7 +78,7 @@ export const removeGuestSessionIdApi = async (): Promise<NoContentApiResponse | 
 export const logoutApi = async (): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.get('https://localhost:5004/api/User/logout', {});
+      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User/logout', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };

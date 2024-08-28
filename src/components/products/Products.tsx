@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store";
 import { ProductDetails } from "../../types/productTypes";
 import { Product } from "../product/Product";
 import styles from './Products.module.scss';
+import React from 'react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const PRODUCTS_PER_PAGE = 3;

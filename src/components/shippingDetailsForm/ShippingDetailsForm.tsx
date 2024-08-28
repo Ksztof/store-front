@@ -2,6 +2,7 @@ import { ErrorMessage, Form, Formik, useFormikContext } from "formik";
 import { useEffect } from "react";
 import { shippingDetailsSchema } from "../../validation/validationSchemas";
 import TextField from "../TextField";
+import React from 'react';
 import { capitalizeFirstLetterAndSetLength, formatEmailInput, formatPhoneNumber, formatPostCode } from "../../validation/validationUtils";
 import { ShippingDetailsFormProps } from "../../props/orderProps";
 import { shippingDetailsInitialValues } from "../../initialValues/orderInitials";

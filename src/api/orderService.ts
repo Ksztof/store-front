@@ -9,8 +9,8 @@ axios.defaults.withCredentials = true;
 export const saveOrder = async (payload: MakeOrderPayload): Promise<OkApiResponse<OrderResponse> | ApiError> => {
     try {
         const url: string = payload.orderMethod
-            ? `https://localhost:5004/api/Orders/${payload.orderMethod}`
-            : `https://localhost:5004/api/Orders`;
+            ? `https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Orders/${payload.orderMethod}`
+            : `https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Orders`;
 
         const response: OrderResponse | any =
             await axios.post<OrderResponse>(url, payload.shippingDetails);

@@ -8,14 +8,14 @@ import LoginPage from './pages/loginPage/LoginPage';
 import { RegisterPage } from './pages/registerPage/RegisterPage';
 import { OrderPage } from './pages/orderPage/OrderPage';
 import ErrorModal from './components/error/ErrorModal';
-import { Header } from './components/Header/Header';
+import { PageHeader } from './components/pageHeader/PageHeader';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className={styles.app}>
         <Router>
-          <Header />
+          <PageHeader />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LoginPage />} />

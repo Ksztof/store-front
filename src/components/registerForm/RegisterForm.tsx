@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { ApiError } from "../../types/errorTypes";
 import { isApiError } from "../../utils/responseUtils";
 import { toCamelCase } from "../../utils/localStorageUtils";
+import React from 'react';
 import { clearError } from "../../redux/reducers/errorReducer";
 import { useAppDispatch } from "../../hooks";
 

@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 export const getClientSecretApi = async (payload: PaymentDetails): Promise<string | ApiError> => {
     try {
         const response: string | any =
-            await axios.post<string>('https://localhost:5004/api/Payments', payload);
+            await axios.post<string>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Payments', payload);
 
         if (typeof response.data === 'string' && response.data.trim() !== '') {
             const responseDetails: string = response.data;
@@ -34,7 +34,7 @@ export const getClientSecretApi = async (payload: PaymentDetails): Promise<strin
 export const updatePaymentIntentApi = async (clientSecret: string): Promise<NoContentApiResponse | ApiError> => {
     try {
         const response: void | any =
-            await axios.post<void>('https://localhost:5004/api/Payments/update-payment-intent', { clientSecret });
+            await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Payments/update-payment-intent', { clientSecret });
 
         if (response.status === HttpStatusCode.NoContent) {
             const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -58,7 +58,7 @@ export const updatePaymentIntentApi = async (clientSecret: string): Promise<NoCo
 export const confirmPaymentApi = async (payload: ConfirmPaymentPayload): Promise<NoContentApiResponse | ApiError> => {
     try {
         const response: void | any =
-            await axios.post<void>('https://localhost:5004/api/Payments/confirm-payment', payload);
+            await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Payments/confirm-payment', payload);
 
         if (response.status === HttpStatusCode.NoContent) {
             const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };

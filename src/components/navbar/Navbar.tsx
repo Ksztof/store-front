@@ -7,6 +7,7 @@ import { logout, resetAuth } from '../../redux/actions/authActions';
 import styles from './Navbar.module.scss'
 import logo from '../../pictures/hpcLogo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import React from 'react';
 
 export const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ export const Navbar: React.FC = () => {
                 <nav className={styles.nav}>
                     <Link className={styles.navbarLink} to="/"> Main </Link>
                     {isLoggedIn ? <Link className={styles.navbarLink} to="" onClick={handleLogout}>Logout</Link> : <Link className={styles.navbarLink} to="/login"> Sign in </Link>}
+                    {/* <Link className={styles.navbarLink} to="/register"> Register </Link> */}
                 </nav>
             </div>
             <div className={`${styles.hamburger} ${isMenuOpen ? styles.hamOpen : ""}`} onClick={toggleMenu}>
