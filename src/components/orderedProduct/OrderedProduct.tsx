@@ -1,6 +1,6 @@
 import { ProductInCartProps, CheckCart, AdjustProductQuantityType } from "../../types/cartTypes";
 import styles from './OrderedProduct.module.scss';
-import productImg from '../../pictures/kielbasa.jpg'
+import productImg from '../../pictures/kielbasa.png'
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { adjustProductQuantity, changeProductInCartQuantity } from "../../redux/actions/cartActions";
 import { AppDispatch } from "../../redux/store";

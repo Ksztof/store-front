@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../hooks";
 import { addProductToCart } from "../../redux/actions/cartActions";
 import { ProductProps } from "../../props/productProps";
 import styles from './Product.module.scss';
-import productImg from '../../pictures/kielbasa.jpg'
+import productImg from '../../pictures/kielbasa.png'
 import { Currency } from "../../types/sharedTypes";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import React from 'react';

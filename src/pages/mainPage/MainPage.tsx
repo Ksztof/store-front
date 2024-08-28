@@ -21,6 +21,7 @@ export const Main = () => {
             navigate('/order');
         };
     };
+    
     const toggleCart = () => {
         if (isFiltersOpen)
             setIsFiltersOpen(false);

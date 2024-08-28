@@ -3,8 +3,8 @@ import { useAppDispatch } from "../../hooks";
 import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../types/cartTypes";
 import { adjustProductQuantity, changeProductInCartQuantity, deleteProductFromCart } from "../../redux/actions/cartActions";
 import styles from './ProductInCart.module.scss';
-import productImg from '../../pictures/kielbasa.jpg'
 import React from 'react';
+import productImg from '../../pictures/kielbasa.png'
 import { FaCaretLeft, FaCaretRight, FaTimes } from "react-icons/fa";
 
 export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
