@@ -56,6 +56,10 @@ export interface ModifyProductInCartQuantityPayload {
   aboutCart: AboutCart,
 }
 
+export interface deleteProductPayload {
+  cartContent: AboutCart,
+  productId: number,
+}
 export interface ProductInCartProps {
   product: CheckCart;
 }

@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { checkCurrentCart, clearCartApi, getCartContent, saveCartContent } from '../../api/cartService';
-import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload, RenderPhase } from '../../types/cartTypes';
+import { AboutCart, AdjustProductQuantityPayload, AdjustProductQuantityType, ChangeProductInCartQuantityPayload, NewProductsForApi, checkCurrentCartPayload, ModifyProductInCartQuantityPayload, addProductToReduxStorePayload, increaseProductInCartQuantityStorePayload, RenderPhase, deleteProductPayload } from '../../types/cartTypes';
 import { addProductToCartPayload } from '../../types/productTypes';
 import { isApiError, isNoContentResponse } from '../../utils/responseUtils';
 import { AppDispatch, RootState } from '../store';
 import { decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from '../../utils/localStorageUtils';
-import { mapAboutCartToNewProductsForApi, needSynchronization, needToClearCart, needToSetCurrentCart } from '../../utils/cartUtils';
+import { deleteProduct, mapAboutCartToNewProductsForApi, needSynchronization, needToClearCart, needToSetCurrentCart } from '../../utils/cartUtils';
 import { modifyProductInCartQuantity } from "../../utils/cartUtils";
 import { NoContentApiResponse } from '../../types/noContentApiResponse';
 import { OkApiResponse } from '../../types/okApiResponse';
@@ -263,7 +263,7 @@ export const synchronizeCart = createAsyncThunk<
         await dispatch(clearCart());
       }
 
-     
+
     }
 
     if (!isCartEmpty && !isCartSaved && renderPhase === RenderPhase.Unmount) {
@@ -285,5 +285,32 @@ export const synchronizeCart = createAsyncThunk<
     }
   }
 );
+
+export const deleteProductFromCart = createAsyncThunk<
+  AboutCart,
+  { productId: number },
+  { state: RootState, rejectValue: string | undefined }>(
+    'cart/deleteProductFromCart',
+    async ({ productId }, { getState, rejectWithValue }) => {
+      try {
+        const currentCartContent: AboutCart | null = getCartData(getState());
+
+        if (currentCartContent) {
+          const deleteProductPayload: deleteProductPayload = {
+            cartContent: currentCartContent,
+            productId: productId
+          }
+          
+          const modifiedCartContent: AboutCart = deleteProduct(deleteProductPayload);
+          return modifiedCartContent;
+        }
+
+        return rejectWithValue("Cart content not found");
+      } catch (error: unknown) {
+        console.error("deleteProductFromCart Unexpected error:", error);
+        return rejectWithValue("Cannot delete product from cart, because unexpected error occured");
+      }
+    }
+  )
 
 export const resetCart = createAction('cart/reset');

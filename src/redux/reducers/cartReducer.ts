@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { cartDataInitialValues } from "../../initialValues/cartInitials";
 import { CartState, AboutCart } from "../../types/cartTypes";
-import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, resetCart, clearCart } from "../actions/cartActions";
+import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, resetCart, clearCart, deleteProductFromCart } from "../actions/cartActions";
 
 
 const initialState: CartState = {
@@ -119,6 +119,23 @@ const cartSlice = createSlice({
         state.isCartChanged = true;
       })
       .addCase(clearCart.rejected, (state: CartState) => {
+        state.loading = false;
+      })
+
+      .addCase(deleteProductFromCart.pending, (state: CartState) => {
+        state.loading = true;
+      })
+      .addCase(deleteProductFromCart.fulfilled, (state: CartState, action: PayloadAction<void | AboutCart>) => {
+        state.loading = false;
+        if (action.payload)
+          state.cartData = action.payload;
+        const numberOfProductsInCart: number = 0;
+        state.isEmpty = state.cartData.aboutProductsInCart.length === numberOfProductsInCart;
+        state.isCartCleared = false;
+        state.isCartSaved = false;
+        state.isCartChanged = true;
+      })
+      .addCase(deleteProductFromCart.rejected, (state: CartState) => {
         state.loading = false;
       })
 
