@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../types/cartTypes";
-import { adjustProductQuantity, changeProductInCartQuantity } from "../../redux/actions/cartActions";
+import { adjustProductQuantity, changeProductInCartQuantity, deleteProductFromCart } from "../../redux/actions/cartActions";
 import styles from './ProductInCart.module.scss';
 import productImg from '../../pictures/kielbasa.jpg'
 import React from 'react';
@@ -20,6 +20,14 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
         setInputValue(event.target.value);
     };
 
+    const handleDeleteProductFromCart = async () => {
+        await dispatch(deleteProductFromCart({ productId: product.productId }));
+    };
+
+    const handleAdjustProductQuantity = async (operationType: AdjustProductQuantityType) => {
+        await dispatch(adjustProductQuantity({ productId: product.productId, operationType: operationType }));
+    }
+
     const handleBlur = () => {
         const quantity = parseInt(inputValue, 10);
         if (isNaN(quantity) || quantity < 1 || quantity > 1000 || product.quantity > 1000) {
@@ -30,6 +38,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
             dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: quantity }));
         }
     };
+
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -45,7 +54,7 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
             </div>
             <div className={styles.summaryContainer}>
                 <div className={styles.summaryTitle}>
-                    <FaCaretLeft className={styles.quantityLeftArrow} onClick={() => dispatch(adjustProductQuantity({ productId: product.productId, operationType: AdjustProductQuantityType.Decrease }))} />
+                    <FaCaretLeft className={styles.quantityLeftArrow} onClick={() => handleAdjustProductQuantity(AdjustProductQuantityType.Decrease)} />
                     <input
                         type="number"
                         min="1"
@@ -55,11 +64,11 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                         autoComplete='off'
                         onKeyDown={handleKeyPress}
                     />
-                    <FaCaretRight className={styles.quantityRightArrow} onClick={() => dispatch(adjustProductQuantity({ productId: product.productId, operationType: AdjustProductQuantityType.Increase }))} />
+                    <FaCaretRight className={styles.quantityRightArrow} onClick={() => handleAdjustProductQuantity(AdjustProductQuantityType.Increase)} />
                     <div className={styles.productName}>
                         <div className={styles.nameWriting}>x {product.productName} </div>
                     </div>
-                    <div className={styles.deletProductIcon}><FaTimes /></div>
+                    <div className={styles.deletProductIcon} onClick={() => handleDeleteProductFromCart()}><FaTimes /></div>
                 </div>
                 <div className={styles.totalSummary}>
                     <p className={styles.unitPriceInfo}>unit price:  {product.productUnitPrice} zł</p>
