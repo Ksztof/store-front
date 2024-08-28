@@ -7,6 +7,8 @@ import { logout, resetAuth } from '../../redux/actions/authActions';
 import styles from './Navbar.module.scss'
 import logo from '../../pictures/hpcLogo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { synchronizeCart } from '../../redux/actions/cartActions';
+import { RenderPhase } from '../../types/cartTypes';
 
 export const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -17,7 +19,8 @@ export const Navbar: React.FC = () => {
         console.log(isLoggedIn);
     }, [isLoggedIn])
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await dispatch(synchronizeCart(RenderPhase.Unmount));
         dispatch(resetAuth());
         dispatch(logout());
     };

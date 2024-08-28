@@ -1,6 +1,6 @@
 import styles from './OrderedProductSummary.module.scss';
 import { ProductInCartProps, CheckCart } from "../../types/cartTypes";
-import productImg from '../../pictures/kielbasa.jpg'
+import productImg from '../../pictures/kielbasa.png'
 
 export const OrderedProductSummary: React.FC<ProductInCartProps> = (props) => {
     const product: CheckCart = props.product;
