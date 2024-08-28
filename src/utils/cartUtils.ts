@@ -1,4 +1,4 @@
-import { AboutCart, CheckCart, NewProductsForApi } from "../types/cartTypes";
+import { AboutCart, CheckCart, deleteProductPayload, NewProductsForApi } from "../types/cartTypes";
 import { ProductDetails } from "../types/productTypes";
 import { ModifyProductInCartQuantityPayload } from "../types/cartTypes";
 import { produce } from 'immer';
@@ -28,6 +28,12 @@ export const modifyProductInCartQuantity = (payload: ModifyProductInCartQuantity
         }
     });
 };
+
+export const deleteProduct = (payload: deleteProductPayload): AboutCart => {
+    return produce(payload.cartContent, (draft: AboutCart) => {
+        draft.aboutProductsInCart = draft.aboutProductsInCart.filter((p: CheckCart) => p.productId !== payload.productId);
+    });
+}
 
 export const calculateTotalCartValue = (cartContentLocStore: CheckCart[]): number => {
     if (!cartContentLocStore || cartContentLocStore.length === 0) return 0;

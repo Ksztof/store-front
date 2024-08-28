@@ -37,7 +37,7 @@
   },
   "proxy": "https://localhost:5004",
   "scripts": {
-    "start": "cross-env HTTPS=true SSL_CRT_FILE=./store-ssl/cert.crt SSL_KEY_FILE=./store-ssl/cert.key react-scripts start",
+    "start": "cross-env HTTPS=true SSL_CRT_FILE=./store-ssl/cert.crt SSL_KEY_FILE=./store-ssl/cert.key WATCHPACK_POLLING=true  react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
