@@ -6,7 +6,8 @@
     background-color: rgb(6, 37, 42);
     overflow: hidden;
     box-sizing: border-box;
-
+    min-width: 100%;
+    min-height: 100%;
     .optionsBar {
         box-sizing: border-box;
         background-color: rgb(12, 55, 62);
