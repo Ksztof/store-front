@@ -14,6 +14,7 @@ export const getClientSecretApi = async (payload: PaymentDetails): Promise<strin
             await axios.post<string>('https://localhost:5004/api/Payments', payload);
 
         if (typeof response.data === 'string' && response.data.trim() !== '') {
+            console.log(`client secret from API: ${response.data}`);
             const responseDetails: string = response.data;
             return responseDetails;
         }

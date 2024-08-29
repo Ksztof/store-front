@@ -6,6 +6,6 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 // }
 
 
-const stripePromise: Promise<Stripe | null> = loadStripe("pk_live_51PH7SrG6csTGDew6p30O33xtYLePxXAofwgmhzHaMnx43T7sNmGNJL0wo8yuinjyuXkGGB3jy0UhHPh0Q8izJfCL00lguKB4O9");
+const stripePromise: Promise<Stripe | null> = loadStripe("pk_test_51PH7SrG6csTGDew6yuvEeNDHR0L7ViX1mKn0UmzEfFEs6Xvp4f91aEaWBuYkgO8BdmnWLeeIHtoEQyYgSLgEYSie00Jw4YBFKD");
 
 export default stripePromise;
