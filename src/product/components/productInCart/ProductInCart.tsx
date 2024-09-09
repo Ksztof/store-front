@@ -3,7 +3,7 @@ import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../../cart/cartTypes";
 import styles from './ProductInCart.module.scss';
 import React from 'react';
-import productImg from '../../pictures/kielbasa.png'
+import productImg from '../../../shared/pictures/kielbasa.png'
 import { FaCaretLeft, FaCaretRight, FaTimes } from "react-icons/fa";
 import { deleteProductFromCart, adjustProductQuantity, changeProductInCartQuantity } from "../../../cart/cartActions";
 

@@ -1,6 +1,6 @@
 import { ProductInCartProps, CheckCart, AdjustProductQuantityType } from "../../../cart/cartTypes";
 import styles from './OrderedProduct.module.scss';
-import productImg from '../../pictures/kielbasa.png'
+import productImg from '../../../shared/pictures/kielbasa.png'
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { useState, useEffect } from "react";

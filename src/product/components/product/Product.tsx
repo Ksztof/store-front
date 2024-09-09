@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { ProductProps } from "../../productProps";
 import styles from './Product.module.scss';
-import productImg from '../../pictures/kielbasa.png'
+import productImg from '../../../shared/pictures/kielbasa.png'
 import { Currency } from "../../../shared/sharedTypes";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import React from 'react';

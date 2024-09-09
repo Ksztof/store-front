@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartState, AboutCart } from "./cartTypes";
-import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, resetCart, clearCart, deleteProductFromCart } from "../actions/cartActions";
 import { cartDataInitialValues } from "./cartConstants";
+import { synchronizeCartWithApi, addProductToCart, adjustProductQuantity, changeProductInCartQuantity, changeCartContentGlobally, setCurrentCart, clearCart, deleteProductFromCart, resetCart } from "./cartActions";
 
 
 const initialState: CartState = {
