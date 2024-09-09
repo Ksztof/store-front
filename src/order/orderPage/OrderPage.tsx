@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import WrappedStripeCheckout from '../../payment/components/stripeCheckout/StripeCheckout';
 import { useSelector } from 'react-redux';
-
-import OrderSummary from '../../order/components/orderSummary/OrderSummary';
-import { shippingDetailsInitialValues } from '../../order/orderConstants';
+import { ShippingDetails, MethodOfPayment, MakeOrderPayload, OrderMethod } from '../orderTypes';
+import { ShippingDetailsForm } from '../components/shippingDetailsForm/ShippingDetailsForm';
+import OrderSummary from '../components/orderSummary/OrderSummary';
+import { shippingDetailsInitialValues } from '../orderConstants';
 import { ReducerStates } from "../../shared/sharedTypes";
 import styles from './OrderPage.module.scss';
-import ProductsToOrder from '../../order/components/productsToOrder/ProductsToOrder';
+import ProductsToOrder from '../components/productsToOrder/ProductsToOrder';
 import { AboutCart } from '../../cart/cartTypes';
 import { changeCartContentGlobally } from '../../cart/cartActions';
-import { ShippingDetailsForm } from '../../order/components/shippingDetailsForm/ShippingDetailsForm';
-import { makeOrder } from '../../order/orderActions';
-import { MethodOfPayment, ShippingDetails, MakeOrderPayload, OrderMethod } from '../../order/orderTypes';
 import PaymentMethodSelector from '../../payment/components/paymentMethodSelector/PaymentMethodSelector';
 import { updatePaymentStatusSuccess } from '../../payment/paymentActions';
 import { useAppDispatch } from '../../shared/hooks/useAppDispatch';
 import { RootState } from '../../shared/redux/store';
+import { makeOrder } from '../orderActions';
 
 export const OrderPage: React.FC = () => {
     const dispatch = useAppDispatch();

@@ -1,11 +1,11 @@
 import React from 'react';
 import App from './App';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './redux/store';
 import './index.modules.scss';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
+import { persistor, store } from './shared/redux/store';
 
 const container = document.getElementById('root');
 if (container) {
