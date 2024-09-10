@@ -12,7 +12,6 @@ import { AppDispatch } from "../../../shared/redux/store";
 export const OrderedProduct: React.FC<ProductInCartProps> = (props) => {
     const product: CheckCart = props.product;
     const dispatch: AppDispatch = useAppDispatch();
-
     const [inputValue, setInputValue] = useState(product.quantity.toString());
 
     useEffect(() => {
@@ -25,9 +24,9 @@ export const OrderedProduct: React.FC<ProductInCartProps> = (props) => {
 
     const handleBlur = () => {
         const quantity = parseInt(inputValue, 10);
+
         if (isNaN(quantity) || quantity < 1 || quantity > 1000 || product.quantity > 1000) {
             setInputValue(product.quantity.toString());
-
             dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: product.quantity }));
         } else {
             dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: quantity }));

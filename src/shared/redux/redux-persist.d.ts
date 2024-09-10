@@ -1,10 +1,10 @@
 declare module 'redux-persist/lib/storage' {
-    const storage: any;
-    export default storage;
-  }
-  
+  const storage: any;
+  export default storage;
+}
 
-  // src/redux-persist.d.ts
+
+// src/redux-persist.d.ts
 declare module 'redux-persist/es/persistReducer' {
   import { Reducer } from 'redux';
   import { PersistConfig } from 'redux-persist/es/types';

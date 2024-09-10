@@ -28,17 +28,15 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
         await dispatch(adjustProductQuantity({ productId: product.productId, operationType: operationType }));
     }
 
-    const handleBlur = () => {
+    const handleBlur = async () => {
         const quantity = parseInt(inputValue, 10);
         if (isNaN(quantity) || quantity < 1 || quantity > 1000 || product.quantity > 1000) {
             setInputValue(product.quantity.toString());
-
-            dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: product.quantity }));
+            await dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: product.quantity }));
         } else {
-            dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: quantity }));
+            await dispatch(changeProductInCartQuantity({ productId: product.productId, productQuantity: quantity }));
         }
     };
-
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {

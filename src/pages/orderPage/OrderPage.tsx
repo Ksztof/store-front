@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import WrappedStripeCheckout from '../../payment/components/stripeCheckout/StripeCheckout';
 import { useSelector } from 'react-redux';
-
 import OrderSummary from '../../order/components/orderSummary/OrderSummary';
 import { shippingDetailsInitialValues } from '../../order/orderConstants';
 import { ReducerStates } from "../../shared/sharedTypes";
 import styles from './OrderPage.module.scss';
 import ProductsToOrder from '../../order/components/productsToOrder/ProductsToOrder';
 import { AboutCart } from '../../cart/cartTypes';
-import { changeCartContentGlobally } from '../../cart/cartActions';
+import { saveCartContent } from '../../cart/cartActions';
 import { ShippingDetailsForm } from '../../order/components/shippingDetailsForm/ShippingDetailsForm';
 import { makeOrder } from '../../order/orderActions';
 import { MethodOfPayment, ShippingDetails, MakeOrderPayload, OrderMethod } from '../../order/orderTypes';
@@ -27,9 +26,8 @@ export const OrderPage: React.FC = () => {
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
     const isCartChanged: boolean = useSelector((state: RootState) => state.cart.isCartChanged);
-    
+
     useEffect(() => {
-        console.log(`isCartChanged: ${isCartChanged}`)
     }, [isCartChanged]);
 
     const handleSetShippingDetails = (values: Partial<ShippingDetails>) => {
@@ -38,15 +36,14 @@ export const OrderPage: React.FC = () => {
 
     const handleDeliveryOrder = async (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(`isCartChanged in handleDeliveryOrder: ${isCartChanged}`)
 
         if (isCartChanged) {
-            console.log("Is in isCartChanged == true block")
-            await dispatch(changeCartContentGlobally(cartContent));
+            await dispatch(saveCartContent(cartContent));
         }
 
         const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: OrderMethod.UponDelivery }
         const orderResult = await dispatch(makeOrder(makeOrderPayload));
+
         if (orderResult.type.endsWith('fulfilled')) {
             dispatch(updatePaymentStatusSuccess());
         }

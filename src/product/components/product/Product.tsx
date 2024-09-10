@@ -22,12 +22,12 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
         if (productQuantity === '') {
             setProductQuantityNum(1);
         }
+
         if (typeof (productQuantity) === "number" && productQuantity < 1000) {
             setProductQuantityNum(productQuantity);
         }
 
     }, [productQuantity]);
-
 
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: string = event.target.value;
@@ -38,6 +38,7 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
         }
 
         const parsedValue: number = parseInt(value, 10);
+
         if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 1000) {
             setProductQuantity(parsedValue);
         }
@@ -46,9 +47,11 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
     const increaseQuantity = () => {
         setProductQuantity((prevQuantity) => {
             const quantity = typeof prevQuantity === 'number' ? prevQuantity : parseInt(prevQuantity, 10);
+
             if (isNaN(quantity)) {
                 return 1;
             }
+
             return quantity + 1;
         });
     };
@@ -56,9 +59,11 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
     const decreaseQuantity = () => {
         setProductQuantity((prevQuantity) => {
             const quantity = typeof prevQuantity === 'number' ? prevQuantity : parseInt(prevQuantity, 10);
+
             if (isNaN(quantity) || quantity <= 1) {
                 return 1;
             }
+
             return quantity - 1;
         });
     };

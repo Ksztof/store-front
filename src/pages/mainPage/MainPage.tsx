@@ -15,16 +15,17 @@ export const Main = () => {
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    
     const handleOrder = () => {
         if (cartContent !== null) {
             navigate('/order');
         };
     };
-    
+
     const toggleCart = () => {
-        if (isFiltersOpen)
+        if (isFiltersOpen) {
             setIsFiltersOpen(false);
+        }
+
         setIsCartOpen(!isCartOpen);
     };
 
@@ -35,10 +36,12 @@ export const Main = () => {
     // };
 
     const closeOption = () => {
-        if (isCartOpen)
+        if (isCartOpen) {
             setIsCartOpen(false);
-        else
+        }
+        else {
             setIsFiltersOpen(false);
+        }
     };
 
     return (
@@ -61,38 +64,28 @@ export const Main = () => {
                 `
             }>
                 <button className={styles.closeButton} onClick={closeOption}><FaTimes className={`${styles.closeButtonLogo} ${isCartOpen || isFiltersOpen ? styles.optionOpen : ''}`} /></button>
-
-
-
                 <div className={styles.cartHeader}>
 
                     <div className={styles.cartHeaderContent}>
                         {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue} zł` : '0 zł'}
                     </div>
                 </div>
-
                 <div className={styles.cartContent}>
                     <Cart />
                 </div>
-
                 <div className={`${styles.cartFooter} ${isCartEmpty ? styles.empty : ''}`}>
                     <button type="submit" onClick={handleOrder}>Order</button>
                 </div>
-
-
                 <div className={styles.filtersContent}>
                     <p>filters</p>
                 </div>
             </div>
-
-
             <div className={styles.searchAndProductWrapper}>
                 <div className={`${styles.searchBar} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>searchBar</div>
                 <div className={`${styles.productsContainer} ${isCartOpen || isFiltersOpen ? styles.leftBarOpen : ''}`}>
                     <Products />
                 </div>
             </div>
-
         </div>
     );
 };

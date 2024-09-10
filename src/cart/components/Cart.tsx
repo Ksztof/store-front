@@ -10,10 +10,10 @@ import { synchronizeCart } from '../cartActions';
 export const Cart: React.FC = () => {
     const dispatch: AppDispatch = useAppDispatch();
     const cartContent: AboutCart = useSelector((state: RootState) => state.cart.cartData);
-   
+
     useEffect(() => {
         dispatch(synchronizeCart(RenderPhase.Mount));
-    }, [ dispatch])
+    }, [dispatch])
 
     useEffect(() => {
         return () => {

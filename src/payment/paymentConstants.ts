@@ -2,7 +2,7 @@ import { ReducerStates } from "../shared/sharedTypes";
 
 export interface PaymentState {
     loading: boolean,
-    status: ReducerStates, 
+    status: ReducerStates,
     clientSecret: string,
 }
 

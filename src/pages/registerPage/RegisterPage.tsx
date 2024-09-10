@@ -13,7 +13,6 @@ import { RootState } from '../../shared/redux/store';
 export const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const registrationState: string = useSelector((state: RootState) => state.auth.status);
-
     const [registerCredentials, setRegisterCredentialsState] = useState<RegisterCredentials>(registerCredentialsInitialValues);
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
@@ -25,11 +24,10 @@ export const RegisterPage: React.FC = () => {
         event.preventDefault();
         await dispatch(register(registerCredentials));
     };
+
     useEffect(() => {
-        console.log(registrationState)
     }, [registrationState])
 
-    
     return (
         <>
             <div className={styles.registerContainer}>

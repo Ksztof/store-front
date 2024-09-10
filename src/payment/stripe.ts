@@ -5,7 +5,6 @@ if (!stripePublicKey) {
   throw new Error('REACT_APP_STRIPE_PUBLIC_KEY is not defined');
 }
 
-
 const stripePromise: Promise<Stripe | null> = loadStripe(stripePublicKey);
 
 export default stripePromise;

@@ -3,7 +3,6 @@ import { AuthState } from './authTypes';
 import { ReducerStates } from '../shared/sharedTypes';
 import { login, register, removeGuestSessionId, logout, resetAuth } from './authActions';
 
-
 const initialState: AuthState = {
   loading: false,
   isLoggedIn: false,

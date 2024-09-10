@@ -27,12 +27,13 @@ export const ZodAboutCart = z.object({
     totalCartValue: z.number(),
     aboutProductsInCart: z.array(ZodAboutProductsInCart),
     createdAt: z.string().refine(val => {
-      const date = new Date(val);
-      return !isNaN(date.getTime());
+        const date = new Date(val);
+        
+        return !isNaN(date.getTime());
     }, {
-      message: "Date format is not valid",
+        message: "Date format is not valid",
     }),
-  });
+});
 
 export const ZodCheckCart = z.object({
     productId: z.number(),
@@ -102,7 +103,7 @@ export const ZodPaymentIntent = z.object({
     amount: z.number(),
     currency: z.string(),
     clientSecret: z.string(),
-  });
+});
 
 export const ZodPaymentIntentObject = z.object({
     paymentIntent: ZodPaymentIntent,

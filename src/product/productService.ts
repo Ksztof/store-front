@@ -5,18 +5,20 @@ import { ProductDetails } from './productTypes';
 
 axios.defaults.withCredentials = true;
 
-export const getAllProducts = async (): Promise<OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError> => {
+export const getProductsApi = async (): Promise<OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError> => {
   try {
     const response: ProductDetails[] | any =
       await axios.get<ProductDetails[]>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Products');
 
     if (isProductDetails(response.data)) {
       const responseDetails: OkApiResponse<ProductDetails[]> = { isSuccess: true, entity: response.data };
+
       return responseDetails;
     }
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+
       return responseDetails;
     }
 
@@ -26,6 +28,7 @@ export const getAllProducts = async (): Promise<OkApiResponse<ProductDetails[]> 
 
     if (isProblemDetails(data)) {
       const apiError: ApiError = { isSuccess: false, error: data };
+      
       return apiError;
     }
 

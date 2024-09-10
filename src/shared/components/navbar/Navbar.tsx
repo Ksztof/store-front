@@ -17,7 +17,6 @@ export const Navbar: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {
-        console.log(isLoggedIn);
     }, [isLoggedIn])
 
     const handleLogout = async () => {
