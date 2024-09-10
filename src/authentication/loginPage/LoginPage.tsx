@@ -26,7 +26,6 @@ const LoginPage: React.FC = () => {
       dispatch(resetCart());
       navigate('/');
     }
-    
   }, [isLoggedIn, navigate, dispatch, isFormValid]);
 
   const handleLogin = async (e: React.FormEvent) => {

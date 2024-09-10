@@ -5,7 +5,7 @@ import { OkApiResponse, ApiError } from "../shared/sharedTypes";
 
 axios.defaults.withCredentials = true;
 
-export const saveOrder = async (payload: MakeOrderPayload): Promise<OkApiResponse<OrderResponse> | ApiError> => {
+export const makeOrderApi = async (payload: MakeOrderPayload): Promise<OkApiResponse<OrderResponse> | ApiError> => {
     try {
         const url: string = payload.orderMethod
             ? `https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Orders/${payload.orderMethod}`
@@ -24,8 +24,6 @@ export const saveOrder = async (payload: MakeOrderPayload): Promise<OkApiRespons
         const data = error.response?.data;
 
         if (isProblemDetails(data)) {
-            console.log("make order isProblemDetails");
-
             const apiError: ApiError = { isSuccess: false, error: data };
             return apiError;
         }

@@ -20,7 +20,7 @@ const NumericField: React.FC<NumericFieldProps> = ({ name, label, formatValue, o
       handleSetShippingDetails({ [name]: formattedValue });
     }
   };
-  
+
   const blurProps = onBlur ? { onBlur: handleCustomBlur } : {};
 
   return (

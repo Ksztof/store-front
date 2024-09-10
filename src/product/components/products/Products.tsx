@@ -19,6 +19,7 @@ export const Products: React.FC = () => {
 
     const [currentPage, setCurrentPage] = useState<number>(() => {
         const savedPage = localStorage.getItem(LOCAL_STORAGE_KEY);
+
         return savedPage ? parseInt(savedPage, 10) : 1;
     });
 
@@ -26,6 +27,7 @@ export const Products: React.FC = () => {
         if (!isDataLoading) {
             dispatch(getProducts());
         }
+
     }, [dispatch]);
 
     useEffect(() => {
@@ -35,7 +37,6 @@ export const Products: React.FC = () => {
     const indexOfLastProduct = currentPage * PRODUCTS_PER_PAGE;
     const indexOfFirstProduct = indexOfLastProduct - PRODUCTS_PER_PAGE;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
     const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
 
     const handleNextPage = () => {

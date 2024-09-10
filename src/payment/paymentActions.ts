@@ -31,7 +31,6 @@ export const getClientSecret = createAsyncThunk<
             }
 
             return rejectWithValue("Cannot start order, client secret doesn't exist ");
-
         } catch (error: any) {
             console.error("payWithCard error: ", error);
             return rejectWithValue(`An unexpected error occurred when paying by card with message: ${error.message}`);
@@ -50,13 +49,10 @@ export const updatePaymentIntent = createAsyncThunk<
             const response: NoContentApiResponse | ApiError = await updatePaymentIntentApi(clientSecret);
 
             if (isApiError(response)) {
-                console.log("Payment INTENT UPDATE ERROR")
-
                 return rejectWithValue(response);
             }
 
             if (isNoContentResponse(response)) {
-                console.log("Payment INTENT UPDATED")
                 return;
             }
 
@@ -99,7 +95,7 @@ export const confirmPayment = createAsyncThunk<
                 console.error('Error confirming PaymentIntent:', error.message);
                 return rejectWithValue(error.message);
             }
-            console.log("Payment Confirmed");
+
             if (paymentIntent && paymentIntent.id) {
                 const payload: ConfirmPaymentPayload = {
                     PaymentIntentId: paymentIntent.id,
@@ -116,6 +112,7 @@ export const confirmPayment = createAsyncThunk<
                     return;
                 };
             }
+
             return rejectWithValue("paymentIntent or PaymentIntentId is missing");
         }
         catch (error: any) {
@@ -143,7 +140,6 @@ export const updatePaymentStatus = createAsyncThunk<
             }
 
             return rejectWithValue("payment status doesn't match");
-
         } catch {
             return rejectWithValue("An uncexpected error occured during payment status check.");
         }

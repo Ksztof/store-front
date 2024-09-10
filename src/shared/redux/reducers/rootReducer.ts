@@ -19,9 +19,9 @@ const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: a
   if (action.type === 'RESET_APP') {
     state = undefined;
   }
+  
   return appReducer(state, action);
 };
 
 export default rootReducer;
-
 export type RootState = ReturnType<typeof rootReducer>;

@@ -13,7 +13,7 @@ import { AsyncTasksParams, PaymentConfirmationPayload } from '../../paymentTypes
 import useAsyncEffect from '../../../shared/hooks/useAsyncEffect ';
 import { HubConnection } from '@microsoft/signalr';
 import { AboutCart } from '../../../cart/cartTypes';
-import { changeCartContentGlobally } from '../../../cart/cartActions';
+import { saveCartContent } from '../../../cart/cartActions';
 import { makeOrder } from '../../../order/orderActions';
 import { RootState } from '../../../shared/redux/store';
 import { updatePaymentIntent, confirmPayment, getClientSecret } from '../../paymentActions';
@@ -39,8 +39,8 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ amount, shippingDetails
         const connection: HubConnection = startConnection(dispatch, orderSummary.id);
         connectionRef.current = connection;
 
-        if(isCartChanged){
-            await dispatch(changeCartContentGlobally(cartContent));
+        if (isCartChanged) {
+            await dispatch(saveCartContent(cartContent));
         }
 
         const makeOrderPayload: MakeOrderPayload = { shippingDetails: shippingDetails, orderMethod: null };
@@ -114,7 +114,7 @@ const WrappedStripeCheckout: React.FC<WrappedStripeCheckoutProps> = ({ amount, s
     }, [clientSecretResponse, clientSecret]);
 
     if (!clientSecret) return <div>Loading...</div>;
-    console.log(clientSecret)
+    
     return (
         <Elements stripe={stripePromise} options={{ clientSecret, appearance }} key={clientSecret}>
             <StripeCheckout

@@ -20,9 +20,13 @@ const TextField: React.FC<TextFieldProps> =
 
             if (handleSetShippingDetails) {
                 handleSetShippingDetails({ [name]: formattedValue });
-            } else if (handleSetRegisterCredentials) {
+            }
+
+            if (handleSetRegisterCredentials) {
                 handleSetRegisterCredentials({ [name]: formattedValue })
-            } else if (handleSetLoginCredentials) {
+            }
+
+            if (handleSetLoginCredentials) {
                 handleSetLoginCredentials({ [name]: formattedValue })
             }
         };

@@ -4,7 +4,6 @@ import { PaymentMethodSelectorProps } from '../../../order/orderProps';
 import { MethodOfPayment } from '../../../order/orderTypes';
 
 export const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({ setPaymentMethod }) => {
-
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const method = event.target.value as MethodOfPayment;
         setPaymentMethod(method);

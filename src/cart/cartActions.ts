@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCartContent, checkCurrentCart, saveCartContent, clearCartApi } from './cartService';
+import { clearCartApi, getCartContentApi, setCurrentCartApi, saveCartContentApi } from './cartService';
 import { modifyProductInCartQuantity, mapAboutCartToNewProductsForApi, deleteProduct, decreaseProductInCartQuantity, getCartWithNewProduct, increaseProductInCartQuantity } from './cartUtils';
 import { isGuestUser } from '../shared/cookies/cookiesUtils';
 import { isApiError, isNoContentResponse } from '../shared/validation/typeGuards/typeGuardsUtils';
@@ -11,15 +11,15 @@ import { deleteProductPayload } from '../cart/cartTypes'
 
 const getCartData = (state: RootState) => state.cart.cartData;
 
-export const synchronizeCartWithApi = createAsyncThunk<
+export const getCartContent = createAsyncThunk<
   void | AboutCart,
   void,
   { rejectValue: ApiError | string }
 >(
-  'cart/synchronizeCartWithApi',
+  'cart/getCartContent',
   async (_, { rejectWithValue }) => {
     try {
-      const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await getCartContent();
+      const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await getCartContentApi();
 
       if (isApiError(response)) {
         return rejectWithValue(response);
@@ -31,7 +31,7 @@ export const synchronizeCartWithApi = createAsyncThunk<
 
       return response.entity;
     } catch (error: any) {
-      console.error("SynchronizeCartWithApi error: ", error);
+      console.error("getCartContent error: ", error);
       return rejectWithValue("The contents of the shopping cart cannot be downloaded, an unexpected error occurred");
     }
   }
@@ -49,8 +49,7 @@ export const setCurrentCart = createAsyncThunk<
 
       if (cartCreationDate !== undefined) {
         const payload: checkCurrentCartPayload = { createdAt: cartCreationDate };
-        console.log(`Payload for  checkCurrentCart: ${JSON.stringify(payload)}`)
-        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await checkCurrentCart(payload);
+        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await setCurrentCartApi(payload);
 
         if (isApiError(response)) {
           return rejectWithValue(response);
@@ -73,7 +72,7 @@ export const addProductToCart = createAsyncThunk<
   AboutCart,
   addProductToCartPayload,
   { state: RootState, rejectValue: string | undefined }>(
-    'cart/addProduct ',
+    'cart/addProductToCart ',
     async (payload: addProductToCartPayload, { getState, rejectWithValue }) => {
       try {
         const currentCartContent: AboutCart = getCartData(getState());
@@ -86,6 +85,7 @@ export const addProductToCart = createAsyncThunk<
           }
 
           const updatedCart: AboutCart = getCartWithNewProduct(addProductPayload);
+
           return updatedCart;
         } else {
           return rejectWithValue("Cannot add product to cart, cart doesn't exsist");
@@ -112,9 +112,11 @@ export const adjustProductQuantity = createAsyncThunk<
 
         if (payload.operationType === AdjustProductQuantityType.Increase) {
           const updatedCart: AboutCart = increaseProductInCartQuantity(changeQuantityPayload);
+
           return updatedCart;
         } else {
           const updatedCart: AboutCart = decreaseProductInCartQuantity(changeQuantityPayload);
+
           return updatedCart;
         }
       } catch (error: unknown) {
@@ -141,6 +143,7 @@ export const changeProductInCartQuantity = createAsyncThunk<
           }
 
           const changedCartContent: AboutCart = modifyProductInCartQuantity(modifyProductInCartQuantityPayload);
+
           return changedCartContent;
         } else {
           return rejectWithValue("Cannot change product in cart quantity, because cart is empty.");
@@ -152,15 +155,15 @@ export const changeProductInCartQuantity = createAsyncThunk<
     }
   )
 
-export const changeCartContentGlobally = createAsyncThunk<
+export const saveCartContent = createAsyncThunk<
   void | AboutCart,
   AboutCart,
   { rejectValue: ApiError | string }>(
-    'cart/changeCartContentGlobally',
+    'cart/saveCartContent',
     async (payload: AboutCart, { rejectWithValue }) => {
       try {
         const newProductsForApi: NewProductsForApi = mapAboutCartToNewProductsForApi(payload);
-        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await saveCartContent(newProductsForApi);
+        const response: NoContentApiResponse | OkApiResponse<AboutCart> | ApiError = await saveCartContentApi(newProductsForApi);
 
         if (isApiError(response)) {
           return rejectWithValue(response);
@@ -173,7 +176,7 @@ export const changeCartContentGlobally = createAsyncThunk<
 
         return response.entity;
       } catch (error: any) {
-        console.error("changeCartContentGlobally error: ", error);
+        console.error("saveCartContent error: ", error);
         return rejectWithValue("Failed to update cart content globally, because of unexpected error");
       }
     }
@@ -187,8 +190,6 @@ export const clearCart = createAsyncThunk<
   'cart/clearCart',
   async (_, { rejectWithValue }) => {
     try {
-      console.log("CART CLEARED");
-
       const response: NoContentApiResponse | ApiError = await clearCartApi();
 
       if (isApiError(response)) {
@@ -198,6 +199,7 @@ export const clearCart = createAsyncThunk<
       if (isNoContentResponse(response)) {
         return;
       }
+
     } catch (error: any) {
       console.error("clearCart error:", error);
       return rejectWithValue(`Unexpected error occured while clearing cart with message: ${error.message}`);
@@ -220,64 +222,62 @@ export const synchronizeCart = createAsyncThunk<
     const isCartSaved: boolean = state.cart.isCartSaved;
     let isUserOrGuest: boolean = isLoggedIn || isGuestUser();
 
-    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
-      console.log("synchronizeCartWithApi");
-      await dispatch(synchronizeCartWithApi());
+    const mount: boolean = renderPhase === RenderPhase.Mount;
+    const cartShouldBeSynchronized: boolean = isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && mount;
+    const cartShouldBeSynchronizedOrUpdated: boolean = !isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && mount;
+    const currentCartShouldBeCheckedSaved: boolean = isUserOrGuest && cartContent.createdAt.trim() !== "" && !isCartEmpty && mount;
+    const shouldCartBeSaved: boolean = !isUserOrGuest && !isCartEmpty && mount;
+    const currentCartShouldBeCheckedCleared: boolean = isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() !== "" && mount;
+
+    if (cartShouldBeSynchronized) {
+      await dispatch(getCartContent());
     };
 
-    if (!isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() === "" && renderPhase === RenderPhase.Mount) {
-      console.log("synchronizeCartWithApi with cartContent");
-      const result: void | AboutCart = await dispatch(synchronizeCartWithApi()).unwrap();
+    if (cartShouldBeSynchronizedOrUpdated) {
+      const result: void | AboutCart = await dispatch(getCartContent()).unwrap();
 
       if (result === undefined) {
-        await dispatch(changeCartContentGlobally(cartContent));
-        console.log("synchronizeCartWithApi with cartContent ADDING TO DATABASE");
+        await dispatch(saveCartContent(cartContent));
       }
     };
 
-    if (isUserOrGuest && cartContent.createdAt.trim() !== "" && !isCartEmpty && renderPhase === RenderPhase.Mount) {
-      console.log("setCurrentCart");
+    if (currentCartShouldBeCheckedSaved) {
       const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
+
       if (result === undefined && !isCartSaved) {
-        console.log("additional cart saving after setting cart");
-        await dispatch(changeCartContentGlobally(cartContent));
+        await dispatch(saveCartContent(cartContent));
       }
     }
 
-    if (!isUserOrGuest && !isCartEmpty && renderPhase === RenderPhase.Mount) {
-      console.log("changeCartContentGlobally for new user");
-
-      await dispatch(changeCartContentGlobally(cartContent));
+    if (shouldCartBeSaved) {
+      await dispatch(saveCartContent(cartContent));
     }
 
-    if (isCartEmpty && isUserOrGuest && cartContent.createdAt.trim() !== "" && renderPhase === RenderPhase.Mount) {
-      console.log("setting empty cart")
+    if (currentCartShouldBeCheckedCleared) {
       const result: void | AboutCart = await dispatch(setCurrentCart()).unwrap();
 
-      console.log(`needToClearCart result: ${result}`)
       if (result === undefined && !isCartCleared) {
-        console.log("cartClearing");
         await dispatch(clearCart());
       }
-
-
     }
 
-    if (!isCartEmpty && !isCartSaved && renderPhase === RenderPhase.Unmount) {
-      console.log("changeCartContentGlobally")
-      await dispatch(changeCartContentGlobally(cartContent))
+    const unmount: boolean = renderPhase === RenderPhase.Unmount;
+    const cartShouldBeSavedUnmount: boolean = (!isCartEmpty && !isCartSaved) || (!isCartEmpty && !isUserOrGuest) && unmount;
+    const cartShouldBeClearedUnmount: boolean = !isCartCleared && isCartEmpty && isUserOrGuest && unmount;
+
+    if (cartShouldBeSavedUnmount) {
+      await dispatch(saveCartContent(cartContent))
     }
+
     const updatedState: RootState = getState();
     isLoggedIn = updatedState.auth.isLoggedIn;
     isUserOrGuest = isLoggedIn || isGuestUser();
 
-    if (!isCartEmpty && !isUserOrGuest && renderPhase === RenderPhase.Unmount) {
-      console.log("changeCartContentGlobally")
-      await dispatch(changeCartContentGlobally(cartContent))
+    if (cartShouldBeSavedUnmount) {
+      await dispatch(saveCartContent(cartContent))
     }
 
-    if (!isCartCleared && isCartEmpty && isUserOrGuest && renderPhase === RenderPhase.Unmount) {
-      console.log("clear at unmount");
+    if (cartShouldBeClearedUnmount) {
       await dispatch(clearCart());
     }
   }
@@ -297,8 +297,9 @@ export const deleteProductFromCart = createAsyncThunk<
             cartContent: currentCartContent,
             productId: productId
           }
-          
+
           const modifiedCartContent: AboutCart = deleteProduct(deleteProductPayload);
+
           return modifiedCartContent;
         }
 

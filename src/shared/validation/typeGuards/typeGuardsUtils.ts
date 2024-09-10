@@ -1,7 +1,6 @@
 import { SafeParseReturnType } from "zod";
 import { AboutCartZodType, AboutPaymentZodType, ApiErrorZodType, ApiResponseNoContentZodType, OrderResponseZodType, PaymentIntentObjectZodType, PaymentIntentZodType, ProblemDetailsZodType, ProductDetailsArrayZodType, ZodAboutCart, ZodAboutPayment, ZodApiError, ZodOrderResponse, ZodPaymentIntent, ZodPaymentIntentObject, ZodProblemDetails, ZodProductDetailsArray, ZodSuccessResponseNoContent } from "./schemas";
 
-
 export function isApiError(response: any): response is ApiErrorZodType {
   const result: SafeParseReturnType<any, ApiErrorZodType> = ZodApiError.safeParse(response);
   return result.success;

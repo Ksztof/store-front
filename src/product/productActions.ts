@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllProducts } from './productService';
+import { getProductsApi } from './productService';
 import { isApiError, isNoContentResponse } from '../shared/validation/typeGuards/typeGuardsUtils';
 import { ApiError, OkApiResponse, NoContentApiResponse } from '../shared/sharedTypes';
 import { ProductDetails } from './productTypes';
@@ -11,8 +11,10 @@ export const getProducts = createAsyncThunk<
     'product/getProducts ',
     async (_, { rejectWithValue }) => {
       try {
-        const response: OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError = await getAllProducts();
+        const response: OkApiResponse<ProductDetails[]> | NoContentApiResponse | ApiError = await getProductsApi();
+
         if (isApiError(response)) {
+
           return rejectWithValue(response);
         }
 

@@ -12,14 +12,17 @@ export const getClientSecretApi = async (payload: PaymentDetails): Promise<strin
 
         if (typeof response.data === 'string' && response.data.trim() !== '') {
             const responseDetails: string = response.data;
+
             return responseDetails;
         }
 
         throw new Error("Unexpected status code received from API during getting client secret");
     } catch (error: any) {
         const data = error.response?.data;
+
         if (isProblemDetails(data)) {
             const apiError: ApiError = { isSuccess: false, error: data };
+
             return apiError;
         }
 
@@ -35,6 +38,7 @@ export const updatePaymentIntentApi = async (clientSecret: string): Promise<NoCo
 
         if (response.status === HttpStatusCode.NoContent) {
             const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
+
             return responseDetails;
         }
 

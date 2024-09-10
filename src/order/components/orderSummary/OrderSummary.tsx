@@ -5,7 +5,6 @@ import { CheckCart } from '../../../cart/cartTypes';
 import { OrderedProductSummary } from '../orderedProductSummary/OrderedProductSummary';
 import styles from './OrderSummary.module.scss';
 import { Link } from 'react-router-dom';
-
 import { useAppDispatch } from '../../../shared/hooks/useAppDispatch';
 import { removeGuestSessionIdApi } from '../../../authentication/authService';
 import { isGuestUser } from '../../../shared/cookies/cookiesUtils';
@@ -19,14 +18,15 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
     const dispatch = useAppDispatch();
 
     const handleRedirect = () => {
-        if(isGuestUser()){
+        if (isGuestUser()) {
             dispatch(removeGuestSessionIdApi());
         }
+
         dispatch(resetOrder());
         dispatch(resetPayment());
         dispatch(resetCart());
     };
-    
+
     return (
         <>
             <div className={styles.summaryTitle}>
@@ -39,7 +39,6 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ paymentMethod }) => 
                     )}
                 </p>
             </div>
-
             <div className={styles.summaryHeader}>
                 <div className={styles.title}></div>
                 <div className={styles.title}>Name</div>

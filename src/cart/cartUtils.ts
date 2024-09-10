@@ -93,8 +93,10 @@ export const getCartWithNewProduct = (payload: addProductToReduxStorePayload): A
 export const decreaseProductInCartQuantity = (payload: increaseProductInCartQuantityStorePayload): AboutCart => {
     return produce(payload.cartContent, (draft: AboutCart) => {
         const productIndex: number | undefined = draft.aboutProductsInCart.findIndex((p: CheckCart) => p.productId === payload.productId);
+
         if (productIndex !== -1) {
             const product = draft.aboutProductsInCart[productIndex];
+
             if (product.quantity > 1) {
                 product.quantity -= 1;
                 product.productTotalPrice -= product.productUnitPrice;
@@ -114,6 +116,7 @@ export const decreaseProductInCartQuantity = (payload: increaseProductInCartQuan
 export const increaseProductInCartQuantity = (payload: increaseProductInCartQuantityStorePayload): AboutCart => {
     return produce(payload.cartContent, (draft: AboutCart) => {
         const product = draft.aboutProductsInCart.find((p: CheckCart) => p.productId === payload.productId);
+
         if (product) {
             product.quantity += 1;
             product.productTotalPrice += product.productUnitPrice;

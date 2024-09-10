@@ -19,7 +19,7 @@ export interface MakeOrderPayload {
 
 export enum OrderMethod {
     UponDelivery = "UponDelivery"
-} 
+}
 
 export interface MakeOrderCardPaymentPayload {
     amount: number;

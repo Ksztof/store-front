@@ -48,9 +48,9 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void; 
-    handleSetRegisterCredentials?: (value: Partial<RegisterCredentials>) => void; 
-    handleSetLoginCredentials?: (value: Partial<LoginCredentials>) => void; 
+    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void;
+    handleSetRegisterCredentials?: (value: Partial<RegisterCredentials>) => void;
+    handleSetLoginCredentials?: (value: Partial<LoginCredentials>) => void;
 }
 
 export interface NumericFieldProps {
@@ -58,12 +58,17 @@ export interface NumericFieldProps {
     label: string;
     formatValue?: (value: string) => string;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void; 
-  }
+    handleSetShippingDetails?: (value: Partial<ShippingDetails>) => void;
+}
 
-  export interface NoContentApiResponseInterface {
+export interface NoContentApiResponseInterface {
     isSuccess: true;
     isEmpty: true;
+}
+
+export enum FormType {
+    LoginForm = "password",
+    RegisterForm = "confirmPassword",
 }
 
 export interface OkApiResponseInterface<T> {
@@ -71,6 +76,5 @@ export interface OkApiResponseInterface<T> {
     entity: T;
 }
 
-        
 export type NoContentApiResponse = NoContentApiResponseInterface;
 export type OkApiResponse<T> = OkApiResponseInterface<T>;

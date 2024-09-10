@@ -5,7 +5,7 @@ import { isProblemDetails } from '../shared/validation/typeGuards/typeGuardsUtil
 
 axios.defaults.withCredentials = true;
 
-export const loginUser = async (credentials: LoginCredentials): Promise<NoContentApiResponse | ApiError> => {
+export const loginApi = async (credentials: LoginCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
       await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User/login', credentials);
@@ -28,7 +28,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<NoConten
   };
 };
 
-export const registerUser = async (credentials: RegisterCredentials): Promise<NoContentApiResponse | ApiError> => {
+export const registerApi = async (credentials: RegisterCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
       await axios.post('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User', credentials);
