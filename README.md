@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# Overview
+This project is the frontend of an e-commerce platform that allows users to purchase selected products. The platform offers multiple features, including an authentication system, synchronization of the current cart state with the database, and the option to complete transactions using a credit card or cash on delivery. The project was built using React.js and TypeScript.
+# Tech Stack
+### React.js
+Used for building the user interface of the application.
+### TypeScript 
+JavaScript extension that includes static typing, which helps identify errors during development and making the code more reliable and easier to maintain.
+### SCSS
+Used pure SCSS for styling the application, allowing for greater control and flexibility in designing the layout and appearance without relying on pre-built UI frameworks.
+### Redux Toolkit
+Utilized for state management, including handling asynchronous actions using Redux Thunk, managing state slices with reducers, persisting certain states like authentication and shopping cart data, and using selectors to access specific slices of state.
+### Axios
+Used for making asynchronous requests to the backend, enabling efficient communication with the database for fetching and updating data.
+### SignalR
+Used to establish a connection with the API and receive real-time responses regarding the status of payment transactions.
+### Formik
+Used for managing form state and validation
+### Yup
+Used for schema-based form validation together with Formik providing a simple way to define validation rules for form inputs. 
+### Zod
+Used for creating type guards, enabling type-safe data parsing and validation in the application.
+### Universal Cookie
+Used for managing cookies within the application.
+### React Router DOM
+Used for managing client-side routing.
+# Key Features
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
