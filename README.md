@@ -51,6 +51,16 @@ After successful account activation, the user can log in by navigating to the `/
 https://github.com/user-attachments/assets/ddd2528e-5df1-418a-a6a5-98118c104cd0
 
 ### Add products to cart
+The user has the option to add a selected product with a specified quantity to the cart.
+
+https://github.com/user-attachments/assets/69808e8b-2fbb-4c5e-b52d-9b99a6b70f8c
 
 ### Add/Delete/Modify products in cart
+After adding a product to the cart, the user has the option to remove it or modify its quantity.
+
+https://github.com/user-attachments/assets/c0d82b05-178b-44e9-a670-911a62be8171
+
+### Order
+
+After adding products to the cart, the user can place an order by filling out the shipment details and selecting one of the payment options: by card (processed through Stripe) or cash on delivery. While on the order page, the user can still modify the quantity of products in the cart. After placing the order, the user will receive an email with the order summary.
 
