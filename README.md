@@ -34,6 +34,7 @@ The folder organization follows a feature-based structure to maintain cleanlines
 
 # Key Features
 
+In this section, I will describe the key features of the online store, intentionally omitting functionalities such as pagination, opening/closing the cart, UI responsiveness, etc., which are inherent elements of the site that ensure a convenient user experience.
 ### Form validation
 The data entered into the form fields is validated in real-time, allowing the user to be informed whether the input is correct. Validation is implemented on multiple levels: the first level uses Yup schema validation and additionally, if the frontend does not catch incorrect input or if the data is already in use by another user, an error message is displayed at the bottom of the form after receiving a response from the API. Also when data is entered properly according to the Yup validation schema, the submit button changes its appearance and becomes enabled for use.
 
@@ -49,4 +50,7 @@ After successful account activation, the user can log in by navigating to the `/
 
 https://github.com/user-attachments/assets/ddd2528e-5df1-418a-a6a5-98118c104cd0
 
+### Add products to cart
+
+### Add/Delete/Modify products in cart
 
