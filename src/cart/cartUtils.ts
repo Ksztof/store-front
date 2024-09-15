@@ -31,8 +31,10 @@ export const modifyProductInCartQuantity = (payload: ModifyProductInCartQuantity
 
 export const deleteProduct = (payload: deleteProductPayload): AboutCart => {
     return produce(payload.cartContent, (draft: AboutCart) => {
-        draft.aboutProductsInCart = draft.aboutProductsInCart.filter((p: CheckCart) => p.productId !== payload.productId);
         const productTotalPrice: number = draft.aboutProductsInCart.find((p: CheckCart) => p.productId === payload.productId)?.productTotalPrice || 0;
+       
+        draft.aboutProductsInCart = draft.aboutProductsInCart.filter((p: CheckCart) => p.productId !== payload.productId);
+        
         draft.totalCartValue -= productTotalPrice;
         
         if (draft.aboutProductsInCart.length < 1) {

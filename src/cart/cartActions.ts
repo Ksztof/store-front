@@ -299,7 +299,6 @@ export const deleteProductFromCart = createAsyncThunk<
           }
 
           const modifiedCartContent: AboutCart = deleteProduct(deleteProductPayload);
-
           return modifiedCartContent;
         }
 
