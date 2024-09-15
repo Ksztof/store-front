@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { RegisterCredentials } from '../authTypes';
-import { useAppDispatch } from '../../shared/hooks/useAppDispatch';
-import { useSelector } from 'react-redux';
-import { ReducerStates } from '../../shared/sharedTypes';
+
 import { Link } from 'react-router-dom';
 import styles from './RegisterPage.module.scss';
-import { RootState } from '../../shared/redux/store';
-import { register, resetAuth } from '../authActions';
-import { registerCredentialsInitialValues } from '../authConstants';
-import { RegisterForm } from '../components/registerForm/RegisterForm';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../../shared/hooks/useAppDispatch';
+import { RootState } from '../../../shared/redux/store';
+import { ReducerStates } from '../../../shared/sharedTypes';
+import { register, resetAuth } from '../../authActions';
+import { registerCredentialsInitialValues } from '../../authConstants';
+import { RegisterCredentials } from '../../authTypes';
+import { RegisterForm } from '../../components/registerForm/RegisterForm';
+
 
 export const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();

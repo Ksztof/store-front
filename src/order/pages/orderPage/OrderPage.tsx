@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import WrappedStripeCheckout from '../../payment/components/stripeCheckout/StripeCheckout';
+import WrappedStripeCheckout from '../../../payment/components/stripeCheckout/StripeCheckout';
 import { useSelector } from 'react-redux';
-import { ShippingDetails, MethodOfPayment, MakeOrderPayload, OrderMethod } from '../orderTypes';
-import { ShippingDetailsForm } from '../components/shippingDetailsForm/ShippingDetailsForm';
-import OrderSummary from '../components/orderSummary/OrderSummary';
-import { shippingDetailsInitialValues } from '../orderConstants';
-import { ReducerStates } from "../../shared/sharedTypes";
+import { ShippingDetails, MethodOfPayment, MakeOrderPayload, OrderMethod } from '../../orderTypes';
+import { ShippingDetailsForm } from '../../components/shippingDetailsForm/ShippingDetailsForm';
+import OrderSummary from '../../components/orderSummary/OrderSummary';
+import { shippingDetailsInitialValues } from '../../orderConstants';
+import { ReducerStates } from "../../../shared/sharedTypes";
 import styles from './OrderPage.module.scss';
-import ProductsToOrder from '../components/productsToOrder/ProductsToOrder';
-import { AboutCart } from '../../cart/cartTypes';
-import { saveCartContent } from '../../cart/cartActions';
-import PaymentMethodSelector from '../../payment/components/paymentMethodSelector/PaymentMethodSelector';
-import { updatePaymentStatusSuccess } from '../../payment/paymentActions';
-import { useAppDispatch } from '../../shared/hooks/useAppDispatch';
-import { RootState } from '../../shared/redux/store';
-import { makeOrder } from '../orderActions';
+import ProductsToOrder from '../../components/productsToOrder/ProductsToOrder';
+import { AboutCart } from '../../../cart/cartTypes';
+import { saveCartContent } from '../../../cart/cartActions';
+import PaymentMethodSelector from '../../../payment/components/paymentMethodSelector/PaymentMethodSelector';
+import { updatePaymentStatusSuccess } from '../../../payment/paymentActions';
+import { useAppDispatch } from '../../../shared/hooks/useAppDispatch';
+import { RootState } from '../../../shared/redux/store';
+import { makeOrder } from '../../orderActions';
 
 export const OrderPage: React.FC = () => {
     const dispatch = useAppDispatch();

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { LoginForm } from '../components/loginForm/LoginForm';
-import { useAppDispatch } from '../../shared/hooks/useAppDispatch';
-import { LoginCredentials } from '../authTypes';
+import { LoginForm } from '../../components/loginForm/LoginForm';
+import { useAppDispatch } from '../../../shared/hooks/useAppDispatch';
+import { LoginCredentials } from '../../authTypes';
 import styles from './LoginPage.module.scss';
-import { resetCart } from '../../cart/cartActions';
-import { RootState } from '../../shared/redux/store';
-import { login } from '../authActions';
-import { loginCredentialsInitialValues } from '../authConstants';
+import { resetCart } from '../../../cart/cartActions';
+import { RootState } from '../../../shared/redux/store';
+import { login } from '../../authActions';
+import { loginCredentialsInitialValues } from '../../authConstants';
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
