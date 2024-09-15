@@ -64,3 +64,8 @@ https://github.com/user-attachments/assets/c0d82b05-178b-44e9-a670-911a62be8171
 
 After adding products to the cart, the user can place an order by filling out the shipment details and selecting one of the payment options: by card (processed through Stripe) or cash on delivery. While on the order page, the user can still modify the quantity of products in the cart. After placing the order, the user will receive an email with the order summary.
 
+https://github.com/user-attachments/assets/5d7a5bee-b09b-486b-8fbc-c76d1ae36c36
+
+
+
+
