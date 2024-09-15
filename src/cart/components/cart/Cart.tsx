@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { ProductInCart } from "../../product/components/productInCart/ProductInCart";
-import { useAppDispatch } from "../../shared/hooks/useAppDispatch";
-import { AboutCart, RenderPhase, CheckCart } from "../cartTypes";
+import { ProductInCart } from "../productInCart/ProductInCart";
+import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
+import { AboutCart, RenderPhase, CheckCart } from "../../cartTypes";
 import styles from './Cart.module.scss'
 import { useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../shared/redux/store';
-import { synchronizeCart } from '../cartActions';
+import { AppDispatch, RootState } from '../../../shared/redux/store';
+import { synchronizeCart } from '../../cartActions';
 
 export const Cart: React.FC = () => {
     const dispatch: AppDispatch = useAppDispatch();

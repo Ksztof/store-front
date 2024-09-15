@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
-import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../../cart/cartTypes";
+import { AdjustProductQuantityType, CheckCart, ProductInCartProps } from "../../cartTypes";
 import styles from './ProductInCart.module.scss';
 import React from 'react';
 import productImg from '../../../shared/pictures/kielbasa.png'
 import { FaCaretLeft, FaCaretRight, FaTimes } from "react-icons/fa";
-import { deleteProductFromCart, adjustProductQuantity, changeProductInCartQuantity } from "../../../cart/cartActions";
+import { deleteProductFromCart, adjustProductQuantity, changeProductInCartQuantity } from "../../cartActions";
 
 export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
     const dispatch = useAppDispatch();

@@ -5,7 +5,7 @@ import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { AboutCart } from '../../../cart/cartTypes';
 import { useNavigate } from 'react-router-dom';
-import { Cart } from '../../../cart/components/Cart';
+import { Cart } from '../../../cart/components/cart/Cart';
 import { RootState } from '../../redux/store';
 
 export const Main = () => {
