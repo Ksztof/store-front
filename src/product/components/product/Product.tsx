@@ -81,7 +81,7 @@ export const Product: React.FC<ProductProps> = ({ productId }) => {
                 </div>
                 <div className={styles.infoContainer}>
                     <div className={styles.productPrice}>
-                        <span className={styles.price}>{product.price}</span>
+                        <span className={styles.price}>{product.price.toFixed(2)}</span>
                         <span className={styles.currency}>{currency}</span>
                     </div>
 

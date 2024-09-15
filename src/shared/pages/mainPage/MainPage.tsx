@@ -67,7 +67,7 @@ export const Main = () => {
                 <div className={styles.cartHeader}>
 
                     <div className={styles.cartHeaderContent}>
-                        {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue} zł` : '0 zł'}
+                        {cartContent && cartContent.totalCartValue !== 0 ? `Total: ${cartContent.totalCartValue.toFixed(2)} zł` : '0 zł'}
                     </div>
                 </div>
                 <div className={styles.cartContent}>

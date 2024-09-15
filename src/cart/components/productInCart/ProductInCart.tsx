@@ -69,8 +69,8 @@ export const ProductInCart: React.FC<ProductInCartProps> = (props) => {
                     <div className={styles.deletProductIcon} onClick={() => handleDeleteProductFromCart()}><FaTimes /></div>
                 </div>
                 <div className={styles.totalSummary}>
-                    <p className={styles.unitPriceInfo}>unit price:  {product.productUnitPrice} zł</p>
-                    <p className={styles.totalTitle}>Product total: {product.productTotalPrice} zł</p>
+                    <p className={styles.unitPriceInfo}>unit price:  {product.productUnitPrice.toFixed(2)} zł</p>
+                    <p className={styles.totalTitle}>Product total: {product.productTotalPrice.toFixed(2)} zł</p>
                 </div>
             </div>
         </div>

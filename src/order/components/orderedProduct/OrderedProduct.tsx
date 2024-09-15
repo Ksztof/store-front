@@ -61,8 +61,8 @@ export const OrderedProduct: React.FC<ProductInCartProps> = (props) => {
                 />
                 <FaCaretRight className={styles.quantityRightArrow} onClick={() => dispatch(adjustProductQuantity({ productId: product.productId, operationType: AdjustProductQuantityType.Increase }))} />
             </div>
-            <div className={styles.cell}>{product.productUnitPrice} zł</div>
-            <div className={styles.cell}>{product.productTotalPrice} zł</div>
+            <div className={styles.cell}>{product.productUnitPrice.toFixed(2)} zł</div>
+            <div className={styles.cell}>{product.productTotalPrice.toFixed(2)} zł</div>
         </div>
     );
 }

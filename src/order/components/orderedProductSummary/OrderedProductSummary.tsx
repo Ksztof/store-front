@@ -17,8 +17,8 @@ export const OrderedProductSummary: React.FC<ProductInCartProps> = (props) => {
             <div className={styles.cell}>
                 {product.quantity}
             </div>
-            <div className={styles.cell}>{product.productUnitPrice} zł</div>
-            <div className={styles.cell}>{product.productTotalPrice} zł</div>
+            <div className={styles.cell}>{product.productUnitPrice.toFixed(2)} zł</div>
+            <div className={styles.cell}>{product.productTotalPrice.toFixed(2)} zł</div>
         </div>
     );
 }
