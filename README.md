@@ -31,4 +31,7 @@ The folder organization follows a feature-based structure to maintain cleanlines
   <img src="https://github.com/user-attachments/assets/07265904-5864-4ef1-8500-ff15d317790a" alt="folders structure 3" width="33%" align="top">
 </div>
 # Key Features
+### Form validation
+The data entered into the form fields is validated in real-time, allowing the user to be informed whether the input is correct. Validation is implemented on multiple levels: the first level uses Yup schema validation and additionally, if the frontend does not catch incorrect input or if the data is already in use by another user, an error message is displayed at the bottom of the form after receiving a response from the API. Also when data is entered properly according to the Yup validation schema, the submit button changes its appearance and becomes enabled for use.
+ 
 
