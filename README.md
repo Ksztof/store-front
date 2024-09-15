@@ -37,12 +37,16 @@ The folder organization follows a feature-based structure to maintain cleanlines
 ### Form validation
 The data entered into the form fields is validated in real-time, allowing the user to be informed whether the input is correct. Validation is implemented on multiple levels: the first level uses Yup schema validation and additionally, if the frontend does not catch incorrect input or if the data is already in use by another user, an error message is displayed at the bottom of the form after receiving a response from the API. Also when data is entered properly according to the Yup validation schema, the submit button changes its appearance and becomes enabled for use.
 
+https://github.com/user-attachments/assets/90fd69ad-21a7-4ffc-a2d5-e5bc832a41ea
+
 ### Register
 The user has the option to create an account by navigating to the `/register` page, where after entering their details in the form and submitting it, they will receive an activation link via email to activate their account.
+
+https://github.com/user-attachments/assets/d3b021c9-7889-498a-b7ea-0b7493e239e8
 
 ### Login
 After successful account activation, the user can log in by navigating to the `/login` page and entering their login credentials, which will be sent to the API for authentication. Upon successful authentication, the user will receive a cookie with the `HttpOnly = true` and `Secure = true` options, containing a JWT token that will be used for authorization purposes.
 
-
+https://github.com/user-attachments/assets/ddd2528e-5df1-418a-a6a5-98118c104cd0
 
 
