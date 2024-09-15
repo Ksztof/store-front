@@ -23,5 +23,12 @@ Used for creating type guards, enabling type-safe data parsing and validation in
 Used for managing cookies within the application.
 ### React Router DOM
 Used for managing client-side routing.
+# Folders Structure
+The folder organization follows a feature-based structure to maintain cleanliness and clarity. This approach groups all related files, such as actions, reducers, services, and components, under specific feature directories like authentication, cart, order, etc. This structure allows for easy navigation and makes it simpler to work on individual features without needing to jump across multiple generic folders. Additionally, the project includes a shared folder that groups resources used across various contexts, such as cart operations, products, authentication, and more. This folder also contains tools related to form and type validation (type guards), cookies, and Redux store configuration. In the main src folder, you will find the core components and their associated styles, such as index.tsx and App.tsx. These files are responsible for the root setup of the application, with index.tsx serving as the entry point for the application.
+<div style="display: flex; gap: 10px; justify-content: flex-start;">
+  <img src="https://github.com/user-attachments/assets/acce84f2-65d2-4a72-b2d5-74f0b9dd7121" alt="folders structure 1" width="33%" align="top">
+  <img src="https://github.com/user-attachments/assets/0acef607-85a9-417e-899d-e6cefc4ea9ac" alt="folders structure 2" width="33%" align="top">
+  <img src="https://github.com/user-attachments/assets/07265904-5864-4ef1-8500-ff15d317790a" alt="folders structure 3" width="33%" align="top">
+</div>
 # Key Features
 
