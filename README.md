@@ -66,11 +66,15 @@ After adding products to the cart, the user can place an order by filling out th
 
 https://github.com/user-attachments/assets/5d7a5bee-b09b-486b-8fbc-c76d1ae36c36
 
-### Synchronization
+### Cart synchronization with API 
 
 The synchronization system is used to display the current state of the user's cart and to limit the number of requests sent to the API. Instead of saving the cart state to the database every time its state changes, such as when adding or removing a product or changing its quantity, we do this at key moments in the application's operation, such as when navigating to a different page, refreshing, or closing the page. The system is closely linked with cookies, which are used to identify the user and thus allow the API to return the current cart state. The cookie of a logged-in user stores a JWT token, while for a guest user, it stores the cart ID. Both cookies, along with their contents, are issued by the API and saved in the browser using redux-persist. Additionally, the synchronization system enables merging the cart state created as a guest with the cart state of a logged-in user when products are added to the cart as a guest and then the user logs in to their account.
 
 https://github.com/user-attachments/assets/6076bf75-b36d-45a1-ada8-66d21bbd8d2a
 
+### Exception handling
 
+The application handles errors returned from the API, which are captured by the `errorReducer` by catching all reducer actions of type `rejected` and storing them in the Redux storage. When errors are present in the Redux storage, they are automatically displayed by the error modal, presenting the user with a clear error message. After the user acknowledges the error, the application state is reset, and the Redux storage is cleared, allowing the user to resolve issues that resulted from incorrect usage of the application.
+
+https://github.com/user-attachments/assets/2af7272d-928a-4d61-9d07-d05d170d7937
 
