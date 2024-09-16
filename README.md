@@ -66,6 +66,11 @@ After adding products to the cart, the user can place an order by filling out th
 
 https://github.com/user-attachments/assets/5d7a5bee-b09b-486b-8fbc-c76d1ae36c36
 
+### Synchronization
+
+The synchronization system is used to display the current state of the user's cart and to limit the number of requests sent to the API. Instead of saving the cart state to the database every time its state changes, such as when adding or removing a product or changing its quantity, we do this at key moments in the application's operation, such as when navigating to a different page, refreshing, or closing the page. The system is closely linked with cookies, which are used to identify the user and thus allow the API to return the current cart state. The cookie of a logged-in user stores a JWT token, while for a guest user, it stores the cart ID. Both cookies, along with their contents, are issued by the API and saved in the browser using redux-persist. Additionally, the synchronization system enables merging the cart state created as a guest with the cart state of a logged-in user when products are added to the cart as a guest and then the user logs in to their account.
+
+https://github.com/user-attachments/assets/6076bf75-b36d-45a1-ada8-66d21bbd8d2a
 
 
 
