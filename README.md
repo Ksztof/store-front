@@ -80,3 +80,7 @@ The application handles errors returned from the API, which are captured by the 
 
 https://github.com/user-attachments/assets/2af7272d-928a-4d61-9d07-d05d170d7937
 
+# CI/CD
+The frontend is connected to Azure Static Web Apps, and every time a commit is pushed to the main branch, the CI/CD process is automatically triggered. The project is built and deployed using GitHub Actions, with the necessary keys (including the Stripe public key) stored in the repository secrets. After each change in the main branch, the frontend is automatically deployed to Azure Static Web Apps.
+
+#[thanks for reading! Now you are ready to check my API :) ](https://github.com/Ksztof/store-api)
