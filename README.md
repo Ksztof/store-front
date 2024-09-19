@@ -1,28 +1,30 @@
 # Overview
 This project is the frontend of an e-commerce platform that allows users to purchase selected products. The platform offers multiple features, including an authentication system, synchronization of the current cart state with the database, and the option to complete transactions using a credit card or cash on delivery. The project was built using React.js and TypeScript.
+
 # Tech Stack
-### React.js
+### [React](https://react.dev/)
 Used for building the user interface of the application.
-### TypeScript 
+### [TypeScript](https://www.typescriptlang.org/)
 JavaScript extension that includes static typing, which helps identify errors during development and making the code more reliable and easier to maintain.
-### SCSS
+### [SCSS](https://sass-lang.com/)
 Used pure SCSS for styling the application, allowing for greater control and flexibility in designing the layout and appearance without relying on pre-built UI frameworks.
-### Redux Toolkit
+### [Redux Toolkit](https://redux-toolkit.js.org/)
 Utilized for state management, including handling asynchronous actions using Redux Thunk, managing state slices with reducers, persisting certain states like authentication and shopping cart data, and using selectors to access specific slices of state.
-### Axios
+### [Axios](https://axios-http.com/)
 Used for making asynchronous requests to the backend, enabling efficient communication with the database for fetching and updating data.
-### SignalR
+### [SignalR](https://dotnet.microsoft.com/en-us/apps/aspnet/signalr)
 Used to establish a connection with the API and receive real-time responses regarding the status of payment transactions.
-### Formik
+### [Formik](https://formik.org/)
 Used for managing form state and validation
-### Yup
+### [Yup](https://www.npmjs.com/package/yup)
 Used for schema-based form validation together with Formik providing a simple way to define validation rules for form inputs. 
-### Zod
+### [Zod](https://zod.dev/)
 Used for creating type guards, enabling type-safe data parsing and validation in the application.
-### Universal Cookie
+### [Universal Cookie](https://www.npmjs.com/package/universal-cookie)
 Used for managing cookies within the application.
-### React Router DOM
+### [React Router DOM](https://reactrouter.com/en/main)
 Used for managing client-side routing.
+
 # Folders Structure
 The folder organization follows a feature-based structure to maintain cleanliness and clarity. This approach groups all related files, such as actions, reducers, services, and components, under specific feature directories like authentication, cart, order, etc. This structure allows for easy navigation and makes it simpler to work on individual features without needing to jump across multiple generic folders. Additionally, the project includes a shared folder that groups resources used across various contexts, such as cart operations, products, authentication, and more. This folder also contains tools related to form and type validation (type guards), cookies, and Redux store configuration. In the main src folder, you will find the core components and their associated styles, such as index.tsx and App.tsx. These files are responsible for the root setup of the application, with index.tsx serving as the entry point for the application.
 
@@ -64,3 +66,22 @@ https://github.com/user-attachments/assets/c0d82b05-178b-44e9-a670-911a62be8171
 
 After adding products to the cart, the user can place an order by filling out the shipment details and selecting one of the payment options: by card (processed through Stripe) or cash on delivery. While on the order page, the user can still modify the quantity of products in the cart. After placing the order, the user will receive an email with the order summary.
 
+https://github.com/user-attachments/assets/5d7a5bee-b09b-486b-8fbc-c76d1ae36c36
+
+### Cart synchronization with API 
+
+The synchronization system is used to display the current state of the user's cart and to limit the number of requests sent to the API. Instead of saving the cart state to the database every time its state changes, such as when adding or removing a product or changing its quantity, we do this at key moments in the application's operation, such as when navigating to a different page, refreshing, or closing the page. The system is closely linked with cookies, which are used to identify the user and thus allow the API to return the current cart state. The cookie of a logged-in user stores a JWT token, while for a guest user, it stores the cart ID. Both cookies, along with their contents, are issued by the API and saved in the browser using redux-persist. Additionally, the synchronization system enables merging the cart state created as a guest with the cart state of a logged-in user when products are added to the cart as a guest and then the user logs in to their account.
+
+https://github.com/user-attachments/assets/6076bf75-b36d-45a1-ada8-66d21bbd8d2a
+
+### Exception handling
+
+The application handles errors returned from the API, which are captured by the `errorReducer` by catching all reducer actions of type `rejected` and storing them in the Redux storage. When errors are present in the Redux storage, they are automatically displayed by the error modal, presenting the user with a clear error message. After the user acknowledges the error, the application state is reset, and the Redux storage is cleared, allowing the user to resolve issues that resulted from incorrect usage of the application.
+
+https://github.com/user-attachments/assets/2af7272d-928a-4d61-9d07-d05d170d7937
+
+# CI/CD
+The frontend is connected to Azure Static Web Apps, and every time a commit is pushed to the main branch, the CI/CD process is automatically triggered. The project is built and deployed using GitHub Actions, with the necessary keys (including the Stripe public key) stored in the repository secrets. After each change in the main branch, the frontend is automatically deployed to Azure Static Web Apps.
+
+<br></br>
+# [thanks for reading! Now you are ready to check my API :) ](https://github.com/Ksztof/store-api)
