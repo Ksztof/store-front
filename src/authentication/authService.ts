@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 export const loginApi = async (credentials: LoginCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User/login', credentials);
+      await axios.post<void>('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Users/login', credentials);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -31,7 +31,7 @@ export const loginApi = async (credentials: LoginCredentials): Promise<NoContent
 export const registerApi = async (credentials: RegisterCredentials): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.post('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User', credentials);
+      await axios.post('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Users', credentials);
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -54,7 +54,7 @@ export const registerApi = async (credentials: RegisterCredentials): Promise<NoC
 export const removeGuestSessionIdApi = async (): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User', {});
+      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Users', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
@@ -77,7 +77,7 @@ export const removeGuestSessionIdApi = async (): Promise<NoContentApiResponse | 
 export const logoutApi = async (): Promise<NoContentApiResponse | ApiError> => {
   try {
     const response: void | any =
-      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/User/logout', {});
+      await axios.get('https://store-api-hqf7djgufnhmamgp.polandcentral-01.azurewebsites.net/api/Users/logout', {});
 
     if (response.status === HttpStatusCode.NoContent) {
       const responseDetails: NoContentApiResponse = { isSuccess: true, isEmpty: true };
